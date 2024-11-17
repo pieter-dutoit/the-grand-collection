@@ -23,13 +23,17 @@ module.exports = {
         "plugin:tailwindcss/recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier",
-
-        //'plugin:@typescript-eslint/recommended-type-checked',
-        // 'plugin:@typescript-eslint/strict-type-checked',
-        // 'plugin:@typescript-eslint/stylistic-type-checked',
       ],
       rules: {
         "tailwindcss/classnames-order": "off",
+        "@typescript-eslint/no-unused-expressions": [
+          "error",
+          {
+            allowShortCircuit: true,
+            allowTernary: true,
+            allowTaggedTemplates: true,
+          },
+        ],
       },
     },
   ],
