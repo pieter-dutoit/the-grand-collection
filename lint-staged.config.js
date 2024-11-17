@@ -1,5 +1,5 @@
 const path = require('path');
-const formatCommand = 'prettier . --check';
+const formatCommand = 'prettier --write .';
 
 module.exports = {
   '*': formatCommand,

@@ -26,6 +26,10 @@ Follow the conventional commits specification for your commit messages. Common e
 - `chore: update dependencies`
 - `BREAKING CHANGE: remove api route`
 
+### Semantic Releases
+
+[semantic-release](https://www.npmjs.com/package/semantic-release)
+
 ## How to Submit Issues or Feature Requests
 
 ## How to Fork, Clone, and Create Pull Requests
