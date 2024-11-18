@@ -21,6 +21,9 @@
     "baseUrl": "src/",
     "paths": {
       "@/components/*": ["components/*"],
+      "@/config/*": ["config/*"],
+      "@/ui/*": ["ui/*"],
+      "@/styles/*": ["styles/*"],
       "@/lib/*": ["lib/*"],
       "@/fonts/*": ["fonts/*"]
     }

@@ -1,10 +1,10 @@
-import "./globals.css";
+import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
-import NavBar from "@/components/ui/navbar";
-import { ThemeProvider } from "@/components/theme-provider";
-import { redhat } from "./fonts";
+import { NavBar } from "@/components/ui/navbar";
+import { ThemeProvider } from "@/config/theme-provider";
+import { redhat } from "@/fonts/index";
 
 export const metadata: Metadata = {
   title: "The Grand Collection",
