@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-redhat)", "system-ui", "sans-serif"],
+        redhat: ["var(--font-redhat)"],
       },
       colors: {
         background: "hsl(var(--background))",

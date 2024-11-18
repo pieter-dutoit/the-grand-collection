@@ -1,11 +1,10 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
-import Head from "next/head";
 
 import NavBar from "@/components/ui/navbar";
-
 import { ThemeProvider } from "@/components/theme-provider";
-
-import { redhat } from "@/fonts/index";
+import { redhat } from "./fonts";
 
 export const metadata: Metadata = {
   title: "The Grand Collection",
@@ -18,21 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang='en'
-      className={`${redhat.className} antialiased`}
-      suppressHydrationWarning
-    >
-      <Head>
-        <link
-          rel='preload'
-          href='/fonts/RedHatDisplay-VariableFont_wght.ttf'
-          as='font'
-          type='font/ttf'
-          crossOrigin='anonymous'
-        />
-      </Head>
-      <body>
+    <html lang='en' suppressHydrationWarning className={`${redhat.variable}`}>
+      <body className='font-redhat antialiased'>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
