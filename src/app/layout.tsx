@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning className={`${redhat.variable}`}>
-      <body className='font-redhat antialiased'>
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>
