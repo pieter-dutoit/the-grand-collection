@@ -12,4 +12,5 @@ export const redhat = localFont({
   ],
   variable: "--font-redhat",
   display: "swap",
+  preload: true,
 });

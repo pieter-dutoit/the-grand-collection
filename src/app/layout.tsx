@@ -2,8 +2,7 @@ import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
-import { NavBar } from "@/components/ui/navbar";
-import { ThemeProvider } from "@/config/theme-provider";
+import { Providers } from "@/app/providers";
 import { redhat } from "@/fonts/index";
 
 export const metadata: Metadata = {
@@ -19,15 +18,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning className={`${redhat.variable}`}>
       <body className='font-redhat antialiased'>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NavBar />
-          {children}
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
