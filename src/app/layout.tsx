@@ -7,11 +7,11 @@ import { redhat } from "@/fonts/index";
 
 export const metadata: Metadata = {
   title: "The Grand Collection",
-  description: "A collection of grand things.",
+  description: "A collection of grand things."
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
