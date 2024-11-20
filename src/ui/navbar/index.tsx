@@ -27,7 +27,10 @@ export function Navbar() {
   ];
 
   return (
-    <NextNavbar onMenuOpenChange={setIsMenuOpen}>
+    <NextNavbar
+      onMenuOpenChange={setIsMenuOpen}
+      className='bg-white dark:bg-default-100'
+    >
       <NavbarContent>
         {/* Mobile menu toggle */}
         <NavbarMenuToggle
@@ -36,7 +39,9 @@ export function Navbar() {
         />
         {/* Branding */}
         <NavbarBrand>
-          <MinimalTextLogo />
+          <NextLink href='/'>
+            <MinimalTextLogo />
+          </NextLink>
         </NavbarBrand>
       </NavbarContent>
 
@@ -49,21 +54,30 @@ export function Navbar() {
             </NextLink>
           </NavbarItem>
         ))}
+        <Button
+          as={Link}
+          color='default'
+          href='#'
+          variant='solid'
+          className='font-semibold uppercase'
+        >
+          Book Now
+        </Button>
       </NavbarContent>
 
       {/* Right-hand Content */}
       <NavbarContent justify='end'>
-        <NavbarItem>
+        {/* <NavbarItem>
           <Button
             as={Link}
             color='default'
             href='#'
             variant='solid'
-            className='font-semibold uppercase text-white'
+            className='font-semibold uppercase'
           >
             Book Now
           </Button>
-        </NavbarItem>
+        </NavbarItem> */}
 
         <NavbarItem className='hidden sm:block'>
           <CountryOutline />
