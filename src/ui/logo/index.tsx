@@ -72,7 +72,7 @@ export function MinimalTextLogo({
     <svg
       xmlns='http://www.w3.org/2000/svg'
       width={width}
-      height={width * (75.591 / 375.609)}
+      height={width * (75 / 380)}
       viewBox='0 0 99.38 20'
     >
       <path
