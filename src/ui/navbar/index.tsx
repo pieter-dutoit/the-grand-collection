@@ -15,8 +15,7 @@ import {
   Button
 } from "@nextui-org/react";
 
-import { CountryOutline, MinimalLogo } from "@/ui/logo";
-import { ThemeToggle } from "@/ui/theme-toggle";
+import { CountryOutline, MinimalTextLogo } from "@/ui/logo";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -37,11 +36,7 @@ export function Navbar() {
         />
         {/* Branding */}
         <NavbarBrand>
-          <MinimalLogo />
-          <p className='text-2xl font-light text-inherit'>
-            <span className='block sm:hidden'>GC</span>
-            <span className='hidden sm:block'>The Grand Collection</span>
-          </p>
+          <MinimalTextLogo />
         </NavbarBrand>
       </NavbarContent>
 
@@ -61,20 +56,17 @@ export function Navbar() {
         <NavbarItem>
           <Button
             as={Link}
-            color='primary'
+            color='default'
             href='#'
             variant='solid'
-            className='font-semibold uppercase'
+            className='font-semibold uppercase text-white'
           >
             Book Now
           </Button>
         </NavbarItem>
 
-        <NavbarItem>
+        <NavbarItem className='hidden sm:block'>
           <CountryOutline />
-        </NavbarItem>
-        <NavbarItem>
-          <ThemeToggle />
         </NavbarItem>
       </NavbarContent>
 
@@ -83,7 +75,7 @@ export function Navbar() {
         {menuItems.map(({ name, href }) => (
           <NavbarMenuItem key={href}>
             <NextLink href={href} legacyBehavior passHref>
-              <Link className='w-full'>{name}</Link>
+              <Link className='w-full text-default-800'>{name}</Link>
             </NextLink>
           </NavbarMenuItem>
         ))}
