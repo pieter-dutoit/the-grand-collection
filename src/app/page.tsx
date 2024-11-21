@@ -1,8 +1,11 @@
+import { Hero } from "./ui/home/hero";
+
 export default function Home() {
   return (
     <>
-      <main style={{ height: "200vh" }}>
-        <h1>Main page 2</h1>
+      <main>
+        {/* <h1>Main page</h1> */}
+        <Hero />
       </main>
     </>
   );

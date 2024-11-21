@@ -22,8 +22,8 @@
     "paths": {
       "@/app/*": ["app/*"],
       "@/config/*": ["config/*"],
-      "@/ui/*": ["ui/*"],
-      "@/styles/*": ["styles/*"],
+      "@/ui/*": ["app/ui/*"],
+      "@/styles/*": ["app/styles/*"],
       "@/lib/*": ["lib/*"],
       "@/fonts/*": ["fonts/*"]
     }

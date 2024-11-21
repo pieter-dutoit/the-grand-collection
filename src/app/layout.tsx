@@ -1,9 +1,8 @@
 import "@/styles/globals.css";
 import { Providers } from "@/app/providers";
 import { redhat } from "@/fonts/index";
-import { Navbar } from "@/ui/navbar"; // Adjust the import path as needed
+import { Navbar } from "@/ui/navbar";
 import { Footer } from "@/ui/footer";
-import { ThemeToggle } from "@/ui/theme-toggle";
 
 export const metadata = {
   title: "The Grand Collection",
@@ -20,7 +19,6 @@ export default function RootLayout({
       <body>
         <Providers>
           <Navbar />
-          <ThemeToggle />
           {children}
           <Footer />
         </Providers>

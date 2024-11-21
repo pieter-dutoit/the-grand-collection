@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
-const { nextui } = require("@nextui-org/react");
-import type { ColorScale } from "@nextui-org/theme";
+import { nextui, type ColorScale } from "@nextui-org/theme";
 
 const STATUS_COLORS: Record<string, ColorScale> = {
   success: {
@@ -206,9 +205,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        white: "#FFFFFF",
-        black: "#1b1c17"
+      backgroundImage: {
+        "custom-gradient":
+          "radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%)"
       }
     }
   },

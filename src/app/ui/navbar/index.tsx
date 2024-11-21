@@ -29,7 +29,7 @@ export function Navbar() {
   return (
     <NextNavbar
       onMenuOpenChange={setIsMenuOpen}
-      className='bg-white shadow-md shadow-background-50 dark:bg-default-100'
+      className='bg-white shadow-md shadow-transparent dark:bg-default-100'
     >
       <NavbarContent>
         {/* Mobile menu toggle */}
@@ -67,17 +67,17 @@ export function Navbar() {
 
       {/* Right-hand Content */}
       <NavbarContent justify='end'>
-        {/* <NavbarItem>
+        <NavbarItem>
           <Button
             as={Link}
             color='default'
             href='#'
             variant='solid'
-            className='font-semibold uppercase'
+            className='font-semibold uppercase sm:hidden'
           >
             Book Now
           </Button>
-        </NavbarItem> */}
+        </NavbarItem>
 
         <NavbarItem className='hidden sm:block'>
           <CountryOutline />
