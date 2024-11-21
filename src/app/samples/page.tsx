@@ -24,8 +24,9 @@ export default function Samples() {
     "success",
     "warning",
     "danger"
-  ];
-  const variants = ["flat", "bordered", "underlined", "faded"];
+  ] as const;
+
+  const variants = ["flat", "bordered", "underlined", "faded"] as const;
 
   const animals = [
     { key: "cat", label: "Cat" },
