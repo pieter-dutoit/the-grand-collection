@@ -1,15 +1,11 @@
-import { Footer } from "@/ui/footer";
-import { Navbar } from "@/ui/navbar";
-import { ThemeToggle } from "@/ui/theme-toggle";
+import { Hero } from "./ui/home/hero";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main style={{ height: "200vh" }}>
-        <ThemeToggle />
-        <h1>Main page</h1>
-        <Footer />
+      <main>
+        {/* <h1>Main page</h1> */}
+        <Hero />
       </main>
     </>
   );

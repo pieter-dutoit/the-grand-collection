@@ -17,7 +17,6 @@ export function ThemeToggle() {
   return (
     <Button
       isIconOnly
-      variant='light'
       aria-label='Dark Mode'
       onClick={() => setTheme(isLight ? "dark" : "light")}
       size='sm'
