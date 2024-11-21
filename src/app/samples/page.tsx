@@ -1,14 +1,6 @@
 "use client";
 
-import { Footer } from "@/ui/footer";
-import { Navbar } from "@/ui/navbar";
-import { ThemeToggle } from "@/ui/theme-toggle";
-
 import {
-  Accordion,
-  AccordionItem,
-  Breadcrumbs,
-  BreadcrumbItem,
   Button,
   Checkbox,
   Chip,
@@ -25,8 +17,6 @@ import {
 import { Moon, Sun } from "lucide-react";
 
 export default function Samples() {
-  const defaultContent =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
   const colors = [
     "default",
     "primary",
