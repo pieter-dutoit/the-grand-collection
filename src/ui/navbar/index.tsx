@@ -29,7 +29,7 @@ export function Navbar() {
   return (
     <NextNavbar
       onMenuOpenChange={setIsMenuOpen}
-      className='bg-white dark:bg-default-100'
+      className='bg-white shadow-md shadow-background-50 dark:bg-default-100'
     >
       <NavbarContent>
         {/* Mobile menu toggle */}

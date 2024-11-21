@@ -1,11 +1,11 @@
 import "@/styles/globals.css";
-
-import type { Metadata } from "next";
-
 import { Providers } from "@/app/providers";
 import { redhat } from "@/fonts/index";
+import { Navbar } from "@/ui/navbar"; // Adjust the import path as needed
+import { Footer } from "@/ui/footer";
+import { ThemeToggle } from "@/ui/theme-toggle";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "The Grand Collection",
   description: "A collection of grand things."
 };
@@ -18,7 +18,12 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning className={`${redhat.variable}`}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          <ThemeToggle />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

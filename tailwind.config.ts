@@ -60,7 +60,7 @@ const LIGHT_THEME = {
       700: "#515445",
       800: "#36382e",
       900: "#1b1c17",
-      DEFAULT: "#b7baab",
+      DEFAULT: "#9fa38f",
       foreground: "#1b1c17"
     } as ColorScale,
     primary: {
@@ -137,7 +137,7 @@ const DARK_THEME = {
       800: "#cfd1c7",
       900: "#e7e8e3",
       DEFAULT: "#9fa38f",
-      foreground: "#f3f4f1"
+      foreground: "#e7e8e3"
     } as ColorScale,
     primary: {
       50: "#0f0e0a",
@@ -205,7 +205,12 @@ const config: Config = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        white: "#FFFFFF",
+        black: "#1b1c17"
+      }
+    }
   },
   darkMode: "class",
   plugins: [
