@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { Button } from "@nextui-org/react";
+import { ChevronDown, MapPin } from "lucide-react";
 
 import { FullLogo } from "@/ui/logo";
-
-import { ChevronDown } from "lucide-react";
 
 import bg from "./images/home-gallery-01.jpg";
 import Link from "next/link";
@@ -37,12 +36,18 @@ export function Hero() {
             size='lg'
             color='secondary'
             variant='shadow'
-            className='mt-8 hidden sm:block'
+            className='mt-8 hidden sm:flex sm:flex-row sm:items-center'
           >
+            <MapPin />
             Explore Our Locations
           </Button>
 
-          <Button color='secondary' variant='shadow' className='mt-8 sm:hidden'>
+          <Button
+            color='secondary'
+            variant='shadow'
+            className='mt-8 flex flex-row items-center sm:hidden'
+          >
+            <MapPin />
             Explore Our Locations
           </Button>
 

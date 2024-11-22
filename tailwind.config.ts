@@ -209,7 +209,7 @@ const config: Config = {
         "custom-gradient":
           "radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 90%)",
         "custom-gradient-mobile":
-          "linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0) 100%)"
+          "linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0) 100%)"
       }
     }
   },
