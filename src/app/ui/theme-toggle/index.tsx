@@ -20,6 +20,7 @@ export function ThemeToggle() {
       aria-label='Dark Mode'
       onClick={() => setTheme(isLight ? "dark" : "light")}
       size='sm'
+      className='absolute bottom-4 right-4'
     >
       {isMounted ? isLight ? <Moon size={20} /> : <Sun size={20} /> : null}
     </Button>

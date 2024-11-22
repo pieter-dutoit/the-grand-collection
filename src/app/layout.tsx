@@ -15,7 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning className={`${redhat.variable}`}>
+    <html
+      lang='en'
+      suppressHydrationWarning
+      className={`${redhat.variable} scroll-smooth antialiased`}
+    >
       <body>
         <Providers>
           <Navbar />

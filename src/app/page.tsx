@@ -1,4 +1,5 @@
-import { Hero } from "./ui/home/hero";
+import { Hero } from "@/ui/home/hero";
+import Overview from "@/ui/home/overview";
 
 export default function Home() {
   return (
@@ -6,6 +7,7 @@ export default function Home() {
       <main>
         {/* <h1>Main page</h1> */}
         <Hero />
+        <Overview />
       </main>
     </>
   );
