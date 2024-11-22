@@ -207,7 +207,9 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "custom-gradient":
-          "radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%)"
+          "radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 90%)",
+        "custom-gradient-mobile":
+          "linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0) 100%)"
       }
     }
   },
