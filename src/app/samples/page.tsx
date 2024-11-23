@@ -1,55 +1,53 @@
 "use client";
 
-import {
-  Button,
-  Checkbox,
-  Chip,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  Select,
-  SelectItem,
-  Switch,
-  Tabs,
-  Tab,
-  Pagination
-} from "@nextui-org/react";
-import { Moon, Sun } from "lucide-react";
+// import {} from // Button,
+// Checkbox,
+// Chip,
+// Popover,
+// PopoverTrigger,
+// PopoverContent,
+// Select,
+// SelectItem,
+// Tabs,
+// Tab,
+// Pagination
+"@nextui-org/react";
+// import { Moon, Sun } from "lucide-react";
 
 export default function Samples() {
-  const colors = [
-    "default",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger"
-  ] as const;
+  // const colors = [
+  //   "default",
+  //   "primary",
+  //   "secondary",
+  //   "success",
+  //   "warning",
+  //   "danger"
+  // ] as const;
 
-  const variants = ["flat", "bordered", "underlined", "faded"] as const;
+  // const variants = ["flat", "bordered", "underlined", "faded"] as const;
 
-  const animals = [
-    { key: "cat", label: "Cat" },
-    { key: "dog", label: "Dog" },
-    { key: "rabbit", label: "Rabbit" },
-    { key: "hamster", label: "Hamster" },
-    { key: "parrot", label: "Parrot" },
-    { key: "fish", label: "Fish" }
-  ];
+  // const animals = [
+  //   { key: "cat", label: "Cat" },
+  //   { key: "dog", label: "Dog" },
+  //   { key: "rabbit", label: "Rabbit" },
+  //   { key: "hamster", label: "Hamster" },
+  //   { key: "parrot", label: "Parrot" },
+  //   { key: "fish", label: "Fish" }
+  // ];
 
-  const content = (
-    <PopoverContent>
-      <div className='px-1 py-2'>
-        <div className='text-small font-bold'>Popover Content</div>
-        <div className='text-tiny'>This is the popover content</div>
-      </div>
-    </PopoverContent>
-  );
+  // const content = (
+  //   <PopoverContent>
+  //     <div className='px-1 py-2'>
+  //       <div className='text-small font-bold'>Popover Content</div>
+  //       <div className='text-tiny'>This is the popover content</div>
+  //     </div>
+  //   </PopoverContent>
+  // );
   return (
     <>
       <h1>Samples</h1>
 
-      <div className='flex flex-wrap items-center gap-4 p-4'>
+      {/* <div className='flex flex-wrap items-center gap-4 p-4'>
         <Button color='default'>Default</Button>
         <Button color='primary'>Primary</Button>
         <Button color='secondary'>Secondary</Button>
@@ -77,9 +75,9 @@ export default function Samples() {
         <Button color='primary' variant='shadow'>
           Shadow
         </Button>
-      </div>
+      </div> */}
 
-      <div className='flex flex-wrap gap-4 p-4'>
+      {/* <div className='flex flex-wrap gap-4 p-4'>
         <Checkbox defaultSelected color='default'>
           Default
         </Checkbox>
@@ -98,23 +96,9 @@ export default function Samples() {
         <Checkbox defaultSelected color='danger'>
           Danger
         </Checkbox>
-        <Switch
-          defaultSelected
-          size='lg'
-          color='secondary'
-          thumbIcon={({ isSelected, className }) =>
-            isSelected ? (
-              <Sun className={className} />
-            ) : (
-              <Moon className={className} />
-            )
-          }
-        >
-          Dark mode
-        </Switch>
-      </div>
+      </div> */}
 
-      <div className='flex flex-wrap gap-4'>
+      {/* <div className='flex flex-wrap gap-4'>
         {colors.map((color) => (
           <Tabs
             key={color}
@@ -127,9 +111,9 @@ export default function Samples() {
             <Tab key='videos' title='Videos' />
           </Tabs>
         ))}
-      </div>
+      </div> */}
 
-      <div>
+      {/* <div>
         <div className='flex flex-wrap gap-4 p-4'>
           <Chip color='warning' variant='solid'>
             Solid
@@ -153,9 +137,9 @@ export default function Samples() {
             Dot
           </Chip>
         </div>
-      </div>
+      </div> */}
 
-      <div className='flex flex-wrap gap-4 p-4'>
+      {/* <div className='flex flex-wrap gap-4 p-4'>
         {colors.map((color) => (
           <Popover key={color} placement='top' color={color}>
             <PopoverTrigger>
@@ -166,9 +150,9 @@ export default function Samples() {
             {content}
           </Popover>
         ))}
-      </div>
+      </div> */}
 
-      <div className='flex w-full flex-row flex-wrap gap-4'>
+      {/* <div className='flex w-full flex-row flex-wrap gap-4'>
         {colors.map((color) => (
           <Select
             key={color}
@@ -183,9 +167,9 @@ export default function Samples() {
             ))}
           </Select>
         ))}
-      </div>
+      </div> */}
 
-      <div className='flex w-full flex-col flex-wrap gap-4'>
+      {/* <div className='flex w-full flex-col flex-wrap gap-4'>
         {variants.map((variant) => (
           <div
             key={variant}
@@ -212,8 +196,8 @@ export default function Samples() {
             </Select>
           </div>
         ))}
-      </div>
-      <Pagination total={10} initialPage={1} />
+      </div> */}
+      {/* <Pagination total={10} initialPage={1} /> */}
     </>
   );
 }
