@@ -9,7 +9,7 @@ import bg from "./images/home-gallery-01.jpg";
 
 export function Hero() {
   return (
-    <section className='relative h-[75vh] w-screen bg-slate-800 sm:h-[calc(100vh_-_4rem)]'>
+    <section className='relative h-[75vh] max-h-[40rem] w-screen bg-slate-800 sm:h-[calc(100vh_-_4rem)] sm:max-h-none'>
       <div className='absolute inset-0 size-full'>
         <Image
           src={bg}

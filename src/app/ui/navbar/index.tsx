@@ -1,7 +1,8 @@
 "use client";
 
-import React, { Fragment } from "react";
 import NextLink from "next/link";
+import React, { Fragment } from "react";
+import { ChevronDown } from "lucide-react";
 
 import {
   Navbar as NextNavbar,
@@ -19,10 +20,9 @@ import {
 } from "@nextui-org/react";
 
 import { CountryOutline, MinimalTextLogo } from "@/ui/logo";
-import { ChevronDown } from "lucide-react";
 
 const linkStyle =
-  "bg-transparent font-normal min-w-0 p-0 m-0 text-lg text-default-700 data-[hover=true]:bg-transparent";
+  "bg-transparent font-normal min-w-0 p-0 m-0 text-medium text-default-700 data-[hover=true]:bg-transparent";
 
 const menuItems = [
   { name: "Home", href: "/" },
@@ -31,8 +31,8 @@ const menuItems = [
     name: "Our Locations",
     dropdownItems: [
       { name: "All Guesthouses", href: "/guesthouses" },
-      { name: "The Paarl Grand", href: "/guesthouses/the-paarl-grand" },
-      { name: "The Kathu Grand", href: "/guesthouses/the-kathu-grand" }
+      { name: "The Paarl Grand", href: "/guesthouses/paarl-grand" },
+      { name: "The Kathu Grand", href: "/guesthouses/kathu-grand" }
     ]
   }
 ];
