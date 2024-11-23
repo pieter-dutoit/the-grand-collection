@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "@nextui-org/react";
+import Link from "next/link";
 
 import image_01 from "./images/overview-01.jpg";
 import image_02 from "./images/overview-02.jpg";
@@ -98,6 +99,8 @@ export default function Overview(): JSX.Element {
                 color='primary'
                 variant='bordered'
                 className='mt-2 flex flex-row items-center'
+                as={Link}
+                href='#properties'
               >
                 Find Your Perfect Stay
               </Button>
