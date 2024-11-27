@@ -22,9 +22,8 @@ export function Hero() {
             objectFit: "cover",
             objectPosition: "center"
           }}
-          quality={70}
           fill
-          sizes='100vw'
+          sizes='50vw'
           className='block lg:hidden'
         />
         {/* Desktop background image */}
@@ -36,9 +35,8 @@ export function Hero() {
             objectFit: "cover",
             objectPosition: "center"
           }}
-          quality={80}
           fill
-          sizes='100vw'
+          sizes='80vw'
           className='hidden lg:block'
           priority
         />
