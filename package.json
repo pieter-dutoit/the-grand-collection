@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.8",
+    "embla-carousel": "^8.5.1",
     "framer-motion": "^11.11.17",
     "lucide-react": "^0.460.0",
     "motion": "^11.11.17",

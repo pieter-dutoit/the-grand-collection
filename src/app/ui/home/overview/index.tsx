@@ -39,7 +39,7 @@ export default function Overview(): JSX.Element {
             every visit unforgettable.
           </p>
 
-          <ul className='grid grid-cols-2 gap-4'>
+          <ul className='grid h-fit grid-cols-2 gap-4'>
             <li className='relative col-span-2 aspect-[3/1] overflow-hidden rounded-md'>
               <Image
                 fill
@@ -50,7 +50,8 @@ export default function Overview(): JSX.Element {
                 placeholder='blur'
                 src={image_03}
                 alt=''
-                loading='lazy'
+                sizes='(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30rem'
+                priority
               />
             </li>
             <li className='relative col-span-1 aspect-[2/1] overflow-hidden rounded-md'>
@@ -63,7 +64,8 @@ export default function Overview(): JSX.Element {
                 placeholder='blur'
                 src={image_02}
                 alt=''
-                loading='lazy'
+                sizes='(max-width: 768px) 45vw, (max-width: 1024px) 20vw, 15rem'
+                priority
               />
             </li>
             <li className='relative col-span-1 aspect-[2/1] overflow-hidden rounded-md'>
@@ -76,7 +78,8 @@ export default function Overview(): JSX.Element {
                 placeholder='blur'
                 src={image_01}
                 alt=''
-                loading='lazy'
+                sizes='(max-width: 768px) 45vw, (max-width: 1024px) 20vw, 15rem'
+                priority
               />
             </li>
           </ul>
