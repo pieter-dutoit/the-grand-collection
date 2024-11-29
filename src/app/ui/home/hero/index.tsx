@@ -23,7 +23,7 @@ export function Hero() {
             objectPosition: "center"
           }}
           fill
-          sizes='50vw'
+          sizes='70vw'
           className='block lg:hidden'
         />
         {/* Desktop background image */}
@@ -36,7 +36,7 @@ export function Hero() {
             objectPosition: "center"
           }}
           fill
-          sizes='80vw'
+          sizes='100vw'
           className='hidden lg:block'
           priority
         />
