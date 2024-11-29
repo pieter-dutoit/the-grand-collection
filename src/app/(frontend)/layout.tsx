@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-import { Providers } from "@/app/providers";
+import { Providers } from "@/app/(frontend)/providers";
 import { redhat } from "@/fonts/index";
 import { Navbar } from "@/ui/navbar";
 import { Footer } from "@/ui/footer";
