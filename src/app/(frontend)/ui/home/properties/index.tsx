@@ -1,16 +1,16 @@
-import Image, { StaticImageData } from "next/image";
+import Image, { StaticImageData } from 'next/image';
 
-import image_01 from "../overview/images/overview-01.jpg";
-import image_02 from "../overview/images/overview-02.jpg";
-import image_03 from "../overview/images/overview-03.jpg";
+import image_01 from '../overview/images/overview-01.jpg';
+import image_02 from '../overview/images/overview-02.jpg';
+import image_03 from '../overview/images/overview-03.jpg';
 
 const properties = [
   {
-    name: "The Paarl Grand",
+    name: 'The Paarl Grand',
     images: [image_01, image_02, image_03]
   },
   {
-    name: "The Kathu Grand",
+    name: 'The Kathu Grand',
     images: [image_01, image_02, image_03]
   }
 ];
@@ -22,15 +22,15 @@ function PropertyPreview({
 }: {
   name: string;
   images: StaticImageData[];
-  alignment: "start" | "end";
+  alignment: 'start' | 'end';
 }): JSX.Element {
-  const alignmentClass = alignment === "start" ? "self-start" : "self-end";
+  const alignmentClass = alignment === 'start' ? 'self-start' : 'self-end';
 
   return (
     <div className={`flex flex-col gap-4 ${alignmentClass}`}>
       <div className='grid grid-cols-3 bg-green-400'>
         {images.map((src, index) => {
-          return <Image key={"img" + index} src={src} alt='' />;
+          return <Image key={'img' + index} src={src} alt='' />;
         })}
       </div>
       <div className='bg-blue-500'>
@@ -52,7 +52,7 @@ export default function Properties(): JSX.Element {
             <PropertyPreview
               key={name}
               name={name}
-              alignment={index % 2 === 0 ? "start" : "end"}
+              alignment={index % 2 === 0 ? 'start' : 'end'}
               images={images}
             />
           ))}

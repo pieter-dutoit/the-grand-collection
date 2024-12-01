@@ -1,12 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@nextui-org/react";
-import { ChevronDown, MapPin } from "lucide-react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@nextui-org/react';
+import { ChevronDown, MapPin } from 'lucide-react';
 
-import { FullLogo } from "@/ui/logo";
+import { FullLogo } from '@/ui/logo';
 
-import desktopBg from "./images/home-gallery-01.jpg";
-import mobileBg from "./images/mobile-gallery-01.jpg";
+// import desktopBg from './images/home-gallery-01.jpg';
+// import mobileBg from './images/mobile-gallery-01.jpg';
 
 export function Hero() {
   return (
@@ -14,13 +14,12 @@ export function Hero() {
       <div className='absolute inset-0 size-full'>
         {/* Mobile background image */}
         <Image
-          src={mobileBg}
-          placeholder='blur'
+          src='/api/media/file/home-gallery-01.webp'
           alt='Hero image'
           priority
           style={{
-            objectFit: "cover",
-            objectPosition: "center"
+            objectFit: 'cover',
+            objectPosition: 'center'
           }}
           fill
           sizes='70vw'
@@ -28,12 +27,11 @@ export function Hero() {
         />
         {/* Desktop background image */}
         <Image
-          src={desktopBg}
-          placeholder='blur'
+          src='/api/media/file/home-gallery-01.webp'
           alt='Hero image'
           style={{
-            objectFit: "cover",
-            objectPosition: "center"
+            objectFit: 'cover',
+            objectPosition: 'center'
           }}
           fill
           sizes='100vw'

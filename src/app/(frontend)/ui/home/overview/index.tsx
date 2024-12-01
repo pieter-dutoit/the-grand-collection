@@ -1,23 +1,23 @@
-import Image from "next/image";
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
+import Image from 'next/image';
+import { Button } from '@nextui-org/react';
+import Link from 'next/link';
 
-import image_01 from "./images/overview-01.jpg";
-import image_02 from "./images/overview-02.jpg";
-import image_03 from "./images/overview-03.jpg";
+import image_01 from './images/overview-01.jpg';
+import image_02 from './images/overview-02.jpg';
+import image_03 from './images/overview-03.jpg';
 
 const features: { title: string; description: string }[] = [
   {
-    title: "Perfect for Business & Leisure",
-    description: "Tailored stays for every traveler"
+    title: 'Perfect for Business & Leisure',
+    description: 'Tailored stays for every traveler'
   },
   {
-    title: "Exceptional Locations",
-    description: "Close to iconic attractions and scenic beauty"
+    title: 'Exceptional Locations',
+    description: 'Close to iconic attractions and scenic beauty'
   },
   {
-    title: "Unparalleled Comfort",
-    description: "World-class service and amenities"
+    title: 'Unparalleled Comfort',
+    description: 'World-class service and amenities'
   }
 ];
 
@@ -27,7 +27,7 @@ export default function Overview(): JSX.Element {
       <div className='mx-auto max-w-screen-lg p-6 md:py-16'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
           <h2 className='whitespace-normal text-4xl font-light capitalize text-foreground-600 sm:text-5xl md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
-            Experience{"\n"}South Africa’s{"\n"}Finest Luxury Guesthouses
+            Experience{'\n'}South Africa’s{'\n'}Finest Luxury Guesthouses
           </h2>
           <p className='text-justify text-lg font-light leading-normal tracking-wide lg:leading-loose'>
             At The Grand Collection, we offer a selection of carefully curated
@@ -44,8 +44,8 @@ export default function Overview(): JSX.Element {
               <Image
                 fill
                 style={{
-                  objectFit: "cover",
-                  objectPosition: "center"
+                  objectFit: 'cover',
+                  objectPosition: 'center'
                 }}
                 placeholder='blur'
                 src={image_03}
@@ -58,8 +58,8 @@ export default function Overview(): JSX.Element {
               <Image
                 fill
                 style={{
-                  objectFit: "cover",
-                  objectPosition: "center"
+                  objectFit: 'cover',
+                  objectPosition: 'center'
                 }}
                 placeholder='blur'
                 src={image_02}
@@ -72,8 +72,8 @@ export default function Overview(): JSX.Element {
               <Image
                 fill
                 style={{
-                  objectFit: "cover",
-                  objectPosition: "center"
+                  objectFit: 'cover',
+                  objectPosition: 'center'
                 }}
                 placeholder='blur'
                 src={image_01}

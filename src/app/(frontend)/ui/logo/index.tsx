@@ -51,19 +51,19 @@ export function MinimalLogo({ width = 40 }: { width?: number }): JSX.Element {
         <path
           id='path6'
           style={{
-            fill: "none",
-            stroke: "currentColor",
+            fill: 'none',
+            stroke: 'currentColor',
             strokeWidth: 1.32292,
-            strokeDasharray: "none"
+            strokeDasharray: 'none'
           }}
           d='m 67.51844,106.30664 c -1.494462,3.0872 -4.657164,5.21628 -8.317139,5.21628 -3.669707,0 -6.839492,-2.14042 -8.329024,-5.24093 m -0.906038,-3.99413 c -2e-6,-5.100384 4.134679,-9.235063 9.235062,-9.235063 5.100384,0 9.235065,4.134678 9.235063,9.235063'
         />
         <path
           style={{
-            fill: "none",
-            stroke: "currentColor",
+            fill: 'none',
+            stroke: 'currentColor',
             strokeWidth: 1.32292,
-            strokeDasharray: "none",
+            strokeDasharray: 'none',
             strokeOpacity: 1
           }}
           d='M 45.027113,104.16245 H 73.375491'
