@@ -1,15 +1,15 @@
-import "@/styles/globals.css";
+import '@/styles/globals.css';
 
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import { Providers } from "@/app/providers";
-import { redhat } from "@/fonts/index";
-import { Navbar } from "@/ui/navbar";
-import { Footer } from "@/ui/footer";
+import { Providers } from '@/app/(frontend)/providers';
+import { redhat } from '@/fonts/index';
+import { Navbar } from '@/ui/navbar';
+import { Footer } from '@/ui/footer';
 
 export const metadata = {
-  title: "The Grand Collection",
-  description: "A collection of grand things."
+  title: 'The Grand Collection',
+  description: 'A collection of grand things.'
 };
 
 export default function RootLayout({

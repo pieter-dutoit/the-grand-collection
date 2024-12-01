@@ -21,11 +21,12 @@
     "baseUrl": "src/",
     "paths": {
       "@/app/*": ["app/*"],
-      "@/config/*": ["config/*"],
-      "@/ui/*": ["app/ui/*"],
-      "@/styles/*": ["app/styles/*"],
+      "@/config/*": ["app/config/(frontend)*"],
+      "@/ui/*": ["app/(frontend)/ui/*"],
+      "@/styles/*": ["app/(frontend)/styles/*"],
       "@/lib/*": ["lib/*"],
-      "@/fonts/*": ["fonts/*"]
+      "@/fonts/*": ["fonts/*"],
+      "@payload-config": ["payload/payload.config.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
