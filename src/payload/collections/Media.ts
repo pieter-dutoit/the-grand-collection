@@ -1,9 +1,14 @@
 import type { CollectionConfig } from 'payload';
 
+import { isLoggedIn } from '@/payload/access/isLoggedIn';
+
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-    read: () => true
+    read: () => true,
+    create: isLoggedIn,
+    update: isLoggedIn,
+    delete: isLoggedIn
   },
   fields: [
     {
@@ -13,6 +18,33 @@ export const Media: CollectionConfig = {
     }
   ],
   upload: {
+    adminThumbnail: 'thumbnail',
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        fit: 'cover',
+        height: 200,
+        width: 200,
+        formatOptions: {
+          format: 'webp',
+          options: {
+            quality: 75
+          }
+        }
+      }
+      // {
+      //   name: 'mobile',
+      //   fit: 'cover',
+      //   height: 2340,
+      //   width: 1080,
+      //   formatOptions: {
+      //     format: 'webp',
+      //     options: {
+      //       quality: 80
+      //     }
+      //   }
+      // }
+    ],
     resizeOptions: {
       width: 3840,
       height: 2160,
@@ -22,7 +54,7 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: 'webp',
       options: {
-        quality: 80
+        quality: 90
       }
     },
     mimeTypes: ['image/*']

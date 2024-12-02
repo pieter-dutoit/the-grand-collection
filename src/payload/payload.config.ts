@@ -4,8 +4,8 @@ import sharp from 'sharp';
 import { buildConfig } from 'payload';
 import { fileURLToPath } from 'url';
 
-import { mongooseAdapter } from '@payloadcms/db-mongodb';
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
+import { postgresAdapter } from '@payloadcms/db-postgres';
+import { s3Storage } from '@payloadcms/storage-s3';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 
 import { Users } from './collections/Users';
@@ -27,17 +27,29 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts')
   },
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || ''
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || ''
+    }
   }),
   sharp,
   plugins: [
-    vercelBlobStorage({
-      enabled: true,
+    s3Storage({
       collections: {
-        media: true
+        media: {
+          prefix: 'media'
+        }
       },
-      token: process.env.BLOB_READ_WRITE_TOKEN || ''
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        forcePathStyle: true,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || ''
+        },
+        region: process.env.S3_REGION,
+        endpoint: process.env.S3_ENDPOINT
+      }
     })
   ],
   upload: {
