@@ -30,7 +30,8 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || ''
-    }
+    },
+    migrationDir: './src/payload/migrations'
   }),
   sharp,
   plugins: [

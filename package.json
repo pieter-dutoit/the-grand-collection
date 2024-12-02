@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prettier --write . && next build",
+    "build": "payload migrate && next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "prepare": "husky",
-    "generate:types": "PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload generate:types"
+    "generate:types": "PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload generate:types",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload"
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.8",
@@ -21,6 +22,7 @@
     "@payloadcms/storage-s3": "^3.2.2",
     "@payloadcms/storage-vercel-blob": "^3.2.2",
     "@vercel/speed-insights": "^1.1.0",
+    "cross-env": "^7.0.3",
     "embla-carousel": "^8.5.1",
     "framer-motion": "^11.11.17",
     "graphql": "^16.8.1",

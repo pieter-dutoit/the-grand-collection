@@ -1,10 +1,34 @@
 # How to Contribute
 
+Follow these steps:
+
+1. For the [repository](https://github.com/pieter-dutoit/the-grand-collection) and clone the fork to your local environment.
+2. Create a feature branch, following conventional commit guidelines (see below).
+3. Commit your work, and create migrations if changes were made to payload collections (see below).
+
+## Environment Variables
+
+```env
+PAYLOAD_SECRET=
+DATABASE_URI=
+S3_BUCKET=
+S3_ACCESS_KEY_ID=
+S3_SECRET_ACCESS_KEY=
+S3_REGION=
+S3_ENDPOINT=
+```
+
+## Payload CMS Migrations
+
+[Explained in more detail here](https://payloadcms.com/docs/database/migrations#when-to-run-migrations)
+
+After making changes to any collections, and before pushing to GitHub, follow these steps:
+
+1. Create a migration file: `pnpm payload migrate:create`
+
+2. Commit and push. Migrations are during deployment.
+
 ## Setting Up the Development Environment
-
-1. Clone the repository
-
-## Coding Style and Guidelines
 
 ### Recommended VSCode extensions
 
@@ -25,12 +49,6 @@ Follow the conventional commits specification for your commit messages. Common e
 - `test: add unit tests for user service`
 - `chore: update dependencies`
 - `BREAKING CHANGE: remove api route`
-
-## How to Submit Issues or Feature Requests
-
-## How to Fork, Clone, and Create Pull Requests
-
-## Testing Instructions
 
 ## Resources
 
