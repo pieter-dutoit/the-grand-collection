@@ -10,13 +10,15 @@
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "prepare": "husky",
-    "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload"
+    "generate:types": "PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload generate:types"
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.8",
     "@payloadcms/db-mongodb": "^3.2.2",
+    "@payloadcms/db-postgres": "^3.2.2",
     "@payloadcms/next": "^3.2.2",
     "@payloadcms/richtext-lexical": "^3.2.2",
+    "@payloadcms/storage-s3": "^3.2.2",
     "@payloadcms/storage-vercel-blob": "^3.2.2",
     "@vercel/speed-insights": "^1.1.0",
     "embla-carousel": "^8.5.1",

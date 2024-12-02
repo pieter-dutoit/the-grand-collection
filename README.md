@@ -24,3 +24,4 @@ Open [http://localhost:3000](http://localhost:3000)
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Theme Generator](https://www.realtimecolors.com/?colors=2e2e2e-f3f3f1-6c705c-cdc7b2-517671&fonts=Inter-Inter)
+- [Payload Access Control](https://github.com/payloadcms/access-control-demo)
