@@ -14,6 +14,7 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
+      label: 'Brief image description (for SEO)',
       required: true
     }
   ],

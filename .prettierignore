@@ -16,4 +16,4 @@ docs
 pnpm-lock.yaml
 src/app/(payload)/*
 src/app/(payload)/**/*
-src/payload/**/*
+src/payload/migrations/**/*

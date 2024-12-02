@@ -22,6 +22,8 @@ S3_ENDPOINT=
 
 [Explained in more detail here](https://payloadcms.com/docs/database/migrations#when-to-run-migrations)
 
+**NB: In dev mode, Payload applies collection changes automatically.** To avoid unintentional table or data loss, always connect to a **testing database when editing collections in dev mode**.
+
 After making changes to any collections, and before pushing to GitHub, follow these steps:
 
 1. Create a migration file: `pnpm payload migrate:create`
