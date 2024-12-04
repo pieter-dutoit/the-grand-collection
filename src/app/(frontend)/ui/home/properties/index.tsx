@@ -28,7 +28,7 @@ function PropertyPreview({
 
   return (
     <div className={`flex flex-col gap-4 ${alignmentClass}`}>
-      <div className='grid grid-cols-3 bg-green-400'>
+      <div className='bg-green-400 grid grid-cols-3'>
         {images.map((src, index) => {
           return <Image key={'img' + index} src={src} alt='' />;
         })}
@@ -42,9 +42,9 @@ function PropertyPreview({
 
 export default function Properties(): JSX.Element {
   return (
-    <section id='properties' className='w-full dark:bg-foreground-100'>
+    <section id='properties' className='dark:bg-foreground-100 w-full'>
       <div className='mx-auto max-w-screen-lg p-6 md:py-16'>
-        <h2 className='whitespace-normal text-center text-2xl font-light capitalize text-foreground-600 sm:text-3xl md:whitespace-pre-wrap md:leading-tight lg:text-4xl lg:leading-tight'>
+        <h2 className='text-foreground-600 whitespace-normal text-center text-2xl font-light capitalize sm:text-3xl md:whitespace-pre-wrap md:leading-tight lg:text-4xl lg:leading-tight'>
           Discover Unique Stays
         </h2>
         <div className='flex flex-col gap-5'>
