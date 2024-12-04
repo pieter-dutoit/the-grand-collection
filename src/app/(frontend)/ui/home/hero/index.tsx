@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from '@nextui-org/react';
-import { ChevronDown, MapPin } from 'lucide-react';
+// import { Button } from '@nextui-org/react';
+import {
+  ChevronDown
+  // MapPin
+} from 'lucide-react';
 
 import { FullLogo } from '@/ui/logo';
 
@@ -10,7 +13,7 @@ import { FullLogo } from '@/ui/logo';
 
 export function Hero() {
   return (
-    <section className='relative h-[75vh] max-h-[40rem] w-screen bg-slate-800 sm:h-[calc(100vh_-_4rem)] sm:max-h-none'>
+    <section className='bg-slate-800 relative h-[75vh] max-h-[40rem] w-screen sm:h-[calc(100vh_-_4rem)] sm:max-h-none'>
       <div className='absolute inset-0 size-full'>
         {/* Mobile background image */}
         <Image
@@ -42,12 +45,12 @@ export function Hero() {
         <div className='absolute inset-0 flex flex-col items-center justify-center p-3'>
           <FullLogo className='w-72 md:w-96 lg:w-[500px]' />
 
-          <h1 className='mx-auto mt-8 max-w-screen-lg px-6 text-center text-medium text-white drop-shadow-sm md:text-lg lg:text-xl'>
+          <h1 className='text-medium text-white mx-auto mt-8 max-w-screen-lg px-6 text-center drop-shadow-sm md:text-lg lg:text-xl'>
             Luxurious Guesthouses Across South Africa – Unique Stays for Every
             Traveler
           </h1>
 
-          <Button
+          {/* <Button
             size='lg'
             color='secondary'
             variant='shadow'
@@ -57,9 +60,9 @@ export function Hero() {
           >
             <MapPin />
             Explore Our Locations
-          </Button>
+          </Button> */}
 
-          <Button
+          {/* <Button
             color='secondary'
             variant='shadow'
             className='mt-8 flex flex-row items-center sm:hidden'
@@ -68,14 +71,14 @@ export function Hero() {
           >
             <MapPin />
             Explore Our Locations
-          </Button>
+          </Button> */}
 
           <Link
             href='#welcome'
             className='absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center sm:flex'
           >
             <span className='text-white'>Learn More</span>
-            <ChevronDown className='size-12 animate-pulse text-white' />
+            <ChevronDown className='text-white size-12 animate-pulse' />
           </Link>
         </div>
       </div>

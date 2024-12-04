@@ -1,11 +1,10 @@
-import '@/styles/globals.css';
+import '@/app/globals.css';
 
-import { SpeedInsights } from '@vercel/speed-insights/next';
+// import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import { Providers } from '@/app/(frontend)/providers';
 import { redhat } from '@/fonts/index';
-import { Navbar } from '@/ui/navbar';
-import { Footer } from '@/ui/footer';
+// import { Navbar } from '@/ui/navbar';
+// import { Footer } from '@/ui/footer';
 
 export const metadata = {
   title: 'The Grand Collection',
@@ -24,12 +23,12 @@ export default function RootLayout({
       className={`${redhat.variable} scroll-smooth antialiased`}
     >
       <body>
-        <Providers>
-          <Navbar />
-          {children}
-          <Footer />
-          <SpeedInsights />
-        </Providers>
+        <h1 className='text-3xl text-olive-400'>{metadata.title}</h1>
+        <p>{metadata.description}</p>
+        {/* <Navbar /> */}
+        {children}
+        {/* <Footer /> */}
+        {/* <SpeedInsights /> */}
       </body>
     </html>
   );

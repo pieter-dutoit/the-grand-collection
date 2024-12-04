@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { Button } from '@nextui-org/react';
-import Link from 'next/link';
+// import { Button } from '@nextui-org/react';
+// import Link from 'next/link';
 
 import image_01 from './images/overview-01.jpg';
 import image_02 from './images/overview-02.jpg';
@@ -23,10 +23,10 @@ const features: { title: string; description: string }[] = [
 
 export default function Overview(): JSX.Element {
   return (
-    <section id='welcome' className='w-full dark:bg-foreground-100'>
+    <section id='welcome' className='dark:bg-foreground-100 w-full'>
       <div className='mx-auto max-w-screen-lg p-6 md:py-16'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
-          <h2 className='whitespace-normal text-4xl font-light capitalize text-foreground-600 sm:text-5xl md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
+          <h2 className='text-foreground-600 whitespace-normal text-4xl font-light capitalize sm:text-5xl md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
             Experience{'\n'}South Africa’s{'\n'}Finest Luxury Guesthouses
           </h2>
           <p className='text-justify text-lg font-light leading-normal tracking-wide lg:leading-loose'>
@@ -88,16 +88,16 @@ export default function Overview(): JSX.Element {
             {features.map(({ title, description }) => {
               return (
                 <li key={title} className='mb-3'>
-                  <h3 className='text-2xl font-semibold text-secondary-600'>
+                  <h3 className='text-secondary-600 text-2xl font-semibold'>
                     {title}
                   </h3>
-                  <p className='mt-2 text-base font-light text-foreground-600'>
+                  <p className='text-foreground-600 mt-2 text-base font-light'>
                     {description}
                   </p>
                 </li>
               );
             })}
-            <li>
+            {/* <li>
               <Button
                 color='primary'
                 variant='bordered'
@@ -107,7 +107,7 @@ export default function Overview(): JSX.Element {
               >
                 Find Your Perfect Stay
               </Button>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

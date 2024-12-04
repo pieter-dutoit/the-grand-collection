@@ -32,7 +32,7 @@ export interface Config {
       | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {
     'home-page': HomePage;
@@ -72,7 +72,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   roles?: ('admin' | 'editor')[] | null;
   updatedAt: string;
   createdAt: string;
@@ -90,7 +90,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   alt: string;
   prefix?: string | null;
   updatedAt: string;
@@ -120,20 +120,20 @@ export interface Media {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -143,10 +143,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -166,7 +166,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -258,15 +258,15 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "home-page".
  */
 export interface HomePage {
-  id: number;
+  id: string;
   hero?: {
-    background_image?: (number | null) | Media;
+    background_image?: (string | null) | Media;
     title?: string | null;
   };
   overview: {
     heading: string;
     description: string;
-    images?: (number | Media)[] | null;
+    images?: (string | Media)[] | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;

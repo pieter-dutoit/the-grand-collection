@@ -13,7 +13,7 @@ const OverviewFields: GroupField = {
     },
     {
       name: 'description',
-      type: 'text',
+      type: 'textarea',
       maxLength: 500,
       minLength: 50,
       label: 'Description (Ideally 50 to 300 characters for SEO)',
@@ -21,7 +21,7 @@ const OverviewFields: GroupField = {
     },
     {
       name: 'images',
-      type: 'relationship',
+      type: 'upload',
       relationTo: 'media',
       hasMany: true,
       label: 'Select 3 Images',

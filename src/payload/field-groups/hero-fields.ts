@@ -7,8 +7,7 @@ const HeroFields: GroupField = {
   fields: [
     {
       name: 'background_image',
-      type: 'relationship',
-      hasMany: false,
+      type: 'upload',
       relationTo: 'media',
       label: 'Select the Background Image'
     },
