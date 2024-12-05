@@ -4,6 +4,9 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     colors: {
+      white: '#ffffff',
+      black: '#000000',
+      transparent: 'transparent',
       olive: {
         50: '#f5f6f3',
         100: '#e8e8e3',
@@ -48,6 +51,15 @@ module.exports = {
         950: '#151e1e',
         DEFAULT: '#537974',
         dark: '#374e4c'
+      }
+    },
+    container: {
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem'
       }
     },
     extend: {
@@ -107,4 +119,4 @@ module.exports = {
     }
   },
   plugins: [require('tailwindcss-animate')]
-};
+}
