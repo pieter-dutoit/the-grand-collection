@@ -1,20 +1,20 @@
-import path from 'path';
-import sharp from 'sharp';
+import path from 'path'
+import sharp from 'sharp'
 
-import { buildConfig } from 'payload';
-import { fileURLToPath } from 'url';
+import { buildConfig } from 'payload'
+import { fileURLToPath } from 'url'
 
-import { postgresAdapter } from '@payloadcms/db-postgres';
-import { s3Storage } from '@payloadcms/storage-s3';
-import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { postgresAdapter } from '@payloadcms/db-postgres'
+import { s3Storage } from '@payloadcms/storage-s3'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
-import { Users } from './collections/Users';
-import { Media } from './collections/Media';
+import { Users } from './collections/Users'
+import { Media } from './collections/Media'
 
-import { HomePage } from './globals/HomePage';
+import { HomePage } from './globals/HomePage'
 
-const filename = fileURLToPath(import.meta.url);
-const dirname = path.dirname(filename);
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
@@ -62,4 +62,4 @@ export default buildConfig({
       fileSize: 10000000
     }
   }
-});
+})

@@ -1,10 +1,10 @@
-import Image from 'next/image';
+import Image from 'next/image'
 // import { Button } from '@nextui-org/react';
 // import Link from 'next/link';
 
-import image_01 from './images/overview-01.jpg';
-import image_02 from './images/overview-02.jpg';
-import image_03 from './images/overview-03.jpg';
+import image_01 from './images/overview-01.jpg'
+import image_02 from './images/overview-02.jpg'
+import image_03 from './images/overview-03.jpg'
 
 const features: { title: string; description: string }[] = [
   {
@@ -19,7 +19,7 @@ const features: { title: string; description: string }[] = [
     title: 'Unparalleled Comfort',
     description: 'World-class service and amenities'
   }
-];
+]
 
 export default function Overview(): JSX.Element {
   return (
@@ -95,7 +95,7 @@ export default function Overview(): JSX.Element {
                     {description}
                   </p>
                 </li>
-              );
+              )
             })}
             {/* <li>
               <Button
@@ -112,5 +112,5 @@ export default function Overview(): JSX.Element {
         </div>
       </div>
     </section>
-  );
+  )
 }

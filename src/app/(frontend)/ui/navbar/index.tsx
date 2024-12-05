@@ -1,12 +1,15 @@
 import 'server-only'
 
 import Link from 'next/link'
+import {
+  NavigationMenu,
+  NavigationMenuList
+} from '@/components/ui/navigation-menu'
 
+import MobileDrawer from './mobile-drawer'
+import NavOptions from './nav-options'
 import { CountryOutline, MinimalTextLogo } from '../logo'
-
-import MobileMenu from './mobile-menu'
-import MobileMenuContent from './mobile-menu/content'
-import DesktopMenu from './desktop-menu'
+import BookingOptions from './booking-options'
 
 export default function Navbar(): JSX.Element {
   return (
@@ -14,23 +17,30 @@ export default function Navbar(): JSX.Element {
       <div className='container mx-auto flex h-full items-center justify-between'>
         {/* Left content */}
         <div className='flex items-center'>
-          <MobileMenu>
-            <MobileMenuContent />
-          </MobileMenu>
+          <MobileDrawer>
+            <NavigationMenu orientation='vertical' className='[&>div]:w-full'>
+              <NavigationMenuList>
+                <NavOptions />
+              </NavigationMenuList>
+            </NavigationMenu>
+          </MobileDrawer>
 
           <Link href='/' aria-label='Home'>
             <MinimalTextLogo />
           </Link>
         </div>
 
-        {/* Center content */}
-        <DesktopMenu />
+        {/* Center content | Desktop menu */}
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavOptions className='hidden md:flex' />
+
+            <BookingOptions />
+          </NavigationMenuList>
+        </NavigationMenu>
 
         {/* Right content */}
-
-        <div>
-          <CountryOutline className='hidden sm:block' />
-        </div>
+        <CountryOutline className='hidden sm:block' />
       </div>
     </header>
   )

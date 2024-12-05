@@ -1,4 +1,4 @@
-import { GroupField } from 'payload';
+import { GroupField } from 'payload'
 
 const OverviewFields: GroupField = {
   name: 'overview',
@@ -27,12 +27,12 @@ const OverviewFields: GroupField = {
       label: 'Select 3 Images',
       validate: (value) => {
         if (!value || value.length !== 3) {
-          return 'You must select exactly 3 images.';
+          return 'You must select exactly 3 images.'
         }
-        return true;
+        return true
       }
     }
   ]
-};
+}
 
-export default OverviewFields;
+export default OverviewFields

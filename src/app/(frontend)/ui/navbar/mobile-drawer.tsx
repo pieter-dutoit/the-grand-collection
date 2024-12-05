@@ -24,6 +24,7 @@ export default function MobileMenu({
   const pathname = usePathname()
 
   useEffect(() => {
+    // Close menu when navigating to a new page
     if (isOpen) {
       setIsOpen(false)
     }
@@ -48,6 +49,8 @@ export default function MobileMenu({
           Use the navigation menu to explore the site.
         </SheetDescription>
 
+        {/* Nest child server component inside client component to keep the children server-rendered:
+        https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#supported-pattern-passing-server-components-to-client-components-as-props */}
         {children}
       </SheetContent>
     </Sheet>

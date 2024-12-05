@@ -1,32 +1,37 @@
+export type NavLabel = {
+  text: string
+  variant?: 'link' | 'button'
+}
+
 export type NavOption = {
   href?: string
-  label: string
+  label: NavLabel
   nested?: NavOption[]
 }
 
 export const navOptions: NavOption[] = [
   {
     href: '/',
-    label: 'Home'
+    label: { text: 'Home' }
   },
   {
     href: '/contact',
-    label: 'Contact Us'
+    label: { text: 'Contact Us' }
   },
   {
-    label: 'Our Locations',
+    label: { text: 'Our Locations' },
     nested: [
       {
         href: '/guesthouses/all',
-        label: 'All Guesthouses'
+        label: { text: 'All Guesthouses' }
       },
       {
         href: '/guesthouses/paarl-grand',
-        label: 'The Paarl Grand'
+        label: { text: 'The Paarl Grand' }
       },
       {
         href: '/guesthouses/kathu-grand',
-        label: 'The Kathu Grand'
+        label: { text: 'The Kathu Grand' }
       }
     ]
   }

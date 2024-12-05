@@ -1,6 +1,6 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig } from 'payload'
 
-import { isLoggedIn } from '@/payload/access/isLoggedIn';
+import { isLoggedIn } from '@/payload/access/isLoggedIn'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -60,4 +60,4 @@ export const Media: CollectionConfig = {
     },
     mimeTypes: ['image/*']
   }
-};
+}

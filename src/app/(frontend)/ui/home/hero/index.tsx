@@ -1,12 +1,12 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from 'next/image'
+import Link from 'next/link'
 // import { Button } from '@nextui-org/react';
 import {
   ChevronDown
   // MapPin
-} from 'lucide-react';
+} from 'lucide-react'
 
-import { FullLogo } from '@/ui/logo';
+import { FullLogo } from '@/ui/logo'
 
 // import desktopBg from './images/home-gallery-01.jpg';
 // import mobileBg from './images/mobile-gallery-01.jpg';
@@ -45,7 +45,7 @@ export function Hero() {
         <div className='absolute inset-0 flex flex-col items-center justify-center p-3'>
           <FullLogo className='w-72 md:w-96 lg:w-[500px]' />
 
-          <h1 className='text-medium text-white mx-auto mt-8 max-w-screen-lg px-6 text-center drop-shadow-sm md:text-lg lg:text-xl'>
+          <h1 className='text-medium mx-auto mt-8 max-w-screen-lg px-6 text-center text-white drop-shadow-sm md:text-lg lg:text-xl'>
             Luxurious Guesthouses Across South Africa – Unique Stays for Every
             Traveler
           </h1>
@@ -78,10 +78,10 @@ export function Hero() {
             className='absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center sm:flex'
           >
             <span className='text-white'>Learn More</span>
-            <ChevronDown className='text-white size-12 animate-pulse' />
+            <ChevronDown className='size-12 animate-pulse text-white' />
           </Link>
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 // import { useTheme } from 'next-themes';
 // import { Button } from '@nextui-org/react';
@@ -25,5 +25,5 @@ export function ThemeToggle() {
     // >
     //   {isMounted ? isLight ? <Moon size={20} /> : <Sun size={20} /> : null}
     // </Button>
-  );
+  )
 }

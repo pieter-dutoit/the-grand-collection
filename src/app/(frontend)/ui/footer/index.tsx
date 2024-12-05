@@ -1,9 +1,9 @@
-import { ThemeToggle } from '@/ui/theme-toggle';
+import { ThemeToggle } from '@/ui/theme-toggle'
 
 export function Footer() {
   return (
-    <footer className='bg-transparent fixed bottom-0 flex w-full justify-center'>
+    <footer className='fixed bottom-0 flex w-full justify-center bg-transparent'>
       <ThemeToggle />
     </footer>
-  );
+  )
 }

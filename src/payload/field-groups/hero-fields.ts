@@ -1,4 +1,4 @@
-import type { GroupField } from 'payload';
+import type { GroupField } from 'payload'
 
 const HeroFields: GroupField = {
   name: 'hero',
@@ -18,6 +18,6 @@ const HeroFields: GroupField = {
       minLength: 20
     }
   ]
-};
+}
 
-export default HeroFields;
+export default HeroFields
