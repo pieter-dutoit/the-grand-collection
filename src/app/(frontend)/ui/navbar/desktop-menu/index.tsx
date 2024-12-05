@@ -1,26 +1,36 @@
 import 'server-only'
 
-import DesktopMenuDropdown from './dropdown'
+import Link from 'next/link'
 
-import NavLink from '../nav-link'
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle
+} from '@/components/ui/navigation-menu'
+
+import DropdownWrapper from './dropdown-wrapper'
 import { NavOption, navOptions } from '../data'
 
 export default function DesktopMenu(): JSX.Element {
   return (
-    <nav aria-label='Desktop navigation menu' className='hidden md:block'>
-      <ul className='flex items-center gap-1 lg:gap-2 xl:gap-3'>
+    <NavigationMenu className='hidden md:flex'>
+      <NavigationMenuList>
         {navOptions.map(({ label, href, nested }: NavOption) => (
-          <li key={label}>
+          <NavigationMenuItem key={label}>
             {nested ? (
-              <>
-                <DesktopMenuDropdown label={label} options={nested} />
-              </>
+              <DropdownWrapper label={label} options={nested} />
             ) : (
-              <NavLink href={href} label={label} />
+              <Link href={href ?? '#'} legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  {label}
+                </NavigationMenuLink>
+              </Link>
             )}
-          </li>
+          </NavigationMenuItem>
         ))}
-      </ul>
-    </nav>
+      </NavigationMenuList>
+    </NavigationMenu>
   )
 }

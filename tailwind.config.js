@@ -60,6 +60,9 @@ module.exports = {
         lg: '4rem',
         xl: '5rem',
         '2xl': '6rem'
+      },
+      screens: {
+        '2xl': '1280px'
       }
     },
     extend: {

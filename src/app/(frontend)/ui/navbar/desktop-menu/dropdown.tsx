@@ -1,24 +1,29 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
+import Link from 'next/link'
 
-import { Button } from '@/components/ui/button'
+import {
+  NavigationMenuContent,
+  NavigationMenuLink,
+  navigationMenuTriggerStyle
+} from '@/components/ui/navigation-menu'
 
 import type { NavOption } from '../data'
-// import DesktopMenuDropdownContent from './dropdown-content'
 
 export default function DesktopMenuDropdown({
-  // options,
-  label
+  options
 }: {
   options: NavOption[]
-  label: string
 }): JSX.Element {
   return (
-    <Button variant='ghost' className='text-md w-full justify-start text-olive'>
-      {label}
-      <ChevronDown />
-      {/* <DesktopMenuDropdownContent options={options} /> */}
-    </Button>
+    <NavigationMenuContent>
+      {options.map(({ label, href }) => (
+        <Link key={href} href={href ?? '#'} legacyBehavior passHref>
+          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            {label}
+          </NavigationMenuLink>
+        </Link>
+      ))}
+    </NavigationMenuContent>
   )
 }

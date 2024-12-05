@@ -25,6 +25,7 @@
       "@/config/*": ["app/config/(frontend)*"],
       "@/ui/*": ["app/(frontend)/ui/*"],
       "@/components/*": ["components/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
       "@/fonts/*": ["fonts/*"],
       "@payload-config": ["payload/payload.config.ts"],
