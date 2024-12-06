@@ -33,18 +33,6 @@ export const Media: CollectionConfig = {
           }
         }
       }
-      // {
-      //   name: 'mobile',
-      //   fit: 'cover',
-      //   height: 2340,
-      //   width: 1080,
-      //   formatOptions: {
-      //     format: 'webp',
-      //     options: {
-      //       quality: 80
-      //     }
-      //   }
-      // }
     ],
     resizeOptions: {
       width: 3840,

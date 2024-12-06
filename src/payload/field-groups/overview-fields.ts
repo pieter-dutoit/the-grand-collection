@@ -1,4 +1,5 @@
 import { GroupField } from 'payload'
+import CTA from './call-to-action'
 
 const OverviewFields: GroupField = {
   name: 'overview',
@@ -24,6 +25,7 @@ const OverviewFields: GroupField = {
       type: 'upload',
       relationTo: 'media',
       hasMany: true,
+      required: true,
       label: 'Select 3 Images',
       validate: (value) => {
         if (!value || value.length !== 3) {
@@ -31,6 +33,38 @@ const OverviewFields: GroupField = {
         }
         return true
       }
+    },
+    {
+      name: 'features',
+      type: 'array',
+      label: 'Features List',
+      required: true,
+      minRows: 2,
+      maxRows: 5,
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Feature Title',
+          minLength: 3,
+          maxLength: 100,
+          required: true
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Feature Description',
+          minLength: 3,
+          maxLength: 200,
+          required: true
+        }
+      ]
+    },
+    {
+      name: 'cta_locations',
+      type: 'group',
+      label: 'Locations Button Details',
+      fields: CTA.fields
     }
   ]
 }

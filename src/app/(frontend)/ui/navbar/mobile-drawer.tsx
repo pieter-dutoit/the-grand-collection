@@ -28,6 +28,7 @@ export default function MobileMenu({
     if (isOpen) {
       setIsOpen(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   return (

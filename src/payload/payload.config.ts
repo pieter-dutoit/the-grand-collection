@@ -4,13 +4,12 @@ import sharp from 'sharp'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-
 import { HomePage } from './globals/HomePage'
 
 const filename = fileURLToPath(import.meta.url)
@@ -30,14 +29,9 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts')
   },
-  db: postgresAdapter({
-    idType: 'uuid',
-    pool: {
-      connectionString: process.env.DATABASE_URI || ''
-    },
-    migrationDir: './src/payload/migrations'
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || ''
   }),
-  sharp,
   plugins: [
     s3Storage({
       collections: {
@@ -57,6 +51,7 @@ export default buildConfig({
       }
     })
   ],
+  sharp,
   upload: {
     limits: {
       fileSize: 10000000

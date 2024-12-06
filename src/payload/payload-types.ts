@@ -259,14 +259,31 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: string
-  hero?: {
-    background_image?: (string | null) | Media
-    title?: string | null
+  hero: {
+    background_image: string | Media
+    title: string
+    cta_locations: {
+      cta_text: string
+      cta_link: string
+    }
+    cta_learn_more: {
+      cta_text: string
+      cta_link: string
+    }
   }
   overview: {
     heading: string
     description: string
-    images?: (string | Media)[] | null
+    images: (string | Media)[]
+    features: {
+      title: string
+      description: string
+      id?: string | null
+    }[]
+    cta_locations: {
+      cta_text: string
+      cta_link: string
+    }
   }
   updatedAt?: string | null
   createdAt?: string | null
@@ -281,6 +298,18 @@ export interface HomePageSelect<T extends boolean = true> {
     | {
         background_image?: T
         title?: T
+        cta_locations?:
+          | T
+          | {
+              cta_text?: T
+              cta_link?: T
+            }
+        cta_learn_more?:
+          | T
+          | {
+              cta_text?: T
+              cta_link?: T
+            }
       }
   overview?:
     | T
@@ -288,6 +317,19 @@ export interface HomePageSelect<T extends boolean = true> {
         heading?: T
         description?: T
         images?: T
+        features?:
+          | T
+          | {
+              title?: T
+              description?: T
+              id?: T
+            }
+        cta_locations?:
+          | T
+          | {
+              cta_text?: T
+              cta_link?: T
+            }
       }
   updatedAt?: T
   createdAt?: T
