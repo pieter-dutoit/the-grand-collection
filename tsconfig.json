@@ -20,10 +20,12 @@
     ],
     "baseUrl": "src/",
     "paths": {
+      "@/*": ["./*"],
       "@/app/*": ["app/*"],
       "@/config/*": ["app/config/(frontend)*"],
       "@/ui/*": ["app/(frontend)/ui/*"],
-      "@/styles/*": ["app/(frontend)/styles/*"],
+      "@/components/*": ["components/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
       "@/fonts/*": ["fonts/*"],
       "@payload-config": ["payload/payload.config.ts"],

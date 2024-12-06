@@ -1,50 +1,46 @@
-import Image, { StaticImageData } from 'next/image';
-
-import image_01 from '../overview/images/overview-01.jpg';
-import image_02 from '../overview/images/overview-02.jpg';
-import image_03 from '../overview/images/overview-03.jpg';
+import Image, { StaticImageData } from 'next/image'
 
 const properties = [
   {
     name: 'The Paarl Grand',
-    images: [image_01, image_02, image_03]
+    images: []
   },
   {
     name: 'The Kathu Grand',
-    images: [image_01, image_02, image_03]
+    images: []
   }
-];
+]
 
 function PropertyPreview({
   name,
   images,
   alignment
 }: {
-  name: string;
-  images: StaticImageData[];
-  alignment: 'start' | 'end';
+  name: string
+  images: StaticImageData[]
+  alignment: 'start' | 'end'
 }): JSX.Element {
-  const alignmentClass = alignment === 'start' ? 'self-start' : 'self-end';
+  const alignmentClass = alignment === 'start' ? 'self-start' : 'self-end'
 
   return (
     <div className={`flex flex-col gap-4 ${alignmentClass}`}>
-      <div className='grid grid-cols-3 bg-green-400'>
+      <div className='grid grid-cols-3'>
         {images.map((src, index) => {
-          return <Image key={'img' + index} src={src} alt='' />;
+          return <Image key={'img' + index} src={src} alt='' />
         })}
       </div>
-      <div className='bg-blue-500'>
+      <div>
         <h3>{name}</h3>
       </div>
     </div>
-  );
+  )
 }
 
 export default function Properties(): JSX.Element {
   return (
-    <section id='properties' className='w-full dark:bg-foreground-100'>
+    <section id='properties' className='w-full'>
       <div className='mx-auto max-w-screen-lg p-6 md:py-16'>
-        <h2 className='whitespace-normal text-center text-2xl font-light capitalize text-foreground-600 sm:text-3xl md:whitespace-pre-wrap md:leading-tight lg:text-4xl lg:leading-tight'>
+        <h2 className='whitespace-normal text-center text-2xl font-light capitalize sm:text-3xl md:whitespace-pre-wrap md:leading-tight lg:text-4xl lg:leading-tight'>
           Discover Unique Stays
         </h2>
         <div className='flex flex-col gap-5'>
@@ -59,5 +55,5 @@ export default function Properties(): JSX.Element {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig } from 'payload'
 
-import { isLoggedIn } from '@/payload/access/isLoggedIn';
+import { isLoggedIn } from '@/payload/access/isLoggedIn'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -14,6 +14,7 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
+      label: 'Brief image description (for SEO)',
       required: true
     }
   ],
@@ -32,18 +33,6 @@ export const Media: CollectionConfig = {
           }
         }
       }
-      // {
-      //   name: 'mobile',
-      //   fit: 'cover',
-      //   height: 2340,
-      //   width: 1080,
-      //   formatOptions: {
-      //     format: 'webp',
-      //     options: {
-      //       quality: 80
-      //     }
-      //   }
-      // }
     ],
     resizeOptions: {
       width: 3840,
@@ -54,9 +43,9 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: 'webp',
       options: {
-        quality: 90
+        quality: 80
       }
     },
     mimeTypes: ['image/*']
   }
-};
+}

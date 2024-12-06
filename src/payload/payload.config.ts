@@ -1,18 +1,19 @@
-import path from 'path';
-import sharp from 'sharp';
+import path from 'path'
+import sharp from 'sharp'
 
-import { buildConfig } from 'payload';
-import { fileURLToPath } from 'url';
+import { buildConfig } from 'payload'
+import { fileURLToPath } from 'url'
 
-import { postgresAdapter } from '@payloadcms/db-postgres';
-import { s3Storage } from '@payloadcms/storage-s3';
-import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { s3Storage } from '@payloadcms/storage-s3'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
-import { Users } from './collections/Users';
-import { Media } from './collections/Media';
+import { Users } from './collections/Users'
+import { Media } from './collections/Media'
+import { HomePage } from './globals/HomePage'
 
-const filename = fileURLToPath(import.meta.url);
-const dirname = path.dirname(filename);
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
@@ -21,18 +22,16 @@ export default buildConfig({
       baseDir: path.resolve(dirname)
     }
   },
+  globals: [HomePage],
   collections: [Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts')
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || ''
-    }
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || ''
   }),
-  sharp,
   plugins: [
     s3Storage({
       collections: {
@@ -52,9 +51,10 @@ export default buildConfig({
       }
     })
   ],
+  sharp,
   upload: {
     limits: {
       fileSize: 10000000
     }
   }
-});
+})

@@ -1,7 +1,7 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig } from 'payload'
 
-import { isAdmin, isAdminFieldLevel } from '../access/isAdmin';
-import { isAdminOrSelf } from '../access/isAdminOrSelf';
+import { isAdmin, isAdminFieldLevel } from '../access/isAdmin'
+import { isAdminOrSelf } from '../access/isAdminOrSelf'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -50,4 +50,4 @@ export const Users: CollectionConfig = {
       ]
     }
   ]
-};
+}

@@ -3,5 +3,5 @@ export default function ThePaarlGrand(): JSX.Element {
     <div>
       <h1>The Guesthouse Page</h1>
     </div>
-  );
+  )
 }

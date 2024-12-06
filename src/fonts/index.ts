@@ -1,4 +1,4 @@
-import localFont from 'next/font/local';
+import localFont from 'next/font/local'
 
 export const redhat = localFont({
   src: [
@@ -13,11 +13,11 @@ export const redhat = localFont({
   variable: '--font-redhat',
   display: 'swap',
   preload: true
-});
+})
 
-export const playball = localFont({
-  src: [{ path: './Playball-Regular.ttf' }],
-  variable: '--font-playball',
-  display: 'swap'
-  // preload: true
-});
+// export const playball = localFont({
+//   src: [{ path: './Playball-Regular.ttf' }],
+//   variable: '--font-playball',
+//   display: 'swap'
+//   // preload: true
+// });

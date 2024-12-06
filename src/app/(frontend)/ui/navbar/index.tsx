@@ -1,182 +1,47 @@
-'use client';
+import 'server-only'
 
-import NextLink from 'next/link';
-import React, { Fragment } from 'react';
-import { ChevronDown } from 'lucide-react';
-
+import Link from 'next/link'
 import {
-  Navbar as NextNavbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
-  Button,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem
-} from '@nextui-org/react';
+  NavigationMenu,
+  NavigationMenuList
+} from '@/components/ui/navigation-menu'
 
-import { CountryOutline, MinimalTextLogo } from '@/ui/logo';
+import MobileDrawer from './mobile-drawer'
+import NavOptions from './nav-options'
+import { CountryOutline, MinimalTextLogo } from '../logo'
+import BookingOptions from './booking-options'
 
-const linkStyle =
-  'bg-transparent font-normal min-w-0 p-0 m-0 text-medium text-default-700 data-[hover=true]:bg-transparent';
-
-const menuItems = [
-  { name: 'Home', href: '/' },
-  { name: 'Contact Us', href: '/contact' },
-  {
-    name: 'Our Locations',
-    dropdownItems: [
-      { name: 'All Guesthouses', href: '/guesthouses' },
-      { name: 'The Paarl Grand', href: '/guesthouses/paarl-grand' },
-      { name: 'The Kathu Grand', href: '/guesthouses/kathu-grand' }
-    ]
-  }
-];
-
-function CustomLink({
-  name,
-  href,
-  onClick
-}: {
-  name: string;
-  href: string;
-  onClick?: () => void;
-}): JSX.Element {
+export default function Navbar(): JSX.Element {
   return (
-    <Button
-      as={NextLink}
-      href={href}
-      onClick={onClick}
-      className={linkStyle}
-      disableRipple
-    >
-      {name}
-    </Button>
-  );
-}
+    <header className='sticky left-0 top-0 z-50 h-16 w-full border-b border-b-sage-100 bg-white'>
+      <div className='container mx-auto flex h-full items-center justify-between'>
+        {/* Left content */}
+        <div className='flex items-center'>
+          <MobileDrawer>
+            <NavigationMenu orientation='vertical' className='[&>div]:w-full'>
+              <NavigationMenuList>
+                <NavOptions />
+              </NavigationMenuList>
+            </NavigationMenu>
+          </MobileDrawer>
 
-export function Navbar(): JSX.Element {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-  const handleLinkClick = () => setIsMenuOpen(false);
-
-  return (
-    <NextNavbar
-      isBordered
-      isMenuOpen={isMenuOpen}
-      onMenuOpenChange={setIsMenuOpen}
-      className='bg-white dark:bg-background-50'
-    >
-      <NavbarContent>
-        {/* Mobile menu toggle */}
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          className='sm:hidden'
-        />
-        {/* Branding */}
-        <NavbarBrand>
-          <NextLink href='/'>
+          <Link href='/' aria-label='Home'>
             <MinimalTextLogo />
-          </NextLink>
-        </NavbarBrand>
-      </NavbarContent>
+          </Link>
+        </div>
 
-      {/* Desktop Menu */}
-      <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-        {menuItems.map(({ name, href, dropdownItems }) =>
-          dropdownItems ? (
-            <Dropdown key={name}>
-              <NavbarItem>
-                <DropdownTrigger>
-                  <Button
-                    disableRipple
-                    className={linkStyle}
-                    endContent={<ChevronDown />}
-                    variant='light'
-                  >
-                    {name}
-                  </Button>
-                </DropdownTrigger>
-              </NavbarItem>
-              <DropdownMenu aria-label={name}>
-                {dropdownItems.map(({ name, href }) => (
-                  <DropdownItem as={NextLink} key={name} href={href}>
-                    {name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          ) : (
-            <NavbarItem key={name}>
-              <CustomLink name={name} href={href} />
-            </NavbarItem>
-          )
-        )}
-        <Button
-          as={NextLink}
-          color='default'
-          href='#'
-          variant='solid'
-          className='font-semibold uppercase'
-        >
-          Book Now
-        </Button>
-      </NavbarContent>
+        {/* Center content | Desktop menu */}
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavOptions className='hidden md:flex' />
 
-      {/* Right-hand Content */}
-      <NavbarContent justify='end'>
-        <NavbarItem>
-          <Button
-            as={NextLink}
-            color='default'
-            href='#'
-            variant='solid'
-            className='font-semibold uppercase sm:hidden'
-          >
-            Book Now
-          </Button>
-        </NavbarItem>
+            <BookingOptions />
+          </NavigationMenuList>
+        </NavigationMenu>
 
-        <NavbarItem className='hidden sm:block'>
-          <CountryOutline />
-        </NavbarItem>
-
-        {/* Mobile Menu */}
-        <NavbarMenu>
-          {menuItems.map(({ name, href, dropdownItems }) =>
-            href ? (
-              <NavbarMenuItem key={name}>
-                <CustomLink name={name} href={href} onClick={handleLinkClick} />
-              </NavbarMenuItem>
-            ) : (
-              dropdownItems && (
-                <Fragment key={name}>
-                  <NavbarMenuItem className='font-bold text-primary-500'>
-                    <span>{name}</span>
-                  </NavbarMenuItem>
-                  <NavbarMenuItem className='ml-3'>
-                    <ul>
-                      {dropdownItems.map(({ name, href }) => (
-                        <NavbarMenuItem key={name}>
-                          <CustomLink
-                            name={name}
-                            href={href}
-                            onClick={handleLinkClick}
-                          />
-                        </NavbarMenuItem>
-                      ))}
-                    </ul>
-                  </NavbarMenuItem>
-                </Fragment>
-              )
-            )
-          )}
-        </NavbarMenu>
-      </NavbarContent>
-    </NextNavbar>
-  );
+        {/* Right content */}
+        <CountryOutline className='hidden sm:block' />
+      </div>
+    </header>
+  )
 }
