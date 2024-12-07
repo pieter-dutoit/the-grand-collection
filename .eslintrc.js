@@ -1,33 +1,33 @@
 module.exports = {
   root: true,
   extends: [
-    "next/core-web-vitals",
-    "plugin:tailwindcss/recommended",
-    "prettier"
+    'next/core-web-vitals',
+    'plugin:tailwindcss/recommended',
+    'prettier'
   ],
-  plugins: ["@typescript-eslint", "tailwindcss"],
+  plugins: ['@typescript-eslint', 'tailwindcss'],
   rules: {
-    "tailwindcss/classnames-order": "off"
+    'tailwindcss/classnames-order': 'off'
   },
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   overrides: [
     {
-      files: ["*.ts", "*.tsx"],
+      files: ['*.ts', '*.tsx'],
       parserOptions: {
-        project: ["./tsconfig.json"],
+        project: ['./tsconfig.json'],
         projectService: true,
         tsconfigRootDir: __dirname
       },
       extends: [
-        "next/core-web-vitals",
-        "plugin:tailwindcss/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier"
+        'next/core-web-vitals',
+        'plugin:tailwindcss/recommended',
+        'plugin:@typescript-eslint/recommended',
+        'prettier'
       ],
       rules: {
-        "tailwindcss/classnames-order": "off",
-        "@typescript-eslint/no-unused-expressions": [
-          "error",
+        'tailwindcss/classnames-order': 'off',
+        '@typescript-eslint/no-unused-expressions': [
+          'error',
           {
             allowShortCircuit: true,
             allowTernary: true,
@@ -37,4 +37,4 @@ module.exports = {
       }
     }
   ]
-};
+}

@@ -4,23 +4,37 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prettier --write . && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "generate:types": "PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload generate:types"
   },
   "dependencies": {
-    "@nextui-org/react": "^2.4.8",
+    "@next/bundle-analyzer": "^15.0.3",
+    "@payloadcms/db-mongodb": "^3.2.2",
+    "@payloadcms/next": "^3.2.2",
+    "@payloadcms/richtext-lexical": "^3.2.2",
+    "@payloadcms/storage-s3": "^3.2.2",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-navigation-menu": "^1.2.1",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@vercel/speed-insights": "^1.1.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "embla-carousel": "^8.5.1",
-    "framer-motion": "^11.11.17",
+    "graphql": "^16.8.1",
     "lucide-react": "^0.460.0",
-    "motion": "^11.11.17",
-    "next": "15.0.3",
-    "next-themes": "^0.4.3",
+    "next": "15.0.4",
+    "payload": "^3.2.2",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "server-only": "^0.0.1",
+    "sharp": "^0.33.5",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
@@ -30,6 +44,7 @@
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^8.14.0",
     "@typescript-eslint/parser": "^8.14.0",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.15.0",
     "eslint-config-next": "15.0.3",
     "eslint-config-prettier": "^9.1.0",
@@ -37,10 +52,10 @@
     "eslint-plugin-tailwindcss": "^3.17.5",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
-    "postcss": "^8",
+    "postcss": "^8.4.49",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^3.4.16",
     "typescript": "^5.6.3"
   }
 }
