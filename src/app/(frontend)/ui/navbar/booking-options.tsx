@@ -4,20 +4,30 @@ import {
 } from '@/components/ui/navigation-menu'
 
 import DropdownMenu from './dropdown-menu'
+import { buttonVariants } from '@/components/ui/button'
+import { twMerge } from 'tailwind-merge'
 
 export default function BookingOptions() {
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger>Book Now</NavigationMenuTrigger>
+      <NavigationMenuTrigger
+        overrideStyle
+        className={twMerge(
+          buttonVariants({ variant: 'default', colour: 'olive' }),
+          'font-semibold uppercase'
+        )}
+      >
+        Book Now
+      </NavigationMenuTrigger>
       <DropdownMenu
         options={[
           {
             label: { text: 'The Paarl Grand' },
-            href: '/book-now-paarl'
+            href: '/guesthouses/paarl-grand'
           },
           {
             label: { text: 'The Kathu Grand' },
-            href: '/book-now-kathu'
+            href: '/guesthouses/kathu-grand'
           }
         ]}
       />

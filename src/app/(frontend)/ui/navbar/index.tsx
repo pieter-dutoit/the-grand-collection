@@ -19,7 +19,7 @@ export default function Navbar(): JSX.Element {
         <div className='flex items-center'>
           <MobileDrawer>
             <NavigationMenu orientation='vertical' className='[&>div]:w-full'>
-              <NavigationMenuList>
+              <NavigationMenuList className='-ml-4 flex flex-col items-start space-x-0'>
                 <NavOptions />
               </NavigationMenuList>
             </NavigationMenu>
@@ -34,7 +34,6 @@ export default function Navbar(): JSX.Element {
         <NavigationMenu>
           <NavigationMenuList>
             <NavOptions className='hidden md:flex' />
-
             <BookingOptions />
           </NavigationMenuList>
         </NavigationMenu>

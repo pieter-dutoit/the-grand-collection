@@ -42,7 +42,7 @@ export default function MobileMenu({
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className='md:hidden'>
+      <SheetContent className='h-full bg-white/75 backdrop-blur-xl backdrop-saturate-150 md:hidden'>
         <SheetHeader className='sr-only'>
           <SheetTitle>Mobile Navigation Menu</SheetTitle>
         </SheetHeader>
