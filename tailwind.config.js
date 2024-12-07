@@ -10,12 +10,12 @@ module.exports = {
         lg: '4rem',
         xl: '5rem',
         '2xl': '6rem'
-      },
-      screens: {
-        '2xl': '1280px'
       }
     },
     extend: {
+      screens: {
+        '2xl': '1280px'
+      },
       backgroundImage: {
         'custom-gradient':
           'radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 90%)',

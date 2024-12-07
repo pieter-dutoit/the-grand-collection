@@ -6,10 +6,11 @@ import {
   NavigationMenuList
 } from '@/components/ui/navigation-menu'
 
+import { CountryOutline, MinimalTextLogo } from '../../ui/logos'
+
 import MobileDrawer from './mobile-drawer'
 import NavOptions from './nav-options'
-import { CountryOutline, MinimalTextLogo } from '../logo'
-import BookingOptions from './booking-options'
+import NavDropdown from './nav-options/nav-dropdown'
 
 export default function Navbar(): JSX.Element {
   return (
@@ -34,7 +35,19 @@ export default function Navbar(): JSX.Element {
         <NavigationMenu>
           <NavigationMenuList>
             <NavOptions className='hidden md:flex' />
-            <BookingOptions />
+            <NavDropdown
+              label='Book Now'
+              options={[
+                {
+                  label: { text: 'The Paarl Grand' },
+                  href: '/guesthouses/paarl-grand'
+                },
+                {
+                  label: { text: 'The Kathu Grand' },
+                  href: '/guesthouses/kathu-grand'
+                }
+              ]}
+            />
           </NavigationMenuList>
         </NavigationMenu>
 

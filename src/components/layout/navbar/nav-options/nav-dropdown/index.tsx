@@ -1,13 +1,21 @@
+import { twMerge } from 'tailwind-merge'
+
 import {
   NavigationMenuItem,
   NavigationMenuTrigger
 } from '@/components/ui/navigation-menu'
-
-import DropdownMenu from './dropdown-menu'
 import { buttonVariants } from '@/components/ui/button'
-import { twMerge } from 'tailwind-merge'
 
-export default function BookingOptions() {
+import DropdownMenu from '../dropdown-menu'
+import { NavOption } from '../../data'
+
+export default function NavDropdown({
+  options,
+  label
+}: {
+  label: string
+  options: NavOption[]
+}): JSX.Element {
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger
@@ -17,20 +25,9 @@ export default function BookingOptions() {
           'font-semibold uppercase'
         )}
       >
-        Book Now
+        {label}
       </NavigationMenuTrigger>
-      <DropdownMenu
-        options={[
-          {
-            label: { text: 'The Paarl Grand' },
-            href: '/guesthouses/paarl-grand'
-          },
-          {
-            label: { text: 'The Kathu Grand' },
-            href: '/guesthouses/kathu-grand'
-          }
-        ]}
-      />
+      <DropdownMenu options={options} />
     </NavigationMenuItem>
   )
 }

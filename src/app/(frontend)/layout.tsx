@@ -4,7 +4,7 @@ import '@/app/globals.css'
 
 import { redhat } from '@/fonts/index'
 
-import Navbar from '@/ui/navbar'
+import Navbar from '@/components/layout/navbar'
 // import { Navbar } from '@/ui/navbar';
 // import { Footer } from '@/ui/footer';
 

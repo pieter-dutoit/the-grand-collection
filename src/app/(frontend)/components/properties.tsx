@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from 'next/image'
+import ScrollAnchor from './scroll-anchor'
 
 const properties = [
   {
@@ -38,11 +39,15 @@ function PropertyPreview({
 
 export default function Properties(): JSX.Element {
   return (
-    <section id='properties' className='w-full'>
-      <div className='mx-auto max-w-screen-lg p-6 md:py-16'>
-        <h2 className='whitespace-normal text-center text-2xl font-light capitalize sm:text-3xl md:whitespace-pre-wrap md:leading-tight lg:text-4xl lg:leading-tight'>
+    <section className='relative w-full'>
+      <ScrollAnchor id='properties' />
+      <div className='container mx-auto py-8'>
+        <h2 className='whitespace-normal text-center text-3xl font-light capitalize text-gold-700 sm:text-3xl md:whitespace-pre-wrap md:leading-tight lg:text-4xl lg:leading-tight'>
           Discover Unique Stays
         </h2>
+        <p className='text-base'>
+          <em>View Our Featured Guesthouses</em>
+        </p>
         <div className='flex flex-col gap-5'>
           {properties.map(({ name, images }, index) => (
             <PropertyPreview

@@ -1,13 +1,13 @@
-import { Hero } from '@/ui/home/hero'
-import Overview from '@/ui/home/overview'
-import Properties from '@/ui/home/properties'
+import { Hero } from '@/app/(frontend)/components/hero'
+import Overview from '@/app/(frontend)/components/overview'
+// import Properties from '@/app/(frontend)/components/properties'
 
 export default function Home() {
   return (
     <main>
       <Hero />
       <Overview />
-      <Properties />
+      {/* <Properties /> */}
     </main>
   )
 }

@@ -8,7 +8,7 @@ import {
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
 
-import type { NavOption } from './data'
+import type { NavOption } from '../data'
 
 export default function DropdownMenu({
   options

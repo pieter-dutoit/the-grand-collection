@@ -10,7 +10,7 @@ import {
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
 
-import { NavLabel, NavOption } from './data'
+import { NavLabel, NavOption } from '../data'
 import useMediaQuery from '@/hooks/use-media-query'
 import Link from 'next/link'
 
