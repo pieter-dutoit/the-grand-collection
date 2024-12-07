@@ -2,11 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
-import ScrollAnchor from '@/ui/scroll-anchor'
+import ScrollAnchor from '@/app/(frontend)/components/scroll-anchor'
 import { buttonVariants } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
+import { Home } from 'lucide-react'
 
 export default async function Overview(): Promise<JSX.Element> {
   const data = await fetchHomePageData('overview')
@@ -21,17 +22,21 @@ export default async function Overview(): Promise<JSX.Element> {
   } = data
 
   return (
-    <section className='relative w-full'>
+    <section className='relative w-full bg-olive-50'>
       <ScrollAnchor id='overview' />
-      <div className='mx-auto max-w-screen-lg p-6 md:py-16'>
+      <div className='container mx-auto py-8'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
-          <h2 className='whitespace-normal text-4xl font-light capitalize sm:text-5xl md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
+          {/* Q1 */}
+          <h2 className='max-w-[80%] whitespace-normal text-4xl font-light capitalize text-olive-600 sm:text-5xl md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
             {heading}
           </h2>
-          <p className='text-justify text-lg font-light leading-normal tracking-wide lg:leading-loose'>
+
+          {/* Q2  */}
+          <p className='text-justify text-lg font-light leading-normal tracking-wide text-olive-700 lg:leading-loose'>
             {description}
           </p>
 
+          {/* Q3 */}
           <div className='h-fit w-full place-self-center'>
             <ul className='my-auto grid h-fit grid-cols-2 gap-4'>
               {images.map((image, index) => {
@@ -39,23 +44,27 @@ export default async function Overview(): Promise<JSX.Element> {
                 const { classes, sizes } =
                   index === 0
                     ? {
-                        classes:
-                          'relative col-span-2 aspect-[3/1] overflow-hidden rounded-md',
+                        classes: 'col-span-2 aspect-[3/1]',
                         sizes:
                           '(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30rem'
                       }
                     : {
-                        classes:
-                          'relative col-span-1 aspect-[2/1] overflow-hidden rounded-md',
+                        classes: 'col-span-1 aspect-[2/1]',
                         sizes:
                           '(max-width: 768px) 45vw, (max-width: 1024px) 20vw, 15rem'
                       }
 
                 return (
-                  <li key={url} className={classes}>
+                  <li
+                    key={url}
+                    className={twMerge(
+                      classes,
+                      'relative overflow-hidden rounded-md'
+                    )}
+                  >
                     <Image
                       fill
-                      className={twMerge(classes, 'object-cover object-center')}
+                      className='object-cover object-center'
                       src={url}
                       alt={alt}
                       sizes={sizes}
@@ -66,11 +75,14 @@ export default async function Overview(): Promise<JSX.Element> {
             </ul>
           </div>
 
+          {/* Q4 */}
           <ul className='flex flex-col items-center justify-center text-center'>
             {features.map(({ title, description }) => {
               return (
                 <li key={title} className='mb-3'>
-                  <h3 className='text-2xl font-semibold'>{title}</h3>
+                  <h3 className='text-xl font-semibold text-sage-600 md:text-2xl'>
+                    {title}
+                  </h3>
                   <p className='mt-2 text-base font-light'>{description}</p>
                 </li>
               )
@@ -78,11 +90,16 @@ export default async function Overview(): Promise<JSX.Element> {
             <li>
               <Link
                 className={twMerge(
-                  buttonVariants({ variant: 'outline' }),
+                  buttonVariants({
+                    variant: 'outline',
+                    colour: 'gold',
+                    size: 'lg'
+                  }),
                   'mt-2 flex flex-row items-center'
                 )}
                 href={cta_locations.cta_link}
               >
+                <Home />
                 {cta_locations.cta_text}
               </Link>
             </li>

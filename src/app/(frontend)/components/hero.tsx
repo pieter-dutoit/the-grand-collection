@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { ChevronDown, MapPin } from 'lucide-react'
+import { ChevronDown, MapPinHouse } from 'lucide-react'
 
-import { FullLogo } from '@/ui/logo'
+import { FullLogo } from '@/components/ui/logos'
 import { buttonVariants } from '@/components/ui/button'
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
@@ -36,12 +36,16 @@ export async function Hero(): Promise<JSX.Element> {
 
           <Link
             className={twMerge(
-              buttonVariants({ variant: 'secondary' }),
-              'mt-8 hidden sm:flex sm:flex-row sm:items-center'
+              buttonVariants({
+                variant: 'default',
+                colour: 'sage',
+                size: 'lg'
+              }),
+              'mt-8 flex flex-row items-center drop-shadow-xl'
             )}
             href={cta_locations.cta_link}
           >
-            <MapPin />
+            <MapPinHouse />
             {cta_locations.cta_text}
           </Link>
 

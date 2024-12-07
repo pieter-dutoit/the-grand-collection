@@ -8,8 +8,8 @@ import {
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
 
-import NestedNav from './nested-nav'
-import { NavOption, navOptions } from './data'
+import NestedOptions from './nested-options'
+import { NavOption, navOptions } from '../data'
 
 export default function NavOptions({
   className
@@ -19,7 +19,7 @@ export default function NavOptions({
   return navOptions.map(({ label, href, nested }: NavOption) => (
     <NavigationMenuItem key={label.text} className={className}>
       {nested ? (
-        <NestedNav label={label} options={nested} />
+        <NestedOptions label={label} options={nested} />
       ) : (
         <Link href={href ?? '#'} legacyBehavior passHref>
           <NavigationMenuLink className={navigationMenuTriggerStyle()}>

@@ -6,10 +6,11 @@ import {
   NavigationMenuList
 } from '@/components/ui/navigation-menu'
 
+import { CountryOutline, MinimalTextLogo } from '../../ui/logos'
+
 import MobileDrawer from './mobile-drawer'
 import NavOptions from './nav-options'
-import { CountryOutline, MinimalTextLogo } from '../logo'
-import BookingOptions from './booking-options'
+import NavDropdown from './nav-options/nav-dropdown'
 
 export default function Navbar(): JSX.Element {
   return (
@@ -19,7 +20,7 @@ export default function Navbar(): JSX.Element {
         <div className='flex items-center'>
           <MobileDrawer>
             <NavigationMenu orientation='vertical' className='[&>div]:w-full'>
-              <NavigationMenuList>
+              <NavigationMenuList className='-ml-4 flex flex-col items-start space-x-0'>
                 <NavOptions />
               </NavigationMenuList>
             </NavigationMenu>
@@ -34,8 +35,19 @@ export default function Navbar(): JSX.Element {
         <NavigationMenu>
           <NavigationMenuList>
             <NavOptions className='hidden md:flex' />
-
-            <BookingOptions />
+            <NavDropdown
+              label='Book Now'
+              options={[
+                {
+                  label: { text: 'The Paarl Grand' },
+                  href: '/guesthouses/paarl-grand'
+                },
+                {
+                  label: { text: 'The Kathu Grand' },
+                  href: '/guesthouses/kathu-grand'
+                }
+              ]}
+            />
           </NavigationMenuList>
         </NavigationMenu>
 

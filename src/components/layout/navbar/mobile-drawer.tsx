@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { AlignJustify, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -12,8 +13,6 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
-
-import { AlignJustify, X } from 'lucide-react'
 
 export default function MobileMenu({
   children
@@ -42,7 +41,7 @@ export default function MobileMenu({
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className='md:hidden'>
+      <SheetContent className='h-full bg-white/75 backdrop-blur-xl backdrop-saturate-150 md:hidden'>
         <SheetHeader className='sr-only'>
           <SheetTitle>Mobile Navigation Menu</SheetTitle>
         </SheetHeader>
