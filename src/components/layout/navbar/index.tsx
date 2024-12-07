@@ -6,7 +6,7 @@ import {
   NavigationMenuList
 } from '@/components/ui/navigation-menu'
 
-import { CountryOutline, MinimalTextLogo } from '../../ui/logos'
+import { CountryOutline, MinimalTextLogo } from '@/components/ui/logos'
 
 import MobileDrawer from './mobile-drawer'
 import NavOptions from './nav-options'

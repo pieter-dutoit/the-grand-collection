@@ -1,3 +1,6 @@
+'use client'
+
+import dynamic from 'next/dynamic'
 import { twMerge } from 'tailwind-merge'
 
 import {
@@ -6,8 +9,12 @@ import {
 } from '@/components/ui/navigation-menu'
 import { buttonVariants } from '@/components/ui/button'
 
-import DropdownMenu from '../dropdown-menu'
 import { NavOption } from '../../data'
+
+// Lazy load the dropdown menu to prevent it from being rendered on the server.
+const DropdownMenu = dynamic(() => import('../dropdown-menu'), {
+  ssr: false
+})
 
 export default function NavDropdown({
   options,
