@@ -1,16 +1,35 @@
 import 'server-only'
 
+import { twMerge } from 'tailwind-merge'
+
 import Link from 'next/link'
 import {
   NavigationMenu,
-  NavigationMenuList
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
 
-import { CountryOutline, MinimalTextLogo } from '../../ui/logos'
+import { CountryOutline, MinimalTextLogo } from '@/components/ui/logos'
 
 import MobileDrawer from './mobile-drawer'
-import NavOptions from './nav-options'
-import NavDropdown from './nav-options/nav-dropdown'
+import NavOptions from './components/nav-options'
+
+import { buttonVariants } from '@/components/ui/button'
+
+const booking_options = [
+  {
+    label: { text: 'The Paarl Grand' },
+    href: '/guesthouses/paarl-grand'
+  },
+  {
+    label: { text: 'The Kathu Grand' },
+    href: '/guesthouses/kathu-grand'
+  }
+]
 
 export default function Navbar(): JSX.Element {
   return (
@@ -35,19 +54,30 @@ export default function Navbar(): JSX.Element {
         <NavigationMenu>
           <NavigationMenuList>
             <NavOptions className='hidden md:flex' />
-            <NavDropdown
-              label='Book Now'
-              options={[
-                {
-                  label: { text: 'The Paarl Grand' },
-                  href: '/guesthouses/paarl-grand'
-                },
-                {
-                  label: { text: 'The Kathu Grand' },
-                  href: '/guesthouses/kathu-grand'
-                }
-              ]}
-            />
+
+            {/* Desktop & Mobile */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
+                overrideStyle
+                className={twMerge(
+                  buttonVariants({ variant: 'default', colour: 'olive' }),
+                  'font-semibold uppercase'
+                )}
+              >
+                Book Now
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                {booking_options.map(({ label, href }) => (
+                  <Link key={href} href={href ?? '#'} legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      {label.text}
+                    </NavigationMenuLink>
+                  </Link>
+                ))}
+              </NavigationMenuContent>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 

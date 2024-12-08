@@ -5,7 +5,7 @@ import '@/app/globals.css'
 import { redhat } from '@/fonts/index'
 
 import Navbar from '@/components/layout/navbar'
-// import { Navbar } from '@/ui/navbar';
+
 // import { Footer } from '@/ui/footer';
 
 export const metadata = {
@@ -19,11 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang='en'
-      suppressHydrationWarning
-      className={`${redhat.variable} scroll-smooth antialiased`}
-    >
+    <html lang='en' className={`${redhat.variable} scroll-smooth antialiased`}>
       <body>
         <Navbar />
         {children}
