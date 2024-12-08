@@ -1,8 +1,7 @@
-'use client'
-
-import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
 import {
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
@@ -11,39 +10,37 @@ import {
 } from '@/components/ui/navigation-menu'
 
 import { NavLabel, NavOption } from '../data'
-import useMediaQuery from '@/hooks/use-media-query'
-import Link from 'next/link'
 
-// Prevent the dropdown from being rendered on the server since it's only used on desktop.
-const DropdownMenu = dynamic(() => import('./dropdown-menu'), {
-  ssr: false
-})
-
-export default function NestedNav({
+export default function SubMenu({
   label,
   options
 }: {
   label: NavLabel
   options: NavOption[]
 }): JSX.Element | null {
-  // The purpose of this hook is to lazy load the dropdown on mobile devices.
-  // It's not for responsive design.
-  const isDesktop = useMediaQuery('(min-width: 768px)')
-
   return (
     <>
       {/* DESKTOP */}
       {/* Hide on mobile using CSS */}
       <NavigationMenuTrigger
         className='hidden md:flex'
-        aria-hidden={!isDesktop}
+        // aria-hidden={!isDesktop}
       >
         {label.text}
       </NavigationMenuTrigger>
 
       {/* Only render on desktop since it adversely affects mobile 
       performance (unused javascript + longer load time) */}
-      {isDesktop && <DropdownMenu options={options} />}
+
+      <NavigationMenuContent>
+        {options.map(({ label, href }) => (
+          <Link key={href} href={href ?? '#'} legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              {label.text}
+            </NavigationMenuLink>
+          </Link>
+        ))}
+      </NavigationMenuContent>
 
       {/* MOBILE */}
       {/* Hide in Desktop using CSS */}
