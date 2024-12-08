@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
-import { cva } from 'class-variance-authority'
 import { ChevronDown } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -40,28 +39,18 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
-const navigationMenuTriggerStyle = cva(
-  'text-olive-700 group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 font-medium transition-colors hover:bg-olive-100 hover:text-olive-900 focus:bg-olive-100 focus:text-olive-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-olive-100/50 data-[state=open]:bg-olive-100/50 dark:bg-olive-950 dark:hover:bg-olive-800 dark:hover:text-olive-50 dark:focus:bg-olive-800 dark:focus:text-olive-50 dark:data-[active]:bg-olive-800/50 dark:data-[state=open]:bg-olive-800/50'
-)
-
 const NavigationMenuTrigger = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger> & {
-    overrideStyle?: boolean
-  }
->(({ className, children, overrideStyle = false, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Trigger
     ref={ref}
-    className={cn(
-      overrideStyle ? '' : navigationMenuTriggerStyle(),
-      'group',
-      className
-    )}
+    className={cn('group', className)}
     {...props}
   >
     {children}
     <ChevronDown
-      className='relative top-px ml-1 size-5 transition duration-300 group-data-[state=open]:rotate-180'
+      className='relative top-px ml-1 hidden size-5 transition duration-300 group-data-[state=open]:rotate-180 md:block'
       aria-hidden='true'
     />
   </NavigationMenuPrimitive.Trigger>
@@ -122,7 +111,6 @@ NavigationMenuIndicator.displayName =
   NavigationMenuPrimitive.Indicator.displayName
 
 export {
-  navigationMenuTriggerStyle,
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,

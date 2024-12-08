@@ -1,6 +1,6 @@
 import '@/app/globals.css'
 
-// import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import { redhat } from '@/fonts/index'
 
@@ -24,7 +24,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         {/* <Footer /> */}
-        {/* <SpeedInsights /> */}
+        <SpeedInsights />
       </body>
     </html>
   )

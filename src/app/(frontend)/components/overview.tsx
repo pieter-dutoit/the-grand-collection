@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
 import ScrollAnchor from '@/app/(frontend)/components/scroll-anchor'
-import { buttonVariants } from '@/components/ui/button'
+import { getButtonVariants } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
@@ -27,7 +27,7 @@ export default async function Overview(): Promise<JSX.Element> {
       <div className='container mx-auto py-8'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
           {/* Q1 */}
-          <h2 className='max-w-[80%] whitespace-normal text-4xl font-light capitalize text-olive-600 sm:text-5xl md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
+          <h2 className='max-w-72 whitespace-normal text-5xl font-light capitalize text-olive-600 sm:max-w-full sm:text-5xl md:max-w-96 md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
             {heading}
           </h2>
 
@@ -90,7 +90,7 @@ export default async function Overview(): Promise<JSX.Element> {
             <li>
               <Link
                 className={twMerge(
-                  buttonVariants({
+                  getButtonVariants({
                     variant: 'outline',
                     colour: 'gold',
                     size: 'lg'
