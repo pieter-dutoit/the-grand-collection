@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge'
 import { ChevronDown, MapPinHouse } from 'lucide-react'
 
 import { FullLogo } from '@/components/ui/logos'
-import { buttonVariants } from '@/components/ui/button'
+import { getButtonVariants } from '@/components/ui/button'
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
@@ -36,7 +36,7 @@ export async function Hero(): Promise<JSX.Element> {
 
           <Link
             className={twMerge(
-              buttonVariants({
+              getButtonVariants({
                 variant: 'default',
                 colour: 'sage',
                 size: 'lg'

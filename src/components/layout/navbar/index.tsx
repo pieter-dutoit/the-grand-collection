@@ -7,29 +7,18 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle
+  NavigationMenuTrigger
 } from '@/components/ui/navigation-menu'
 
 import { CountryOutline, MinimalTextLogo } from '@/components/ui/logos'
 
-import MobileDrawer from './mobile-drawer'
+import MobileDrawer from './components/mobile-drawer'
 import NavOptions from './components/nav-options'
 
-import { buttonVariants } from '@/components/ui/button'
-
-const booking_options = [
-  {
-    label: { text: 'The Paarl Grand' },
-    href: '/guesthouses/paarl-grand'
-  },
-  {
-    label: { text: 'The Kathu Grand' },
-    href: '/guesthouses/kathu-grand'
-  }
-]
+import { getButtonVariants } from '@/components/ui/button'
+import NavLink from './components/nav-link'
+import { bookingOptions } from './data'
 
 export default function Navbar(): JSX.Element {
   return (
@@ -58,23 +47,16 @@ export default function Navbar(): JSX.Element {
             {/* Desktop & Mobile */}
             <NavigationMenuItem>
               <NavigationMenuTrigger
-                overrideStyle
                 className={twMerge(
-                  buttonVariants({ variant: 'default', colour: 'olive' }),
-                  'font-semibold uppercase'
+                  getButtonVariants({ variant: 'default', colour: 'olive' }),
+                  'text-sm font-bold uppercase'
                 )}
               >
                 Book Now
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                {booking_options.map(({ label, href }) => (
-                  <Link key={href} href={href ?? '#'} legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      {label.text}
-                    </NavigationMenuLink>
-                  </Link>
+                {bookingOptions.map((option) => (
+                  <NavLink key={option.href + '-booking'} {...option} />
                 ))}
               </NavigationMenuContent>
             </NavigationMenuItem>
