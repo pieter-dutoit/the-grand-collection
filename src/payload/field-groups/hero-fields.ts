@@ -1,5 +1,5 @@
 import type { GroupField } from 'payload'
-import CTA from './call-to-action'
+import ActionLink from './action-link'
 
 const HeroFields: GroupField = {
   name: 'hero',
@@ -21,16 +21,10 @@ const HeroFields: GroupField = {
       required: true
     },
     {
-      name: 'cta_locations',
+      name: 'locations_link',
       type: 'group',
-      label: 'Locations Button Details',
-      fields: CTA.fields
-    },
-    {
-      name: 'cta_learn_more',
-      type: 'group',
-      label: 'Learn More Button Details',
-      fields: CTA.fields
+      label: 'Locations Link',
+      fields: ActionLink.fields
     }
   ]
 }

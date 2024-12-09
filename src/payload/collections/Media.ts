@@ -43,7 +43,7 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: 'webp',
       options: {
-        quality: 80
+        quality: 100
       }
     },
     mimeTypes: ['image/*']

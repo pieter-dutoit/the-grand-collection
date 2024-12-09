@@ -1,5 +1,5 @@
 import { GroupField } from 'payload'
-import CTA from './call-to-action'
+import ActionLink from './action-link'
 
 const OverviewFields: GroupField = {
   name: 'overview',
@@ -15,18 +15,19 @@ const OverviewFields: GroupField = {
     {
       name: 'description',
       type: 'textarea',
+      label: 'Description (Ideally 50 to 300 characters for SEO)',
       maxLength: 500,
       minLength: 50,
-      label: 'Description (Ideally 50 to 300 characters for SEO)',
+
       required: true
     },
     {
       name: 'images',
       type: 'upload',
+      label: 'Select 3 Images',
       relationTo: 'media',
       hasMany: true,
       required: true,
-      label: 'Select 3 Images',
       validate: (value) => {
         if (!value || value.length !== 3) {
           return 'You must select exactly 3 images.'
@@ -61,10 +62,10 @@ const OverviewFields: GroupField = {
       ]
     },
     {
-      name: 'cta_locations',
+      name: 'locations_link',
       type: 'group',
-      label: 'Locations Button Details',
-      fields: CTA.fields
+      label: 'Locations Link Details',
+      fields: ActionLink.fields
     }
   ]
 }

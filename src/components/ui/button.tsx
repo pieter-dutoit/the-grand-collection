@@ -161,7 +161,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = 'Button'
 
-const getButtonVariants = (variants: VariantProps<typeof buttonVariants>) =>
+const getButtonStyles = (variants: VariantProps<typeof buttonVariants>) =>
   twMerge(buttonVariants(variants))
 
-export { Button, getButtonVariants }
+export { Button, getButtonStyles }

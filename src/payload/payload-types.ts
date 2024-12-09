@@ -262,13 +262,9 @@ export interface HomePage {
   hero: {
     background_image: string | Media
     title: string
-    cta_locations: {
-      cta_text: string
-      cta_link: string
-    }
-    cta_learn_more: {
-      cta_text: string
-      cta_link: string
+    locations_link: {
+      link_text: string
+      link_url: string
     }
   }
   overview: {
@@ -280,9 +276,9 @@ export interface HomePage {
       description: string
       id?: string | null
     }[]
-    cta_locations: {
-      cta_text: string
-      cta_link: string
+    locations_link: {
+      link_text: string
+      link_url: string
     }
   }
   updatedAt?: string | null
@@ -298,17 +294,11 @@ export interface HomePageSelect<T extends boolean = true> {
     | {
         background_image?: T
         title?: T
-        cta_locations?:
+        locations_link?:
           | T
           | {
-              cta_text?: T
-              cta_link?: T
-            }
-        cta_learn_more?:
-          | T
-          | {
-              cta_text?: T
-              cta_link?: T
+              link_text?: T
+              link_url?: T
             }
       }
   overview?:
@@ -324,11 +314,11 @@ export interface HomePageSelect<T extends boolean = true> {
               description?: T
               id?: T
             }
-        cta_locations?:
+        locations_link?:
           | T
           | {
-              cta_text?: T
-              cta_link?: T
+              link_text?: T
+              link_url?: T
             }
       }
   updatedAt?: T

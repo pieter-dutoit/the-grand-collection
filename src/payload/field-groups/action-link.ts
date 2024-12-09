@@ -2,13 +2,13 @@ import { GroupField } from 'payload'
 
 import { validateSlug } from '@/payload/utils/validation'
 
-const CTA: GroupField = {
-  name: 'cta',
-  label: 'Call to Action',
+const ActionLink: GroupField = {
+  name: 'action_link',
+  label: 'Action Link',
   type: 'group',
   fields: [
     {
-      name: 'cta_text',
+      name: 'link_text',
       type: 'text',
       label: 'Link Text',
       admin: {
@@ -19,7 +19,7 @@ const CTA: GroupField = {
       maxLength: 100
     },
     {
-      name: 'cta_link',
+      name: 'link_url',
       type: 'text',
       label: 'Link Path/URL',
       defaultValue: '#',
@@ -29,4 +29,4 @@ const CTA: GroupField = {
   ]
 }
 
-export default CTA
+export default ActionLink

@@ -12,7 +12,7 @@ import useMediaQuery from '@/hooks/use-media-query'
 
 import NavLink from './nav-link'
 import { NavLabel, NavOption } from '../data'
-import { getButtonVariants } from '@/components/ui/button'
+import { getButtonStyles } from '@/components/ui/button'
 
 // Prevent the dropdown from being rendered on the server since it's only used on desktop.
 const NavigationMenuContent = dynamic(
@@ -43,7 +43,7 @@ export default function SubMenu({
       <NavigationMenuTrigger
         className={twMerge(
           'hidden md:flex',
-          getButtonVariants({ ...label }),
+          getButtonStyles({ ...label }),
           'hidden md:flex'
         )}
         aria-hidden={!isDesktop}
@@ -71,7 +71,10 @@ export default function SubMenu({
       <NavigationMenuList className='flex flex-col items-start space-x-0 pl-4 md:hidden'>
         {options.map((option: NavOption) => {
           return (
-            <NavigationMenuItem key={option.label.text + '-mobile'}>
+            <NavigationMenuItem
+              className='flex pl-4'
+              key={option.label.text + '-mobile'}
+            >
               <NavLink {...option} />
             </NavigationMenuItem>
           )

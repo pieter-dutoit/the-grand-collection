@@ -33,7 +33,7 @@ export default function MobileMenu({
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild className='md:hidden'>
-        <Button variant='ghost' size='icon' className='mr-2'>
+        <Button variant='ghost' size='icon' className='mr-1 sm:mr-2'>
           {isOpen ? (
             <X aria-label='Close nav menu' />
           ) : (

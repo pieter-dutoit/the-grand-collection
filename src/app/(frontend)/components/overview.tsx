@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
 import ScrollAnchor from '@/app/(frontend)/components/scroll-anchor'
-import { getButtonVariants } from '@/components/ui/button'
+import { getButtonStyles } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
@@ -17,7 +17,7 @@ export default async function Overview(): Promise<JSX.Element> {
       description,
       features = [],
       images = [],
-      cta_locations
+      locations_link
     }
   } = data
 
@@ -90,17 +90,17 @@ export default async function Overview(): Promise<JSX.Element> {
             <li>
               <Link
                 className={twMerge(
-                  getButtonVariants({
+                  getButtonStyles({
                     variant: 'outline',
                     colour: 'gold',
                     size: 'lg'
                   }),
                   'mt-2 flex flex-row items-center'
                 )}
-                href={cta_locations.cta_link}
+                href={locations_link.link_url}
               >
                 <Home />
-                {cta_locations.cta_text}
+                {locations_link.link_text}
               </Link>
             </li>
           </ul>

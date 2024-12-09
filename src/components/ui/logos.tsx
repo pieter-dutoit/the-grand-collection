@@ -79,16 +79,14 @@ export function MinimalLogo({ width = 40 }: { width?: number }): JSX.Element {
 }
 
 export function MinimalTextLogo({
-  width = 150
+  className
 }: {
-  width?: number
+  className?: string
 }): JSX.Element {
   return (
     <svg
-      xmlns='http://www.w3.org/2000/svg'
-      width={width}
-      height={width * (75 / 390)}
-      viewBox='0 0 99.38 20'
+      className={twMerge('w-full max-w-xs', className)}
+      viewBox='0 0 99.38 21'
       aria-label="The Grand Collection's logo"
     >
       <path
