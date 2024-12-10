@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-import { isAdmin, isAdminFieldLevel } from '../access/isAdmin'
-import { isAdminOrSelf } from '../access/isAdminOrSelf'
+import { isAdmin, isAdminFieldLevel } from '../access/is-admin'
+import { isAdminOrSelf } from '../access/is-admin-or-self'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -16,13 +16,11 @@ export const Users: CollectionConfig = {
     lockTime: 600 * 1000 // Time period to allow the max login attempts
   },
   access: {
-    // Only admins can create users
     create: isAdmin,
     // Admins can read all, but any other logged in user can only read themselves
     read: isAdminOrSelf,
     // Admins can update all, but any other logged in user can only update themselves
     update: isAdminOrSelf,
-    // Only admins can delete
     delete: isAdmin
   },
   fields: [

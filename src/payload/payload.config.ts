@@ -8,9 +8,14 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
-import { HomePage } from './globals/HomePage'
+import { HomePage } from './globals/home-page'
+
+import { Users } from './collections/users'
+import { Media } from './collections/media'
+import { Guesthouses } from './collections/guesthouses'
+import { ContactPersons } from './collections/contact-persons'
+import { SocialMediaPlatforms } from './collections/social-media-platforms'
+import { Amenities } from './collections/amenities'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +28,14 @@ export default buildConfig({
     }
   },
   globals: [HomePage],
-  collections: [Users, Media],
+  collections: [
+    Amenities,
+    Users,
+    Media,
+    Guesthouses,
+    ContactPersons,
+    SocialMediaPlatforms
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

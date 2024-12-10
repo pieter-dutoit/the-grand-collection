@@ -23,7 +23,7 @@ import { bookingOptions } from './data'
 export default function Navbar(): JSX.Element {
   return (
     <header className='sticky left-0 top-0 z-50 h-16 w-full border-b border-b-sage-100 bg-white'>
-      <div className='mx-auto flex h-full max-w-7xl items-center justify-between px-1 sm:px-2 md:px-4 lg:px-20'>
+      <div className='mx-auto flex h-full max-w-7xl items-center justify-between px-[5vw] sm:px-8 lg:px-20'>
         {/* Left content */}
         <div className='flex items-center'>
           <MobileDrawer>
@@ -40,9 +40,9 @@ export default function Navbar(): JSX.Element {
         </div>
 
         {/* Center content | Desktop menu */}
-        <NavigationMenu className='ml-auto mr-4 md:mx-0'>
+        <NavigationMenu className='ml-auto sm:mr-6 lg:mr-auto'>
           <NavigationMenuList>
-            <NavOptions className='hidden md:flex' />
+            <NavOptions className='hidden lg:flex' />
 
             {/* Desktop & Mobile */}
             <NavigationMenuItem>

@@ -11,16 +11,26 @@ export interface Config {
     users: UserAuthOperations
   }
   collections: {
+    amenities: Amenity
     users: User
     media: Media
+    guesthouses: Guesthouse
+    'contact-person': ContactPerson
+    'social-media-platforms': SocialMediaPlatform
     'payload-locked-documents': PayloadLockedDocument
     'payload-preferences': PayloadPreference
     'payload-migrations': PayloadMigration
   }
   collectionsJoins: {}
   collectionsSelect: {
+    amenities: AmenitiesSelect<false> | AmenitiesSelect<true>
     users: UsersSelect<false> | UsersSelect<true>
     media: MediaSelect<false> | MediaSelect<true>
+    guesthouses: GuesthousesSelect<false> | GuesthousesSelect<true>
+    'contact-person': ContactPersonSelect<false> | ContactPersonSelect<true>
+    'social-media-platforms':
+      | SocialMediaPlatformsSelect<false>
+      | SocialMediaPlatformsSelect<true>
     'payload-locked-documents':
       | PayloadLockedDocumentsSelect<false>
       | PayloadLockedDocumentsSelect<true>
@@ -69,21 +79,15 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "amenities".
  */
-export interface User {
+export interface Amenity {
   id: string
-  roles?: ('admin' | 'editor')[] | null
+  name: string
+  description?: string | null
+  icon: string | Media
   updatedAt: string
   createdAt: string
-  email: string
-  resetPasswordToken?: string | null
-  resetPasswordExpiration?: string | null
-  salt?: string | null
-  hash?: string | null
-  loginAttempts?: number | null
-  lockUntil?: string | null
-  password?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -117,11 +121,111 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string
+  roles?: ('admin' | 'editor')[] | null
+  updatedAt: string
+  createdAt: string
+  email: string
+  resetPasswordToken?: string | null
+  resetPasswordExpiration?: string | null
+  salt?: string | null
+  hash?: string | null
+  loginAttempts?: number | null
+  lockUntil?: string | null
+  password?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guesthouses".
+ */
+export interface Guesthouse {
+  id: string
+  name: string
+  slug?: string | null
+  booking_platform: {
+    name: 'NightsBridge'
+    url: string
+  }
+  content: {
+    details: {
+      background_image: string | Media
+      heading: string
+      description: string
+      gallery: (string | Media)[]
+      general_amenities: (string | Amenity)[]
+    }
+  }
+  contact_details: {
+    contact_persons?: (string | ContactPerson)[] | null
+    address: {
+      street: string
+      suburb: string
+      city: string
+      province:
+        | 'eastern-cape'
+        | 'free-state'
+        | 'gauteng'
+        | 'kwazulu-natal'
+        | 'limpopo'
+        | 'mpumalanga'
+        | 'northern-cape'
+        | 'north-west'
+        | 'western-cape'
+      postalCode: string
+    }
+    socials: {
+      name: string | SocialMediaPlatform
+      url: string
+    }
+  }
+  seo: {
+    seo: {
+      meta: {
+        title?: string | null
+        description: string
+      }
+    }
+  }
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-person".
+ */
+export interface ContactPerson {
+  id: string
+  name: string
+  email: string
+  phone: string
+  position: string
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media-platforms".
+ */
+export interface SocialMediaPlatform {
+  id: string
+  platform: string
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
   id: string
   document?:
+    | ({
+        relationTo: 'amenities'
+        value: string | Amenity
+      } | null)
     | ({
         relationTo: 'users'
         value: string | User
@@ -129,6 +233,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media'
         value: string | Media
+      } | null)
+    | ({
+        relationTo: 'guesthouses'
+        value: string | Guesthouse
+      } | null)
+    | ({
+        relationTo: 'contact-person'
+        value: string | ContactPerson
+      } | null)
+    | ({
+        relationTo: 'social-media-platforms'
+        value: string | SocialMediaPlatform
       } | null)
   globalSlug?: string | null
   user: {
@@ -171,6 +287,17 @@ export interface PayloadMigration {
   batch?: number | null
   updatedAt: string
   createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "amenities_select".
+ */
+export interface AmenitiesSelect<T extends boolean = true> {
+  name?: T
+  description?: T
+  icon?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -220,6 +347,90 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T
             }
       }
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guesthouses_select".
+ */
+export interface GuesthousesSelect<T extends boolean = true> {
+  name?: T
+  slug?: T
+  booking_platform?:
+    | T
+    | {
+        name?: T
+        url?: T
+      }
+  content?:
+    | T
+    | {
+        details?:
+          | T
+          | {
+              background_image?: T
+              heading?: T
+              description?: T
+              gallery?: T
+              general_amenities?: T
+            }
+      }
+  contact_details?:
+    | T
+    | {
+        contact_persons?: T
+        address?:
+          | T
+          | {
+              street?: T
+              suburb?: T
+              city?: T
+              province?: T
+              postalCode?: T
+            }
+        socials?:
+          | T
+          | {
+              name?: T
+              url?: T
+            }
+      }
+  seo?:
+    | T
+    | {
+        seo?:
+          | T
+          | {
+              meta?:
+                | T
+                | {
+                    title?: T
+                    description?: T
+                  }
+            }
+      }
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-person_select".
+ */
+export interface ContactPersonSelect<T extends boolean = true> {
+  name?: T
+  email?: T
+  phone?: T
+  position?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media-platforms_select".
+ */
+export interface SocialMediaPlatformsSelect<T extends boolean = true> {
+  platform?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -281,6 +492,7 @@ export interface HomePage {
       link_url: string
     }
   }
+  featured_guesthouses: (string | Guesthouse)[]
   updatedAt?: string | null
   createdAt?: string | null
 }
@@ -321,6 +533,7 @@ export interface HomePageSelect<T extends boolean = true> {
               link_url?: T
             }
       }
+  featured_guesthouses?: T
   updatedAt?: T
   createdAt?: T
   globalType?: T

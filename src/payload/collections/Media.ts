@@ -1,15 +1,9 @@
 import type { CollectionConfig } from 'payload'
-
-import { isLoggedIn } from '@/payload/access/isLoggedIn'
+import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  access: {
-    read: () => true,
-    create: isLoggedIn,
-    update: isLoggedIn,
-    delete: isLoggedIn
-  },
+  access: { ...DEFAULT_COLLECTION_ACCESS, read: () => true },
   fields: [
     {
       name: 'alt',

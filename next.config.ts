@@ -7,8 +7,6 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true'
 })
 
-const nextConfig: NextConfig = {
-  /* config options here */
-}
+const nextConfig: NextConfig = {}
 
 module.exports = withBundleAnalyzer(withPayload(nextConfig))

@@ -20,7 +20,7 @@ function BlockLink({ label, href }: NavOption): JSX.Element {
             variant,
             colour: color
           }),
-          'mb-1 w-full bg-olive-50 md:bg-olive-50/50'
+          'mb-1 w-full bg-olive-50 lg:bg-olive-50/50'
         )}
       >
         {text}
@@ -39,7 +39,7 @@ function DetailedNavLink({
   const { alt } = image ? extractImageProps(image) : { alt: '' }
   return (
     <Link legacyBehavior href={href ?? '#'} passHref className='my-1 flex'>
-      <NavigationMenuLink className='my-1 w-[250px] overflow-hidden rounded-lg border border-olive-100 bg-olive-50 transition-colors hover:bg-olive-50/50 active:border-olive-300 sm:w-[350px] md:bg-transparent'>
+      <NavigationMenuLink className='my-1 w-[250px] overflow-hidden rounded-lg border border-olive-100 bg-olive-50 transition-colors hover:bg-olive-50/50 active:border-olive-300 sm:w-[350px] lg:bg-transparent'>
         <div className='flex grow'>
           <Image
             width={90}

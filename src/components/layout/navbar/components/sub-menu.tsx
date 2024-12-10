@@ -42,9 +42,9 @@ export default function SubMenu({
       {/* Hide on mobile using CSS */}
       <NavigationMenuTrigger
         className={twMerge(
-          'hidden md:flex',
+          'hidden lg:flex',
           getButtonStyles({ ...label }),
-          'hidden md:flex'
+          'hidden lg:flex'
         )}
         aria-hidden={!isDesktop}
       >
@@ -65,10 +65,10 @@ export default function SubMenu({
       {/* Hide in Desktop using CSS */}
       {/* Load regardless of Desktop/Mobile to ensure it's available 
       immediately on mobile devices. Negligible impact on Desktop performance */}
-      <p className='my-2 ml-4 w-full text-left text-lg font-bold text-gold-500 md:hidden'>
+      <p className='my-2 ml-4 w-full text-left text-lg font-bold text-gold-500 lg:hidden'>
         {label.text}
       </p>
-      <NavigationMenuList className='flex flex-col items-start space-x-0 pl-4 md:hidden'>
+      <NavigationMenuList className='flex flex-col items-start space-x-0 pl-4 lg:hidden'>
         {options.map((option: NavOption) => {
           return (
             <NavigationMenuItem

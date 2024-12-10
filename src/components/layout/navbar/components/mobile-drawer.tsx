@@ -32,7 +32,7 @@ export default function MobileMenu({
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger asChild className='md:hidden'>
+      <SheetTrigger asChild className='lg:hidden'>
         <Button variant='ghost' size='icon' className='mr-1 sm:mr-2'>
           {isOpen ? (
             <X aria-label='Close nav menu' />
@@ -41,7 +41,7 @@ export default function MobileMenu({
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className='h-full bg-white/75 backdrop-blur-xl backdrop-saturate-150 md:hidden'>
+      <SheetContent className='h-full bg-white/75 backdrop-blur-xl backdrop-saturate-150 lg:hidden'>
         <SheetHeader className='sr-only'>
           <SheetTitle>Mobile Navigation Menu</SheetTitle>
         </SheetHeader>
