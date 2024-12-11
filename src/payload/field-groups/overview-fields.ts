@@ -1,5 +1,6 @@
 import { GroupField } from 'payload'
-import ActionLink from './action-link'
+
+import ActionLinkFields from './action-link'
 
 const OverviewFields: GroupField = {
   name: 'overview',
@@ -65,7 +66,7 @@ const OverviewFields: GroupField = {
       name: 'locations_link',
       type: 'group',
       label: 'Locations Link Details',
-      fields: ActionLink.fields
+      fields: ActionLinkFields
     }
   ]
 }

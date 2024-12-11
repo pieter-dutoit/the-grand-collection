@@ -150,13 +150,11 @@ export interface Guesthouse {
     url: string
   }
   content: {
-    details: {
-      background_image: string | Media
-      heading: string
-      description: string
-      gallery: (string | Media)[]
-      general_amenities: (string | Amenity)[]
-    }
+    background_image: string | Media
+    heading: string
+    description: string
+    gallery: (string | Media)[]
+    general_amenities: (string | Amenity)[]
   }
   contact_details: {
     contact_persons?: (string | ContactPerson)[] | null
@@ -179,14 +177,6 @@ export interface Guesthouse {
     socials: {
       name: string | SocialMediaPlatform
       url: string
-    }
-  }
-  seo: {
-    seo: {
-      meta: {
-        title?: string | null
-        description: string
-      }
     }
   }
   updatedAt: string
@@ -364,15 +354,11 @@ export interface GuesthousesSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        details?:
-          | T
-          | {
-              background_image?: T
-              heading?: T
-              description?: T
-              gallery?: T
-              general_amenities?: T
-            }
+        background_image?: T
+        heading?: T
+        description?: T
+        gallery?: T
+        general_amenities?: T
       }
   contact_details?:
     | T
@@ -392,20 +378,6 @@ export interface GuesthousesSelect<T extends boolean = true> {
           | {
               name?: T
               url?: T
-            }
-      }
-  seo?:
-    | T
-    | {
-        seo?:
-          | T
-          | {
-              meta?:
-                | T
-                | {
-                    title?: T
-                    description?: T
-                  }
             }
       }
   updatedAt?: T

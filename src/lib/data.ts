@@ -1,9 +1,13 @@
 import 'server-only'
 
 import { getPayload } from 'payload'
-import config from '@payload-config'
 
-export async function fetchHomePageData(field: string) {
+import config from '@payload-config'
+import { HomePage } from '@/payload/payload-types'
+
+export async function fetchHomePageData(
+  field: string
+): Promise<Partial<HomePage>> {
   const payload = await getPayload({ config })
   const res = await payload.findGlobal({
     slug: 'home-page',
@@ -11,5 +15,5 @@ export async function fetchHomePageData(field: string) {
       [field]: true
     }
   })
-  return res
+  return res as Partial<HomePage>
 }

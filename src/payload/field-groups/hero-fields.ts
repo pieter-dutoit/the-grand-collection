@@ -1,5 +1,6 @@
 import type { GroupField } from 'payload'
-import ActionLink from './action-link'
+
+import ActionLinkFields from './action-link'
 
 const HeroFields: GroupField = {
   name: 'hero',
@@ -24,7 +25,7 @@ const HeroFields: GroupField = {
       name: 'locations_link',
       type: 'group',
       label: 'Locations Link',
-      fields: ActionLink.fields
+      fields: ActionLinkFields
     }
   ]
 }

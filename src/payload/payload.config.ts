@@ -10,12 +10,12 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { HomePage } from './globals/home-page'
 
-import { Users } from './collections/users'
-import { Media } from './collections/media'
 import { Guesthouses } from './collections/guesthouses'
 import { ContactPersons } from './collections/contact-persons'
 import { SocialMediaPlatforms } from './collections/social-media-platforms'
 import { Amenities } from './collections/amenities'
+import { Users } from './collections/Users'
+import { Media } from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
