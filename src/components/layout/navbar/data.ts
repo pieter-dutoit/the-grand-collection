@@ -1,4 +1,6 @@
-import { Media } from '@/payload/payload-types'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import { Guesthouse, Media } from '@/payload/payload-types'
 
 const DEFAULT_LABEL_STYLE: Pick<NavLabel, 'variant' | 'color'> = {
   variant: 'ghost',
@@ -21,58 +23,71 @@ export interface NavOption {
   externalSiteName?: string
 }
 
-export const navOptions: NavOption[] = [
-  {
-    href: '/',
-    label: { text: 'Home', ...DEFAULT_LABEL_STYLE }
-  },
-  {
-    href: '/contact',
-    label: { text: 'Contact Us', ...DEFAULT_LABEL_STYLE }
-  },
-  {
-    label: { text: 'Our Locations', ...DEFAULT_LABEL_STYLE },
-    nested: [
-      {
-        href: '/guesthouses/all',
-        label: {
-          text: 'View All Guesthouses',
-          color: 'olive',
-          variant: 'outline'
+export const getGuestHouses = async (): Promise<Guesthouse[]> => {
+  const payload = await getPayload({ config })
+  const res = await payload.find({
+    collection: 'guesthouses',
+    depth: 2,
+    pagination: false,
+    sort: '-name'
+  })
+  if (!res) {
+    throw new Error('Failed to fetch home page data')
+  }
+  return res.docs
+}
+
+export async function getNavOptions(): Promise<NavOption[]> {
+  const guesthouses = await getGuestHouses()
+  return [
+    {
+      href: '/',
+      label: { text: 'Home', ...DEFAULT_LABEL_STYLE }
+    },
+    {
+      href: '/contact',
+      label: { text: 'Contact Us', ...DEFAULT_LABEL_STYLE }
+    },
+    {
+      label: { text: 'Our Locations', ...DEFAULT_LABEL_STYLE },
+      nested: [
+        {
+          href: '/guesthouses/all',
+          label: {
+            text: 'View All Guesthouses',
+            color: 'olive',
+            variant: 'outline'
+          },
+          variant: 'block'
         },
-        variant: 'block'
+        ...guesthouses.map(
+          (guesthouse): NavOption => ({
+            variant: 'detailed',
+            href: `/guesthouses/${guesthouse.slug}`,
+            label: {
+              text: guesthouse.name,
+              ...DEFAULT_LABEL_STYLE
+            },
+            image: guesthouse.content.gallery[0],
+            address: `${guesthouse.contact_details.address.city}, ${guesthouse.contact_details.address.province}`
+          })
+        )
+      ]
+    }
+  ]
+}
+
+export async function getBookingOptions(): Promise<NavOption[]> {
+  const guesthouses = await getGuestHouses()
+
+  return guesthouses.map(
+    (guesthouse): NavOption => ({
+      label: {
+        text: guesthouse.name
       },
-      {
-        variant: 'detailed',
-        href: '/guesthouses/paarl-grand',
-        label: { text: 'The Paarl Grand', ...DEFAULT_LABEL_STYLE },
-        image: '/images/locations/paarl.jpg',
-        address: 'Paarl, Western Cape'
-      },
-      {
-        variant: 'detailed',
-        href: '/guesthouses/kathu-grand',
-        label: { text: 'The Kathu Grand', ...DEFAULT_LABEL_STYLE },
-        image: '/images/locations/kathu.jpg',
-        address: 'Kathu, Northern Cape'
-      }
-    ]
-  }
-]
-
-export const bookingOptions: NavOption[] = [
-  {
-    label: { text: 'The Paarl Grand' },
-    href: 'https://book.nightsbridge.com/35314',
-
-    variant: 'external',
-    externalSiteName: 'NightsBridge'
-  },
-  {
-    label: { text: 'The Kathu Grand' },
-    href: '#',
-
-    variant: 'external',
-    externalSiteName: 'NightsBridge'
-  }
-]
+      variant: 'external',
+      href: guesthouse.booking_platform.url,
+      externalSiteName: guesthouse.booking_platform.name
+    })
+  )
+}

@@ -1,7 +1,5 @@
 import { Field } from 'payload'
 
-import { validateSlug } from '@/payload/utils/validation'
-
 const ActionLinkFields: Field[] = [
   {
     name: 'link_text',
@@ -19,8 +17,7 @@ const ActionLinkFields: Field[] = [
     type: 'text',
     label: 'Link Path/URL',
     defaultValue: '#',
-    required: true,
-    validate: validateSlug
+    required: true
   }
 ]
 

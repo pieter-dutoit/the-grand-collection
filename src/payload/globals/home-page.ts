@@ -5,6 +5,7 @@ import { isLoggedIn } from '@/payload/access/is-logged-in'
 
 import HeroFields from '@/payload/field-groups/hero-fields'
 import OverviewFields from '@/payload/field-groups/overview-fields'
+import FeaturedPropertiesFields from '@/payload/field-groups/featured-properties-fields'
 
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
@@ -12,18 +13,5 @@ export const HomePage: GlobalConfig = {
     read: isLoggedInOrIsPublished,
     update: isLoggedIn
   },
-  fields: [
-    HeroFields,
-    OverviewFields,
-    {
-      name: 'featured_guesthouses',
-      label: 'Featured Guesthouses',
-      type: 'relationship',
-      relationTo: 'guesthouses',
-      hasMany: true,
-      required: true,
-      minRows: 1,
-      maxRows: 4
-    }
-  ]
+  fields: [HeroFields, OverviewFields, FeaturedPropertiesFields]
 }

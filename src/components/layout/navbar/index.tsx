@@ -12,15 +12,16 @@ import {
 } from '@/components/ui/navigation-menu'
 
 import { CountryOutline, MinimalTextLogo } from '@/components/ui/logos'
+import { getButtonStyles } from '@/components/ui/button'
 
 import MobileDrawer from './components/mobile-drawer'
 import NavOptions from './components/nav-options'
-import { getButtonStyles } from '@/components/ui/button'
-
 import NavLink from './components/nav-link'
-import { bookingOptions } from './data'
 
-export default function Navbar(): JSX.Element {
+import { getBookingOptions } from './data'
+
+export default async function Navbar(): Promise<JSX.Element> {
+  const bookingOptions = await getBookingOptions()
   return (
     <header className='sticky left-0 top-0 z-50 h-16 w-full border-b border-b-sage-100 bg-white'>
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between px-[5vw] sm:px-8 lg:px-20'>

@@ -31,15 +31,15 @@ const Address: GroupField = {
       label: 'Select Province',
       required: true,
       options: [
-        { label: 'Eastern Cape', value: 'eastern-cape' },
-        { label: 'Free State', value: 'free-state' },
-        { label: 'Gauteng', value: 'gauteng' },
-        { label: 'KwaZulu-Natal', value: 'kwazulu-natal' },
-        { label: 'Limpopo', value: 'limpopo' },
-        { label: 'Mpumalanga', value: 'mpumalanga' },
-        { label: 'Northern Cape', value: 'northern-cape' },
-        { label: 'North West', value: 'north-west' },
-        { label: 'Western Cape', value: 'western-cape' }
+        { label: 'Eastern Cape', value: 'Eastern Cape' },
+        { label: 'Free State', value: 'Free State' },
+        { label: 'Gauteng', value: 'Gauteng' },
+        { label: 'KwaZulu-Natal', value: 'KwaZulu-Natal' },
+        { label: 'Limpopo', value: 'Limpopo' },
+        { label: 'Mpumalanga', value: 'Mpumalanga' },
+        { label: 'Northern Cape', value: 'Northern Cape' },
+        { label: 'North West', value: 'North West' },
+        { label: 'Western Cape', value: 'Western Cape' }
       ]
     },
     {

@@ -163,15 +163,15 @@ export interface Guesthouse {
       suburb: string
       city: string
       province:
-        | 'eastern-cape'
-        | 'free-state'
-        | 'gauteng'
-        | 'kwazulu-natal'
-        | 'limpopo'
-        | 'mpumalanga'
-        | 'northern-cape'
-        | 'north-west'
-        | 'western-cape'
+        | 'Eastern Cape'
+        | 'Free State'
+        | 'Gauteng'
+        | 'KwaZulu-Natal'
+        | 'Limpopo'
+        | 'Mpumalanga'
+        | 'Northern Cape'
+        | 'North West'
+        | 'Western Cape'
       postalCode: string
     }
     socials: {
@@ -464,7 +464,11 @@ export interface HomePage {
       link_url: string
     }
   }
-  featured_guesthouses: (string | Guesthouse)[]
+  featured: {
+    heading: string
+    subheading: string
+    guesthouses: (string | Guesthouse)[]
+  }
   updatedAt?: string | null
   createdAt?: string | null
 }
@@ -505,7 +509,13 @@ export interface HomePageSelect<T extends boolean = true> {
               link_url?: T
             }
       }
-  featured_guesthouses?: T
+  featured?:
+    | T
+    | {
+        heading?: T
+        subheading?: T
+        guesthouses?: T
+      }
   updatedAt?: T
   createdAt?: T
   globalType?: T

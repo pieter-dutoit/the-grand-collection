@@ -9,10 +9,11 @@ import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 export async function Hero(): Promise<JSX.Element> {
-  const {
-    hero: { title, background_image, locations_link }
-  } = await fetchHomePageData('hero')
+  const { hero } = await fetchHomePageData('hero')
 
+  if (!hero) return <> </>
+
+  const { title, background_image, locations_link } = hero
   const { url, alt } = extractImageProps(background_image)
 
   return (

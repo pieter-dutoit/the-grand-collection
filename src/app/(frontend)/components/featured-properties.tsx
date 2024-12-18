@@ -1,74 +1,31 @@
-import Image from 'next/image'
-
-import { Guesthouse } from '@/payload/payload-types'
 import { fetchHomePageData } from '@/lib/data'
-import { extractImageProps } from '@/lib/utils'
 
 import ScrollAnchor from './scroll-anchor'
-
-function PropertyPreview({
-  guesthouse,
-  alignment = 'start'
-}: {
-  guesthouse: Guesthouse
-  alignment: string
-}): JSX.Element {
-  const alignmentClass = alignment === 'start' ? 'self-start' : 'self-end'
-
-  const {
-    name,
-    slug,
-    content: { gallery }
-  } = guesthouse
-
-  return (
-    <div className={`flex flex-col gap-4 ${alignmentClass}`}>
-      <div className='grid grid-cols-3'>
-        {gallery.map((image) => {
-          const { alt, url } = extractImageProps(image)
-          return (
-            <div className='relative size-20' key={url}>
-              <Image
-                src={url}
-                alt={alt}
-                fill
-                className='object-cover object-center'
-              />
-            </div>
-          )
-        })}
-      </div>
-      <div>
-        <h3>{name}</h3>
-        <a href={`guesthouses/${slug}`}>{name}</a>
-      </div>
-    </div>
-  )
-}
+import PropertyPreview from './property-preview'
 
 export default async function Properties(): Promise<JSX.Element> {
-  const { featured_guesthouses } = await fetchHomePageData(
-    'featured_guesthouses'
-  )
+  const { featured } = await fetchHomePageData('featured')
+  if (!featured) return <></>
+
+  const { heading, subheading, guesthouses } = featured
 
   return (
     <section className='relative w-full'>
-      <ScrollAnchor id='properties' />
+      <ScrollAnchor id='locations' />
       <div className='container mx-auto py-8'>
-        <h2 className='whitespace-normal text-center text-3xl font-light capitalize text-gold-700 sm:text-3xl md:whitespace-pre-wrap md:leading-tight lg:text-4xl lg:leading-tight'>
-          Discover Unique Stays
+        <h2 className='whitespace-normal text-center text-4xl font-light capitalize text-gold-700 sm:text-5xl md:whitespace-pre-wrap md:leading-tight lg:text-6xl'>
+          {heading}
         </h2>
-        <p className='text-base'>
-          <em>View Our Featured Guesthouses</em>
-        </p>
-        <div className='flex flex-col gap-5'>
-          {featured_guesthouses?.map((guesthouse, index) => {
+        <h3 className='mt-6 text-center text-xl font-light sm:text-2xl'>
+          {subheading}
+        </h3>
+        <div className='my-8 flex flex-col gap-12'>
+          {guesthouses?.map((guesthouse, index) => {
             if (typeof guesthouse === 'string') return null
             return (
               <PropertyPreview
                 key={guesthouse.slug + '-' + index}
                 guesthouse={guesthouse}
-                alignment={index % 2 === 0 ? 'start' : 'end'}
               />
             )
           })}

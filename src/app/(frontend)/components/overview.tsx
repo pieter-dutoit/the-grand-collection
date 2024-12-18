@@ -11,6 +11,7 @@ import { Home } from 'lucide-react'
 
 export default async function Overview(): Promise<JSX.Element> {
   const data = await fetchHomePageData('overview')
+
   const {
     overview: {
       heading,
@@ -18,8 +19,8 @@ export default async function Overview(): Promise<JSX.Element> {
       features = [],
       images = [],
       locations_link
-    }
-  } = data
+    } = {}
+  } = data ?? {}
 
   return (
     <section className='relative w-full bg-olive-50'>
@@ -97,10 +98,10 @@ export default async function Overview(): Promise<JSX.Element> {
                   }),
                   'mt-2 flex flex-row items-center'
                 )}
-                href={locations_link.link_url}
+                href={locations_link?.link_url ?? '#'}
               >
                 <Home />
-                {locations_link.link_text}
+                {locations_link?.link_text}
               </Link>
             </li>
           </ul>
