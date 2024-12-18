@@ -1,13 +1,13 @@
-import { GroupField } from 'payload'
+import { ArrayField } from 'payload'
 
-const SocialMediaLinks: GroupField = {
+const SocialMediaLinks: ArrayField = {
   name: 'socials',
   label: 'Social Media Links',
-  type: 'group',
+  type: 'array',
   fields: [
     {
-      name: 'name',
-      label: 'Platform Name',
+      name: 'platform',
+      label: 'Platform',
       type: 'relationship',
       relationTo: 'social-media-platforms',
       hasMany: false,

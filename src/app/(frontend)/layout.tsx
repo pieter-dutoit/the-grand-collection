@@ -4,9 +4,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import { redhat } from '@/fonts/index'
 
-import Navbar from '@/components/layout/navbar'
-
-// import { Footer } from '@/ui/footer';
+import Navbar from '@/app/(frontend)/components/layout/navbar'
+import Footer from '@/app/(frontend)/components/layout/footer'
 
 export const metadata = {
   title: 'The Grand Collection',
@@ -23,7 +22,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
-        {/* <Footer /> */}
+        <Footer />
         <SpeedInsights />
       </body>
     </html>

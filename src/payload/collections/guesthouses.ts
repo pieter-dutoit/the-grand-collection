@@ -64,7 +64,7 @@ export const Guesthouses: CollectionConfig = {
               name: 'contact_persons',
               label: 'Contact Person(s)',
               type: 'relationship',
-              relationTo: 'contact-person',
+              relationTo: 'contact-persons',
               hasMany: true,
               minRows: 1,
               maxRows: 10

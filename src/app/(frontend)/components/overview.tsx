@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
-import ScrollAnchor from '@/app/(frontend)/components/scroll-anchor'
 import { getButtonStyles } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'
@@ -24,7 +23,7 @@ export default async function Overview(): Promise<JSX.Element> {
 
   return (
     <section className='relative w-full bg-olive-50'>
-      <ScrollAnchor id='overview' />
+      <div id='overview' className='absolute -top-16' />
       <div className='container mx-auto py-8'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
           {/* Q1 */}

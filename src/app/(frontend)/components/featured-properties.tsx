@@ -1,6 +1,5 @@
 import { fetchHomePageData } from '@/lib/data'
 
-import ScrollAnchor from './scroll-anchor'
 import PropertyPreview from './property-preview'
 
 export default async function Properties(): Promise<JSX.Element> {
@@ -11,7 +10,7 @@ export default async function Properties(): Promise<JSX.Element> {
 
   return (
     <section className='relative w-full'>
-      <ScrollAnchor id='locations' />
+      <div id='locations' className='absolute -top-16' />
       <div className='container mx-auto py-8'>
         <h2 className='whitespace-normal text-center text-4xl font-light capitalize text-gold-700 sm:text-5xl md:whitespace-pre-wrap md:leading-tight lg:text-6xl'>
           {heading}

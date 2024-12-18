@@ -15,7 +15,7 @@ export interface Config {
     users: User
     media: Media
     guesthouses: Guesthouse
-    'contact-person': ContactPerson
+    'contact-persons': ContactPerson
     'social-media-platforms': SocialMediaPlatform
     'payload-locked-documents': PayloadLockedDocument
     'payload-preferences': PayloadPreference
@@ -27,7 +27,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>
     media: MediaSelect<false> | MediaSelect<true>
     guesthouses: GuesthousesSelect<false> | GuesthousesSelect<true>
-    'contact-person': ContactPersonSelect<false> | ContactPersonSelect<true>
+    'contact-persons': ContactPersonsSelect<false> | ContactPersonsSelect<true>
     'social-media-platforms':
       | SocialMediaPlatformsSelect<false>
       | SocialMediaPlatformsSelect<true>
@@ -174,17 +174,20 @@ export interface Guesthouse {
         | 'Western Cape'
       postalCode: string
     }
-    socials: {
-      name: string | SocialMediaPlatform
-      url: string
-    }
+    socials?:
+      | {
+          platform: string | SocialMediaPlatform
+          url: string
+          id?: string | null
+        }[]
+      | null
   }
   updatedAt: string
   createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-person".
+ * via the `definition` "contact-persons".
  */
 export interface ContactPerson {
   id: string
@@ -201,7 +204,8 @@ export interface ContactPerson {
  */
 export interface SocialMediaPlatform {
   id: string
-  platform: string
+  name: string
+  icon: string | Media
   updatedAt: string
   createdAt: string
 }
@@ -229,7 +233,7 @@ export interface PayloadLockedDocument {
         value: string | Guesthouse
       } | null)
     | ({
-        relationTo: 'contact-person'
+        relationTo: 'contact-persons'
         value: string | ContactPerson
       } | null)
     | ({
@@ -376,8 +380,9 @@ export interface GuesthousesSelect<T extends boolean = true> {
         socials?:
           | T
           | {
-              name?: T
+              platform?: T
               url?: T
+              id?: T
             }
       }
   updatedAt?: T
@@ -385,9 +390,9 @@ export interface GuesthousesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-person_select".
+ * via the `definition` "contact-persons_select".
  */
-export interface ContactPersonSelect<T extends boolean = true> {
+export interface ContactPersonsSelect<T extends boolean = true> {
   name?: T
   email?: T
   phone?: T
@@ -400,7 +405,8 @@ export interface ContactPersonSelect<T extends boolean = true> {
  * via the `definition` "social-media-platforms_select".
  */
 export interface SocialMediaPlatformsSelect<T extends boolean = true> {
-  platform?: T
+  name?: T
+  icon?: T
   updatedAt?: T
   createdAt?: T
 }
@@ -469,6 +475,14 @@ export interface HomePage {
     subheading: string
     guesthouses: (string | Guesthouse)[]
   }
+  socials?:
+    | {
+        platform: string | SocialMediaPlatform
+        url: string
+        id?: string | null
+      }[]
+    | null
+  contactPersons?: (string | ContactPerson)[] | null
   updatedAt?: string | null
   createdAt?: string | null
 }
@@ -516,6 +530,14 @@ export interface HomePageSelect<T extends boolean = true> {
         subheading?: T
         guesthouses?: T
       }
+  socials?:
+    | T
+    | {
+        platform?: T
+        url?: T
+        id?: T
+      }
+  contactPersons?: T
   updatedAt?: T
   createdAt?: T
   globalType?: T
