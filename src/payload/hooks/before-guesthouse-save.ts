@@ -1,12 +1,10 @@
 import { CollectionBeforeChangeHook } from 'payload'
+import createSlug from '../utils/create-slug'
 
 const beforeGuesthouseSave: CollectionBeforeChangeHook = async ({ data }) => {
   return {
     ...data,
-    slug: data.name
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^a-z0-9-]/g, '')
+    slug: createSlug(data.name)
   }
 }
 

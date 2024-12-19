@@ -16,14 +16,14 @@ import { getButtonStyles } from '@/components/ui/button'
 
 import MobileDrawer from './components/mobile-drawer'
 import NavOptions from './components/nav-options'
-import NavLink from './components/nav-link'
 
 import { getBookingOptions } from './data'
+import BookingOptions from './components/booking-options'
 
 export default async function Navbar(): Promise<JSX.Element> {
   const bookingOptions = await getBookingOptions()
   return (
-    <header className='sticky left-0 top-0 z-50 h-16 w-full border-b border-b-sage-100 bg-white'>
+    <header className='sticky left-0 top-0 z-50 h-16 w-full border-b border-b-olive-100 bg-white'>
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between px-[5vw] sm:px-8 lg:px-20'>
         {/* Left content */}
         <div className='flex items-center'>
@@ -56,9 +56,7 @@ export default async function Navbar(): Promise<JSX.Element> {
                 Book Now
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                {bookingOptions.map((option) => (
-                  <NavLink key={option.href + '-booking'} {...option} />
-                ))}
+                <BookingOptions options={bookingOptions} />
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>

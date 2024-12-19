@@ -1,6 +1,5 @@
-import { getPayload } from 'payload'
-import config from '@payload-config'
-import { Guesthouse, Media } from '@/payload/payload-types'
+import { Media } from '@/payload/payload-types'
+import { getGuestHouses } from '@/lib/data'
 
 const DEFAULT_LABEL_STYLE: Pick<NavLabel, 'variant' | 'color'> = {
   variant: 'ghost',
@@ -21,20 +20,7 @@ export interface NavOption {
   image?: Media | string
   nested?: NavOption[]
   externalSiteName?: string
-}
-
-export const getGuestHouses = async (): Promise<Guesthouse[]> => {
-  const payload = await getPayload({ config })
-  const res = await payload.find({
-    collection: 'guesthouses',
-    depth: 2,
-    pagination: false,
-    sort: '-name'
-  })
-  if (!res) {
-    throw new Error('Failed to fetch home page data')
-  }
-  return res.docs
+  isHighlighted?: boolean
 }
 
 export async function getNavOptions(): Promise<NavOption[]> {
@@ -45,8 +31,8 @@ export async function getNavOptions(): Promise<NavOption[]> {
       label: { text: 'Home', ...DEFAULT_LABEL_STYLE }
     },
     {
-      href: '/contact',
-      label: { text: 'Contact Us', ...DEFAULT_LABEL_STYLE }
+      href: '/about',
+      label: { text: 'About Us', ...DEFAULT_LABEL_STYLE }
     },
     {
       label: { text: 'Our Locations', ...DEFAULT_LABEL_STYLE },
@@ -68,7 +54,7 @@ export async function getNavOptions(): Promise<NavOption[]> {
               text: guesthouse.name,
               ...DEFAULT_LABEL_STYLE
             },
-            image: guesthouse.content.gallery[0],
+            image: guesthouse.content.images.exterior[0],
             address: `${guesthouse.contact_details.address.city}, ${guesthouse.contact_details.address.province}`
           })
         )

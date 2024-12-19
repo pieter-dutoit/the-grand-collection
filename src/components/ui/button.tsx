@@ -72,7 +72,7 @@ const buttonVariants = cva(
         variant: 'default',
         colour: 'olive',
         className:
-          'bg-olive-400 text-olive-50 shadow hover:bg-olive-400/90 dark:bg-olive-50 dark:text-olive-900 dark:hover:bg-olive-50/90'
+          'bg-olive-500/85 text-olive-50 shadow hover:bg-olive-400/90 dark:bg-olive-50 dark:text-olive-900 dark:hover:bg-olive-50/90'
       },
       {
         variant: 'outline',

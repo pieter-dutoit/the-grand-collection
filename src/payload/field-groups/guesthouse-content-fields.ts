@@ -2,13 +2,6 @@ import { Field } from 'payload'
 
 export const GuesthouseContentFields: Field[] = [
   {
-    name: 'background_image',
-    label: 'Background / Hero Image',
-    type: 'upload',
-    relationTo: 'media',
-    required: true
-  },
-  {
     name: 'heading',
     type: 'text',
     label:
@@ -28,16 +21,6 @@ export const GuesthouseContentFields: Field[] = [
     maxLength: 1000
   },
   {
-    name: 'gallery',
-    label: 'Main Gallery (3 or more images)',
-    type: 'upload',
-    required: true,
-    relationTo: 'media',
-    hasMany: true,
-    minRows: 3,
-    maxRows: 10
-  },
-  {
     name: 'general_amenities',
     label: 'General Amenities',
     type: 'relationship',
@@ -46,6 +29,40 @@ export const GuesthouseContentFields: Field[] = [
     required: true,
     minRows: 1,
     maxRows: 100
+  },
+  {
+    name: 'images',
+    type: 'group',
+    label: 'Images',
+    fields: [
+      {
+        name: 'background_image',
+        label: 'Background / Hero Image',
+        type: 'upload',
+        relationTo: 'media',
+        required: true
+      },
+      {
+        name: 'exterior',
+        label: 'Exterior Gallery (3 or more images)',
+        type: 'upload',
+        required: true,
+        relationTo: 'media',
+        hasMany: true,
+        minRows: 3,
+        maxRows: 10
+      },
+      {
+        name: 'interior',
+        label: 'Interior Gallery (3 or more images)',
+        type: 'upload',
+        required: true,
+        relationTo: 'media',
+        hasMany: true,
+        minRows: 3,
+        maxRows: 10
+      }
+    ]
   }
 ]
 

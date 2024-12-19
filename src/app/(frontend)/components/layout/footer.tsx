@@ -1,13 +1,14 @@
+import 'server-only'
+
 import Image from 'next/image'
+import { twMerge } from 'tailwind-merge'
+import { Mail, Phone } from 'lucide-react'
 import Link from 'next/link'
 
 import { MinimalTextLogo } from '@/components/ui/logos'
-import { fetchHomePageData } from '@/lib/data'
+import { fetchHomePageData, getGuestHouses } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 import { getButtonStyles } from '@/components/ui/button'
-import { twMerge } from 'tailwind-merge'
-import { Mail, Phone } from 'lucide-react'
-import { getGuestHouses } from './navbar/data'
 
 export default async function Footer(): Promise<JSX.Element> {
   const { socials } = await fetchHomePageData('socials')

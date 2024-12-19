@@ -11,7 +11,7 @@ import { extractImageProps } from '@/lib/utils'
 export async function Hero(): Promise<JSX.Element> {
   const { hero } = await fetchHomePageData('hero')
 
-  if (!hero) return <> </>
+  if (!hero) return <></>
 
   const { title, background_image, locations_link } = hero
   const { url, alt } = extractImageProps(background_image)
@@ -20,7 +20,7 @@ export async function Hero(): Promise<JSX.Element> {
     <section className='relative h-[75vh] max-h-[40rem] w-screen bg-sage-700 sm:max-h-none'>
       <div className='absolute inset-0 size-full'>
         <Image
-          src={url ?? ''}
+          src={url}
           alt={alt}
           className='object-cover object-center'
           fill

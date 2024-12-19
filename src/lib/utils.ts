@@ -10,6 +10,7 @@ export function extractImageProps(image: Media | string): {
   url: string
   alt: string
 } {
+  if (typeof image === 'string') return { url: image, alt: '' }
   const { url, alt } = typeof image === 'object' ? image : { url: '', alt: '' }
   return { url: url || '', alt: alt || '' }
 }

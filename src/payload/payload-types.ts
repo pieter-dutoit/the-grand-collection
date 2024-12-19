@@ -150,11 +150,14 @@ export interface Guesthouse {
     url: string
   }
   content: {
-    background_image: string | Media
     heading: string
     description: string
-    gallery: (string | Media)[]
     general_amenities: (string | Amenity)[]
+    images: {
+      background_image: string | Media
+      exterior: (string | Media)[]
+      interior: (string | Media)[]
+    }
   }
   contact_details: {
     contact_persons?: (string | ContactPerson)[] | null
@@ -358,11 +361,16 @@ export interface GuesthousesSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        background_image?: T
         heading?: T
         description?: T
-        gallery?: T
         general_amenities?: T
+        images?:
+          | T
+          | {
+              background_image?: T
+              exterior?: T
+              interior?: T
+            }
       }
   contact_details?:
     | T

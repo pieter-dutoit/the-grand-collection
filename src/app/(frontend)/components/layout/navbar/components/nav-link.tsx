@@ -11,6 +11,7 @@ import type { NavOption } from '../data'
 
 function BlockLink({ label, href }: NavOption): JSX.Element {
   const { variant, color, text } = label
+
   return (
     <Link legacyBehavior href={href ?? '#'} passHref>
       <NavigationMenuLink
@@ -36,7 +37,7 @@ function DetailedNavLink({
   address
 }: NavOption): JSX.Element {
   const { text } = label
-  const { alt } = image ? extractImageProps(image) : { alt: '' }
+  const { alt, url } = image ? extractImageProps(image) : { alt: '', url: '' }
   return (
     <Link legacyBehavior href={href ?? '#'} passHref className='my-1 flex'>
       <NavigationMenuLink className='my-1 w-[250px] overflow-hidden rounded-lg border border-olive-100 bg-olive-50 transition-colors hover:bg-olive-50/50 active:border-olive-300 sm:w-[350px] lg:bg-transparent'>
@@ -45,7 +46,7 @@ function DetailedNavLink({
             width={90}
             height={90}
             alt={alt}
-            src={'/'}
+            src={url}
             className='h-14 w-12 content-center rounded-l-lg bg-olive-100 object-cover sm:size-[90px]'
             loading='lazy'
           />
@@ -81,14 +82,20 @@ function DetailedNavLink({
 function ExternalNavLink({
   label,
   href,
-  externalSiteName
+  externalSiteName,
+  isHighlighted
 }: NavOption): JSX.Element {
+  const highlightedStyles = isHighlighted ? 'bg-olive-100' : 'bg-white'
+
   return (
     <NavigationMenuLink
       href={href}
       target='_blank'
       rel='noopener noreferrer'
-      className='my-1 flex min-w-48 flex-row items-center justify-end rounded-sm border border-olive-200 bg-gold-50/0 py-1 pl-4 pr-2 transition-colors hover:border-olive-950 active:border-olive-500'
+      className={twMerge(
+        'my-1 flex min-w-48 flex-row items-center justify-end rounded-sm border border-olive-200 py-1 pl-4 pr-2 transition-colors hover:border-olive-950 active:border-olive-500',
+        highlightedStyles
+      )}
     >
       <div className='flex flex-col items-end'>
         <span className='text-nowrap text-base text-olive-800'>
