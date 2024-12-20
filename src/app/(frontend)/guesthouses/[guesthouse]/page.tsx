@@ -39,7 +39,7 @@ export default async function ThePaarlGrand({
     <>
       <Hero guesthouse={data} />
       <Navbar />
-      <Gallery images={data.content.images} />
+      <Gallery data={data} />
 
       <div className='h-screen'>hello</div>
     </>

@@ -24,7 +24,7 @@ export default function Hero({
 
   const { url: heroSrc, alt } = extractImageProps(background_image)
   return (
-    <section className='relative'>
+    <section className='relative bg-olive-50'>
       <div className='container relative z-10 mx-auto py-8 lg:py-16'>
         <h1 className='text-4xl text-olive-800 md:text-5xl lg:text-6xl'>
           {name}
@@ -54,9 +54,9 @@ export default function Hero({
           fill
           className='object-cover object-center'
           priority
-          sizes='70vw'
+          sizes='(max-width: 640px) 50vw, 70vw'
         />
-        <div className='absolute inset-0 bg-gradient-to-r from-white to-transparent' />
+        <div className='absolute inset-0 bg-gradient-to-r from-olive-50 to-transparent' />
       </div>
     </section>
   )
