@@ -1,14 +1,12 @@
 import 'server-only'
-
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { twMerge } from 'tailwind-merge'
 
 import { getGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
-import { getButtonStyles } from '@/components/ui/button'
 
 import Hero from './components/hero'
+import Navbar from './components/navbar'
+import Gallery from './components/gallery'
 
 type Params = Promise<{ guesthouse: string }>
 
@@ -37,38 +35,13 @@ export default async function ThePaarlGrand({
 
   if (!data) return notFound()
 
-  const NAV_OPTIONS = [
-    { href: '#gallery', text: 'Gallery' },
-    { href: '#rooms', text: 'Rooms' },
-    { href: '#amenities', text: 'Amenities' },
-    { href: '#contact', text: 'Contact Us' }
-  ]
-
   return (
     <>
       <Hero guesthouse={data} />
-      <nav className='sticky left-0 top-16 z-40 h-14 w-full bg-olive-50 lg:h-16'>
-        <ul className='container mx-auto flex h-full snap-x items-center space-x-4 overflow-x-auto'>
-          {NAV_OPTIONS.map(({ href, text }) => (
-            <li key={href} className='snap-center'>
-              <Link
-                href={href}
-                className={twMerge(
-                  getButtonStyles({
-                    variant: 'ghost',
-                    colour: 'gold'
-                  }),
-                  'font-semibold'
-                )}
-              >
-                {text}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <Navbar />
+      <Gallery images={data.content.images} />
 
-      <div className='h-[200vh]'>hello</div>
+      <div className='h-screen'>hello</div>
     </>
   )
 }
