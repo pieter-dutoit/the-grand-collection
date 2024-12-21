@@ -13,7 +13,7 @@ export default function Gallery({ data }: { data: Guesthouse }): JSX.Element {
       images: { interior = [], exterior = [] }
     }
   } = data
-  const preview = [...interior?.slice(0, 3), ...exterior?.slice(0, 3)]
+  const preview = [...exterior?.slice(0, 3), ...interior?.slice(0, 3)]
 
   return (
     <section className='mx-auto bg-gold-100 py-8 lg:py-16'>
@@ -69,7 +69,7 @@ export default function Gallery({ data }: { data: Guesthouse }): JSX.Element {
             })}
           </button>
         </DialogTrigger>
-        <GalleryDialog name={name} images={[...interior, ...exterior]} />
+        <GalleryDialog name={name} images={[...exterior, ...interior]} />
       </Dialog>
     </section>
   )

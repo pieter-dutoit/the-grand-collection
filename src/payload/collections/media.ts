@@ -8,7 +8,7 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      label: 'Brief image description (for SEO)',
+      label: 'Brief image description, e.g. "Wifi icon" or "View of pool"',
       required: true
     }
   ],
@@ -37,7 +37,7 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: 'webp',
       options: {
-        quality: 100
+        quality: 90
       }
     },
     mimeTypes: ['image/*']
