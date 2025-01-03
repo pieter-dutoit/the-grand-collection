@@ -4,10 +4,10 @@ import FeaturedProperties from '@/app/(frontend)/components/featured-properties'
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Hero />
       <Overview />
       <FeaturedProperties />
-    </main>
+    </>
   )
 }

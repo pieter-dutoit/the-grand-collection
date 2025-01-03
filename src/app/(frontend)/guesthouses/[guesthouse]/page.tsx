@@ -1,4 +1,5 @@
 import 'server-only'
+
 import { notFound } from 'next/navigation'
 
 import { getGuestHouses } from '@/lib/data'
@@ -7,6 +8,7 @@ import { Guesthouse } from '@/payload/payload-types'
 import Hero from './components/hero'
 import Navbar from './components/navbar'
 import Gallery from './components/gallery'
+import Amenities from './components/amenities'
 
 type Params = Promise<{ guesthouse: string }>
 
@@ -40,8 +42,7 @@ export default async function ThePaarlGrand({
       <Hero guesthouse={data} />
       <Navbar />
       <Gallery data={data} />
-
-      <div className='h-screen'>hello</div>
+      <Amenities data={data} />
     </>
   )
 }

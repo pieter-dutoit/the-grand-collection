@@ -152,7 +152,16 @@ export interface Guesthouse {
   content: {
     heading: string
     description: string
-    general_amenities: (string | Amenity)[]
+    amenities: {
+      heading: string
+      description: string
+      background_image: string | Media
+      general_amenities: (string | Amenity)[]
+    }
+    gallery: {
+      heading: string
+      description: string
+    }
     images: {
       background_image: string | Media
       exterior: (string | Media)[]
@@ -363,7 +372,20 @@ export interface GuesthousesSelect<T extends boolean = true> {
     | {
         heading?: T
         description?: T
-        general_amenities?: T
+        amenities?:
+          | T
+          | {
+              heading?: T
+              description?: T
+              background_image?: T
+              general_amenities?: T
+            }
+        gallery?:
+          | T
+          | {
+              heading?: T
+              description?: T
+            }
         images?:
           | T
           | {

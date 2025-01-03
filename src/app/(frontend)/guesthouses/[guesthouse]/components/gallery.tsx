@@ -4,7 +4,9 @@ import { twMerge } from 'tailwind-merge'
 import { extractImageProps } from '@/lib/utils'
 import { Guesthouse } from '@/payload/payload-types'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+
 import GalleryDialog from './gallery-dialog'
+import SectionHeading from './section-heading'
 
 export default function Gallery({ data }: { data: Guesthouse }): JSX.Element {
   const {
@@ -20,13 +22,12 @@ export default function Gallery({ data }: { data: Guesthouse }): JSX.Element {
     <section className='mx-auto bg-gold-100 py-8 lg:py-16'>
       <div id='gallery' className='absolute -mt-36 lg:-mt-48' />
 
-      <h2>{heading}</h2>
-      <h3>{description}</h3>
+      <SectionHeading heading={heading} description={description} />
 
       <Dialog>
         <DialogTrigger asChild>
           <button
-            className='container mx-auto grid grid-cols-6 gap-2 md:gap-4'
+            className='container mx-auto mt-5 grid grid-cols-6 gap-2 md:mt-8 md:gap-4 lg:mt-10'
             aria-label='View Gallery'
           >
             {preview.map((image, index) => {

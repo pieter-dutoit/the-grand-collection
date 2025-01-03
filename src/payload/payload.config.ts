@@ -20,8 +20,6 @@ import { Media } from './collections/media'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-console.log('Resolved path:', path.resolve(dirname, './globals/home-page'))
-
 export default buildConfig({
   admin: {
     user: Users.slug,

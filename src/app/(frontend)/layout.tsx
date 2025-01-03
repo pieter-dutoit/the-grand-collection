@@ -21,9 +21,11 @@ export default function RootLayout({
     <html lang='en' className={`${redhat.variable} scroll-smooth antialiased`}>
       <body>
         <Navbar />
-        {children}
-        <Footer />
-        {/* <SpeedInsights /> */}
+        <main>
+          {children}
+          <Footer />
+          {/* <SpeedInsights /> */}
+        </main>
       </body>
     </html>
   )
