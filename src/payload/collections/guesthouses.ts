@@ -7,7 +7,7 @@ import Address from '../field-groups/address'
 import BookingPlatform from '../field-groups/booking-platform'
 // import SEOFields from '../field-groups/seo'
 import SocialMediaLinks from '../field-groups/social-media-links'
-import GuestHouseDetailsFields from '../field-groups/guesthouse-content-fields'
+import GuestHouseContentFields from '../field-groups/guesthouse-content-fields'
 
 import { validateSlugFriendly } from '../utils/validation'
 import beforeGuesthouseSave from '../hooks/before-guesthouse-save'
@@ -54,7 +54,7 @@ export const Guesthouses: CollectionConfig = {
         {
           name: 'content',
           label: 'Page Content',
-          fields: GuestHouseDetailsFields
+          fields: GuestHouseContentFields
         },
         {
           name: 'contact_details',

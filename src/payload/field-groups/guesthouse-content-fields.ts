@@ -31,6 +31,29 @@ export const GuesthouseContentFields: Field[] = [
     maxRows: 100
   },
   {
+    name: 'gallery',
+    type: 'group',
+    label: 'Gallery',
+    fields: [
+      {
+        name: 'heading',
+        label: 'Gallery Heading',
+        type: 'text',
+        required: true,
+        minLength: 3,
+        maxLength: 100
+      },
+      {
+        name: 'description',
+        label: 'Gallery Description',
+        type: 'textarea',
+        required: true,
+        minLength: 3,
+        maxLength: 1000
+      }
+    ]
+  },
+  {
     name: 'images',
     type: 'group',
     label: 'Images',

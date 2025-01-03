@@ -38,7 +38,7 @@ export default function ImageCarousel({
           const borderClass =
             selectedPhoto === index
               ? 'border-gold-400 shadow-lg'
-              : 'border-gold-50  opacity-40 grayscale-[60%]'
+              : 'border-gold-50  opacity-50 grayscale-[40%]'
 
           return (
             <CarouselItem key={index} className='basis-1/4 pl-2 md:basis-1/6'>
