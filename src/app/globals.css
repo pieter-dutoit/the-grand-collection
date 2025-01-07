@@ -6,6 +6,10 @@ body {
   font-family: var(--font-redhat), Arial, Helvetica, sans-serif;
 }
 
+.playball {
+  font-family: var(--font-playball), cursive;
+}
+
 @layer base {
   :root {
     --radius: 0.5rem;

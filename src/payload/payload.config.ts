@@ -16,6 +16,8 @@ import { SocialMediaPlatforms } from './collections/social-media-platforms'
 import { Amenities } from './collections/amenities'
 import { Users } from './collections/users'
 import { Media } from './collections/media'
+import { Rooms } from './collections/rooms'
+import { Beds } from './collections/beds'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,9 +32,11 @@ export default buildConfig({
   globals: [HomePage],
   collections: [
     Amenities,
+    Beds,
     Users,
     Media,
     Guesthouses,
+    Rooms,
     ContactPersons,
     SocialMediaPlatforms
   ],

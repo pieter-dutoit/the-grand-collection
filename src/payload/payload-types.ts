@@ -12,9 +12,11 @@ export interface Config {
   }
   collections: {
     amenities: Amenity
+    beds: Bed
     users: User
     media: Media
     guesthouses: Guesthouse
+    rooms: Room
     'contact-persons': ContactPerson
     'social-media-platforms': SocialMediaPlatform
     'payload-locked-documents': PayloadLockedDocument
@@ -24,9 +26,11 @@ export interface Config {
   collectionsJoins: {}
   collectionsSelect: {
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>
+    beds: BedsSelect<false> | BedsSelect<true>
     users: UsersSelect<false> | UsersSelect<true>
     media: MediaSelect<false> | MediaSelect<true>
     guesthouses: GuesthousesSelect<false> | GuesthousesSelect<true>
+    rooms: RoomsSelect<false> | RoomsSelect<true>
     'contact-persons': ContactPersonsSelect<false> | ContactPersonsSelect<true>
     'social-media-platforms':
       | SocialMediaPlatformsSelect<false>
@@ -121,6 +125,17 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "beds".
+ */
+export interface Bed {
+  id: string
+  name: string
+  icon: string | Media
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -152,12 +167,6 @@ export interface Guesthouse {
   content: {
     heading: string
     description: string
-    amenities: {
-      heading: string
-      description: string
-      background_image: string | Media
-      general_amenities: (string | Amenity)[]
-    }
     gallery: {
       heading: string
       description: string
@@ -166,6 +175,18 @@ export interface Guesthouse {
       background_image: string | Media
       exterior: (string | Media)[]
       interior: (string | Media)[]
+    }
+    amenities: {
+      heading: string
+      description: string
+      background_image: string | Media
+      general_amenities: (string | Amenity)[]
+    }
+    rooms: {
+      heading: string
+      description: string
+      people_icon: string | Media
+      rooms?: (string | Room)[] | null
     }
   }
   contact_details: {
@@ -194,6 +215,28 @@ export interface Guesthouse {
         }[]
       | null
   }
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rooms".
+ */
+export interface Room {
+  id: string
+  name: string
+  description: string
+  details: {
+    sleeps_adults: number
+    sleeps_children: number
+    bed_count: {
+      bed: string | Bed
+      quantity: number
+      id?: string | null
+    }[]
+  }
+  amenities: (string | Amenity)[]
+  gallery: (string | Media)[]
   updatedAt: string
   createdAt: string
 }
@@ -233,6 +276,10 @@ export interface PayloadLockedDocument {
         value: string | Amenity
       } | null)
     | ({
+        relationTo: 'beds'
+        value: string | Bed
+      } | null)
+    | ({
         relationTo: 'users'
         value: string | User
       } | null)
@@ -243,6 +290,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'guesthouses'
         value: string | Guesthouse
+      } | null)
+    | ({
+        relationTo: 'rooms'
+        value: string | Room
       } | null)
     | ({
         relationTo: 'contact-persons'
@@ -301,6 +352,16 @@ export interface PayloadMigration {
 export interface AmenitiesSelect<T extends boolean = true> {
   name?: T
   description?: T
+  icon?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "beds_select".
+ */
+export interface BedsSelect<T extends boolean = true> {
+  name?: T
   icon?: T
   updatedAt?: T
   createdAt?: T
@@ -372,14 +433,6 @@ export interface GuesthousesSelect<T extends boolean = true> {
     | {
         heading?: T
         description?: T
-        amenities?:
-          | T
-          | {
-              heading?: T
-              description?: T
-              background_image?: T
-              general_amenities?: T
-            }
         gallery?:
           | T
           | {
@@ -392,6 +445,22 @@ export interface GuesthousesSelect<T extends boolean = true> {
               background_image?: T
               exterior?: T
               interior?: T
+            }
+        amenities?:
+          | T
+          | {
+              heading?: T
+              description?: T
+              background_image?: T
+              general_amenities?: T
+            }
+        rooms?:
+          | T
+          | {
+              heading?: T
+              description?: T
+              people_icon?: T
+              rooms?: T
             }
       }
   contact_details?:
@@ -415,6 +484,31 @@ export interface GuesthousesSelect<T extends boolean = true> {
               id?: T
             }
       }
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rooms_select".
+ */
+export interface RoomsSelect<T extends boolean = true> {
+  name?: T
+  description?: T
+  details?:
+    | T
+    | {
+        sleeps_adults?: T
+        sleeps_children?: T
+        bed_count?:
+          | T
+          | {
+              bed?: T
+              quantity?: T
+              id?: T
+            }
+      }
+  amenities?: T
+  gallery?: T
   updatedAt?: T
   createdAt?: T
 }

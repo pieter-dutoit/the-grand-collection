@@ -25,7 +25,7 @@ export const getGuestHouses = async (query?: Where): Promise<Guesthouse[]> => {
   const payload = await getPayload({ config })
   const res = await payload.find({
     collection: 'guesthouses',
-    depth: 2,
+    depth: 3,
     pagination: false,
     sort: '-name',
     where: query || {}

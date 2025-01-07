@@ -9,6 +9,7 @@ import Hero from './components/hero'
 import Navbar from './components/navbar'
 import Gallery from './components/gallery'
 import Amenities from './components/amenities'
+import { Rooms } from './components/rooms'
 
 type Params = Promise<{ guesthouse: string }>
 
@@ -43,6 +44,7 @@ export default async function ThePaarlGrand({
       <Navbar />
       <Gallery data={data} />
       <Amenities data={data} />
+      <Rooms data={data} />
     </>
   )
 }

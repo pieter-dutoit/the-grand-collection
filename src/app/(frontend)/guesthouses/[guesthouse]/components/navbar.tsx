@@ -12,7 +12,7 @@ const NAV_OPTIONS = [
 
 export default function Navbar(): JSX.Element {
   return (
-    <nav className='sticky left-0 top-16 z-40 h-14 w-full bg-olive-50 lg:h-16'>
+    <nav className='sticky left-0 top-16 z-40 h-14 w-full border-b-2 border-olive-200 bg-olive-50 lg:h-16'>
       <ul className='container mx-auto flex h-full snap-x items-center space-x-1 overflow-x-auto'>
         {NAV_OPTIONS.map(({ href, text }) => (
           <li key={href} className='snap-center'>

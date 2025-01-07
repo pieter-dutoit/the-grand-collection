@@ -2,7 +2,7 @@ import '@/app/globals.css'
 
 // import { SpeedInsights } from '@vercel/speed-insights/next'
 
-import { redhat } from '@/fonts/index'
+import { playball, redhat } from '@/fonts/index'
 
 import Navbar from '@/app/(frontend)/components/layout/navbar'
 import Footer from '@/app/(frontend)/components/layout/footer'
@@ -18,7 +18,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en' className={`${redhat.variable} scroll-smooth antialiased`}>
+    <html
+      lang='en'
+      className={`${redhat.variable} ${playball.variable} scroll-smooth antialiased`}
+    >
       <body>
         <Navbar />
         <main>

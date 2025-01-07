@@ -18,10 +18,10 @@ export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
     <section>
       <div id='amenities' className='absolute -mt-36 lg:-mt-48' />
 
-      <div className='relative flex flex-col items-center justify-center py-16 pr-0 md:pr-[50vw]'>
+      <div className='relative flex flex-col items-center justify-center py-8 pr-0 md:pr-[50vw] lg:py-16'>
         <SectionHeading heading={heading} description={description} />
 
-        <ul className='mx-8 mt-10 flex gap-6'>
+        <ul className='mx-8 mt-10 flex flex-wrap-reverse justify-center gap-6 lg:mx-16'>
           {general_amenities.map((amenity) => {
             if (typeof amenity === 'string') return null
             const { id, icon, name } = amenity
@@ -38,7 +38,7 @@ export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
                 {/* To show on hover */}
                 <div
                   tabIndex={-1}
-                  className='pointer-events-none absolute right-1/2 top-1/2 z-10 flex -translate-y-1/2 translate-x-1/2 flex-col items-center justify-center rounded-lg bg-olive-100/60 p-4 opacity-0 backdrop-blur-md transition-opacity duration-150 peer-hover:opacity-100 peer-active:opacity-100 md:right-1/4'
+                  className='pointer-events-none absolute right-1/2 top-1/2 z-10 flex max-w-[45vw] -translate-y-1/2 translate-x-1/2 flex-col items-center justify-center rounded-lg bg-olive-100/60 p-4 opacity-0 backdrop-blur-md transition-opacity duration-150 peer-hover:opacity-100 peer-active:opacity-100 md:right-1/4'
                 >
                   <Image src={url} alt={alt} height={20} width={20} />
                   <h4 className='mt-2 text-center text-2xl font-semibold'>
