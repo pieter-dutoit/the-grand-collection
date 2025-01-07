@@ -70,7 +70,7 @@ export default buildConfig({
   sharp,
   upload: {
     limits: {
-      fileSize: 10000000
+      fileSize: 4500000
     }
   }
 })
