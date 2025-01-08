@@ -32,9 +32,9 @@ export const ContactPersons: CollectionConfig = {
     },
     {
       name: 'position',
-      label: 'Position / Title',
+      label: 'Position / Title (Optional)',
       type: 'text',
-      required: true
+      required: false
     }
   ]
 }

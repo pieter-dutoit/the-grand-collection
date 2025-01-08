@@ -217,6 +217,7 @@ export interface Guesthouse {
   }
   updatedAt: string
   createdAt: string
+  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -249,7 +250,7 @@ export interface ContactPerson {
   name: string
   email: string
   phone: string
-  position: string
+  position?: string | null
   updatedAt: string
   createdAt: string
 }
@@ -486,6 +487,7 @@ export interface GuesthousesSelect<T extends boolean = true> {
       }
   updatedAt?: T
   createdAt?: T
+  _status?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

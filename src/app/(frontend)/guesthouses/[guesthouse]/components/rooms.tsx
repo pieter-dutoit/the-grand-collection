@@ -29,7 +29,7 @@ export const Rooms = ({ data }: PropTypes): JSX.Element => {
             return (
               <li
                 key={room.id}
-                className='grid- grid rounded-lg border-2 border-gold-200 bg-white text-olive-600 shadow-lg lg:grid-cols-2'
+                className='grid rounded-lg border-2 border-gold-200 bg-white text-olive-600 shadow-lg lg:grid-cols-2'
               >
                 <div className='order-2 flex flex-col p-4 lg:order-1'>
                   <RoomDetails room={room} peopleIcon={people_icon} />

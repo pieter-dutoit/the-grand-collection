@@ -13,7 +13,6 @@ export default function RoomDetails({
 }: PropTypes): JSX.Element {
   const { name, description, details, amenities } = room
   const { sleeps_adults, sleeps_children, bed_count } = details
-  console.log({ bed_count })
 
   const { url, alt } = extractImageProps(peopleIcon)
   return (
@@ -23,7 +22,7 @@ export default function RoomDetails({
       <h5 className='sr-only'>Room Beds and Capacity</h5>
       <ul className='mt-6 flex flex-col font-semibold'>
         <li className='flex items-center gap-2'>
-          <Image src={url} alt={alt} height={20} width={20} />
+          <Image src={url} alt={alt} height={20} width={20} unoptimized />
           <strong>Sleeps</strong> {sleeps_adults} Adults
           {sleeps_children
             ? ` & ${sleeps_children} Child${sleeps_children === 1 ? '' : 'ren'}`
@@ -36,7 +35,7 @@ export default function RoomDetails({
             const { url, alt } = extractImageProps(icon)
             return (
               <span key={bed.id} className='flex items-center gap-2'>
-                <Image src={url} alt={alt} height={20} width={20} />
+                <Image src={url} alt={alt} height={20} width={20} unoptimized />
                 <strong>
                   {quantity} x {bed.name}
                 </strong>{' '}
@@ -48,7 +47,7 @@ export default function RoomDetails({
       </ul>
 
       <h5 className='sr-only'>Amenities</h5>
-      <ul className='mt-2 flex flex-row flex-wrap items-center gap-2'>
+      <ul className='mt-4 flex flex-row flex-wrap items-center gap-2'>
         {amenities.map((amenity) => {
           if (typeof amenity === 'string') return null
           const { icon, name } = amenity
@@ -56,9 +55,9 @@ export default function RoomDetails({
           return (
             <li
               key={amenity.id}
-              className='mt-4 flex items-center gap-2 rounded-lg border-2 border-gold-600 px-3 py-1'
+              className='flex items-center gap-2 rounded-lg border-2 border-gold-600 px-3 py-1'
             >
-              <Image src={url} alt={alt} height={20} width={20} />
+              <Image src={url} alt={alt} height={20} width={20} unoptimized />
               {name}
             </li>
           )

@@ -59,7 +59,7 @@ export default async function Overview(): Promise<JSX.Element> {
                     key={url}
                     className={twMerge(
                       classes,
-                      'relative overflow-hidden rounded-md'
+                      'relative overflow-hidden rounded-lg border-2 border-sage-300 bg-olive-300'
                     )}
                   >
                     <Image

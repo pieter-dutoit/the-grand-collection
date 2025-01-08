@@ -20,12 +20,5 @@ export default async function Layout({
     return <></>
   }
 
-  const { booking_platform } = data
-
-  return (
-    <>
-      {children}
-      {booking_platform.name}
-    </>
-  )
+  return <>{children}</>
 }

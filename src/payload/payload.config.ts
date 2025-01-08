@@ -46,7 +46,10 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts')
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || ''
+    url: process.env.DATABASE_URI || '',
+    connectOptions: {
+      dbName: process.env.DATABASE_NAME || 'test'
+    }
   }),
   plugins: [
     s3Storage({

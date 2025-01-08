@@ -57,7 +57,7 @@ export default function PropertyPreview({
           return (
             <div
               className={twMerge(
-                'h-30 relative size-40 w-full overflow-hidden rounded-lg bg-white',
+                'h-30 relative size-40 w-full overflow-hidden rounded-lg border-2 border-sage-300 bg-sage-300',
                 sizeClasses
               )}
               key={url}

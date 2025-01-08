@@ -8,7 +8,11 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import GalleryDialog from './gallery-dialog'
 import SectionHeading from './section-heading'
 
-export default function Gallery({ data }: { data: Guesthouse }): JSX.Element {
+interface GalleryProps {
+  data: Guesthouse
+}
+
+export default function Gallery({ data }: GalleryProps): JSX.Element {
   const {
     name,
     content: {
@@ -19,7 +23,7 @@ export default function Gallery({ data }: { data: Guesthouse }): JSX.Element {
   const preview = [...exterior?.slice(0, 3), ...interior?.slice(0, 3)]
 
   return (
-    <section className='mx-auto bg-gold-100 py-8 lg:py-16'>
+    <section className='bg-gold-100 py-8 lg:py-16'>
       <div id='gallery' className='absolute -mt-36 lg:-mt-48' />
 
       <SectionHeading heading={heading} description={description} />

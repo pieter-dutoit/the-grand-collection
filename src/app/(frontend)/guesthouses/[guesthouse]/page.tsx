@@ -10,6 +10,7 @@ import Navbar from './components/navbar'
 import Gallery from './components/gallery'
 import Amenities from './components/amenities'
 import { Rooms } from './components/rooms'
+import ContactUs from './components/contact-us'
 
 type Params = Promise<{ guesthouse: string }>
 
@@ -45,6 +46,7 @@ export default async function ThePaarlGrand({
       <Gallery data={data} />
       <Amenities data={data} />
       <Rooms data={data} />
+      <ContactUs data={data} />
     </>
   )
 }

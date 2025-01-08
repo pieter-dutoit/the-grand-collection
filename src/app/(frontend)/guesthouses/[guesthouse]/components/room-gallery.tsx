@@ -22,17 +22,28 @@ export default function RoomGallery({ room }: PropTypes): JSX.Element {
             {thumbnails.map((image, index) => {
               const { url, alt } = extractImageProps(image)
               const classes = index === 0 ? 'col-span-3' : 'col-span-2'
+              const sizes =
+                index === 0
+                  ? '(max-width: 640px) 40vw, 20rem'
+                  : '(max-width: 640px) 25vw, 13rem'
 
               return (
-                <li key={url} className={twMerge(classes, 'relative min-h-48')}>
+                <li
+                  key={url}
+                  className={twMerge(
+                    classes,
+                    'relative min-h-48 overflow-hidden rounded-lg border-2 border-sage-300 bg-sage-300'
+                  )}
+                >
                   <Image
                     src={url}
                     alt={alt}
                     fill
-                    className='rounded-lg bg-olive-300 object-cover object-center lg:size-full'
+                    className='bg-olive-300 object-cover object-center lg:size-full'
+                    sizes={sizes}
                   />
                   {index === thumbnails.length - 1 && (
-                    <span className='absolute inset-0 flex items-center justify-center bg-olive-800 bg-opacity-50 text-2xl font-semibold text-white'>
+                    <span className='absolute inset-0 flex items-center justify-center bg-olive-800/50 text-2xl font-semibold text-white'>
                       +{gallery.length - thumbnails.length}
                     </span>
                   )}

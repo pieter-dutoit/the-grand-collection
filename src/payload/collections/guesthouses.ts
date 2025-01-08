@@ -13,6 +13,9 @@ import { validateSlugFriendly } from '../utils/validation'
 import beforeGuesthouseSave from '../hooks/before-guesthouse-save'
 
 export const Guesthouses: CollectionConfig = {
+  versions: {
+    drafts: true
+  },
   slug: 'guesthouses',
   admin: {
     useAsTitle: 'name'

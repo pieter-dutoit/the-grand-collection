@@ -24,12 +24,19 @@ export async function fetchHomePageData(
 export const getGuestHouses = async (query?: Where): Promise<Guesthouse[]> => {
   const payload = await getPayload({ config })
   const res = await payload.find({
+    draft: false,
     collection: 'guesthouses',
     depth: 3,
     pagination: false,
     sort: '-name',
-    where: query || {}
+    where: {
+      ...query,
+      _status: {
+        equals: 'published'
+      }
+    }
   })
+
   if (!res) {
     throw new Error('Failed to fetch guesthouse page data')
   }
