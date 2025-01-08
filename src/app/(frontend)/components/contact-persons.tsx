@@ -1,6 +1,7 @@
-import { ContactPerson } from '@/payload/payload-types'
 import { Mail, Phone } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
+
+import { ContactPerson } from '@/payload/payload-types'
 
 interface ContactsProps {
   contactPersons: (ContactPerson | string)[]

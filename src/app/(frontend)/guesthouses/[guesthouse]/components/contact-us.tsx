@@ -1,8 +1,9 @@
 import { Guesthouse } from '@/payload/payload-types'
 import Socials from '@/app/(frontend)/components/socials'
 
-import SectionHeading from './section-heading'
 import ContactPersons from '@/app/(frontend)/components/contact-persons'
+
+import SectionHeading from './section-heading'
 
 interface ContactUsProps {
   data: Guesthouse
