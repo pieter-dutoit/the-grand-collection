@@ -1,6 +1,6 @@
 import '@/app/globals.css'
 
-// import { SpeedInsights } from '@vercel/speed-insights/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import { playball, redhat } from '@/fonts/index'
 
@@ -27,7 +27,7 @@ export default function RootLayout({
         <main>
           {children}
           <Footer />
-          {/* <SpeedInsights /> */}
+          <SpeedInsights />
         </main>
       </body>
     </html>
