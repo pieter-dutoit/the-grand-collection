@@ -10,7 +10,9 @@ import SocialMediaLinks from '../field-groups/social-media-links'
 import GuestHouseContentFields from '../field-groups/guesthouse-content-fields'
 
 import { validateSlugFriendly } from '../utils/validation'
-import beforeGuesthouseSave from '../hooks/before-guesthouse-save'
+
+import revalidateAllPaths from '../hooks/collections/revalidate-all-paths'
+import createGuesthouseSlug from '../hooks/collections/create-guesthouse-slug'
 
 export const Guesthouses: CollectionConfig = {
   versions: {
@@ -25,7 +27,8 @@ export const Guesthouses: CollectionConfig = {
     read: isLoggedInOrIsPublished
   },
   hooks: {
-    beforeChange: [beforeGuesthouseSave]
+    beforeChange: [createGuesthouseSlug],
+    afterChange: [revalidateAllPaths]
   },
   fields: [
     {

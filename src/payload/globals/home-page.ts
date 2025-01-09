@@ -8,9 +8,13 @@ import OverviewFields from '@/payload/field-groups/overview-fields'
 import FeaturedPropertiesFields from '@/payload/field-groups/featured-properties-fields'
 
 import SocialMediaLinks from '../field-groups/social-media-links'
+import revalidateAllPaths from '../hooks/globals/revalidate-all-paths'
 
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
+  hooks: {
+    afterChange: [revalidateAllPaths]
+  },
   access: {
     read: isLoggedInOrIsPublished,
     update: isLoggedIn

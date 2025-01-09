@@ -37,7 +37,9 @@ export default async function ThePaarlGrand({
   const res: Guesthouse[] = await getGuestHouses({ slug: { equals: slug } })
   const [data] = res
 
-  if (!data) return notFound()
+  if (!data) {
+    notFound()
+  }
 
   return (
     <>
@@ -51,5 +53,5 @@ export default async function ThePaarlGrand({
   )
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
 export const revalidate = false

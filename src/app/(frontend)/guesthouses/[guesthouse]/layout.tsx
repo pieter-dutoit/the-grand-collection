@@ -17,7 +17,7 @@ export default async function Layout({
   const [data] = res
 
   if (!data) {
-    return <></>
+    return <>{children}</>
   }
 
   return <>{children}</>
