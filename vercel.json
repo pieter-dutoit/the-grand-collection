@@ -1,6 +1,6 @@
 {
   "functions": {
-    "src/app/(frontend)/*.{js,ts,tsx}": {
+    "src/app/(frontend)/**/*.{js,ts,tsx}": {
       "maxDuration": 60
     }
   }
