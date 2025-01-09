@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "src/app/(frontend)/*.js": {
+      "maxDuration": 25
+    }
+  }
+}
