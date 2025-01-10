@@ -1,8 +1,12 @@
 import type { CollectionConfig } from 'payload'
 import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
 
-export const Media: CollectionConfig = {
-  slug: 'media',
+export const SEOMedia: CollectionConfig = {
+  slug: 'seo-media',
+  labels: {
+    singular: 'SEO Media',
+    plural: 'SEO Media'
+  },
   access: { ...DEFAULT_COLLECTION_ACCESS, read: () => true },
   fields: [
     {
@@ -28,24 +32,36 @@ export const Media: CollectionConfig = {
       {
         name: 'thumbnail',
         fit: 'cover',
-        height: 200,
-        width: 200,
+        width: 600,
+        height: 315,
         formatOptions: {
-          format: 'webp',
+          format: 'jpeg',
           options: {
             quality: 75
+          }
+        }
+      },
+      {
+        name: 'twitter',
+        fit: 'cover',
+        width: 1600,
+        height: 675,
+        formatOptions: {
+          format: 'jpeg',
+          options: {
+            quality: 90
           }
         }
       }
     ],
     resizeOptions: {
-      width: 3840,
-      height: 2160,
-      fit: 'inside',
+      width: 1200,
+      height: 630,
+      fit: 'cover',
       position: 'center'
     },
     formatOptions: {
-      format: 'webp',
+      format: 'jpeg',
       options: {
         quality: 90
       }

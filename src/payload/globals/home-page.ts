@@ -9,9 +9,13 @@ import FeaturedPropertiesFields from '@/payload/field-groups/featured-properties
 
 import SocialMediaLinks from '../field-groups/social-media-links'
 import revalidateAllPaths from '../hooks/globals/revalidate-all-paths'
+import SEOFields from '../field-groups/seo'
 
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
+  versions: {
+    drafts: true
+  },
   hooks: {
     afterChange: [revalidateAllPaths]
   },
@@ -20,16 +24,31 @@ export const HomePage: GlobalConfig = {
     update: isLoggedIn
   },
   fields: [
-    HeroFields,
-    OverviewFields,
-    FeaturedPropertiesFields,
-    SocialMediaLinks,
     {
-      type: 'relationship',
-      name: 'contactPersons',
-      label: 'Contact Persons',
-      relationTo: 'contact-persons',
-      hasMany: true
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            HeroFields,
+            OverviewFields,
+            FeaturedPropertiesFields,
+            SocialMediaLinks,
+            {
+              type: 'relationship',
+              name: 'contactPersons',
+              label: 'Contact Persons',
+              relationTo: 'contact-persons',
+              hasMany: true
+            }
+          ]
+        },
+        {
+          name: 'seo',
+          label: 'SEO',
+          fields: SEOFields
+        }
+      ]
     }
   ]
 }

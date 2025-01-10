@@ -1,5 +1,6 @@
 import '@/app/globals.css'
 
+import { Metadata } from 'next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import { playball, redhat } from '@/fonts/index'
@@ -7,9 +8,21 @@ import { playball, redhat } from '@/fonts/index'
 import Navbar from '@/app/(frontend)/components/layout/navbar'
 import Footer from '@/app/(frontend)/components/layout/footer'
 
-export const metadata = {
-  title: 'The Grand Collection',
-  description: 'A collection of grand things.'
+import { fetchHomePageData } from '@/lib/data'
+import createMetadataConfig from '@/lib/utils/create-metadata-object'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { seo } = await fetchHomePageData('seo')
+
+  if (!seo)
+    return {
+      title: {
+        default: '%s | The Grand Collection',
+        template: 'The Grand Collection'
+      }
+    }
+
+  return createMetadataConfig(seo)
 }
 
 export default function RootLayout({

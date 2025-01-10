@@ -12,7 +12,7 @@ import Amenities from './components/amenities'
 import { Rooms } from './components/rooms'
 import ContactUs from './components/contact-us'
 
-type Params = Promise<{ guesthouse: string }>
+type Props = { params: Promise<{ guesthouse: string }> }
 
 export async function generateStaticParams() {
   const guesthouses = await getGuestHouses()
@@ -29,9 +29,7 @@ export async function generateStaticParams() {
 
 export default async function ThePaarlGrand({
   params
-}: {
-  params: Params
-}): Promise<JSX.Element> {
+}: Props): Promise<JSX.Element> {
   const { guesthouse: slug } = await params
 
   const res: Guesthouse[] = await getGuestHouses({ slug: { equals: slug } })
