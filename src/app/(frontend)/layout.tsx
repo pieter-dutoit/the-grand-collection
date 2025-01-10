@@ -22,7 +22,10 @@ export async function generateMetadata(): Promise<Metadata> {
       }
     }
 
-  return createMetadataConfig(seo)
+  return createMetadataConfig({
+    ...seo,
+    twitter: seo.twitter || {}
+  })
 }
 
 export default function RootLayout({

@@ -17,9 +17,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [data] = res
 
   const { seo } = data
-  if (!seo) return {}
-
-  return createMetadataConfig(seo)
+  return createMetadataConfig({
+    ...seo,
+    twitter: seo.twitter || {}
+  })
 }
 
 export default async function Layout({ children }: Props) {
