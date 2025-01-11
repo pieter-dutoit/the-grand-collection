@@ -7,10 +7,7 @@ import { playball, redhat } from '@/fonts/index'
 import Navbar from '@/app/(frontend)/components/layout/navbar'
 import Footer from '@/app/(frontend)/components/layout/footer'
 
-export const metadata = {
-  title: 'The Grand Collection',
-  description: 'A collection of grand things.'
-}
+export const metadata = {}
 
 export default function RootLayout({
   children

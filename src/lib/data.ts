@@ -2,7 +2,7 @@ import 'server-only'
 
 import { getPayload, Where } from 'payload'
 import config from '@payload-config'
-import { Guesthouse, HomePage } from '@/payload/payload-types'
+import { Guesthouse, GuesthousesPage, HomePage } from '@/payload/payload-types'
 
 export async function fetchHomePageData(
   field: string
@@ -18,7 +18,24 @@ export async function fetchHomePageData(
   if (!res) {
     throw new Error('Failed to fetch home page data')
   }
-  return res as Partial<HomePage>
+  return res
+}
+
+export async function fetchGuesthousesPageData(
+  field: string
+): Promise<Partial<GuesthousesPage>> {
+  const payload = await getPayload({ config })
+  const res = await payload.findGlobal({
+    slug: 'guesthouses-page',
+    depth: 2,
+    select: {
+      [field]: true
+    }
+  })
+  if (!res) {
+    throw new Error('Failed to fetch guesthouses page data')
+  }
+  return res
 }
 
 export const getGuestHouses = async (query?: Where): Promise<Guesthouse[]> => {

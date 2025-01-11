@@ -19,6 +19,7 @@ import { Media } from './collections/media'
 import { SEOMedia } from './collections/seo-media'
 import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
+import { GuesthousesPage } from './globals/guesthouses-page'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,7 +31,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname)
     }
   },
-  globals: [HomePage],
+  globals: [HomePage, GuesthousesPage],
   collections: [
     Amenities,
     Beds,

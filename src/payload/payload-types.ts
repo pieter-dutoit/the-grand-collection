@@ -52,9 +52,13 @@ export interface Config {
   }
   globals: {
     'home-page': HomePage
+    'guesthouses-page': GuesthousesPage
   }
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>
+    'guesthouses-page':
+      | GuesthousesPageSelect<false>
+      | GuesthousesPageSelect<true>
   }
   locale: null
   user: User & {
@@ -771,6 +775,25 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guesthouses-page".
+ */
+export interface GuesthousesPage {
+  id: string
+  content: {
+    heading: string
+    sub_heading: string
+  }
+  seo: {
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
+  _status?: ('draft' | 'published') | null
+  updatedAt?: string | null
+  createdAt?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
@@ -821,6 +844,29 @@ export interface HomePageSelect<T extends boolean = true> {
         id?: T
       }
   contactPersons?: T
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
+  _status?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guesthouses-page_select".
+ */
+export interface GuesthousesPageSelect<T extends boolean = true> {
+  content?:
+    | T
+    | {
+        heading?: T
+        sub_heading?: T
+      }
   seo?:
     | T
     | {
