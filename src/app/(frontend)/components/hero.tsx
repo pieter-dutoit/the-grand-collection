@@ -24,9 +24,8 @@ export async function Hero(): Promise<JSX.Element> {
           alt={alt}
           className='object-cover object-center'
           fill
-          sizes='100vw'
+          sizes='(max-width:768px) 90vw, 100vw'
           priority
-          quality={80}
         />
         <div className='absolute inset-0 bg-custom-gradient-mobile sm:bg-custom-gradient' />
         <div className='absolute inset-0 flex flex-col items-center justify-center p-3'>
