@@ -16,6 +16,7 @@ import { SocialMediaPlatforms } from './collections/social-media-platforms'
 import { Amenities } from './collections/amenities'
 import { Users } from './collections/users'
 import { Media } from './collections/media'
+import { SEOMedia } from './collections/seo-media'
 import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
 
@@ -35,6 +36,7 @@ export default buildConfig({
     Beds,
     Users,
     Media,
+    SEOMedia,
     Guesthouses,
     Rooms,
     ContactPersons,
@@ -56,6 +58,9 @@ export default buildConfig({
       collections: {
         media: {
           prefix: 'media'
+        },
+        'seo-media': {
+          prefix: 'media/seo'
         }
       },
       bucket: process.env.S3_BUCKET || '',

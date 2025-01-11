@@ -31,5 +31,3 @@ export default async function AllGuestHouses(): Promise<JSX.Element> {
     </section>
   )
 }
-
-// export const revalidate = 30

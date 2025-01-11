@@ -15,6 +15,7 @@ export interface Config {
     beds: Bed
     users: User
     media: Media
+    'seo-media': SeoMedia
     guesthouses: Guesthouse
     rooms: Room
     'contact-persons': ContactPerson
@@ -29,6 +30,7 @@ export interface Config {
     beds: BedsSelect<false> | BedsSelect<true>
     users: UsersSelect<false> | UsersSelect<true>
     media: MediaSelect<false> | MediaSelect<true>
+    'seo-media': SeoMediaSelect<false> | SeoMediaSelect<true>
     guesthouses: GuesthousesSelect<false> | GuesthousesSelect<true>
     rooms: RoomsSelect<false> | RoomsSelect<true>
     'contact-persons': ContactPersonsSelect<false> | ContactPersonsSelect<true>
@@ -151,6 +153,44 @@ export interface User {
   loginAttempts?: number | null
   lockUntil?: string | null
   password?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-media".
+ */
+export interface SeoMedia {
+  id: string
+  alt: string
+  prefix?: string | null
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
+  filename?: string | null
+  mimeType?: string | null
+  filesize?: number | null
+  width?: number | null
+  height?: number | null
+  focalX?: number | null
+  focalY?: number | null
+  sizes?: {
+    thumbnail?: {
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
+    twitter?: {
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
+  }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -289,6 +329,10 @@ export interface PayloadLockedDocument {
         value: string | Media
       } | null)
     | ({
+        relationTo: 'seo-media'
+        value: string | SeoMedia
+      } | null)
+    | ({
         relationTo: 'guesthouses'
         value: string | Guesthouse
       } | null)
@@ -405,6 +449,49 @@ export interface MediaSelect<T extends boolean = true> {
     | T
     | {
         thumbnail?:
+          | T
+          | {
+              url?: T
+              width?: T
+              height?: T
+              mimeType?: T
+              filesize?: T
+              filename?: T
+            }
+      }
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-media_select".
+ */
+export interface SeoMediaSelect<T extends boolean = true> {
+  alt?: T
+  prefix?: T
+  updatedAt?: T
+  createdAt?: T
+  url?: T
+  thumbnailURL?: T
+  filename?: T
+  mimeType?: T
+  filesize?: T
+  width?: T
+  height?: T
+  focalX?: T
+  focalY?: T
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T
+              width?: T
+              height?: T
+              mimeType?: T
+              filesize?: T
+              filename?: T
+            }
+        twitter?:
           | T
           | {
               url?: T
@@ -609,8 +696,40 @@ export interface HomePage {
       }[]
     | null
   contactPersons?: (string | ContactPerson)[] | null
+  seo: {
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
+  _status?: ('draft' | 'published') | null
   updatedAt?: string | null
   createdAt?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField".
+ */
+export interface MetadataField {
+  title: string
+  description: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField".
+ */
+export interface OpenGraphField {
+  site_name: string
+  title: string
+  description: string
+  image: string | SeoMedia
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField".
+ */
+export interface TwitterField {
+  creator?: string | null
+  creatorId?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -664,9 +783,43 @@ export interface HomePageSelect<T extends boolean = true> {
         id?: T
       }
   contactPersons?: T
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
+  _status?: T
   updatedAt?: T
   createdAt?: T
   globalType?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField_select".
+ */
+export interface MetadataFieldSelect<T extends boolean = true> {
+  title?: T
+  description?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField_select".
+ */
+export interface OpenGraphFieldSelect<T extends boolean = true> {
+  site_name?: T
+  title?: T
+  description?: T
+  image?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField_select".
+ */
+export interface TwitterFieldSelect<T extends boolean = true> {
+  creator?: T
+  creatorId?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

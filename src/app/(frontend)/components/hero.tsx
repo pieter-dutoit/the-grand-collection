@@ -24,7 +24,7 @@ export async function Hero(): Promise<JSX.Element> {
           alt={alt}
           className='object-cover object-center'
           fill
-          sizes='100vw'
+          sizes='(max-width:768px) 90vw, 100vw'
           priority
           quality={80}
         />
