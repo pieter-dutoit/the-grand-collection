@@ -1,6 +1,5 @@
 import '@/app/globals.css'
 
-import { Metadata } from 'next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import { playball, redhat } from '@/fonts/index'
