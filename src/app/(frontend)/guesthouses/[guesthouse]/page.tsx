@@ -27,9 +27,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function ThePaarlGrand({
-  params
-}: Props): Promise<JSX.Element> {
+export default async function Page({ params }: Props): Promise<JSX.Element> {
   const { guesthouse: slug } = await params
 
   const res: Guesthouse[] = await getGuestHouses({ slug: { equals: slug } })

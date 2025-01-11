@@ -54,7 +54,7 @@ export default function Hero({
           fill
           className='object-cover object-center'
           priority
-          sizes='(max-width: 640px) 40vw, 40vw'
+          sizes='40vw'
         />
         <div className='absolute inset-0 bg-gradient-to-r from-olive-50 to-olive-50/50 sm:to-transparent' />
       </div>

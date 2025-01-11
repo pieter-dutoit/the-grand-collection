@@ -8,25 +8,7 @@ import { playball, redhat } from '@/fonts/index'
 import Navbar from '@/app/(frontend)/components/layout/navbar'
 import Footer from '@/app/(frontend)/components/layout/footer'
 
-import { fetchHomePageData } from '@/lib/data'
-import createMetadataConfig from '@/lib/utils/create-metadata-object'
-
-export async function generateMetadata(): Promise<Metadata> {
-  const { seo } = await fetchHomePageData('seo')
-
-  if (!seo)
-    return {
-      title: {
-        default: '%s | The Grand Collection',
-        template: 'The Grand Collection'
-      }
-    }
-
-  return createMetadataConfig({
-    ...seo,
-    twitter: seo.twitter || {}
-  })
-}
+export const metadata = {}
 
 export default function RootLayout({
   children
