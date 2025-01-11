@@ -5,7 +5,7 @@ import { isLoggedInOrIsPublished } from '../access/is-logged-in-or-is-published'
 
 import Address from '../field-groups/address'
 import BookingPlatform from '../field-groups/booking-platform'
-// import SEOFields from '../field-groups/seo'
+import SEOFields from '../field-groups/seo'
 import SocialMediaLinks from '../field-groups/social-media-links'
 import GuestHouseContentFields from '../field-groups/guesthouse-content-fields'
 
@@ -78,12 +78,12 @@ export const Guesthouses: CollectionConfig = {
             Address,
             SocialMediaLinks
           ]
+        },
+        {
+          name: 'seo',
+          label: 'SEO',
+          fields: SEOFields
         }
-        // {
-        //   name: 'seo',
-        //   label: 'SEO & Metadata',
-        //   fields: SEOFields
-        // }
       ]
     }
   ]

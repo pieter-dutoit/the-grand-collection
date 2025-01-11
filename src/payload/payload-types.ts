@@ -255,6 +255,11 @@ export interface Guesthouse {
         }[]
       | null
   }
+  seo: {
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
   updatedAt: string
   createdAt: string
   _status?: ('draft' | 'published') | null
@@ -304,6 +309,32 @@ export interface SocialMediaPlatform {
   icon: string | Media
   updatedAt: string
   createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField".
+ */
+export interface MetadataField {
+  title: string
+  description: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField".
+ */
+export interface OpenGraphField {
+  site_name: string
+  title: string
+  description: string
+  image: string | SeoMedia
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField".
+ */
+export interface TwitterField {
+  creator?: string | null
+  creatorId?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -572,9 +603,42 @@ export interface GuesthousesSelect<T extends boolean = true> {
               id?: T
             }
       }
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
   updatedAt?: T
   createdAt?: T
   _status?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField_select".
+ */
+export interface MetadataFieldSelect<T extends boolean = true> {
+  title?: T
+  description?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField_select".
+ */
+export interface OpenGraphFieldSelect<T extends boolean = true> {
+  site_name?: T
+  title?: T
+  description?: T
+  image?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField_select".
+ */
+export interface TwitterFieldSelect<T extends boolean = true> {
+  creator?: T
+  creatorId?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -707,32 +771,6 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MetadataField".
- */
-export interface MetadataField {
-  title: string
-  description: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "OpenGraphField".
- */
-export interface OpenGraphField {
-  site_name: string
-  title: string
-  description: string
-  image: string | SeoMedia
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TwitterField".
- */
-export interface TwitterField {
-  creator?: string | null
-  creatorId?: string | null
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
@@ -794,32 +832,6 @@ export interface HomePageSelect<T extends boolean = true> {
   updatedAt?: T
   createdAt?: T
   globalType?: T
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MetadataField_select".
- */
-export interface MetadataFieldSelect<T extends boolean = true> {
-  title?: T
-  description?: T
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "OpenGraphField_select".
- */
-export interface OpenGraphFieldSelect<T extends boolean = true> {
-  site_name?: T
-  title?: T
-  description?: T
-  image?: T
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TwitterField_select".
- */
-export interface TwitterFieldSelect<T extends boolean = true> {
-  creator?: T
-  creatorId?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -6,6 +6,15 @@ export const Media: CollectionConfig = {
   access: { ...DEFAULT_COLLECTION_ACCESS, read: () => true },
   fields: [
     {
+      name: 'file_size_display',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/payload/components/file-size-display'
+        }
+      }
+    },
+    {
       name: 'alt',
       type: 'text',
       label: 'Brief image description, e.g. "Wifi icon" or "View of pool"',
