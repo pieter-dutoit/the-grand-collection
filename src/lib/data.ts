@@ -2,7 +2,12 @@ import 'server-only'
 
 import { getPayload, Where } from 'payload'
 import config from '@payload-config'
-import { Guesthouse, GuesthousesPage, HomePage } from '@/payload/payload-types'
+import {
+  Guesthouse,
+  GuesthousesPage,
+  HomePage,
+  Logo
+} from '@/payload/payload-types'
 
 export async function fetchHomePageData(
   field: string
@@ -34,6 +39,21 @@ export async function fetchGuesthousesPageData(
   })
   if (!res) {
     throw new Error('Failed to fetch guesthouses page data')
+  }
+  return res
+}
+
+export async function getLogo(variant: string): Promise<Partial<Logo>> {
+  const payload = await getPayload({ config })
+  const res = await payload.findGlobal({
+    slug: 'logos',
+    depth: 2,
+    select: {
+      [variant]: true
+    }
+  })
+  if (!res) {
+    throw new Error('Failed to fetch logo data')
   }
   return res
 }

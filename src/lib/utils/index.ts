@@ -6,7 +6,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function extractImageProps(image: Media | string | SeoMedia): {
+export function extractImageProps(
+  image: Media | string | SeoMedia | undefined
+): {
   url: string
   alt: string
   width: number

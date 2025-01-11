@@ -3,13 +3,15 @@ import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { House } from 'lucide-react'
 
-import { FullLogo } from '@/components/ui/logos'
 import { getButtonStyles } from '@/components/ui/button'
-import { fetchHomePageData } from '@/lib/data'
+import { fetchHomePageData, getLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 export async function Hero(): Promise<JSX.Element> {
   const { hero } = await fetchHomePageData('hero')
+  const logo = await getLogo('logo_light')
+  const { logo_light } = logo
+  const logoProps = extractImageProps(logo_light)
 
   if (!hero) return <></>
 
@@ -29,7 +31,14 @@ export async function Hero(): Promise<JSX.Element> {
         />
         <div className='absolute inset-0 bg-custom-gradient-mobile sm:bg-custom-gradient' />
         <div className='absolute inset-0 flex flex-col items-center justify-center p-3'>
-          <FullLogo className='w-72 md:w-96 lg:w-[500px]' />
+          <div className='m-w-11/12 relative h-[30vh] w-full md:h-52 md:w-96 lg:h-80 lg:w-[500px]'>
+            <Image
+              src={logoProps.url}
+              alt={logoProps.alt}
+              fill
+              className='object-contain object-center'
+            />
+          </div>
 
           <h1 className='mx-auto mt-8 max-w-screen-lg px-6 text-center text-white drop-shadow-sm md:text-lg lg:text-xl'>
             {title}

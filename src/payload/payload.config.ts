@@ -9,6 +9,8 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { HomePage } from './globals/home-page'
+import { GuesthousesPage } from './globals/guesthouses-page'
+import { Logos } from './globals/logos'
 
 import { Guesthouses } from './collections/guesthouses'
 import { ContactPersons } from './collections/contact-persons'
@@ -19,7 +21,6 @@ import { Media } from './collections/media'
 import { SEOMedia } from './collections/seo-media'
 import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
-import { GuesthousesPage } from './globals/guesthouses-page'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,7 +32,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname)
     }
   },
-  globals: [HomePage, GuesthousesPage],
+  globals: [Logos, HomePage, GuesthousesPage],
   collections: [
     Amenities,
     Beds,

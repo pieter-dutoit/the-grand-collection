@@ -51,10 +51,12 @@ export interface Config {
     defaultIDType: string
   }
   globals: {
+    logos: Logo
     'home-page': HomePage
     'guesthouses-page': GuesthousesPage
   }
   globalsSelect: {
+    logos: LogosSelect<false> | LogosSelect<true>
     'home-page': HomePageSelect<false> | HomePageSelect<true>
     'guesthouses-page':
       | GuesthousesPageSelect<false>
@@ -725,6 +727,20 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logos".
+ */
+export interface Logo {
+  id: string
+  logo_dark: string | Media
+  logo_light: string | Media
+  minimal_dark: string | Media
+  minimal_light: string | Media
+  _status?: ('draft' | 'published') | null
+  updatedAt?: string | null
+  createdAt?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page".
  */
 export interface HomePage {
@@ -791,6 +807,20 @@ export interface GuesthousesPage {
   _status?: ('draft' | 'published') | null
   updatedAt?: string | null
   createdAt?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logos_select".
+ */
+export interface LogosSelect<T extends boolean = true> {
+  logo_dark?: T
+  logo_light?: T
+  minimal_dark?: T
+  minimal_light?: T
+  _status?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

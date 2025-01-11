@@ -11,7 +11,7 @@ import {
   NavigationMenuTrigger
 } from '@/components/ui/navigation-menu'
 
-import { CountryOutline, MinimalTextLogo } from '@/components/ui/logos'
+import { CountryOutline } from '@/components/ui/logos'
 import { getButtonStyles } from '@/components/ui/button'
 
 import MobileDrawer from './components/mobile-drawer'
@@ -19,9 +19,16 @@ import NavOptions from './components/nav-options'
 
 import { getBookingOptions } from './data'
 import BookingOptions from './components/booking-options'
+import { getLogo } from '@/lib/data'
+import { extractImageProps } from '@/lib/utils'
+import Image from 'next/image'
 
 export default async function Navbar(): Promise<JSX.Element> {
   const bookingOptions = await getBookingOptions()
+  const logo = await getLogo('minimal_dark')
+  const { minimal_dark } = logo
+  const { url, alt } = extractImageProps(minimal_dark)
+
   return (
     <header className='sticky left-0 top-0 z-50 h-16 w-full border-b border-b-olive-100 bg-white'>
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between px-[5vw] sm:px-8 lg:px-20'>
@@ -36,7 +43,14 @@ export default async function Navbar(): Promise<JSX.Element> {
           </MobileDrawer>
 
           <Link href='/' aria-label='Home'>
-            <MinimalTextLogo className='w-32 sm:w-36' />
+            <div className='relative h-14 w-32 sm:w-36'>
+              <Image
+                src={url}
+                alt={alt}
+                fill
+                className='object-contain object-center'
+              />
+            </div>
           </Link>
         </div>
 

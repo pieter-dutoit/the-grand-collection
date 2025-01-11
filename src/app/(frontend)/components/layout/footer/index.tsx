@@ -1,8 +1,9 @@
 import 'server-only'
 import Link from 'next/link'
+import Image from 'next/image'
 
-import { MinimalTextLogo } from '@/components/ui/logos'
-import { fetchHomePageData, getGuestHouses } from '@/lib/data'
+import { fetchHomePageData, getGuestHouses, getLogo } from '@/lib/data'
+import { extractImageProps } from '@/lib/utils'
 
 import Socials from '../../socials'
 import ContactPersons from '../../contact-persons'
@@ -11,6 +12,9 @@ export default async function Footer(): Promise<JSX.Element> {
   const { socials } = await fetchHomePageData('socials')
   const { contactPersons } = await fetchHomePageData('contactPersons')
   const guesthouses = await getGuestHouses()
+  const logo = await getLogo('minimal_light')
+  const { minimal_light } = logo
+  const { url, alt } = extractImageProps(minimal_light)
 
   return (
     <footer className='w-full justify-center bg-olive-500 py-8'>
@@ -18,10 +22,14 @@ export default async function Footer(): Promise<JSX.Element> {
         {/* Logo & Socials */}
         <div className='flex flex-col md:col-span-3 lg:col-span-2'>
           <Link href='/'>
-            <MinimalTextLogo
-              className='mx-auto w-40 max-w-full md:mx-0'
-              color='text-gold-100'
-            />
+            <div className='relative mx-auto h-16 w-52 max-w-full md:mx-0'>
+              <Image
+                src={url}
+                alt={alt}
+                fill
+                className='object-contain object-center'
+              />
+            </div>
           </Link>
 
           {/* Socials */}

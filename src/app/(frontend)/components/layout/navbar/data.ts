@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { Media } from '@/payload/payload-types'
 import { getGuestHouses } from '@/lib/data'
 
