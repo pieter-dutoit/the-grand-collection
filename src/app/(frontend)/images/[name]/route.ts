@@ -1,3 +1,5 @@
+export const dynamic = 'force-static'
+
 import { NextRequest, NextResponse } from 'next/server'
 import sharp from 'sharp'
 
@@ -9,15 +11,17 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ name: string }> }
 ) {
+  const headersList = new Headers(request.headers)
+  const referer = headersList.get('referer')
+  const ua = headersList.get('user-agent')
+  const country = headersList.get('x-vercel-ip-country')
+  const region = headersList.get('x-vercel-ip-country-region')
+  console.log({ referer, ua, country, region })
+
   try {
     const filename = (await params).name
     const sizeParams = filename.match(SIZE_PARAMS_REGEX)?.[1]
     const extension = filename.match(FORMAT_REGEX)?.[1]
-
-    const accept = request.headers.get('Accept') ?? ''
-    const toWebp = /image\/webp/.test(accept)
-
-    console.log('Accept: ', accept)
 
     const path = `${process.env.PUBLIC_BUCKET_PATH}/media/${filename.replace(
       PARAM_REPLACE_REGEX,
@@ -30,7 +34,6 @@ export async function GET(
     }
 
     const contentType = response.headers.get('Content-Type') || ''
-    console.log({ contentType })
     if (!contentType.startsWith('image/')) {
       throw new Error(`Invalid image content type: ${contentType}`)
     }
@@ -75,9 +78,6 @@ export async function GET(
     return new NextResponse('Internal Server Error', { status: 500 })
   }
 }
-
-export const revalidate = false
-export const dynamic = 'force-static'
 
 // Sources
 // https://stackoverflow.com/questions/77248968/return-image-from-next-js-api-display-in-browser
