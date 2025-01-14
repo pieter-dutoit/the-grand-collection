@@ -28,8 +28,8 @@ export const Media: CollectionConfig = {
       {
         name: 'thumbnail',
         fit: 'cover',
-        height: 200,
-        width: 200,
+        height: 100,
+        width: 100,
         formatOptions: {
           format: 'webp',
           options: {
