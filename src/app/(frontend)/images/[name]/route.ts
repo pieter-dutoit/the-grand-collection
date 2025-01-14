@@ -16,7 +16,10 @@ export async function GET(
   const ua = headersList.get('user-agent')
   const country = headersList.get('x-vercel-ip-country')
   const region = headersList.get('x-vercel-ip-country-region')
-  console.log({ referer, ua, country, region })
+  const accept = headersList.get('accept')
+  console.log({ referer, ua, country, region, accept })
+
+  const toWebp = false
 
   try {
     const filename = (await params).name
