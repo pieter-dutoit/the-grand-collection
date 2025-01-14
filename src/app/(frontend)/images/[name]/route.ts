@@ -20,27 +20,33 @@ export async function GET(
 
     const basePath = process.env.VERCEL_URL || 'localhost:3000'
     const httpScheme = process.env.HTTP_SCHEME || 'https'
-
-    const response = await fetch(
+    const path =
       `${httpScheme}://${basePath}/${PAYLOAD_MEDIA_BASE_ROUTE}/${filename}`.replace(
         PARAM_REPLACE_REGEX,
         ''
       )
-    )
+
+    const response = await fetch(path)
     let buffer: ArrayBuffer | Buffer = await response.arrayBuffer()
 
     if (sizeParams) {
+      console.log('size 1')
       const [height, width] = sizeParams.split('x')
-
+      console.log('size 2')
       let image = sharp(buffer).resize(+height, +width || undefined)
+      console.log('size 3')
       if (extension !== 'webp' && toWebp) {
+        console.log('size 4')
         image = image.webp()
       }
+      console.log('size 5')
       buffer = await image.toBuffer()
     }
 
+    console.log('size 6')
     const headers = new Headers()
     headers.set('Content-Type', `image/${toWebp ? 'webp' : extension}`)
+    console.log('size 7')
     return new NextResponse(buffer, {
       status: 200,
       statusText: 'OK',
@@ -48,7 +54,7 @@ export async function GET(
     })
   } catch (error) {
     console.error(error)
-    return NextResponse.json({ error: 'Failed to serve image' })
+    return new NextResponse('Internal Server Error', { status: 500 })
   }
 }
 
