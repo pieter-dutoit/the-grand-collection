@@ -18,8 +18,11 @@ export async function GET(
     const accept = request.headers.get('Accept') ?? ''
     const toWebp = /image\/webp/.test(accept)
 
+    const basePath = process.env.VERCEL_URL || 'localhost:3000'
+    const httpScheme = process.env.HTTP_SCHEME || 'https'
+
     const response = await fetch(
-      `http://localhost:3000/${PAYLOAD_MEDIA_BASE_ROUTE}/${filename}`.replace(
+      `${httpScheme}://${basePath}/${PAYLOAD_MEDIA_BASE_ROUTE}/${filename}`.replace(
         PARAM_REPLACE_REGEX,
         ''
       )
