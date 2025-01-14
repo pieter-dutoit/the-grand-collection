@@ -1,6 +1,6 @@
 export const dynamic = 'force-static'
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import sharp from 'sharp'
 
 const FORMAT_REGEX = /.(\w+)$/i
@@ -8,19 +8,9 @@ const SIZE_PARAMS_REGEX = /-(\d+x\d+)\..+$/i
 const PARAM_REPLACE_REGEX = /-\d+x\d+/i
 
 export async function GET(
-  request: NextRequest,
+  request: Request,
   { params }: { params: Promise<{ name: string }> }
 ) {
-  const headersList = new Headers(request.headers)
-  const referer = headersList.get('referer')
-  const ua = headersList.get('user-agent')
-  const country = headersList.get('x-vercel-ip-country')
-  const region = headersList.get('x-vercel-ip-country-region')
-  const accept = headersList.get('accept')
-  console.log({ referer, ua, country, region, accept })
-
-  const toWebp = false
-
   try {
     const filename = (await params).name
     const sizeParams = filename.match(SIZE_PARAMS_REGEX)?.[1]
@@ -49,10 +39,12 @@ export async function GET(
       throw new Error(`Invalid image buffer: ${error}`)
     }
 
-    if (extension !== 'svg' && sizeParams) {
+    const shouldResize = extension !== 'svg' && sizeParams
+
+    if (shouldResize) {
       const [width, height] = sizeParams.split('x')
 
-      let image = sharp(buffer).resize({
+      const image = sharp(buffer).resize({
         width: +width,
         height: +height || undefined,
         fit: 'cover',
@@ -60,15 +52,11 @@ export async function GET(
         withoutEnlargement: true
       })
 
-      if (extension !== 'webp' && toWebp) {
-        image = image.webp()
-      }
-
       buffer = await image.toBuffer()
     }
 
     const headers = new Headers()
-    const mimeType = `image/${toWebp ? 'webp' : extension}`
+    const mimeType = `image/${shouldResize ? 'webp' : extension}`
     headers.set('Content-Type', mimeType)
 
     return new NextResponse(buffer, {

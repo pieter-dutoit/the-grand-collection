@@ -49,7 +49,7 @@ export const SEOMedia: CollectionConfig = {
         formatOptions: {
           format: 'jpeg',
           options: {
-            quality: 90
+            quality: 75
           }
         }
       }
@@ -63,7 +63,7 @@ export const SEOMedia: CollectionConfig = {
     formatOptions: {
       format: 'jpeg',
       options: {
-        quality: 90
+        quality: 75
       }
     },
     mimeTypes: ['image/*']
