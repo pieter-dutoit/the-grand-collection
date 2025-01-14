@@ -4,7 +4,6 @@ import sharp from 'sharp'
 const FORMAT_REGEX = /.(\w+)$/i
 const SIZE_PARAMS_REGEX = /-(\d+x\d+)\..+$/i
 const PARAM_REPLACE_REGEX = /-\d+x\d+/i
-const PAYLOAD_MEDIA_BASE_ROUTE = '/api/media/file'
 
 export async function GET(
   request: NextRequest,
@@ -18,15 +17,10 @@ export async function GET(
     const accept = request.headers.get('Accept') ?? ''
     const toWebp = /image\/webp/.test(accept)
 
-    const basePath =
-      'the-grand-collection-git-feat-image-resizing-pdut89s-projects.vercel.app'
-    const httpScheme = process.env.HTTP_SCHEME || 'https'
-    const path =
-      `${httpScheme}://${basePath}${PAYLOAD_MEDIA_BASE_ROUTE}/${filename}`.replace(
-        PARAM_REPLACE_REGEX,
-        ''
-      )
-    console.log('Loading image from path: ', path)
+    const path = `${process.env.PUBLIC_BUCKET_PATH}/media/${filename.replace(
+      PARAM_REPLACE_REGEX,
+      ''
+    )}`
 
     const response = await fetch(path)
     if (!response.ok) {
