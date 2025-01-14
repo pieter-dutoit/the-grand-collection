@@ -18,36 +18,51 @@ export async function GET(
     const accept = request.headers.get('Accept') ?? ''
     const toWebp = /image\/webp/.test(accept)
 
-    const basePath = process.env.VERCEL_URL || 'localhost:3000'
+    const basePath =
+      'the-grand-collection-git-feat-image-resizing-pdut89s-projects.vercel.app'
     const httpScheme = process.env.HTTP_SCHEME || 'https'
     const path =
-      `${httpScheme}://${basePath}/${PAYLOAD_MEDIA_BASE_ROUTE}/${filename}`.replace(
+      `${httpScheme}://${basePath}${PAYLOAD_MEDIA_BASE_ROUTE}/${filename}`.replace(
         PARAM_REPLACE_REGEX,
         ''
       )
-    console.log('PATH: ', path)
+    console.log('Loading image from path: ', path)
 
     const response = await fetch(path)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`)
+    }
+
+    const contentType = response.headers.get('Content-Type') || ''
+    if (!contentType.startsWith('image/')) {
+      throw new Error(`Invalid image content type: ${contentType}`)
+    }
+
     let buffer: ArrayBuffer | Buffer = await response.arrayBuffer()
 
+    try {
+      sharp(buffer) // Attempt to initialize with the buffer
+    } catch (error) {
+      throw new Error(`Invalid image buffer: ${error}`)
+    }
+
     if (sizeParams) {
-      console.log('size 1')
       const [height, width] = sizeParams.split('x')
-      console.log('size 2')
+
       let image = sharp(buffer).resize(+height, +width || undefined)
-      console.log('size 3')
+
       if (extension !== 'webp' && toWebp) {
-        console.log('size 4')
         image = image.webp()
       }
-      console.log('size 5')
+
       buffer = await image.toBuffer()
     }
 
-    console.log('size 6')
     const headers = new Headers()
-    headers.set('Content-Type', `image/${toWebp ? 'webp' : extension}`)
-    console.log('size 7')
+    const mimeType = `image/${toWebp ? 'webp' : extension}`
+    console.log('Mime type: ', mimeType)
+    headers.set('Content-Type', mimeType)
+
     return new NextResponse(buffer, {
       status: 200,
       statusText: 'OK',
