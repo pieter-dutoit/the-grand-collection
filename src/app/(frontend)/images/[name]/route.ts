@@ -17,6 +17,8 @@ export async function GET(
     const accept = request.headers.get('Accept') ?? ''
     const toWebp = /image\/webp/.test(accept)
 
+    console.log('Accept: ', accept)
+
     const path = `${process.env.PUBLIC_BUCKET_PATH}/media/${filename.replace(
       PARAM_REPLACE_REGEX,
       ''
@@ -28,6 +30,7 @@ export async function GET(
     }
 
     const contentType = response.headers.get('Content-Type') || ''
+    console.log({ contentType })
     if (!contentType.startsWith('image/')) {
       throw new Error(`Invalid image content type: ${contentType}`)
     }
@@ -35,15 +38,21 @@ export async function GET(
     let buffer: ArrayBuffer | Buffer = await response.arrayBuffer()
 
     try {
-      sharp(buffer) // Attempt to initialize with the buffer
+      sharp(buffer)
     } catch (error) {
       throw new Error(`Invalid image buffer: ${error}`)
     }
 
-    if (sizeParams) {
-      const [height, width] = sizeParams.split('x')
+    if (extension !== 'svg' && sizeParams) {
+      const [width, height] = sizeParams.split('x')
 
-      let image = sharp(buffer).resize(+height, +width || undefined)
+      let image = sharp(buffer).resize({
+        width: +width,
+        height: +height || undefined,
+        fit: 'cover',
+        position: 'center',
+        withoutEnlargement: true
+      })
 
       if (extension !== 'webp' && toWebp) {
         image = image.webp()
@@ -54,7 +63,6 @@ export async function GET(
 
     const headers = new Headers()
     const mimeType = `image/${toWebp ? 'webp' : extension}`
-    console.log('Mime type: ', mimeType)
     headers.set('Content-Type', mimeType)
 
     return new NextResponse(buffer, {
