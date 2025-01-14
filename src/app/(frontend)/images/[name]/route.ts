@@ -25,6 +25,7 @@ export async function GET(
         PARAM_REPLACE_REGEX,
         ''
       )
+    console.log('PATH: ', path)
 
     const response = await fetch(path)
     let buffer: ArrayBuffer | Buffer = await response.arrayBuffer()
