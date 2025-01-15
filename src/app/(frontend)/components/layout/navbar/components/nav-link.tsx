@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { ExternalLink, MapPin } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
-import Image from 'next/image'
 
+import Image from '@/components/ui/image'
 import { NavigationMenuLink } from '@/components/ui/navigation-menu'
 import { getButtonStyles } from '@/components/ui/button'
 import { extractImageProps } from '@/lib/utils'
@@ -48,7 +48,6 @@ function DetailedNavLink({
             alt={alt}
             src={url}
             className='h-14 w-12 content-center rounded-l-lg bg-olive-100 object-cover sm:size-[90px]'
-            loading='lazy'
           />
 
           <div className='flex size-full flex-col items-start px-2 py-1'>

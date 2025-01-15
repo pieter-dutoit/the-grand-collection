@@ -1,25 +1,26 @@
 import { twMerge } from 'tailwind-merge'
 
 interface Props {
-  src: string | undefined
-  alt: string | undefined
+  src: string
+  alt: string
   fill?: boolean
   height?: number
   width?: number
   sizes?: string
-  loading?: 'lazy' | 'eager'
   priority?: boolean
-  className: string
+  className?: string
   portrait?: boolean
 }
 
-const SIZES = [200, 480, 640, 770, 900, 1080, 1200, 1920, 2048]
+const SIZES = [200, 350, 500, 770, 900, 1200, 1500, 1920, 2048]
 const MOBILE_BREAK = 900
 
 function createSourceSet(src: string, portrait: boolean): string {
   const [name, extension] = src.split('.')
   const result = SIZES.reduce((acc, width, index) => {
-    const height = width <= MOBILE_BREAK && portrait ? width * 1.5 : 0
+    const height =
+      width <= MOBILE_BREAK && portrait ? Math.floor(width * 1.4) : 0
+
     return (
       acc +
       `${index ? ', ' : ''}${name}-${width}x${height}.${extension} ${width}w`
@@ -37,13 +38,13 @@ export default function Image(props: Props): JSX.Element {
     height,
     width,
     fill,
-    className,
+    className = '',
     portrait = false,
-    // priority = 'false',
-    loading = 'lazy'
+    priority
   } = props
 
-  const imagePath = `images/${src}`
+  const filename = src.split('/').pop()
+  const imagePath = `/images/${filename}`
 
   const defaultStyles = fill ? 'absolute inset-0 size-full' : ''
 
@@ -52,7 +53,7 @@ export default function Image(props: Props): JSX.Element {
       className={twMerge(defaultStyles, className)}
       src={imagePath}
       alt={alt}
-      loading={loading}
+      loading={priority ? 'eager' : 'lazy'}
       {...(fill
         ? src && { srcSet: createSourceSet(imagePath, portrait), sizes }
         : {

@@ -13,6 +13,7 @@ import {
 
 import { CountryOutline } from '@/components/ui/logos'
 import { getButtonStyles } from '@/components/ui/button'
+import Image from '@/components/ui/image'
 
 import MobileDrawer from './components/mobile-drawer'
 import NavOptions from './components/nav-options'
@@ -21,7 +22,6 @@ import { getBookingOptions } from './data'
 import BookingOptions from './components/booking-options'
 import { getLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
-import Image from 'next/image'
 
 export default async function Navbar(): Promise<JSX.Element> {
   const bookingOptions = await getBookingOptions()

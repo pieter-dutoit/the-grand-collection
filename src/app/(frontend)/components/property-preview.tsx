@@ -1,8 +1,8 @@
-import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { MapPin } from 'lucide-react'
 import Link from 'next/link'
 
+import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
 import { Guesthouse } from '@/payload/payload-types'
 

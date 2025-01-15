@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
+import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'

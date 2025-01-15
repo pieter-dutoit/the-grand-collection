@@ -1,6 +1,6 @@
 import { MapPin } from 'lucide-react'
-import Image from 'next/image'
 
+import Image from '@/components/ui/image'
 import { extractImageProps } from '@/lib/utils'
 import { Guesthouse } from '@/payload/payload-types'
 import AvailabilityLink from '@/app/(frontend)/components/availability-link'
@@ -54,7 +54,7 @@ export default function Hero({
           fill
           className='object-cover object-center'
           priority
-          sizes='40vw'
+          sizes='(max-width: 768px) 50vw, 60vw'
         />
         <div className='absolute inset-0 bg-gradient-to-r from-olive-50 to-olive-50/50 sm:to-transparent' />
       </div>

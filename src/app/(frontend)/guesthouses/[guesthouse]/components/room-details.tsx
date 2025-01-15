@@ -1,6 +1,6 @@
 import { extractImageProps } from '@/lib/utils'
 import { Media, Room } from '@/payload/payload-types'
-import Image from 'next/image'
+import Image from '@/components/ui/image'
 
 interface PropTypes {
   room: Room
@@ -22,7 +22,7 @@ export default function RoomDetails({
       <h5 className='sr-only'>Room Beds and Capacity</h5>
       <ul className='mt-6 flex flex-col font-semibold'>
         <li className='flex items-center gap-2'>
-          <Image src={url} alt={alt} height={20} width={20} unoptimized />
+          <Image src={url} alt={alt} height={20} width={20} />
           <strong>Sleeps</strong> {sleeps_adults} Adults
           {sleeps_children
             ? ` & ${sleeps_children} Child${sleeps_children === 1 ? '' : 'ren'}`
@@ -35,7 +35,7 @@ export default function RoomDetails({
             const { url, alt } = extractImageProps(icon)
             return (
               <span key={bed.id} className='flex items-center gap-2'>
-                <Image src={url} alt={alt} height={20} width={20} unoptimized />
+                <Image src={url} alt={alt} height={20} width={20} />
                 <strong>
                   {quantity} x {bed.name}
                 </strong>{' '}
@@ -57,7 +57,7 @@ export default function RoomDetails({
               key={amenity.id}
               className='flex items-center gap-2 rounded-lg border-2 border-gold-600 px-3 py-1'
             >
-              <Image src={url} alt={alt} height={20} width={20} unoptimized />
+              <Image src={url} alt={alt} height={20} width={20} />
               {name}
             </li>
           )
