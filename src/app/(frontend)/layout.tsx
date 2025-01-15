@@ -6,8 +6,15 @@ import { playball, redhat } from '@/fonts/index'
 
 import Navbar from '@/app/(frontend)/components/layout/navbar'
 import Footer from '@/app/(frontend)/components/layout/footer'
+import { Metadata } from 'next'
 
-export const metadata = {}
+export async function generateMetadata(): Promise<Metadata> {
+  // const { seo } = await fetchHomePageData('seo')
+
+  // if (!seo) return {}
+
+  return {}
+}
 
 export default function RootLayout({
   children
