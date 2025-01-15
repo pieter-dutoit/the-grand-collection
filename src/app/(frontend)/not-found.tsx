@@ -16,7 +16,7 @@ export default function NotFound() {
           getButtonStyles({ variant: 'link', colour: 'gold' })
         )}
       >
-        Home
+        Return to Home
       </Link>
     </div>
   )

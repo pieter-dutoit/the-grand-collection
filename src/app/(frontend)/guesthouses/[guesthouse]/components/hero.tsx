@@ -55,6 +55,7 @@ export default function Hero({
           className='object-cover object-center'
           priority
           sizes='(max-width: 768px) 50vw, 60vw'
+          portrait
         />
         <div className='absolute inset-0 bg-gradient-to-r from-olive-50 to-olive-50/50 sm:to-transparent' />
       </div>

@@ -1,7 +1,6 @@
 // Cache response
 export const dynamic = 'force-static'
 
-import { NextResponse } from 'next/server'
 import sharp from 'sharp'
 
 const FORMAT_REGEX = /.(\w+)$/i
@@ -42,13 +41,14 @@ export async function GET(
 
     // Do not format SVG's
     if (isSVG) {
-      const headers = new Headers()
-      headers.set('Content-Type', 'image/svg+xml')
-      headers.set('Cache-Control', 'public, max-age=31536000, immutable')
-      return new NextResponse(buffer, {
+      return new Response(buffer, {
         status: 200,
         statusText: 'OK',
-        headers
+        headers: {
+          'Content-Type': 'image/svg+xml',
+          'Cache-Control': 'public, max-age=31536000, immutable',
+          'Access-Control-Allow-Origin': 'same-site'
+        }
       })
     }
 
@@ -68,19 +68,20 @@ export async function GET(
     }
 
     // Create appropriate response headers
-    const headers = new Headers()
     const mimeType = `image/${extension}`
-    headers.set('Content-Type', mimeType)
-    headers.set('Cache-Control', 'public, max-age=31536000, immutable')
 
-    return new NextResponse(buffer, {
+    return new Response(buffer, {
       status: 200,
       statusText: 'OK',
-      headers
+      headers: {
+        'Content-Type': mimeType,
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        'Access-Control-Allow-Origin': 'same-site'
+      }
     })
   } catch (error) {
     console.error(error)
-    return new NextResponse('Internal Server Error', { status: 500 })
+    return new Response('Internal Server Error', { status: 500 })
   }
 }
 
