@@ -7,6 +7,10 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true'
 })
 
-const nextConfig: NextConfig = {}
+const nextConfig: NextConfig = {
+  experimental: {
+    reactCompiler: false
+  }
+}
 
 module.exports = withBundleAnalyzer(withPayload(nextConfig))
