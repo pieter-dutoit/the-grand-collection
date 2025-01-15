@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 
 import {
@@ -10,6 +9,7 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel'
 
+import Image from '@/components/ui/image'
 import { Media } from '@/payload/payload-types'
 import { extractImageProps } from '@/lib/utils'
 

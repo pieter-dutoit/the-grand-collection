@@ -28,8 +28,8 @@ export const Media: CollectionConfig = {
       {
         name: 'thumbnail',
         fit: 'cover',
-        height: 200,
-        width: 200,
+        height: 100,
+        width: 100,
         formatOptions: {
           format: 'webp',
           options: {
@@ -47,7 +47,7 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: 'webp',
       options: {
-        quality: 90
+        quality: 75
       }
     },
     mimeTypes: ['image/*']

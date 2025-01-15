@@ -1,8 +1,8 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { House } from 'lucide-react'
 
+import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
 import { fetchHomePageData, getLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
@@ -21,17 +21,20 @@ export async function Hero(): Promise<JSX.Element> {
   return (
     <section className='relative h-[75vh] max-h-[40rem] w-screen bg-sage-700 sm:max-h-none'>
       <div className='absolute inset-0 size-full'>
-        <Image
-          src={url}
-          alt={alt}
-          className='object-cover object-center'
-          fill
-          sizes='(max-width:768px) 90vw, 100vw'
-          priority
-        />
+        {url && (
+          <Image
+            src={url}
+            alt={alt}
+            className='object-cover object-center'
+            fill
+            sizes='100vw'
+            priority
+            portrait
+          />
+        )}
         <div className='absolute inset-0 bg-custom-gradient-mobile sm:bg-custom-gradient' />
         <div className='absolute inset-0 flex flex-col items-center justify-center p-3'>
-          <div className='m-w-11/12 relative h-[30vh] w-full md:h-52 md:w-96 lg:h-80 lg:w-[500px]'>
+          <div className='relative h-[30vh] w-full md:h-52 md:w-96 lg:h-80 lg:w-[500px]'>
             <Image
               src={logoProps.url}
               alt={logoProps.alt}

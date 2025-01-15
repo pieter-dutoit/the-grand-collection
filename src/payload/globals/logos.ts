@@ -15,7 +15,7 @@ export const Logos: GlobalConfig = {
   fields: [
     {
       name: 'logo_dark',
-      label: 'Default Logo, Dark (SVG Recommended)',
+      label: 'Default Logo, Dark',
       type: 'upload',
       relationTo: 'media',
       hasMany: false,
@@ -23,7 +23,7 @@ export const Logos: GlobalConfig = {
     },
     {
       name: 'logo_light',
-      label: 'Default Logo, Light (SVG Recommended)',
+      label: 'Default Logo, Light',
       type: 'upload',
       relationTo: 'media',
       hasMany: false,
@@ -31,7 +31,7 @@ export const Logos: GlobalConfig = {
     },
     {
       name: 'minimal_dark',
-      label: 'Minimal Dark Logo (SVG Recommended)',
+      label: 'Minimal Logo, Dark',
       type: 'upload',
       relationTo: 'media',
       hasMany: false,
@@ -39,7 +39,7 @@ export const Logos: GlobalConfig = {
     },
     {
       name: 'minimal_light',
-      label: 'Minimal Light Logo (SVG Recommended)',
+      label: 'Minimal Logo, Light',
       type: 'upload',
       relationTo: 'media',
       hasMany: false,

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import Image from 'next/image'
 
+import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
 import { extractImageProps } from '@/lib/utils'
 import { SocialMediaPlatform } from '@/payload/payload-types'
@@ -44,7 +44,7 @@ export default function Socials({
               )}
             >
               <span className='sr-only'>{name}</span>
-              <Image unoptimized src={url} alt={alt} height={30} width={30} />
+              <Image src={url} alt={alt} height={30} width={30} />
             </Link>
           </li>
         )
