@@ -26,8 +26,6 @@ export async function GET(
       ''
     )}`
 
-    console.log({ filename, isSVG, path })
-
     // Fetch image from bucket:
     const response = await fetch(path)
     if (!response.ok) {
