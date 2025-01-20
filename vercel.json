@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "src/app/**/*.{js,ts,tsx}": {
+      "maxDuration": 30
+    }
+  }
+}

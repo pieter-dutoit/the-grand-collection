@@ -1,3 +1,3 @@
-src/app/(payload)/
-src/app/(payload)/**
+src/app/payload/
+src/app/payload/**
 src/payload/migrations/**/*

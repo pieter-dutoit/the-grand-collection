@@ -1,13 +1,12 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
+import { Home } from 'lucide-react'
 
-import ScrollAnchor from '@/app/(frontend)/components/scroll-anchor'
+import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
-import { Home } from 'lucide-react'
 
 export default async function Overview(): Promise<JSX.Element> {
   const data = await fetchHomePageData('overview')
@@ -24,7 +23,7 @@ export default async function Overview(): Promise<JSX.Element> {
 
   return (
     <section className='relative w-full bg-olive-50'>
-      <ScrollAnchor id='overview' />
+      <div id='overview' className='absolute -top-16' />
       <div className='container mx-auto py-8'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
           {/* Q1 */}
@@ -47,12 +46,12 @@ export default async function Overview(): Promise<JSX.Element> {
                     ? {
                         classes: 'col-span-2 aspect-[3/1]',
                         sizes:
-                          '(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30rem'
+                          '(max-width: 768px) 85vw, (max-width: 1024px) 21rem, 27rem'
                       }
                     : {
                         classes: 'col-span-1 aspect-[2/1]',
                         sizes:
-                          '(max-width: 768px) 45vw, (max-width: 1024px) 20vw, 15rem'
+                          '(max-width: 768px) 40vw, (max-width: 1024px) 10rem, 13rem'
                       }
 
                 return (
@@ -60,7 +59,7 @@ export default async function Overview(): Promise<JSX.Element> {
                     key={url}
                     className={twMerge(
                       classes,
-                      'relative overflow-hidden rounded-md'
+                      'relative overflow-hidden rounded-lg border-2 border-sage-300 bg-olive-300'
                     )}
                   >
                     <Image

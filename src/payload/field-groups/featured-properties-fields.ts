@@ -28,6 +28,11 @@ const FeaturedPropertiesFields: GroupField = {
       label: 'Featured Guesthouses',
       type: 'relationship',
       relationTo: 'guesthouses',
+      filterOptions: {
+        _status: {
+          equals: 'published'
+        }
+      },
       hasMany: true,
       required: true,
       minRows: 1,

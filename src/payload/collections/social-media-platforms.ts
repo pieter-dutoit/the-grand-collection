@@ -8,14 +8,22 @@ export const SocialMediaPlatforms: CollectionConfig = {
     plural: 'Social Media Platforms'
   },
   admin: {
-    useAsTitle: 'platform'
+    useAsTitle: 'name'
   },
   access: DEFAULT_COLLECTION_ACCESS,
   fields: [
     {
-      name: 'platform',
-      label: 'Social Media Platform',
+      name: 'name',
+      label: 'Platform Name',
       type: 'text',
+      required: true,
+      unique: true
+    },
+    {
+      name: 'icon',
+      label: 'Icon',
+      type: 'upload',
+      relationTo: 'media',
       required: true
     }
   ]

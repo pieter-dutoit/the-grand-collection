@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
 
 export const ContactPersons: CollectionConfig = {
-  slug: 'contact-person',
+  slug: 'contact-persons',
   labels: {
     singular: 'Contact Person',
     plural: 'Contact Persons'
@@ -32,9 +32,9 @@ export const ContactPersons: CollectionConfig = {
     },
     {
       name: 'position',
-      label: 'Position / Title',
+      label: 'Position / Title (Optional)',
       type: 'text',
-      required: true
+      required: false
     }
   ]
 }

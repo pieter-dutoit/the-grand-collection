@@ -9,6 +9,8 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { HomePage } from './globals/home-page'
+import { GuesthousesPage } from './globals/guesthouses-page'
+import { Logos } from './globals/logos'
 
 import { Guesthouses } from './collections/guesthouses'
 import { ContactPersons } from './collections/contact-persons'
@@ -16,23 +18,33 @@ import { SocialMediaPlatforms } from './collections/social-media-platforms'
 import { Amenities } from './collections/amenities'
 import { Users } from './collections/users'
 import { Media } from './collections/media'
+import { SEOMedia } from './collections/seo-media'
+import { Rooms } from './collections/rooms'
+import { Beds } from './collections/beds'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  routes: {
+    admin: '/payload/admin',
+    api: '/payload/api'
+  },
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname)
     }
   },
-  globals: [HomePage],
+  globals: [Logos, HomePage, GuesthousesPage],
   collections: [
     Amenities,
+    Beds,
     Users,
     Media,
+    SEOMedia,
     Guesthouses,
+    Rooms,
     ContactPersons,
     SocialMediaPlatforms
   ],
@@ -42,13 +54,19 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts')
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || ''
+    url: process.env.DATABASE_URI || '',
+    connectOptions: {
+      dbName: process.env.DATABASE_NAME || 'test'
+    }
   }),
   plugins: [
     s3Storage({
       collections: {
         media: {
           prefix: 'media'
+        },
+        'seo-media': {
+          prefix: 'media/seo'
         }
       },
       bucket: process.env.S3_BUCKET || '',
@@ -66,7 +84,7 @@ export default buildConfig({
   sharp,
   upload: {
     limits: {
-      fileSize: 10000000
+      fileSize: 4500000
     }
   }
 })

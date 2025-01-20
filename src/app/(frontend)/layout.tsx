@@ -2,15 +2,18 @@ import '@/app/globals.css'
 
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-import { redhat } from '@/fonts/index'
+import { playball, redhat } from '@/fonts/index'
 
-import Navbar from '@/components/layout/navbar'
+import Navbar from '@/app/(frontend)/components/layout/navbar'
+import Footer from '@/app/(frontend)/components/layout/footer'
+import { Metadata } from 'next'
 
-// import { Footer } from '@/ui/footer';
+export async function generateMetadata(): Promise<Metadata> {
+  // const { seo } = await fetchHomePageData('seo')
 
-export const metadata = {
-  title: 'The Grand Collection',
-  description: 'A collection of grand things.'
+  // if (!seo) return {}
+
+  return {}
 }
 
 export default function RootLayout({
@@ -19,12 +22,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en' className={`${redhat.variable} scroll-smooth antialiased`}>
+    <html
+      lang='en'
+      className={`${redhat.variable} ${playball.variable} scroll-smooth antialiased`}
+    >
       <body>
         <Navbar />
-        {children}
-        {/* <Footer /> */}
-        <SpeedInsights />
+        <main>
+          {children}
+          <Footer />
+          <SpeedInsights />
+        </main>
       </body>
     </html>
   )

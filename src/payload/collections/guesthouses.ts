@@ -5,14 +5,19 @@ import { isLoggedInOrIsPublished } from '../access/is-logged-in-or-is-published'
 
 import Address from '../field-groups/address'
 import BookingPlatform from '../field-groups/booking-platform'
-// import SEOFields from '../field-groups/seo'
+import SEOFields from '../field-groups/seo'
 import SocialMediaLinks from '../field-groups/social-media-links'
-import GuestHouseDetailsFields from '../field-groups/guesthouse-content-fields'
+import GuestHouseContentFields from '../field-groups/guesthouse-content-fields'
 
 import { validateSlugFriendly } from '../utils/validation'
-import beforeGuesthouseSave from '../hooks/before-guesthouse-save'
+
+import revalidateAllPaths from '../hooks/collections/revalidate-all-paths'
+import createGuesthouseSlug from '../hooks/collections/create-guesthouse-slug'
 
 export const Guesthouses: CollectionConfig = {
+  versions: {
+    drafts: true
+  },
   slug: 'guesthouses',
   admin: {
     useAsTitle: 'name'
@@ -22,7 +27,8 @@ export const Guesthouses: CollectionConfig = {
     read: isLoggedInOrIsPublished
   },
   hooks: {
-    beforeChange: [beforeGuesthouseSave]
+    beforeChange: [createGuesthouseSlug],
+    afterChange: [revalidateAllPaths]
   },
   fields: [
     {
@@ -54,7 +60,7 @@ export const Guesthouses: CollectionConfig = {
         {
           name: 'content',
           label: 'Page Content',
-          fields: GuestHouseDetailsFields
+          fields: GuestHouseContentFields
         },
         {
           name: 'contact_details',
@@ -64,7 +70,7 @@ export const Guesthouses: CollectionConfig = {
               name: 'contact_persons',
               label: 'Contact Person(s)',
               type: 'relationship',
-              relationTo: 'contact-person',
+              relationTo: 'contact-persons',
               hasMany: true,
               minRows: 1,
               maxRows: 10
@@ -72,12 +78,12 @@ export const Guesthouses: CollectionConfig = {
             Address,
             SocialMediaLinks
           ]
+        },
+        {
+          name: 'seo',
+          label: 'SEO',
+          fields: SEOFields
         }
-        // {
-        //   name: 'seo',
-        //   label: 'SEO & Metadata',
-        //   fields: SEOFields
-        // }
       ]
     }
   ]

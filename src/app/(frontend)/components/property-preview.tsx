@@ -1,12 +1,13 @@
-import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
-import { ExternalLink, MapPin } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import Link from 'next/link'
 
+import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
 import { Guesthouse } from '@/payload/payload-types'
 
 import { extractImageProps } from '@/lib/utils'
+import AvailabilityLink from './availability-link'
 
 export default function PropertyPreview({
   guesthouse
@@ -22,8 +23,11 @@ export default function PropertyPreview({
     contact_details: {
       address: { city, province }
     },
-    content: { gallery, heading }
+    content: { images, heading }
   } = guesthouse
+
+  const { interior, exterior } = images
+  const gallery = [exterior[0], ...interior.slice(0, 3)]
 
   return (
     <div
@@ -33,7 +37,7 @@ export default function PropertyPreview({
       )}
     >
       <div className='mb-1 grid gap-4 sm:grid-cols-4 xl:grid-cols-5'>
-        {gallery.slice(0, 4).map((image, index) => {
+        {gallery.map((image, index) => {
           const { alt, url } = extractImageProps(image)
 
           const sizeClasses =
@@ -47,13 +51,13 @@ export default function PropertyPreview({
 
           const sizes =
             index === 0
-              ? '(max-width: 640px) 80vw, (max-width: 1280px) 18rem, 23rem'
-              : '(max-width: 640px) 0vw, (max-width: 1280px) 18rem, 11rem'
+              ? '(max-width: 640px) 85vw, (max-width: 768px) 16rem, (max-width: 1024px) 21rem, 26rem'
+              : '(max-width: 640px) 0vw, (max-width: 768px) 16rem, (max-width: 1280px) 10rem, 13rem'
 
           return (
             <div
               className={twMerge(
-                'h-30 relative size-40 w-full overflow-hidden rounded-lg bg-white',
+                'h-30 relative size-40 w-full overflow-hidden rounded-lg border-2 border-sage-300 bg-sage-300',
                 sizeClasses
               )}
               key={url}
@@ -72,12 +76,12 @@ export default function PropertyPreview({
 
       <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between'>
         <div className='flex flex-col'>
-          <h4 className='text-sm font-bold text-sage-400'>Guesthouse</h4>
+          <span className='text-sm font-bold text-sage-400'>Guesthouse</span>
 
-          <h5 className='text-2xl text-olive-900'>{name}</h5>
+          <h3 className='text-2xl text-olive-900'>{name}</h3>
           <div className='mt-2 flex items-center'>
             <MapPin className='size-4 text-sage-400' />
-            <h6 className='ml-1 text-xs font-bold text-sage-400'>{`${city}, ${province}`}</h6>
+            <p className='ml-1 text-xs font-bold text-sage-400'>{`${city}, ${province}`}</p>
           </div>
         </div>
 
@@ -97,21 +101,11 @@ export default function PropertyPreview({
           </Link>
 
           {/* Booking / Availability button */}
-          <div className='mt-2 flex flex-col items-start sm:mt-0 sm:items-end'>
-            <Link
-              href={bookingUrl}
-              className={getButtonStyles({
-                variant: 'default',
-                colour: 'olive'
-              })}
-            >
-              Check Availability <ExternalLink />
-            </Link>
-            <em className='text-nowrap text-xs text-olive-500'>
-              Powered by{' '}
-              <strong className='font-semibold'>{platformName}</strong>
-            </em>
-          </div>
+          <AvailabilityLink
+            bookingUrl={bookingUrl}
+            platformName={platformName}
+            className='mt-2 sm:mt-0'
+          />
         </div>
       </div>
 

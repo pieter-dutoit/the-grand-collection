@@ -6,20 +6,30 @@ export const Media: CollectionConfig = {
   access: { ...DEFAULT_COLLECTION_ACCESS, read: () => true },
   fields: [
     {
+      name: 'file_size_display',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/payload/components/file-size-display'
+        }
+      }
+    },
+    {
       name: 'alt',
       type: 'text',
-      label: 'Brief image description (for SEO)',
+      label: 'Brief image description, e.g. "Wifi icon" or "View of pool"',
       required: true
     }
   ],
   upload: {
+    disableLocalStorage: true,
     adminThumbnail: 'thumbnail',
     imageSizes: [
       {
         name: 'thumbnail',
         fit: 'cover',
-        height: 200,
-        width: 200,
+        height: 100,
+        width: 100,
         formatOptions: {
           format: 'webp',
           options: {
@@ -37,7 +47,7 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: 'webp',
       options: {
-        quality: 100
+        quality: 75
       }
     },
     mimeTypes: ['image/*']
