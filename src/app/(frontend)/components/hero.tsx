@@ -40,6 +40,7 @@ export async function Hero(): Promise<JSX.Element> {
               alt={logoProps.alt}
               fill
               className='object-contain object-center'
+              sizes='(max-width: 510px) 90vw, 30rem'
             />
           </div>
 
