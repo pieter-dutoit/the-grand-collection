@@ -24,8 +24,8 @@ export default function RoomGallery({ room }: PropTypes): JSX.Element {
               const classes = index === 0 ? 'col-span-3' : 'col-span-2'
               const sizes =
                 index === 0
-                  ? '(max-width: 640px) 40vw, 20rem'
-                  : '(max-width: 640px) 25vw, 13rem'
+                  ? '(max-width: 640px) 50vw, (max-width: 1024px) 26rem, 15rem'
+                  : '(max-width: 640px) 40vw, (max-width: 1024px) 17rem, 10rem'
 
               return (
                 <li

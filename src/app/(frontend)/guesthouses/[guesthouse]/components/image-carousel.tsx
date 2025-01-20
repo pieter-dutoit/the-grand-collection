@@ -54,7 +54,7 @@ export default function ImageCarousel({
                   alt={alt}
                   fill
                   className='object-cover object-center'
-                  sizes='(max-width: 640px) 5rem, 8rem'
+                  sizes='(max-width: 768px) 20vw, 9rem'
                 />
               </button>
             </CarouselItem>

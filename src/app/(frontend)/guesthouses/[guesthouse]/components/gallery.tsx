@@ -49,8 +49,8 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
                 index === 1 ? 'col-span-4 row-span-2' : 'col-span-2 row-span-1'
               const sizes =
                 index === 1
-                  ? '(max-width: 640px) 40vw, (max-width: 768px) 12rem, (max-width: 1280px) 20rem, 25rem'
-                  : '(max-width: 640px) 20vw, (max-width: 768px) 6rem, (max-width: 1280px) 10rem, 13rem'
+                  ? '(max-width: 640px) 65vw, (max-width: 768px) 24rem, (max-width: 1280px) 29rem, 46rem'
+                  : '(max-width: 640px) 32vw, (max-width: 768px) 12rem, (max-width: 1280px) 14rem, 23rem'
 
               return (
                 <div

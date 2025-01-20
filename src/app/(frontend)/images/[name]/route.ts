@@ -3,6 +3,8 @@ export const dynamic = 'force-static'
 
 import sharp from 'sharp'
 
+import { ALLOWED_SIZES, calculatePortraitHeight } from '@/components/ui/image'
+
 const FORMAT_REGEX = /.(\w+)$/i
 const SIZE_PARAMS_REGEX = /-(\d+x\d+)\..+$/i
 const PARAM_REPLACE_REGEX = /-\d+x\d+/i
@@ -39,8 +41,9 @@ export async function GET(
     // Convert image to buffer
     let buffer: ArrayBuffer | Buffer = await response.arrayBuffer()
 
-    // Do not format SVG's
     if (isSVG) {
+      // Do not format SVG's
+      // Cache response to browser
       return new Response(buffer, {
         status: 200,
         statusText: 'OK',
@@ -57,6 +60,15 @@ export async function GET(
       const image = sharp(buffer)
       const [width, height] = sizeParams.split('x')
 
+      // Validate size parameters to protect against invalid route requests or attacks
+      const isAllowedWidth = ALLOWED_SIZES.includes(+width)
+      const isAllowedHeight =
+        +height === 0 || +height === calculatePortraitHeight(+width)
+
+      if (!(isAllowedWidth && isAllowedHeight)) {
+        return new Response('Invalid request', { status: 400 })
+      }
+
       image.resize({
         width: +width,
         height: +height || undefined,
@@ -68,6 +80,7 @@ export async function GET(
     }
 
     // Create appropriate response headers
+    // Cache response to browser for better user experience
     const mimeType = `image/${extension}`
 
     return new Response(buffer, {

@@ -57,7 +57,7 @@ export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
               alt={alt}
               fill
               className='object-cover object-center'
-              sizes='(max-width: 1024px) 80vw, 40vw'
+              sizes='(max-width: 1024px) 0vw, 50vw'
             />
           </div>
         </ul>

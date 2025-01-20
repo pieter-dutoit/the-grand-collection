@@ -12,14 +12,20 @@ interface Props {
   portrait?: boolean
 }
 
-const SIZES = [200, 350, 500, 770, 900, 1200, 1500, 1920, 2048]
+export const ALLOWED_SIZES = [200, 350, 500, 770, 900, 1200, 1500, 1920, 2048]
+
+const PORTRAIT_ASPECT_RATIO = 1.4
+export function calculatePortraitHeight(width: number): number {
+  return Math.floor(width * PORTRAIT_ASPECT_RATIO)
+}
+
 const MOBILE_BREAK = 900
 
 function createSourceSet(src: string, portrait: boolean): string {
   const [name, extension] = src.split('.')
-  const result = SIZES.reduce((acc, width, index) => {
+  const result = ALLOWED_SIZES.reduce((acc, width, index) => {
     const height =
-      width <= MOBILE_BREAK && portrait ? Math.floor(width * 1.4) : 0
+      width <= MOBILE_BREAK && portrait ? calculatePortraitHeight(width) : 0
 
     return (
       acc +
@@ -30,7 +36,7 @@ function createSourceSet(src: string, portrait: boolean): string {
   return result
 }
 
-export default function Image(props: Props): JSX.Element {
+export default function Image(props: Props): JSX.Element | null {
   const {
     src,
     alt,

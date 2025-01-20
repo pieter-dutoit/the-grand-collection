@@ -2,15 +2,14 @@
 
 import React from 'react'
 
-import Image from '@/components/ui/image'
 import {
   DialogContent,
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
 
+import Image from '@/components/ui/image'
 import { Media } from '@/payload/payload-types'
-
 import { extractImageProps } from '@/lib/utils'
 
 import ImageCarousel from './image-carousel'
@@ -37,7 +36,7 @@ export default function GalleryDialog({ images, name }: Props): JSX.Element {
             src={url}
             fill
             className='object-cover object-center'
-            sizes='(max-width: 640px) 50vw, 30rem'
+            sizes='(max-width: 640px) 90vw, (max-width: 1025px) 80vw, 56rem'
           />
         </div>
 

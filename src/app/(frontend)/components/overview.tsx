@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
+import { Home } from 'lucide-react'
 
 import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
-import { Home } from 'lucide-react'
 
 export default async function Overview(): Promise<JSX.Element> {
   const data = await fetchHomePageData('overview')
@@ -46,12 +46,12 @@ export default async function Overview(): Promise<JSX.Element> {
                     ? {
                         classes: 'col-span-2 aspect-[3/1]',
                         sizes:
-                          '(max-width: 768px) 60vw, (max-width: 1024px) 20rem, 25rem'
+                          '(max-width: 768px) 90vw, (max-width: 1024px) 21rem, 27rem'
                       }
                     : {
                         classes: 'col-span-1 aspect-[2/1]',
                         sizes:
-                          '(max-width: 768px) 30vw, (max-width: 1024px) 9rem, 13rem'
+                          '(max-width: 768px) 45vw, (max-width: 1024px) 10rem, 13rem'
                       }
 
                 return (
