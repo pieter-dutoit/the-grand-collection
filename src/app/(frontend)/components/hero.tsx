@@ -27,7 +27,7 @@ export async function Hero(): Promise<JSX.Element> {
             alt={alt}
             className='object-cover object-center'
             fill
-            sizes='100vw'
+            sizes='(max-width: 510px) 90vw, 100vw'
             priority
             portrait
           />
@@ -40,6 +40,7 @@ export async function Hero(): Promise<JSX.Element> {
               alt={logoProps.alt}
               fill
               className='object-contain object-center'
+              sizes='(max-width: 510px) 90vw, 30rem'
             />
           </div>
 

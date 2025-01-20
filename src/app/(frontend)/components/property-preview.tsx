@@ -51,7 +51,7 @@ export default function PropertyPreview({
 
           const sizes =
             index === 0
-              ? '(max-width: 640px) 85vw, (max-width: 768px) 16rem, (max-width: 1024px) 21rem, 27rem'
+              ? '(max-width: 640px) 85vw, (max-width: 768px) 16rem, (max-width: 1024px) 21rem, 26rem'
               : '(max-width: 640px) 0vw, (max-width: 768px) 16rem, (max-width: 1280px) 10rem, 13rem'
 
           return (

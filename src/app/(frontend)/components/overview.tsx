@@ -46,12 +46,12 @@ export default async function Overview(): Promise<JSX.Element> {
                     ? {
                         classes: 'col-span-2 aspect-[3/1]',
                         sizes:
-                          '(max-width: 768px) 90vw, (max-width: 1024px) 21rem, 27rem'
+                          '(max-width: 768px) 85vw, (max-width: 1024px) 21rem, 27rem'
                       }
                     : {
                         classes: 'col-span-1 aspect-[2/1]',
                         sizes:
-                          '(max-width: 768px) 45vw, (max-width: 1024px) 10rem, 13rem'
+                          '(max-width: 768px) 40vw, (max-width: 1024px) 10rem, 13rem'
                       }
 
                 return (
