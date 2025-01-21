@@ -14,6 +14,6 @@ test-results
 junit.xml
 docs
 pnpm-lock.yaml
-src/app/payload/*
-src/app/payload/**/*
-src/payload/migrations/**/*
+src/app/(payload)/*
+src/app/(payload)/**/*
+src/(payload)/migrations/**/*

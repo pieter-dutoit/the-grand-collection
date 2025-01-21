@@ -27,13 +27,20 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   routes: {
-    admin: '/payload/admin',
-    api: '/payload/api'
+    admin: '/cms/admin',
+    api: '/cms/api'
   },
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname)
+    },
+    components: {
+      views: {
+        dashboard: {
+          Component: '@/payload/components/dashboard-wrapper'
+        }
+      }
     }
   },
   globals: [Logos, HomePage, GuesthousesPage],

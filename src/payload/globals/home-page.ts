@@ -8,16 +8,12 @@ import OverviewFields from '@/payload/field-groups/overview-fields'
 import FeaturedPropertiesFields from '@/payload/field-groups/featured-properties-fields'
 
 import SocialMediaLinks from '../field-groups/social-media-links'
-import revalidateAllPaths from '../hooks/globals/revalidate-all-paths'
 import SEOFields from '../field-groups/seo'
 
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
   versions: {
     drafts: true
-  },
-  hooks: {
-    afterChange: [revalidateAllPaths]
   },
   access: {
     read: isLoggedInOrIsPublished,

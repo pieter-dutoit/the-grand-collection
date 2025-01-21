@@ -1,13 +1,12 @@
 import { revalidatePath } from 'next/cache'
-import type { GlobalAfterChangeHook } from 'payload'
 
-const revalidateAllPaths: GlobalAfterChangeHook = async ({ doc }) => {
+const revalidateAllPaths = async () => {
+  'use server'
   try {
     revalidatePath('/(frontend)', 'layout')
   } catch (error) {
     console.error(error)
   }
-  return doc
 }
 
 export default revalidateAllPaths
