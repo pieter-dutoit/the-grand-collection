@@ -21,7 +21,7 @@ export async function GET(
     const isSVG = extension === 'svg'
 
     // Construct the bucket url to fetch the image from:
-    const path = `${process.env.PUBLIC_BUCKET_PATH}/media/${filename.replace(
+    const path = `${process.env.S3_BUCKET_PATH}/media/${filename.replace(
       PARAM_REPLACE_REGEX,
       ''
     )}`
