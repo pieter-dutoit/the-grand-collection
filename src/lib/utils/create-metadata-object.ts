@@ -6,12 +6,12 @@ import {
   TwitterField
 } from '@/payload/payload-types'
 
-import { extractImageProps } from '.'
+import { extractImageProps, getBaseUrl } from '.'
 
 interface SEO {
   meta: MetadataField
   open_graph: OpenGraphField
-  twitter: TwitterField
+  twitter?: TwitterField
 }
 
 export default function createMetadataConfig(seo: SEO): Metadata {
@@ -26,6 +26,7 @@ export default function createMetadataConfig(seo: SEO): Metadata {
 
   return {
     // Basic fields:
+    metadataBase: new URL(getBaseUrl()),
     generator: 'Next.js',
     applicationName: 'The Grand Collection',
     referrer: 'strict-origin-when-cross-origin',
