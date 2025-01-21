@@ -27,3 +27,10 @@ export function extractImageProps(
     width: width ?? 0
   }
 }
+
+export function getBaseUrl(): string {
+  const vercelURL =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
+
+  return vercelURL ? `https://${vercelURL}` : 'http://localhost:3000'
+}
