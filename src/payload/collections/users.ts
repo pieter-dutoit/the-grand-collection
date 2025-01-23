@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { isAdmin, isAdminFieldLevel } from '../access/is-admin'
 import { isAdminOrSelf } from '../access/is-admin-or-self'
-import { getDomain } from '../utils/get-domain'
+// import { getDomain } from '../utils/get-domain'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -17,8 +17,8 @@ export const Users: CollectionConfig = {
     lockTime: 600 * 1000, // 10mins: Time period to allow the max login attempts
     cookies: {
       sameSite: 'Strict',
-      secure: true,
-      domain: getDomain()
+      secure: true
+      // domain: getDomain()
     }
   },
   access: {
