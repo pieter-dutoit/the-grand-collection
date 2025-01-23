@@ -53,14 +53,14 @@ export interface Config {
   globals: {
     logos: Logo
     'home-page': HomePage
-    'guesthouses-page': GuesthousesPage
+    'all-guesthouses-page': AllGuesthousesPage
   }
   globalsSelect: {
     logos: LogosSelect<false> | LogosSelect<true>
     'home-page': HomePageSelect<false> | HomePageSelect<true>
-    'guesthouses-page':
-      | GuesthousesPageSelect<false>
-      | GuesthousesPageSelect<true>
+    'all-guesthouses-page':
+      | AllGuesthousesPageSelect<false>
+      | AllGuesthousesPageSelect<true>
   }
   locale: null
   user: User & {
@@ -791,9 +791,9 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "guesthouses-page".
+ * via the `definition` "all-guesthouses-page".
  */
-export interface GuesthousesPage {
+export interface AllGuesthousesPage {
   id: string
   content: {
     heading: string
@@ -888,9 +888,9 @@ export interface HomePageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "guesthouses-page_select".
+ * via the `definition` "all-guesthouses-page_select".
  */
-export interface GuesthousesPageSelect<T extends boolean = true> {
+export interface AllGuesthousesPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
