@@ -7,7 +7,7 @@ export const SEOMedia: CollectionConfig = {
     singular: 'SEO Media',
     plural: 'SEO Media'
   },
-  access: DEFAULT_COLLECTION_ACCESS,
+  access: { ...DEFAULT_COLLECTION_ACCESS, read: () => true },
   fields: [
     {
       name: 'file_size_display',
