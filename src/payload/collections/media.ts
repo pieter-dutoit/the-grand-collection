@@ -3,7 +3,7 @@ import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  access: { ...DEFAULT_COLLECTION_ACCESS, read: () => true },
+  access: DEFAULT_COLLECTION_ACCESS,
   fields: [
     {
       name: 'file_size_display',

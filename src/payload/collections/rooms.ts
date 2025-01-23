@@ -1,7 +1,6 @@
 import type { ArrayField, CollectionConfig, GroupField } from 'payload'
 
 import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
-import { isLoggedInOrIsPublished } from '../access/is-logged-in-or-is-published'
 
 import { validateSlugFriendly } from '../utils/validation'
 
@@ -66,10 +65,7 @@ export const Rooms: CollectionConfig = {
   admin: {
     useAsTitle: 'name'
   },
-  access: {
-    ...DEFAULT_COLLECTION_ACCESS,
-    read: isLoggedInOrIsPublished
-  },
+  access: DEFAULT_COLLECTION_ACCESS,
   fields: [
     {
       name: 'name',
