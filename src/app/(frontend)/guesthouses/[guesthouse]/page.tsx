@@ -15,16 +15,9 @@ import ContactUs from './components/contact-us'
 
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 
-type MetadataProps = Readonly<{
-  children: React.ReactNode
-  params: Promise<{
-    guesthouse: string
-  }>
-}>
+type Props = { params: Promise<{ guesthouse: string }> }
 
-export async function generateMetadata({
-  params
-}: MetadataProps): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { guesthouse: slug } = await params
   const res: Guesthouse[] = await getGuestHouses({ slug: { equals: slug } })
   const [data] = res
@@ -39,8 +32,6 @@ export async function generateMetadata({
     twitter: seo.twitter || {}
   })
 }
-
-type Props = { params: Promise<{ guesthouse: string }> }
 
 export async function generateStaticParams() {
   const guesthouses = await getGuestHouses()
