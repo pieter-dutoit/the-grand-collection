@@ -25,7 +25,7 @@ export default function GalleryDialog({ images, name }: Props): JSX.Element {
   const { url, alt } = extractImageProps(images[selectedImage])
 
   return (
-    <DialogContent className='h-auto w-11/12 max-w-screen-lg bg-olive-100 p-2 sm:p-4 lg:rounded-2xl'>
+    <DialogContent className='h-auto w-11/12 max-w-screen-lg rounded-lg bg-olive-100 p-2 sm:p-4 lg:rounded-2xl'>
       <DialogHeader>
         <DialogTitle className='text-gold-600'>{name}</DialogTitle>
       </DialogHeader>

@@ -9,7 +9,7 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { HomePage } from './globals/home-page'
-import { GuesthousesPage } from './globals/guesthouses-page'
+import { AllGuesthousesPage } from './globals/all-guesthouses-page'
 import { Logos } from './globals/logos'
 
 import { Guesthouses } from './collections/guesthouses'
@@ -43,7 +43,7 @@ export default buildConfig({
       }
     }
   },
-  globals: [Logos, HomePage, GuesthousesPage],
+  globals: [Logos, HomePage, AllGuesthousesPage],
   collections: [
     Amenities,
     Beds,

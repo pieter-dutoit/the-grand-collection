@@ -5,8 +5,8 @@ import { isLoggedIn } from '@/payload/access/is-logged-in'
 
 import SEOFields from '../field-groups/seo'
 
-export const GuesthousesPage: GlobalConfig = {
-  slug: 'guesthouses-page',
+export const AllGuesthousesPage: GlobalConfig = {
+  slug: 'all-guesthouses-page',
   versions: {
     drafts: true
   },

@@ -37,7 +37,7 @@ export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
                 {/* To show on hover */}
                 <div
                   tabIndex={-1}
-                  className='pointer-events-none absolute right-1/2 top-1/2 z-10 flex max-w-[45vw] -translate-y-1/2 translate-x-1/2 flex-col items-center justify-center rounded-lg bg-olive-100/60 p-4 opacity-0 backdrop-blur-md transition-opacity duration-150 peer-hover:opacity-100 peer-active:opacity-100 md:right-1/4'
+                  className='pointer-events-none absolute right-1/2 top-1/2 z-10 flex max-w-[90vw] -translate-y-1/2 translate-x-1/2 flex-col items-center justify-center rounded-lg bg-olive-100/60 p-4 opacity-0 backdrop-blur-md transition-opacity duration-150 peer-hover:opacity-100 peer-active:opacity-100 md:right-1/4 md:max-w-[45vw]'
                 >
                   <Image src={url} alt={alt} height={20} width={20} />
                   <h4 className='mt-2 text-center text-2xl font-semibold'>
@@ -57,7 +57,7 @@ export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
               alt={alt}
               fill
               className='object-cover object-center'
-              sizes='(max-width: 1024px) 0vw, 50vw'
+              sizes='(max-width: 768px) 0vw, 50vw'
             />
           </div>
         </ul>

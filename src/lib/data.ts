@@ -4,7 +4,7 @@ import { getPayload, Where } from 'payload'
 import config from '@payload-config'
 import {
   Guesthouse,
-  GuesthousesPage,
+  AllGuesthousesPage,
   HomePage,
   Logo
 } from '@/payload/payload-types'
@@ -28,10 +28,10 @@ export async function fetchHomePageData(
 
 export async function fetchGuesthousesPageData(
   field: string
-): Promise<Partial<GuesthousesPage>> {
+): Promise<Partial<AllGuesthousesPage>> {
   const payload = await getPayload({ config })
   const res = await payload.findGlobal({
-    slug: 'guesthouses-page',
+    slug: 'all-guesthouses-page',
     depth: 2,
     select: {
       [field]: true

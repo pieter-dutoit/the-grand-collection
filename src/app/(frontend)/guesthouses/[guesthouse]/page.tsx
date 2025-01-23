@@ -5,15 +5,14 @@ import { notFound } from 'next/navigation'
 
 import { getGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
+import createMetadataConfig from '@/lib/utils/create-metadata-object'
 
 import Hero from './components/hero'
 import Navbar from './components/navbar'
 import Gallery from './components/gallery'
 import Amenities from './components/amenities'
-import { Rooms } from './components/rooms'
+import Rooms from './components/rooms'
 import ContactUs from './components/contact-us'
-
-import createMetadataConfig from '@/lib/utils/create-metadata-object'
 
 type Props = { params: Promise<{ guesthouse: string }> }
 
