@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
 import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
-import { isLoggedInOrIsPublished } from '../access/is-logged-in-or-is-published'
 
 import Address from '../field-groups/address'
 import BookingPlatform from '../field-groups/booking-platform'
@@ -20,10 +19,7 @@ export const Guesthouses: CollectionConfig = {
   admin: {
     useAsTitle: 'name'
   },
-  access: {
-    ...DEFAULT_COLLECTION_ACCESS,
-    read: isLoggedInOrIsPublished
-  },
+  access: DEFAULT_COLLECTION_ACCESS,
   hooks: {
     beforeChange: [createGuesthouseSlug]
   },

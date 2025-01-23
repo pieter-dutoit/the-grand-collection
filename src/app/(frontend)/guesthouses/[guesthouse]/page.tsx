@@ -1,5 +1,6 @@
 import 'server-only'
 
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getGuestHouses } from '@/lib/data'
@@ -11,6 +12,33 @@ import Gallery from './components/gallery'
 import Amenities from './components/amenities'
 import { Rooms } from './components/rooms'
 import ContactUs from './components/contact-us'
+
+import createMetadataConfig from '@/lib/utils/create-metadata-object'
+
+type MetadataProps = Readonly<{
+  children: React.ReactNode
+  params: Promise<{
+    guesthouse: string
+  }>
+}>
+
+export async function generateMetadata({
+  params
+}: MetadataProps): Promise<Metadata> {
+  const { guesthouse: slug } = await params
+  const res: Guesthouse[] = await getGuestHouses({ slug: { equals: slug } })
+  const [data] = res
+
+  if (!data) {
+    return {}
+  }
+
+  const { seo } = data
+  return createMetadataConfig({
+    ...seo,
+    twitter: seo.twitter || {}
+  })
+}
 
 type Props = { params: Promise<{ guesthouse: string }> }
 
