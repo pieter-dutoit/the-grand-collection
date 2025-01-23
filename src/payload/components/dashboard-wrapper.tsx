@@ -13,20 +13,21 @@ function DashboardWrapper(): JSX.Element {
       <hr />
 
       <section style={{ marginTop: '4rem' }}>
-        <h3>Publish changes</h3>
+        <h3>Apply Website Updates</h3>
         <p>
-          This action will make all changes in the CMS live on the website.{' '}
-          <br />
-          Drafts will not be published.
+          This action will refresh the website to display all recent changes
+          made in the CMS. <br />
+          Drafts or unpublished content (e.g. Guesthouses) will remain hidden
+          until published individually in the CMS.
         </p>
         <br />
         <em>
-          All website pages will take ~10 to 15 seconds to load after changes
-          are published.
+          Note: After applying updates, all website pages may take ~10 to 15
+          seconds to fully refresh.
         </em>
         <br />
         <button onClick={revalidateAllPaths} style={{ marginTop: '2rem' }}>
-          Publish all changes
+          Apply Updates to Website
         </button>
       </section>
     </Gutter>

@@ -8,7 +8,7 @@ interface PropTypes {
   data: Guesthouse
 }
 
-export const Rooms = ({ data }: PropTypes): JSX.Element => {
+export default function Rooms({ data }: PropTypes): JSX.Element {
   const {
     content: {
       rooms: { rooms, heading, description, people_icon }
