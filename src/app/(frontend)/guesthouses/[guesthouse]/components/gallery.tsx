@@ -4,9 +4,9 @@ import Image from '@/components/ui/image'
 import { extractImageProps } from '@/lib/utils'
 import { Guesthouse } from '@/payload/payload-types'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import SectionHeading from '@/components/ui/section-heading'
 
 import GalleryDialog from './gallery-dialog'
-import SectionHeading from './section-heading'
 
 interface GalleryProps {
   data: Guesthouse
@@ -26,7 +26,7 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
     <section className='bg-gold-100 py-8 lg:py-16'>
       <div id='gallery' className='absolute -mt-36 lg:-mt-48' />
 
-      <SectionHeading heading={heading} description={description} />
+      <SectionHeading heading={heading} subtitle={description} />
 
       <Dialog>
         <DialogTrigger asChild>
@@ -49,8 +49,8 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
                 index === 1 ? 'col-span-4 row-span-2' : 'col-span-2 row-span-1'
               const sizes =
                 index === 1
-                  ? '(max-width: 640px) 65vw, (max-width: 768px) 24rem, (max-width: 1280px) 29rem, 46rem'
-                  : '(max-width: 640px) 32vw, (max-width: 768px) 12rem, (max-width: 1280px) 14rem, 23rem'
+                  ? '(max-width: 640px) 60vw, (max-width: 768px) 22rem, (max-width: 1280px) 28rem, 44rem'
+                  : '(max-width: 640px) 30vw, (max-width: 768px) 11rem, (max-width: 1280px) 14rem, 22rem'
 
               return (
                 <div

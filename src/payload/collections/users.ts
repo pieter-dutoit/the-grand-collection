@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { isAdmin, isAdminFieldLevel } from '../access/is-admin'
 import { isAdminOrSelf } from '../access/is-admin-or-self'
+// import { getDomain } from '../utils/get-domain'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -13,7 +14,12 @@ export const Users: CollectionConfig = {
     tokenExpiration: 7200, // How many seconds to keep the user logged in
     verify: false, // Require email verification before being allowed to authenticate
     maxLoginAttempts: 5, // Automatically lock a user out after X amount of failed logins
-    lockTime: 600 * 1000 // Time period to allow the max login attempts
+    lockTime: 600 * 1000, // 10mins: Time period to allow the max login attempts
+    cookies: {
+      sameSite: 'Strict',
+      secure: true
+      // domain: getDomain()
+    }
   },
   access: {
     create: isAdmin,

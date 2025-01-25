@@ -15,7 +15,7 @@ export const Logos: GlobalConfig = {
   fields: [
     {
       name: 'logo_dark',
-      label: 'Default Logo, Dark',
+      label: 'Large Logo, Dark (Used in home page Hero)',
       type: 'upload',
       relationTo: 'media',
       hasMany: false,
@@ -23,7 +23,7 @@ export const Logos: GlobalConfig = {
     },
     {
       name: 'logo_light',
-      label: 'Default Logo, Light',
+      label: 'Large Logo, Light (Used in home page Hero)',
       type: 'upload',
       relationTo: 'media',
       hasMany: false,
@@ -31,7 +31,7 @@ export const Logos: GlobalConfig = {
     },
     {
       name: 'minimal_dark',
-      label: 'Minimal Logo, Dark',
+      label: 'Small Logo, Dark (Used in navbar and footer)',
       type: 'upload',
       relationTo: 'media',
       hasMany: false,
@@ -39,7 +39,7 @@ export const Logos: GlobalConfig = {
     },
     {
       name: 'minimal_light',
-      label: 'Minimal Logo, Light',
+      label: 'Small Logo, Light (Used in navbar and footer)',
       type: 'upload',
       relationTo: 'media',
       hasMany: false,

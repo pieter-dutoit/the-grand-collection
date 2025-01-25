@@ -9,7 +9,7 @@ const MetadataField: GroupField = {
     {
       name: 'title',
       label:
-        'Page Title (Should be within 50–60 characters to avoid truncation in search results)',
+        'Page Title (Shows in the browser tab and search results) (Up to 70 characters)',
       type: 'text',
       minLength: 5,
       maxLength: 70,
@@ -18,7 +18,7 @@ const MetadataField: GroupField = {
     {
       name: 'description',
       label:
-        'Page Description (About 50 to 160 characters for best SEO results)',
+        'Description (Shows in search results) (Ideally 100 to 200 characters)',
       type: 'textarea',
       required: true,
       minLength: 70,
@@ -35,7 +35,7 @@ const OpenGraphField: GroupField = {
   fields: [
     {
       name: 'site_name',
-      label: 'Site Name (e.g. The Paarl Grand)',
+      label: 'Site Name (Up to 200 characters)',
       type: 'text',
       minLength: 5,
       maxLength: 200,
@@ -59,7 +59,7 @@ const OpenGraphField: GroupField = {
     },
     {
       name: 'image',
-      label: 'Image',
+      label: 'Image (Automatically cropped to 1200 x 630 pixels)',
       type: 'upload',
       relationTo: 'seo-media',
       required: true
