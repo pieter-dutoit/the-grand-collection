@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import {
@@ -19,7 +18,7 @@ type Props = {
   selectedPhoto: number
 }
 
-export default function ImageCarousel({
+export default function PreviewImageCarousel({
   images,
   onPhotoSelect,
   selectedPhoto
@@ -41,7 +40,10 @@ export default function ImageCarousel({
               : 'border-gold-50  opacity-50 grayscale-[40%]'
 
           return (
-            <CarouselItem key={index} className='basis-1/4 pl-2 md:basis-1/6'>
+            <CarouselItem
+              key={url + index}
+              className='basis-1/4 pl-2 md:basis-1/6'
+            >
               <button
                 onClick={() => onPhotoSelect(index)}
                 className={twMerge(
