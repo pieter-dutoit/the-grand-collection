@@ -1,8 +1,7 @@
+import SectionHeading from '@/components/ui/section-heading'
 import Image from '@/components/ui/image'
 import { extractImageProps } from '@/lib/utils'
 import { Guesthouse } from '@/payload/payload-types'
-
-import SectionHeading from './section-heading'
 
 export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
   const {
@@ -18,7 +17,7 @@ export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
       <div id='amenities' className='absolute -mt-36 lg:-mt-48' />
 
       <div className='relative flex flex-col items-center justify-center py-8 pr-0 md:pr-[50vw] lg:py-16'>
-        <SectionHeading heading={heading} description={description} />
+        <SectionHeading heading={heading} subtitle={description} />
 
         <ul className='mx-8 mt-10 flex flex-wrap-reverse justify-center gap-6 lg:mx-16'>
           {general_amenities.map((amenity) => {

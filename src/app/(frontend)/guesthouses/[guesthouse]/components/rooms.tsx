@@ -1,6 +1,6 @@
 import { Guesthouse } from '@/payload/payload-types'
+import SectionHeading from '@/components/ui/section-heading'
 
-import SectionHeading from './section-heading'
 import RoomDetails from './room-details'
 import RoomGallery from './room-gallery'
 
@@ -19,7 +19,7 @@ export default function Rooms({ data }: PropTypes): JSX.Element {
     <section className='mx-auto bg-gold-100 py-8 lg:py-16'>
       <div id='rooms' className='absolute -mt-36 lg:-mt-48' />
 
-      <SectionHeading heading={heading} description={description} />
+      <SectionHeading heading={heading} subtitle={description} />
 
       <div className='container mx-auto'>
         <ul className='mt-8 grid grid-cols-1 gap-8 lg:mt-16'>

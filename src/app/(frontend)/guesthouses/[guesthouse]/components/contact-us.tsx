@@ -2,8 +2,7 @@ import { Guesthouse } from '@/payload/payload-types'
 import Socials from '@/app/(frontend)/components/socials'
 
 import ContactPersons from '@/app/(frontend)/components/contact-persons'
-
-import SectionHeading from './section-heading'
+import SectionHeading from '@/components/ui/section-heading'
 
 interface ContactUsProps {
   data: Guesthouse
@@ -25,7 +24,7 @@ export default function ContactUs({
   return (
     <section className='py-8 lg:py-16'>
       <div id='contact' className='absolute -mt-36 lg:-mt-48' />
-      <SectionHeading heading='Contact Us' description='Get In Touch' />
+      <SectionHeading heading='Contact Us' subtitle='Get In Touch' />
 
       <div className='container mx-auto mt-8 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-3'>
         {contact_persons && (
