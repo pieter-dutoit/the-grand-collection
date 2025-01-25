@@ -4,6 +4,7 @@ import Image from '@/components/ui/image'
 import { extractImageProps } from '@/lib/utils'
 import { Guesthouse } from '@/payload/payload-types'
 import AvailabilityLink from '@/app/(frontend)/components/availability-link'
+import PageHeading from '@/components/ui/page-heading'
 
 export default function Hero({
   guesthouse
@@ -26,9 +27,11 @@ export default function Hero({
   return (
     <section className='relative bg-olive-50'>
       <div className='container relative z-10 mx-auto py-8 lg:py-16'>
-        <h1 className='text-4xl text-olive-800 md:text-5xl lg:text-6xl'>
-          {name}
-        </h1>
+        <PageHeading
+          heading={name}
+          containerClassNames='p-0 lg:p-0'
+          headingClassNames='text-left'
+        />
         <h2 className='mt-2 text-sm font-bold text-sage-700'>Guesthouse</h2>
         <div className='mt-2 flex items-center text-sage-700'>
           <MapPin className='mr-1 size-5' />

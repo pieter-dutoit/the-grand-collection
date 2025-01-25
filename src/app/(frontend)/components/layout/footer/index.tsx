@@ -104,8 +104,8 @@ export default async function Footer(): Promise<JSX.Element> {
           <ul className='flex flex-col gap-2'>
             {[
               {
-                label: 'Contact Us',
-                url: '/contact'
+                label: 'About Us',
+                url: '/about'
               }
             ].map(({ label, url }) => {
               return (
