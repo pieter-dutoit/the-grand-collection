@@ -16,14 +16,12 @@ import {
 type HomePageData = Partial<HomePage>
 
 export const fetchHomePageData = unstable_cache(
-  async (field: string): Promise<HomePageData> => {
+  async (field?: string): Promise<HomePageData> => {
     const payload = await getPayload({ config })
     const res = await payload.findGlobal({
       slug: 'home-page',
       depth: 2,
-      select: {
-        [field]: true
-      }
+      ...(field && { select: { [field]: true } })
     })
     if (!res) {
       throw new Error('Failed to fetch home page data')
@@ -37,14 +35,12 @@ export const fetchHomePageData = unstable_cache(
 type AboutPageData = Partial<AboutUsPage>
 
 export const fetchAboutPageData = unstable_cache(
-  async (field: string): Promise<AboutPageData> => {
+  async (field?: string): Promise<AboutPageData> => {
     const payload = await getPayload({ config })
     const res = await payload.findGlobal({
       slug: 'about-us-page',
       depth: 2,
-      select: {
-        [field]: true
-      }
+      ...(field && { select: { [field]: true } })
     })
     if (!res) {
       throw new Error(`Failed to fetch about page ${field} data`)
@@ -58,14 +54,12 @@ export const fetchAboutPageData = unstable_cache(
 type GuesthousePageData = Partial<AllGuesthousesPage>
 
 export const fetchGuesthousesPageData = unstable_cache(
-  async (field: string): Promise<GuesthousePageData> => {
+  async (field?: string): Promise<GuesthousePageData> => {
     const payload = await getPayload({ config })
     const res = await payload.findGlobal({
       slug: 'all-guesthouses-page',
       depth: 2,
-      select: {
-        [field]: true
-      }
+      ...(field && { select: { [field]: true } })
     })
     if (!res) {
       throw new Error('Failed to fetch guesthouses page data')
