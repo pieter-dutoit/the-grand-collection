@@ -99,6 +99,7 @@ export const AboutUsPage: GlobalConfig = {
         },
         {
           label: 'SEO',
+          name: 'seo',
           fields: SEOFields
         }
       ]
