@@ -850,9 +850,11 @@ export interface AboutUsPage {
     image: string | Media
   }
   subsections?: (string | RichtextSection)[] | null
-  meta: MetadataField
-  open_graph: OpenGraphField
-  twitter?: TwitterField
+  seo: {
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
   _status?: ('draft' | 'published') | null
   updatedAt?: string | null
   createdAt?: string | null
@@ -973,9 +975,13 @@ export interface AboutUsPageSelect<T extends boolean = true> {
         image?: T
       }
   subsections?: T
-  meta?: T | MetadataFieldSelect<T>
-  open_graph?: T | OpenGraphFieldSelect<T>
-  twitter?: T | TwitterFieldSelect<T>
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
   _status?: T
   updatedAt?: T
   createdAt?: T
