@@ -10,19 +10,21 @@ import GuestHouseContentFields from '../field-groups/guesthouse-content-fields'
 
 import createGuesthouseSlug from '../hooks/collections/create-guesthouse-slug'
 import { validateSlugFriendly } from '../utils/validation'
+import revalidateCache from '../hooks/collections/revalidate-cache'
 
 export const Guesthouses: CollectionConfig = {
-  versions: {
-    drafts: true
-  },
   slug: 'guesthouses',
   admin: {
     useAsTitle: 'name'
   },
-  access: DEFAULT_COLLECTION_ACCESS,
-  hooks: {
-    beforeChange: [createGuesthouseSlug]
+  versions: {
+    drafts: true
   },
+  hooks: {
+    beforeChange: [createGuesthouseSlug],
+    afterChange: [revalidateCache('guesthouses', true)]
+  },
+  access: DEFAULT_COLLECTION_ACCESS,
   fields: [
     {
       name: 'name',

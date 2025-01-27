@@ -4,11 +4,15 @@ import { isLoggedInOrIsPublished } from '@/payload/access/is-logged-in-or-is-pub
 import { isLoggedIn } from '@/payload/access/is-logged-in'
 
 import SEOFields from '../field-groups/seo'
+import revalidateCache from '../hooks/globals/revalidate-cache'
 
 export const AllGuesthousesPage: GlobalConfig = {
   slug: 'all-guesthouses-page',
   versions: {
     drafts: true
+  },
+  hooks: {
+    afterChange: [revalidateCache('all-guesthouses-page')]
   },
   access: {
     read: isLoggedInOrIsPublished,
@@ -27,7 +31,7 @@ export const AllGuesthousesPage: GlobalConfig = {
               label: 'Page Heading',
               type: 'text',
               required: true,
-              minLength: 5,
+              minLength: 3,
               maxLength: 200,
               defaultValue: 'Explore Our Guesthouses in South Africa'
             },
@@ -36,7 +40,7 @@ export const AllGuesthousesPage: GlobalConfig = {
               label: 'Sub Heading',
               type: 'text',
               required: true,
-              minLength: 5,
+              minLength: 3,
               maxLength: 200,
               defaultValue: 'Comfort and Luxury in Every Stay'
             }

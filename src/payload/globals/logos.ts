@@ -3,10 +3,15 @@ import type { GlobalConfig } from 'payload'
 import { isLoggedInOrIsPublished } from '@/payload/access/is-logged-in-or-is-published'
 import { isLoggedIn } from '@/payload/access/is-logged-in'
 
+import revalidateCache from '../hooks/globals/revalidate-cache'
+
 export const Logos: GlobalConfig = {
   slug: 'logos',
   versions: {
     drafts: true
+  },
+  hooks: {
+    afterChange: [revalidateCache('logos')]
   },
   access: {
     read: isLoggedInOrIsPublished,

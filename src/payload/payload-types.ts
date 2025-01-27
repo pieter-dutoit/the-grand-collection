@@ -20,6 +20,7 @@ export interface Config {
     rooms: Room
     'contact-persons': ContactPerson
     'social-media-platforms': SocialMediaPlatform
+    'richtext-sections': RichtextSection
     'payload-locked-documents': PayloadLockedDocument
     'payload-preferences': PayloadPreference
     'payload-migrations': PayloadMigration
@@ -37,6 +38,9 @@ export interface Config {
     'social-media-platforms':
       | SocialMediaPlatformsSelect<false>
       | SocialMediaPlatformsSelect<true>
+    'richtext-sections':
+      | RichtextSectionsSelect<false>
+      | RichtextSectionsSelect<true>
     'payload-locked-documents':
       | PayloadLockedDocumentsSelect<false>
       | PayloadLockedDocumentsSelect<true>
@@ -53,11 +57,13 @@ export interface Config {
   globals: {
     logos: Logo
     'home-page': HomePage
+    'about-us-page': AboutUsPage
     'all-guesthouses-page': AllGuesthousesPage
   }
   globalsSelect: {
     logos: LogosSelect<false> | LogosSelect<true>
     'home-page': HomePageSelect<false> | HomePageSelect<true>
+    'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>
     'all-guesthouses-page':
       | AllGuesthousesPageSelect<false>
       | AllGuesthousesPageSelect<true>
@@ -344,6 +350,31 @@ export interface TwitterField {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "richtext-sections".
+ */
+export interface RichtextSection {
+  id: string
+  heading: string
+  content: {
+    root: {
+      type: string
+      children: {
+        type: string
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  }
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -384,6 +415,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'social-media-platforms'
         value: string | SocialMediaPlatform
+      } | null)
+    | ({
+        relationTo: 'richtext-sections'
+        value: string | RichtextSection
       } | null)
   globalSlug?: string | null
   user: {
@@ -695,6 +730,16 @@ export interface SocialMediaPlatformsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "richtext-sections_select".
+ */
+export interface RichtextSectionsSelect<T extends boolean = true> {
+  heading?: T
+  content?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -791,6 +836,29 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us-page".
+ */
+export interface AboutUsPage {
+  id: string
+  hero: {
+    heading: string
+    sub_heading: string
+  }
+  overview: {
+    title: string
+    description: string
+    image: string | Media
+  }
+  subsections?: (string | RichtextSection)[] | null
+  meta: MetadataField
+  open_graph: OpenGraphField
+  twitter?: TwitterField
+  _status?: ('draft' | 'published') | null
+  updatedAt?: string | null
+  createdAt?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "all-guesthouses-page".
  */
 export interface AllGuesthousesPage {
@@ -881,6 +949,33 @@ export interface HomePageSelect<T extends boolean = true> {
         open_graph?: T | OpenGraphFieldSelect<T>
         twitter?: T | TwitterFieldSelect<T>
       }
+  _status?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us-page_select".
+ */
+export interface AboutUsPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        heading?: T
+        sub_heading?: T
+      }
+  overview?:
+    | T
+    | {
+        title?: T
+        description?: T
+        image?: T
+      }
+  subsections?: T
+  meta?: T | MetadataFieldSelect<T>
+  open_graph?: T | OpenGraphFieldSelect<T>
+  twitter?: T | TwitterFieldSelect<T>
   _status?: T
   updatedAt?: T
   createdAt?: T
