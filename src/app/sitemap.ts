@@ -3,9 +3,9 @@ import type { MetadataRoute } from 'next'
 import { getBaseUrl } from '@/lib/utils'
 import {
   fetchAboutPageData,
+  fetchGuestHouses,
   fetchGuesthousesPageData,
-  fetchHomePageData,
-  getGuestHouses
+  fetchHomePageData
 } from '@/lib/data'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -14,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const homePage = await fetchHomePageData()
   const aboutPage = await fetchAboutPageData()
   const allGuestHousesPage = await fetchGuesthousesPageData()
-  const guesthouses = await getGuestHouses()
+  const guesthouses = await fetchGuestHouses()
 
   return [
     // Home Page
@@ -45,8 +45,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7
     },
     // Guesthouse Pages
-    ...guesthouses.map(({ slug, createdAt, updatedAt }) => ({
-      url: baseURL + '/' + slug,
+    ...guesthouses.map(({ slug, updatedAt, createdAt }) => ({
+      url: baseURL + '/guesthouses/' + slug,
       lastModified: new Date(updatedAt || createdAt),
       changeFrequency: 'yearly' as const,
       priority: 0.8

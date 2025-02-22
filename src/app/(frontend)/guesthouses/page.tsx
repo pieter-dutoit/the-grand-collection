@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import { fetchGuesthousesPageData, getGuestHouses } from '@/lib/data'
+import { fetchGuesthousesPageData, fetchGuestHouses } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 
 import PropertyPreview from '../components/property-preview'
@@ -19,7 +19,7 @@ export default async function AllGuestHouses(): Promise<JSX.Element> {
   const { content } = await fetchGuesthousesPageData('content')
   if (!content) return <></>
 
-  const guesthouses = await getGuestHouses()
+  const guesthouses = await fetchGuestHouses()
 
   const { heading, sub_heading } = content
 

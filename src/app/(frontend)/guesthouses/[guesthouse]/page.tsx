@@ -3,7 +3,7 @@ import 'server-only'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { getGuestHouses } from '@/lib/data'
+import { fetchGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 
@@ -18,7 +18,7 @@ type Props = { params: Promise<{ guesthouse: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { guesthouse: slug } = await params
-  const res: Guesthouse[] = await getGuestHouses({ slug: { equals: slug } })
+  const res: Guesthouse[] = await fetchGuestHouses({ slug: { equals: slug } })
   const [data] = res
 
   if (!data) {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const guesthouses = await getGuestHouses()
+  const guesthouses = await fetchGuestHouses()
 
   if (!guesthouses) {
     return []
@@ -48,7 +48,7 @@ export async function generateStaticParams() {
 export default async function Page({ params }: Props): Promise<JSX.Element> {
   const { guesthouse: slug } = await params
 
-  const res: Guesthouse[] = await getGuestHouses({ slug: { equals: slug } })
+  const res: Guesthouse[] = await fetchGuestHouses({ slug: { equals: slug } })
   const [data] = res
 
   if (!data) {

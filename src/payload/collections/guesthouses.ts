@@ -11,6 +11,7 @@ import GuestHouseContentFields from '../field-groups/guesthouse-content-fields'
 import createGuesthouseSlug from '../hooks/collections/create-guesthouse-slug'
 import { validateSlugFriendly } from '../utils/validation'
 import revalidateCache from '../hooks/collections/revalidate-cache'
+import { BusinessDetailsFields } from '../field-groups/business-details-fields'
 
 export const Guesthouses: CollectionConfig = {
   slug: 'guesthouses',
@@ -56,6 +57,11 @@ export const Guesthouses: CollectionConfig = {
           name: 'content',
           label: 'Page Content',
           fields: GuestHouseContentFields
+        },
+        {
+          name: 'business_details',
+          label: 'Business Details',
+          fields: BusinessDetailsFields
         },
         {
           name: 'contact_details',

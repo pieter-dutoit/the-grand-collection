@@ -4,12 +4,12 @@ import { House } from 'lucide-react'
 
 import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
-import { fetchHomePageData, getLogo } from '@/lib/data'
+import { fetchHomePageData, fetchLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 export async function Hero(): Promise<JSX.Element> {
   const { hero } = await fetchHomePageData('hero')
-  const logo = await getLogo('logo_light')
+  const logo = await fetchLogo('logo_light')
   const { logo_light } = logo
   const logoProps = extractImageProps(logo_light)
 
@@ -27,7 +27,7 @@ export async function Hero(): Promise<JSX.Element> {
             alt={alt}
             className='object-cover object-center'
             fill
-            sizes='(max-width: 510px) 90vw, 100vw'
+            sizes='100vw'
             priority
             portrait
           />
