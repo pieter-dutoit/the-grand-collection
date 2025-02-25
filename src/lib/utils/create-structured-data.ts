@@ -1,4 +1,4 @@
-import { Guesthouse, Media } from '@/payload/payload-types'
+import { Amenity, Guesthouse, Media, Room } from '@/payload/payload-types'
 import { createSourceSet } from '@/components/ui/image'
 
 import { extractContactDetails, extractImageProps, getBaseUrl } from '.'
@@ -38,6 +38,29 @@ const BUSINESS_AUDIENCE = [
 export function createAbsoluteImagePath(cmsPath: string): string {
   const filename = cmsPath.split('/').pop()
   return `${getBaseUrl()}/api/images/${filename}`
+}
+
+export function createAmenitiesList(amenities: (Amenity | string)[]) {
+  return [
+    {
+      '@type': 'LocationFeatureSpecification',
+      name: 'InternetType',
+      value: 'FREE'
+    },
+    {
+      '@type': 'LocationFeatureSpecification',
+      name: 'ParkingType',
+      value: 'FREE'
+    },
+    ...amenities
+      .filter((amenity) => typeof amenity !== 'string')
+      .map(({ googleName }) => ({
+        '@type': 'LocationFeatureSpecification',
+        name: googleName,
+        value: true
+      }))
+      .filter(({ name }) => !!name)
+  ]
 }
 
 export function createMediaObject(image: Media | string) {
@@ -139,7 +162,8 @@ export async function createGuesthouseStructuredData({
     content: {
       description,
       images: { background_image, exterior, interior },
-      rooms
+      rooms,
+      amenities: { general_amenities }
     },
     business_details: {
       hours: { opening_time, closing_time },
@@ -197,8 +221,72 @@ export async function createGuesthouseStructuredData({
       audience: BUSINESS_AUDIENCE,
       numberOfRooms: rooms.rooms?.length,
       sameAs: socials?.map(({ url }) => url),
-      availableLanguage: LANGUAGES
+      availableLanguage: LANGUAGES,
+      amenityFeature: createAmenitiesList(general_amenities),
+      containsPlace: rooms.rooms
+        ?.filter((room) => typeof room !== 'string')
+        .map((room) => createRoomStructuredData(room, guesthouse))
     })
+  }
+}
+
+function createRoomStructuredData(room: Room, guesthouse: Guesthouse) {
+  const {
+    business_details: {
+      check_in_out: { check_in_time, check_out_time }
+    }
+  } = guesthouse
+
+  const {
+    base_price,
+    slug,
+    name,
+    description,
+    gallery,
+    details: { bed_count, sleeps_adults, sleeps_children },
+    amenities
+  } = room
+
+  const amenityFeature = createAmenitiesList(amenities)
+  const sleepsCount = sleeps_adults + sleeps_children
+  const roomIdentifier = guesthouse.slug + '-' + slug
+
+  return {
+    '@type': ['HotelRoom', 'Product'],
+    '@id': getBaseUrl() + '/guesthouses/' + guesthouse.slug + '/#' + slug,
+    image: gallery.map(createMediaObject),
+    name,
+    description,
+    identifier: roomIdentifier,
+    offers: {
+      '@type': ['Offer', 'LodgingReservation'],
+      identifier: roomIdentifier + '-standard-rate',
+      checkinTime: check_in_time,
+      checkoutTime: check_out_time,
+      url: guesthouse.booking_platform.url,
+      availability: 'https://schema.org/InStock',
+      priceSpecification: {
+        '@type': 'CompoundPriceSpecification',
+        price: base_price,
+        priceCurrency: 'ZAR'
+      }
+    },
+    bed: bed_count.map(({ bed, quantity }) => {
+      if (typeof bed === 'string') return
+      const { googleName } = bed
+
+      return {
+        '@type': 'BedDetails',
+        typeOfBed: googleName,
+        numberOfBeds: quantity
+      }
+    }),
+    occupancy: {
+      '@type': 'QuantitativeValue',
+      value: sleepsCount,
+      unitCode: 'C62'
+    },
+    amenityFeature
   }
 }
 

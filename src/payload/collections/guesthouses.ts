@@ -8,7 +8,7 @@ import SEOFields from '../field-groups/seo'
 import SocialMediaLinks from '../field-groups/social-media-links'
 import GuestHouseContentFields from '../field-groups/guesthouse-content-fields'
 
-import createGuesthouseSlug from '../hooks/collections/create-guesthouse-slug'
+import createCollectionSlug from '../hooks/collections/create-collection-slug'
 import { validateSlugFriendly } from '../utils/validation'
 import revalidateCache from '../hooks/collections/revalidate-cache'
 import { BusinessDetailsFields } from '../field-groups/business-details-fields'
@@ -22,7 +22,7 @@ export const Guesthouses: CollectionConfig = {
     drafts: true
   },
   hooks: {
-    beforeChange: [createGuesthouseSlug],
+    beforeChange: [createCollectionSlug],
     afterChange: [revalidateCache('guesthouses', true)]
   },
   access: DEFAULT_COLLECTION_ACCESS,
@@ -43,6 +43,7 @@ export const Guesthouses: CollectionConfig = {
       label: 'Page Slug / URL (Auto Generated)',
       type: 'text',
       unique: true,
+      required: true,
       admin: {
         position: 'sidebar',
         readOnly: true

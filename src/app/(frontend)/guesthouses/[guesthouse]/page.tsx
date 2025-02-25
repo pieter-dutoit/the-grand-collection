@@ -62,6 +62,7 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
   const guesthouseStructuredData = await createGuesthouseStructuredData({
     guesthouse: data
   })
+
   const jsonLd = [
     guesthouseStructuredData,
     createBreadCrumbs([
