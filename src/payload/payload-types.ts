@@ -315,6 +315,11 @@ export interface Guesthouse {
         | 'T13:00:00+02:00'
         | 'T14:00:00+02:00'
     }
+    geo: {
+      latitude: string
+      longitude: string
+      mapsLink: string
+    }
   }
   contact_details: {
     contact_persons?: (string | ContactPerson)[] | null
@@ -712,6 +717,13 @@ export interface GuesthousesSelect<T extends boolean = true> {
           | {
               check_in_time?: T
               check_out_time?: T
+            }
+        geo?:
+          | T
+          | {
+              latitude?: T
+              longitude?: T
+              mapsLink?: T
             }
       }
   contact_details?:

@@ -68,5 +68,30 @@ export const BusinessDetailsFields: Field[] = [
         required: true
       }
     ]
+  },
+  {
+    type: 'group',
+    name: 'geo',
+    label: 'Geolocation (Match Google Maps)',
+    fields: [
+      {
+        name: 'latitude',
+        label: 'Latitude',
+        type: 'text',
+        required: true
+      },
+      {
+        name: 'longitude',
+        label: 'Longitude',
+        type: 'text',
+        required: true
+      },
+      {
+        name: 'mapsLink',
+        label: 'Maps Link (format: https://maps.app.goo.gl/xxxxxxxxxxxx)',
+        type: 'text',
+        required: true
+      }
+    ]
   }
 ]
