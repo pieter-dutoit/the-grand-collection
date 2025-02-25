@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { Media } from '@/payload/payload-types'
-import { getGuestHouses } from '@/lib/data'
+import { fetchGuestHouses } from '@/lib/data'
 
 const DEFAULT_LABEL_STYLE: Pick<NavLabel, 'variant' | 'color'> = {
   variant: 'ghost',
@@ -26,7 +26,7 @@ export interface NavOption {
 }
 
 export async function getNavOptions(): Promise<NavOption[]> {
-  const guesthouses = await getGuestHouses()
+  const guesthouses = await fetchGuestHouses()
   return [
     {
       href: '/',
@@ -66,7 +66,7 @@ export async function getNavOptions(): Promise<NavOption[]> {
 }
 
 export async function getBookingOptions(): Promise<NavOption[]> {
-  const guesthouses = await getGuestHouses()
+  const guesthouses = await fetchGuestHouses()
 
   return guesthouses.map(
     (guesthouse): NavOption => ({

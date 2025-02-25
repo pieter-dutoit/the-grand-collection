@@ -6,10 +6,65 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji'
+
 export interface Config {
   auth: {
     users: UserAuthOperations
   }
+  blocks: {}
   collections: {
     amenities: Amenity
     beds: Bed
@@ -101,9 +156,17 @@ export interface UserAuthOperations {
  */
 export interface Amenity {
   id: string
+  slug?: string | null
+  featured: boolean
   name: string
+  googleName?: string | null
   description?: string | null
   icon: string | Media
+  price?: {
+    unit_price?: number | null
+    unit_type?: string | null
+    on_request?: boolean | null
+  }
   updatedAt: string
   createdAt: string
 }
@@ -144,6 +207,7 @@ export interface Media {
 export interface Bed {
   id: string
   name: string
+  googleName: 'KING' | 'QUEEN' | 'DOUBLE' | 'SINGLE'
   icon: string | Media
   updatedAt: string
   createdAt: string
@@ -211,7 +275,7 @@ export interface SeoMedia {
 export interface Guesthouse {
   id: string
   name: string
-  slug?: string | null
+  slug: string
   booking_platform: {
     name: 'NightsBridge'
     url: string
@@ -239,6 +303,31 @@ export interface Guesthouse {
       description: string
       people_icon: string | Media
       rooms?: (string | Room)[] | null
+    }
+  }
+  business_details: {
+    hours: {
+      opening_time: '00:00' | '06:00' | '07:00' | '08:00' | '09:00' | '10:00'
+      closing_time: '23:59' | '18:00' | '19:00' | '20:00' | '21:00' | '22:00'
+    }
+    check_in_out: {
+      check_in_time:
+        | 'T12:00:00+02:00'
+        | 'T13:00:00+02:00'
+        | 'T14:00:00+02:00'
+        | 'T15:00:00+02:00'
+        | 'T16:00:00+02:00'
+      check_out_time:
+        | 'T10:00:00+02:00'
+        | 'T11:00:00+02:00'
+        | 'T12:00:00+02:00'
+        | 'T13:00:00+02:00'
+        | 'T14:00:00+02:00'
+    }
+    geo: {
+      latitude: string
+      longitude: string
+      mapsLink: string
     }
   }
   contact_details: {
@@ -282,6 +371,9 @@ export interface Guesthouse {
  */
 export interface Room {
   id: string
+  slug?: string | null
+  count: number
+  base_price: number
   name: string
   description: string
   details: {
@@ -467,9 +559,19 @@ export interface PayloadMigration {
  * via the `definition` "amenities_select".
  */
 export interface AmenitiesSelect<T extends boolean = true> {
+  slug?: T
+  featured?: T
   name?: T
+  googleName?: T
   description?: T
   icon?: T
+  price?:
+    | T
+    | {
+        unit_price?: T
+        unit_type?: T
+        on_request?: T
+      }
   updatedAt?: T
   createdAt?: T
 }
@@ -479,6 +581,7 @@ export interface AmenitiesSelect<T extends boolean = true> {
  */
 export interface BedsSelect<T extends boolean = true> {
   name?: T
+  googleName?: T
   icon?: T
   updatedAt?: T
   createdAt?: T
@@ -623,6 +726,29 @@ export interface GuesthousesSelect<T extends boolean = true> {
               rooms?: T
             }
       }
+  business_details?:
+    | T
+    | {
+        hours?:
+          | T
+          | {
+              opening_time?: T
+              closing_time?: T
+            }
+        check_in_out?:
+          | T
+          | {
+              check_in_time?: T
+              check_out_time?: T
+            }
+        geo?:
+          | T
+          | {
+              latitude?: T
+              longitude?: T
+              mapsLink?: T
+            }
+      }
   contact_details?:
     | T
     | {
@@ -686,6 +812,9 @@ export interface TwitterFieldSelect<T extends boolean = true> {
  * via the `definition` "rooms_select".
  */
 export interface RoomsSelect<T extends boolean = true> {
+  slug?: T
+  count?: T
+  base_price?: T
   name?: T
   description?: T
   details?:

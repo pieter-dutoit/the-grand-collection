@@ -72,7 +72,7 @@ export const fetchGuesthousesPageData = unstable_cache(
 
 type LogoData = Partial<Logo>
 
-export const getLogo = unstable_cache(
+export const fetchLogo = unstable_cache(
   async (variant: string): Promise<LogoData> => {
     const payload = await getPayload({ config })
     const res = await payload.findGlobal({
@@ -91,7 +91,7 @@ export const getLogo = unstable_cache(
   { revalidate: false, tags: ['logos'] }
 )
 
-export const getGuestHouses = unstable_cache(
+export const fetchGuestHouses = unstable_cache(
   async (query?: Where): Promise<Guesthouse[]> => {
     const payload = await getPayload({ config })
     const res = await payload.find({
