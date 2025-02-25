@@ -177,7 +177,6 @@ export async function createGuesthouseStructuredData({
 
   return {
     '@context': 'https://schema.org',
-    // Minimal data:
     '@type': 'LodgingBusiness',
     '@id': getBaseUrl() + '/guesthouses/' + slug + '/#lodgingBusiness',
     url: getBaseUrl() + '/guesthouses/' + slug,

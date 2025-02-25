@@ -44,14 +44,12 @@ export async function generateStaticParams() {
   }
 
   return guesthouses.map((guesthouse) => ({
-    guesthouse: guesthouse.slug,
-    ...guesthouse
+    guesthouse: guesthouse.slug
   }))
 }
 
 export default async function Page({ params }: Props): Promise<JSX.Element> {
   const { guesthouse: slug } = await params
-
   const res: Guesthouse[] = await fetchGuestHouses({ slug: { equals: slug } })
   const [data] = res
 

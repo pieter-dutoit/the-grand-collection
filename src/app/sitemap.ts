@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: homePage.updatedAt
         ? new Date(homePage.updatedAt)
         : new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: 'monthly',
       priority: 1
     },
     // All Guesthouses Page
@@ -32,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: allGuestHousesPage.updatedAt
         ? new Date(allGuestHousesPage.updatedAt)
         : new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: 'monthly',
       priority: 0.9
     },
     // About page
@@ -48,7 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...guesthouses.map(({ slug, updatedAt, createdAt }) => ({
       url: baseURL + '/guesthouses/' + slug,
       lastModified: new Date(updatedAt || createdAt),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: 'monthly' as const,
       priority: 0.8
     }))
   ]
