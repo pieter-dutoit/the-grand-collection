@@ -36,7 +36,6 @@ export function extractContactDetails(
   position: string | undefined | null
 }[] {
   if (!contacts) return []
-  console.log({ contacts })
 
   return contacts
     .filter((contact) => typeof contact !== 'string')

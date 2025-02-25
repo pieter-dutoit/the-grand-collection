@@ -6,6 +6,10 @@ import { notFound } from 'next/navigation'
 import { fetchGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
+import {
+  createBreadCrumbs,
+  createGuesthouseStructuredData
+} from '@/lib/utils/create-structured-data'
 
 import Hero from './components/hero'
 import Navbar from './components/navbar'
@@ -55,8 +59,29 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
     notFound()
   }
 
+  const guesthouseStructuredData = await createGuesthouseStructuredData({
+    guesthouse: data
+  })
+  const jsonLd = [
+    guesthouseStructuredData,
+    createBreadCrumbs([
+      {
+        name: 'All Guesthouses',
+        item: '/guesthouses'
+      },
+      {
+        name: data.name,
+        item: '/guesthouses/' + data.slug
+      }
+    ])
+  ]
+
   return (
     <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Hero guesthouse={data} />
       <Navbar />
       <Gallery data={data} />

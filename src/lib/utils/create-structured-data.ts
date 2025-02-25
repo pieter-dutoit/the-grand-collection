@@ -2,7 +2,7 @@ import { Guesthouse, Media } from '@/payload/payload-types'
 import { createSourceSet } from '@/components/ui/image'
 
 import { extractContactDetails, extractImageProps, getBaseUrl } from '.'
-import { fetchHomePageData, fetchLogo } from '../data'
+import { fetchGuestHouses, fetchHomePageData, fetchLogo } from '../data'
 
 const LANGUAGES = [
   {
@@ -40,7 +40,7 @@ export function createAbsoluteImagePath(cmsPath: string): string {
   return `${getBaseUrl()}/api/images/${filename}`
 }
 
-export function createMediaObject(image: Media) {
+export function createMediaObject(image: Media | string) {
   const { url, alt } = extractImageProps(image)
   const contentUrl = createAbsoluteImagePath(url)
   const thumbnailUrl = createSourceSet(contentUrl, false)
@@ -79,7 +79,7 @@ export function createBreadCrumbs(
       },
       ...crumbs.map(({ name, item }, index) => ({
         '@type': 'ListItem',
-        position: index + 1,
+        position: index + 2,
         name,
         ...(item && { item: getBaseUrl() + item })
       }))
@@ -87,7 +87,9 @@ export function createBreadCrumbs(
   }
 }
 
-export async function getOrganisationStructuredData() {
+export async function getOrganisationStructuredData({
+  minimal = false
+}: { minimal?: boolean } = {}) {
   // Home page data
   const homePageData = await fetchHomePageData()
   const { hero, overview, socials, contactPersons } = homePageData
@@ -101,31 +103,29 @@ export async function getOrganisationStructuredData() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': getBaseUrl() + '/#organization',
-    url: getBaseUrl(),
-    sameAs: socials?.map(({ url }) => url),
-    logo: createAbsoluteImagePath(logoURL),
-    image: [hero?.background_image, ...(overview?.images || [])]
-      .filter((image) => typeof image !== 'string')
-      .map((image) => (image ? createMediaObject(image) : null))
-      .filter(Boolean),
     name: 'The Grand Collection',
-    description:
-      'The Grand Collection offers a selection of luxury guesthouses across South Africa, catering to business and leisure travellers.',
-    slogan: 'Splendour Stay',
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'Customer Service',
-      email,
-      telephone: '+27' + phoneLink
-    }
-    // TODO: Consider adding this back in, depending on how pages are ranked by Google
-    // subOrganization: guesthouses.map((guesthouse) =>
-    //   createGuesthouseStructuredData({ guesthouse, minimal: true })
-    // )
+    ...(!minimal && {
+      url: getBaseUrl(),
+      sameAs: socials?.map(({ url }) => url),
+      logo: createAbsoluteImagePath(logoURL),
+      image: [hero?.background_image, ...(overview?.images || [])]
+        .filter((image) => typeof image !== 'string')
+        .map((image) => (image ? createMediaObject(image) : null))
+        .filter(Boolean),
+      description:
+        'The Grand Collection offers a selection of luxury guesthouses across South Africa, catering to business and leisure travellers.',
+      slogan: 'Splendour Stay',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'Customer Service',
+        email,
+        telephone: '+27' + phoneLink
+      }
+    })
   }
 }
 
-export function createGuesthouseStructuredData({
+export async function createGuesthouseStructuredData({
   guesthouse,
   minimal = false
 }: {
@@ -148,12 +148,17 @@ export function createGuesthouseStructuredData({
     }
   } = guesthouse
 
+  const telephone = '+27' + extractContactDetails(contact_persons)[0].phoneLink
+  const email = extractContactDetails(contact_persons)[0].email
+
   return {
+    '@context': 'https://schema.org',
     // Minimal data:
     '@type': 'LodgingBusiness',
     '@id': getBaseUrl() + '/guesthouses/' + slug + '/#lodgingBusiness',
     url: getBaseUrl() + '/guesthouses/' + slug,
     name,
+    telephone,
     address: {
       '@type': 'PostalAddress',
       streetAddress: address.street,
@@ -165,9 +170,9 @@ export function createGuesthouseStructuredData({
     // Full data:
     ...(!minimal && {
       identifier: 'hotel-id-' + slug,
-      parentOrganization: {
-        '@id': getBaseUrl() + '/#organization'
-      },
+      parentOrganization: await getOrganisationStructuredData({
+        minimal: true
+      }),
       geo: {
         '@type': 'GeoCoordinates',
         latitude,
@@ -177,8 +182,9 @@ export function createGuesthouseStructuredData({
       description,
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: '+27' + extractContactDetails(contact_persons)[0].phoneLink,
-        email: extractContactDetails(contact_persons)[0].email
+        contactType: 'Customer Service',
+        telephone,
+        email
       },
       image: [background_image, ...interior, ...exterior]
         .slice(0, 40)
@@ -193,5 +199,40 @@ export function createGuesthouseStructuredData({
       sameAs: socials?.map(({ url }) => url),
       availableLanguage: LANGUAGES
     })
+  }
+}
+
+export async function getGuesthouseListStructure() {
+  const guesthouses = await fetchGuestHouses()
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'The Grand Collection Guesthouses',
+    description:
+      'A curated list of luxury guesthouses under The Grand Collection across South Africa.',
+    url: getBaseUrl() + '/guesthouses',
+    itemListElement: guesthouses.map(
+      (
+        {
+          name,
+          slug,
+          content: {
+            description,
+            images: { exterior }
+          }
+        },
+        index
+      ) => {
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          name,
+          url: getBaseUrl() + '/guesthouses/' + slug,
+          image: createMediaObject(exterior[0]),
+          description
+        }
+      }
+    )
   }
 }

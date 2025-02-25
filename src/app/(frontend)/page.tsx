@@ -8,7 +8,6 @@ import {
 
 export default async function Home() {
   const organisationSD = await getOrganisationStructuredData()
-
   const jsonLd = [createBreadCrumbs(), organisationSD]
 
   return (
