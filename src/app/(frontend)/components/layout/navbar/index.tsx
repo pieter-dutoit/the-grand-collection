@@ -77,7 +77,10 @@ export default async function Navbar(): Promise<JSX.Element> {
         </NavigationMenu>
 
         {/* Right content */}
-        <CountryOutline className='hidden sm:block' />
+        <Link className='hidden sm:block' href='/guesthouses'>
+          <span className='sr-only'>View our properties</span>
+          <CountryOutline />
+        </Link>
       </div>
     </header>
   )

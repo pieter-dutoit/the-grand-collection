@@ -23,11 +23,15 @@ export default function PropertyPreview({
     contact_details: {
       address: { city, province }
     },
-    content: { images, heading }
+    content: { images, heading, rooms }
   } = guesthouse
 
   const { interior, exterior } = images
   const gallery = [exterior[0], ...interior.slice(0, 3)]
+
+  const lowestPrice = rooms.rooms
+    ?.filter((room) => typeof room !== 'string')
+    .sort((one, two) => one.base_price - two.base_price)[0]?.base_price
 
   return (
     <div
@@ -82,6 +86,10 @@ export default function PropertyPreview({
           <div className='mt-2 flex items-center'>
             <MapPin className='size-4 text-sage-400' />
             <p className='ml-1 text-xs font-bold text-sage-400'>{`${city}, ${province}`}</p>
+          </div>
+
+          <div className='mt-2 text-sm font-extrabold text-olive-900'>
+            from <span className='text-xl'>R{lowestPrice}</span> per night
           </div>
         </div>
 

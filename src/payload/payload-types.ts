@@ -327,7 +327,8 @@ export interface Guesthouse {
     geo: {
       latitude: string
       longitude: string
-      mapsLink: string
+      maps_link: string
+      maps_embed_url: string
     }
   }
   contact_details: {
@@ -746,7 +747,8 @@ export interface GuesthousesSelect<T extends boolean = true> {
           | {
               latitude?: T
               longitude?: T
-              mapsLink?: T
+              maps_link?: T
+              maps_embed_url?: T
             }
       }
   contact_details?:
