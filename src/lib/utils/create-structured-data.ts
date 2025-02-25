@@ -168,7 +168,7 @@ export async function createGuesthouseStructuredData({
     business_details: {
       hours: { opening_time, closing_time },
       check_in_out: { check_in_time, check_out_time },
-      geo: { latitude, longitude, mapsLink }
+      geo: { latitude, longitude, maps_link }
     }
   } = guesthouse
 
@@ -201,7 +201,7 @@ export async function createGuesthouseStructuredData({
         latitude,
         longitude
       },
-      hasMap: mapsLink,
+      hasMap: maps_link,
       description,
       contactPoint: {
         '@type': 'ContactPoint',

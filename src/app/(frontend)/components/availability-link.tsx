@@ -29,7 +29,7 @@ export default function AvailabilityLink({
         Check Availability <ExternalLink />
       </Link>
       <em className='text-nowrap text-xs text-olive-500'>
-        Powered by <strong className='font-semibold'>{platformName}</strong>
+        Bookings on <strong className='font-semibold'>{platformName}</strong>
       </em>
     </div>
   )

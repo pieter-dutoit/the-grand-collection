@@ -87,8 +87,15 @@ export const BusinessDetailsFields: Field[] = [
         required: true
       },
       {
-        name: 'mapsLink',
+        name: 'maps_link',
         label: 'Maps Link (format: https://maps.app.goo.gl/xxxxxxxxxxxx)',
+        type: 'text',
+        required: true
+      },
+      {
+        name: 'maps_embed_url',
+        label:
+          'Maps Embed (format: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1dxxxxxxxxxxxx)',
         type: 'text',
         required: true
       }
