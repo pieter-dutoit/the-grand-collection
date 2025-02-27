@@ -26,12 +26,17 @@ export default function PropertyPreview({
     content: { images, heading, rooms }
   } = guesthouse
 
+  const filteredRooms = rooms.rooms?.filter((room) => typeof room !== 'string')
   const { interior, exterior } = images
-  const gallery = [exterior[0], ...interior.slice(0, 3)]
+  const gallery = [
+    exterior[1],
+    interior[0],
+    ...(filteredRooms?.[0].gallery.slice(0, 2) || [])
+  ]
 
-  const lowestPrice = rooms.rooms
-    ?.filter((room) => typeof room !== 'string')
-    .sort((one, two) => one.base_price - two.base_price)[0]?.base_price
+  const lowestPrice = filteredRooms?.sort(
+    (one, two) => one.base_price - two.base_price
+  )[0]?.base_price
 
   return (
     <div

@@ -58,263 +58,285 @@ export type SupportedTimezones =
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+  | 'Pacific/Fiji'
 
 export interface Config {
   auth: {
-    users: UserAuthOperations;
-  };
-  blocks: {};
+    users: UserAuthOperations
+  }
+  blocks: {}
   collections: {
-    amenities: Amenity;
-    beds: Bed;
-    users: User;
-    media: Media;
-    'seo-media': SeoMedia;
-    guesthouses: Guesthouse;
-    rooms: Room;
-    'contact-persons': ContactPerson;
-    'social-media-platforms': SocialMediaPlatform;
-    'richtext-sections': RichtextSection;
-    'payload-locked-documents': PayloadLockedDocument;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
-  };
-  collectionsJoins: {};
+    amenities: Amenity
+    beds: Bed
+    users: User
+    media: Media
+    'seo-media': SeoMedia
+    guesthouses: Guesthouse
+    rooms: Room
+    'contact-persons': ContactPerson
+    'social-media-platforms': SocialMediaPlatform
+    'richtext-sections': RichtextSection
+    'payload-locked-documents': PayloadLockedDocument
+    'payload-preferences': PayloadPreference
+    'payload-migrations': PayloadMigration
+  }
+  collectionsJoins: {}
   collectionsSelect: {
-    amenities: AmenitiesSelect<false> | AmenitiesSelect<true>;
-    beds: BedsSelect<false> | BedsSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
-    'seo-media': SeoMediaSelect<false> | SeoMediaSelect<true>;
-    guesthouses: GuesthousesSelect<false> | GuesthousesSelect<true>;
-    rooms: RoomsSelect<false> | RoomsSelect<true>;
-    'contact-persons': ContactPersonsSelect<false> | ContactPersonsSelect<true>;
-    'social-media-platforms': SocialMediaPlatformsSelect<false> | SocialMediaPlatformsSelect<true>;
-    'richtext-sections': RichtextSectionsSelect<false> | RichtextSectionsSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
-  };
+    amenities: AmenitiesSelect<false> | AmenitiesSelect<true>
+    beds: BedsSelect<false> | BedsSelect<true>
+    users: UsersSelect<false> | UsersSelect<true>
+    media: MediaSelect<false> | MediaSelect<true>
+    'seo-media': SeoMediaSelect<false> | SeoMediaSelect<true>
+    guesthouses: GuesthousesSelect<false> | GuesthousesSelect<true>
+    rooms: RoomsSelect<false> | RoomsSelect<true>
+    'contact-persons': ContactPersonsSelect<false> | ContactPersonsSelect<true>
+    'social-media-platforms':
+      | SocialMediaPlatformsSelect<false>
+      | SocialMediaPlatformsSelect<true>
+    'richtext-sections':
+      | RichtextSectionsSelect<false>
+      | RichtextSectionsSelect<true>
+    'payload-locked-documents':
+      | PayloadLockedDocumentsSelect<false>
+      | PayloadLockedDocumentsSelect<true>
+    'payload-preferences':
+      | PayloadPreferencesSelect<false>
+      | PayloadPreferencesSelect<true>
+    'payload-migrations':
+      | PayloadMigrationsSelect<false>
+      | PayloadMigrationsSelect<true>
+  }
   db: {
-    defaultIDType: string;
-  };
+    defaultIDType: string
+  }
   globals: {
-    logos: Logo;
-    'home-page': HomePage;
-    'about-us-page': AboutUsPage;
-    'all-guesthouses-page': AllGuesthousesPage;
-  };
+    logos: Logo
+    'home-page': HomePage
+    'about-us-page': AboutUsPage
+    'all-guesthouses-page': AllGuesthousesPage
+  }
   globalsSelect: {
-    logos: LogosSelect<false> | LogosSelect<true>;
-    'home-page': HomePageSelect<false> | HomePageSelect<true>;
-    'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
-    'all-guesthouses-page': AllGuesthousesPageSelect<false> | AllGuesthousesPageSelect<true>;
-  };
-  locale: null;
+    logos: LogosSelect<false> | LogosSelect<true>
+    'home-page': HomePageSelect<false> | HomePageSelect<true>
+    'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>
+    'all-guesthouses-page':
+      | AllGuesthousesPageSelect<false>
+      | AllGuesthousesPageSelect<true>
+  }
+  locale: null
   user: User & {
-    collection: 'users';
-  };
+    collection: 'users'
+  }
   jobs: {
-    tasks: unknown;
-    workflows: unknown;
-  };
+    tasks: unknown
+    workflows: unknown
+  }
 }
 export interface UserAuthOperations {
   forgotPassword: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   login: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   registerFirstUser: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   unlock: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "amenities".
  */
 export interface Amenity {
-  id: string;
-  slug?: string | null;
-  featured: boolean;
-  name: string;
-  googleName?: string | null;
-  description?: string | null;
-  icon: string | Media;
+  id: string
+  slug?: string | null
+  featured: boolean
+  name: string
+  googleName?: string | null
+  description?: string | null
+  icon: string | Media
   price?: {
-    unit_price?: number | null;
-    unit_type?: string | null;
-    on_request?: boolean | null;
-  };
-  updatedAt: string;
-  createdAt: string;
+    unit_price?: number | null
+    unit_type?: string | null
+    on_request?: boolean | null
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
-  alt: string;
-  prefix?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  id: string
+  alt: string
+  prefix?: string | null
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
+  filename?: string | null
+  mimeType?: string | null
+  filesize?: number | null
+  width?: number | null
+  height?: number | null
+  focalX?: number | null
+  focalY?: number | null
   sizes?: {
     thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
+  }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "beds".
  */
 export interface Bed {
-  id: string;
-  name: string;
-  googleName: 'KING' | 'QUEEN' | 'DOUBLE' | 'SINGLE';
-  icon: string | Media;
-  updatedAt: string;
-  createdAt: string;
+  id: string
+  name: string
+  googleName: 'KING' | 'QUEEN' | 'DOUBLE' | 'SINGLE'
+  icon: string | Media
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
-  roles?: ('admin' | 'editor')[] | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
+  id: string
+  roles?: ('admin' | 'editor')[] | null
+  updatedAt: string
+  createdAt: string
+  email: string
+  resetPasswordToken?: string | null
+  resetPasswordExpiration?: string | null
+  salt?: string | null
+  hash?: string | null
+  loginAttempts?: number | null
+  lockUntil?: string | null
+  password?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "seo-media".
  */
 export interface SeoMedia {
-  id: string;
-  alt: string;
-  prefix?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  id: string
+  alt: string
+  prefix?: string | null
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
+  filename?: string | null
+  mimeType?: string | null
+  filesize?: number | null
+  width?: number | null
+  height?: number | null
+  focalX?: number | null
+  focalY?: number | null
   sizes?: {
     thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
     twitter?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
+  }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "guesthouses".
  */
 export interface Guesthouse {
-  id: string;
-  name: string;
-  slug: string;
+  id: string
+  name: string
+  slug: string
   booking_platform: {
-    name: 'NightsBridge';
-    url: string;
-  };
+    name: 'NightsBridge'
+    url: string
+  }
   content: {
-    heading: string;
-    description: string;
+    heading: string
+    description: string
     gallery: {
-      heading: string;
-      description: string;
-    };
+      heading: string
+      description: string
+    }
     images: {
-      background_image: string | Media;
-      exterior: (string | Media)[];
-      interior: (string | Media)[];
-    };
+      background_image: string | Media
+      exterior: (string | Media)[]
+      interior: (string | Media)[]
+    }
     amenities: {
-      heading: string;
-      description: string;
-      background_image: string | Media;
-      general_amenities: (string | Amenity)[];
-    };
+      heading: string
+      description: string
+      background_image: string | Media
+      general_amenities: (string | Amenity)[]
+    }
     rooms: {
-      heading: string;
-      description: string;
-      people_icon: string | Media;
-      rooms?: (string | Room)[] | null;
-    };
-  };
+      heading: string
+      description: string
+      people_icon: string | Media
+      rooms?: (string | Room)[] | null
+    }
+  }
   business_details: {
     hours: {
-      opening_time: '00:00' | '06:00' | '07:00' | '08:00' | '09:00' | '10:00';
-      closing_time: '23:59' | '18:00' | '19:00' | '20:00' | '21:00' | '22:00';
-    };
+      opening_time: '00:00' | '06:00' | '07:00' | '08:00' | '09:00' | '10:00'
+      closing_time: '23:59' | '18:00' | '19:00' | '20:00' | '21:00' | '22:00'
+    }
     check_in_out: {
-      check_in_time: 'T12:00:00+02:00' | 'T13:00:00+02:00' | 'T14:00:00+02:00' | 'T15:00:00+02:00' | 'T16:00:00+02:00';
-      check_out_time: 'T10:00:00+02:00' | 'T11:00:00+02:00' | 'T12:00:00+02:00' | 'T13:00:00+02:00' | 'T14:00:00+02:00';
-    };
+      check_in_time:
+        | 'T12:00:00+02:00'
+        | 'T13:00:00+02:00'
+        | 'T14:00:00+02:00'
+        | 'T15:00:00+02:00'
+        | 'T16:00:00+02:00'
+      check_out_time:
+        | 'T10:00:00+02:00'
+        | 'T11:00:00+02:00'
+        | 'T12:00:00+02:00'
+        | 'T13:00:00+02:00'
+        | 'T14:00:00+02:00'
+    }
     geo: {
-      latitude: string;
-      longitude: string;
-      maps_link: string;
-      maps_embed_url: string;
-    };
-  };
+      latitude: string
+      longitude: string
+      maps_link: string
+      maps_embed_url: string
+    }
+  }
   contact_details: {
-    contact_persons?: (string | ContactPerson)[] | null;
+    contact_persons?: (string | ContactPerson)[] | null
     address: {
-      street: string;
-      suburb: string;
-      city: string;
+      street: string
+      suburb: string
+      city: string
       province:
         | 'Eastern Cape'
         | 'Free State'
@@ -324,682 +346,682 @@ export interface Guesthouse {
         | 'Mpumalanga'
         | 'Northern Cape'
         | 'North West'
-        | 'Western Cape';
-      postalCode: string;
-    };
+        | 'Western Cape'
+      postalCode: string
+    }
     socials?:
       | {
-          platform: string | SocialMediaPlatform;
-          url: string;
-          id?: string | null;
+          platform: string | SocialMediaPlatform
+          url: string
+          id?: string | null
         }[]
-      | null;
-  };
+      | null
+  }
   seo: {
-    meta: MetadataField;
-    open_graph: OpenGraphField;
-    twitter?: TwitterField;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
+  updatedAt: string
+  createdAt: string
+  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rooms".
  */
 export interface Room {
-  id: string;
-  slug?: string | null;
-  count: number;
-  base_price: number;
-  name: string;
-  description: string;
+  id: string
+  slug?: string | null
+  count: number
+  base_price: number
+  name: string
+  description: string
   details: {
-    sleeps_adults: number;
-    sleeps_children: number;
-    bed_count: {
-      bed: string | Bed;
-      quantity: number;
-      id?: string | null;
-    }[];
-  };
-  amenities: (string | Amenity)[];
-  gallery: (string | Media)[];
-  updatedAt: string;
-  createdAt: string;
+    sleeps_adults: number
+    sleeps_children: number
+    beds: {
+      type: string | Bed
+      quantity: number
+      id?: string | null
+    }[]
+  }
+  amenities: (string | Amenity)[]
+  gallery: (string | Media)[]
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-persons".
  */
 export interface ContactPerson {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  position?: string | null;
-  updatedAt: string;
-  createdAt: string;
+  id: string
+  name: string
+  email: string
+  phone: string
+  position?: string | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "social-media-platforms".
  */
 export interface SocialMediaPlatform {
-  id: string;
-  name: string;
-  icon: string | Media;
-  updatedAt: string;
-  createdAt: string;
+  id: string
+  name: string
+  icon: string | Media
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MetadataField".
  */
 export interface MetadataField {
-  title: string;
-  description: string;
+  title: string
+  description: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "OpenGraphField".
  */
 export interface OpenGraphField {
-  site_name: string;
-  title: string;
-  description: string;
-  image: string | SeoMedia;
+  site_name: string
+  title: string
+  description: string
+  image: string | SeoMedia
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TwitterField".
  */
 export interface TwitterField {
-  creator?: string | null;
-  creatorId?: string | null;
+  creator?: string | null
+  creatorId?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "richtext-sections".
  */
 export interface RichtextSection {
-  id: string;
-  heading: string;
+  id: string
+  heading: string
   content: {
     root: {
-      type: string;
+      type: string
       children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  updatedAt: string;
-  createdAt: string;
+        type: string
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: string
   document?:
     | ({
-        relationTo: 'amenities';
-        value: string | Amenity;
+        relationTo: 'amenities'
+        value: string | Amenity
       } | null)
     | ({
-        relationTo: 'beds';
-        value: string | Bed;
+        relationTo: 'beds'
+        value: string | Bed
       } | null)
     | ({
-        relationTo: 'users';
-        value: string | User;
+        relationTo: 'users'
+        value: string | User
       } | null)
     | ({
-        relationTo: 'media';
-        value: string | Media;
+        relationTo: 'media'
+        value: string | Media
       } | null)
     | ({
-        relationTo: 'seo-media';
-        value: string | SeoMedia;
+        relationTo: 'seo-media'
+        value: string | SeoMedia
       } | null)
     | ({
-        relationTo: 'guesthouses';
-        value: string | Guesthouse;
+        relationTo: 'guesthouses'
+        value: string | Guesthouse
       } | null)
     | ({
-        relationTo: 'rooms';
-        value: string | Room;
+        relationTo: 'rooms'
+        value: string | Room
       } | null)
     | ({
-        relationTo: 'contact-persons';
-        value: string | ContactPerson;
+        relationTo: 'contact-persons'
+        value: string | ContactPerson
       } | null)
     | ({
-        relationTo: 'social-media-platforms';
-        value: string | SocialMediaPlatform;
+        relationTo: 'social-media-platforms'
+        value: string | SocialMediaPlatform
       } | null)
     | ({
-        relationTo: 'richtext-sections';
-        value: string | RichtextSection;
-      } | null);
-  globalSlug?: string | null;
+        relationTo: 'richtext-sections'
+        value: string | RichtextSection
+      } | null)
+  globalSlug?: string | null
   user: {
-    relationTo: 'users';
-    value: string | User;
-  };
-  updatedAt: string;
-  createdAt: string;
+    relationTo: 'users'
+    value: string | User
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: string
   user: {
-    relationTo: 'users';
-    value: string | User;
-  };
-  key?: string | null;
+    relationTo: 'users'
+    value: string | User
+  }
+  key?: string | null
   value?:
     | {
-        [k: string]: unknown;
+        [k: string]: unknown
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
+    | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
-  name?: string | null;
-  batch?: number | null;
-  updatedAt: string;
-  createdAt: string;
+  id: string
+  name?: string | null
+  batch?: number | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "amenities_select".
  */
 export interface AmenitiesSelect<T extends boolean = true> {
-  slug?: T;
-  featured?: T;
-  name?: T;
-  googleName?: T;
-  description?: T;
-  icon?: T;
+  slug?: T
+  featured?: T
+  name?: T
+  googleName?: T
+  description?: T
+  icon?: T
   price?:
     | T
     | {
-        unit_price?: T;
-        unit_type?: T;
-        on_request?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
+        unit_price?: T
+        unit_type?: T
+        on_request?: T
+      }
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "beds_select".
  */
 export interface BedsSelect<T extends boolean = true> {
-  name?: T;
-  googleName?: T;
-  icon?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  name?: T
+  googleName?: T
+  icon?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  roles?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
+  roles?: T
+  updatedAt?: T
+  createdAt?: T
+  email?: T
+  resetPasswordToken?: T
+  resetPasswordExpiration?: T
+  salt?: T
+  hash?: T
+  loginAttempts?: T
+  lockUntil?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  prefix?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
+  alt?: T
+  prefix?: T
+  updatedAt?: T
+  createdAt?: T
+  url?: T
+  thumbnailURL?: T
+  filename?: T
+  mimeType?: T
+  filesize?: T
+  width?: T
+  height?: T
+  focalX?: T
+  focalY?: T
   sizes?:
     | T
     | {
         thumbnail?:
           | T
           | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
+              url?: T
+              width?: T
+              height?: T
+              mimeType?: T
+              filesize?: T
+              filename?: T
+            }
+      }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "seo-media_select".
  */
 export interface SeoMediaSelect<T extends boolean = true> {
-  alt?: T;
-  prefix?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
+  alt?: T
+  prefix?: T
+  updatedAt?: T
+  createdAt?: T
+  url?: T
+  thumbnailURL?: T
+  filename?: T
+  mimeType?: T
+  filesize?: T
+  width?: T
+  height?: T
+  focalX?: T
+  focalY?: T
   sizes?:
     | T
     | {
         thumbnail?:
           | T
           | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
+              url?: T
+              width?: T
+              height?: T
+              mimeType?: T
+              filesize?: T
+              filename?: T
+            }
         twitter?:
           | T
           | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
+              url?: T
+              width?: T
+              height?: T
+              mimeType?: T
+              filesize?: T
+              filename?: T
+            }
+      }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "guesthouses_select".
  */
 export interface GuesthousesSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
+  name?: T
+  slug?: T
   booking_platform?:
     | T
     | {
-        name?: T;
-        url?: T;
-      };
+        name?: T
+        url?: T
+      }
   content?:
     | T
     | {
-        heading?: T;
-        description?: T;
+        heading?: T
+        description?: T
         gallery?:
           | T
           | {
-              heading?: T;
-              description?: T;
-            };
+              heading?: T
+              description?: T
+            }
         images?:
           | T
           | {
-              background_image?: T;
-              exterior?: T;
-              interior?: T;
-            };
+              background_image?: T
+              exterior?: T
+              interior?: T
+            }
         amenities?:
           | T
           | {
-              heading?: T;
-              description?: T;
-              background_image?: T;
-              general_amenities?: T;
-            };
+              heading?: T
+              description?: T
+              background_image?: T
+              general_amenities?: T
+            }
         rooms?:
           | T
           | {
-              heading?: T;
-              description?: T;
-              people_icon?: T;
-              rooms?: T;
-            };
-      };
+              heading?: T
+              description?: T
+              people_icon?: T
+              rooms?: T
+            }
+      }
   business_details?:
     | T
     | {
         hours?:
           | T
           | {
-              opening_time?: T;
-              closing_time?: T;
-            };
+              opening_time?: T
+              closing_time?: T
+            }
         check_in_out?:
           | T
           | {
-              check_in_time?: T;
-              check_out_time?: T;
-            };
+              check_in_time?: T
+              check_out_time?: T
+            }
         geo?:
           | T
           | {
-              latitude?: T;
-              longitude?: T;
-              maps_link?: T;
-              maps_embed_url?: T;
-            };
-      };
+              latitude?: T
+              longitude?: T
+              maps_link?: T
+              maps_embed_url?: T
+            }
+      }
   contact_details?:
     | T
     | {
-        contact_persons?: T;
+        contact_persons?: T
         address?:
           | T
           | {
-              street?: T;
-              suburb?: T;
-              city?: T;
-              province?: T;
-              postalCode?: T;
-            };
+              street?: T
+              suburb?: T
+              city?: T
+              province?: T
+              postalCode?: T
+            }
         socials?:
           | T
           | {
-              platform?: T;
-              url?: T;
-              id?: T;
-            };
-      };
+              platform?: T
+              url?: T
+              id?: T
+            }
+      }
   seo?:
     | T
     | {
-        meta?: T | MetadataFieldSelect<T>;
-        open_graph?: T | OpenGraphFieldSelect<T>;
-        twitter?: T | TwitterFieldSelect<T>;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
+  updatedAt?: T
+  createdAt?: T
+  _status?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MetadataField_select".
  */
 export interface MetadataFieldSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
+  title?: T
+  description?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "OpenGraphField_select".
  */
 export interface OpenGraphFieldSelect<T extends boolean = true> {
-  site_name?: T;
-  title?: T;
-  description?: T;
-  image?: T;
+  site_name?: T
+  title?: T
+  description?: T
+  image?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TwitterField_select".
  */
 export interface TwitterFieldSelect<T extends boolean = true> {
-  creator?: T;
-  creatorId?: T;
+  creator?: T
+  creatorId?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rooms_select".
  */
 export interface RoomsSelect<T extends boolean = true> {
-  slug?: T;
-  count?: T;
-  base_price?: T;
-  name?: T;
-  description?: T;
+  slug?: T
+  count?: T
+  base_price?: T
+  name?: T
+  description?: T
   details?:
     | T
     | {
-        sleeps_adults?: T;
-        sleeps_children?: T;
-        bed_count?:
+        sleeps_adults?: T
+        sleeps_children?: T
+        beds?:
           | T
           | {
-              bed?: T;
-              quantity?: T;
-              id?: T;
-            };
-      };
-  amenities?: T;
-  gallery?: T;
-  updatedAt?: T;
-  createdAt?: T;
+              type?: T
+              quantity?: T
+              id?: T
+            }
+      }
+  amenities?: T
+  gallery?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-persons_select".
  */
 export interface ContactPersonsSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  phone?: T;
-  position?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  name?: T
+  email?: T
+  phone?: T
+  position?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "social-media-platforms_select".
  */
 export interface SocialMediaPlatformsSelect<T extends boolean = true> {
-  name?: T;
-  icon?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  name?: T
+  icon?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "richtext-sections_select".
  */
 export interface RichtextSectionsSelect<T extends boolean = true> {
-  heading?: T;
-  content?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  heading?: T
+  content?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T;
-  globalSlug?: T;
-  user?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  document?: T
+  globalSlug?: T
+  user?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T;
-  key?: T;
-  value?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  user?: T
+  key?: T
+  value?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T;
-  batch?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  name?: T
+  batch?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "logos".
  */
 export interface Logo {
-  id: string;
-  logo_dark: string | Media;
-  logo_light: string | Media;
-  minimal_dark: string | Media;
-  minimal_light: string | Media;
-  _status?: ('draft' | 'published') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+  id: string
+  logo_dark: string | Media
+  logo_light: string | Media
+  minimal_dark: string | Media
+  minimal_light: string | Media
+  _status?: ('draft' | 'published') | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page".
  */
 export interface HomePage {
-  id: string;
+  id: string
   hero: {
-    background_image: string | Media;
-    title: string;
+    background_image: string | Media
+    title: string
     locations_link: {
-      link_text: string;
-      link_url: string;
-    };
-  };
+      link_text: string
+      link_url: string
+    }
+  }
   overview: {
-    heading: string;
-    description: string;
-    images: (string | Media)[];
+    heading: string
+    description: string
+    images: (string | Media)[]
     features: {
-      title: string;
-      description: string;
-      id?: string | null;
-    }[];
+      title: string
+      description: string
+      id?: string | null
+    }[]
     locations_link: {
-      link_text: string;
-      link_url: string;
-    };
-  };
+      link_text: string
+      link_url: string
+    }
+  }
   featured: {
-    heading: string;
-    subheading: string;
-    guesthouses: (string | Guesthouse)[];
-  };
+    heading: string
+    subheading: string
+    guesthouses: (string | Guesthouse)[]
+  }
   socials?:
     | {
-        platform: string | SocialMediaPlatform;
-        url: string;
-        id?: string | null;
+        platform: string | SocialMediaPlatform
+        url: string
+        id?: string | null
       }[]
-    | null;
-  contactPersons?: (string | ContactPerson)[] | null;
+    | null
+  contactPersons?: (string | ContactPerson)[] | null
   seo: {
-    meta: MetadataField;
-    open_graph: OpenGraphField;
-    twitter?: TwitterField;
-  };
-  _status?: ('draft' | 'published') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
+  _status?: ('draft' | 'published') | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about-us-page".
  */
 export interface AboutUsPage {
-  id: string;
+  id: string
   hero: {
-    heading: string;
-    sub_heading: string;
-  };
+    heading: string
+    sub_heading: string
+  }
   overview: {
-    title: string;
-    description: string;
-    image: string | Media;
-  };
-  subsections?: (string | RichtextSection)[] | null;
+    title: string
+    description: string
+    image: string | Media
+  }
+  subsections?: (string | RichtextSection)[] | null
   seo: {
-    meta: MetadataField;
-    open_graph: OpenGraphField;
-    twitter?: TwitterField;
-  };
-  _status?: ('draft' | 'published') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
+  _status?: ('draft' | 'published') | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "all-guesthouses-page".
  */
 export interface AllGuesthousesPage {
-  id: string;
+  id: string
   content: {
-    heading: string;
-    sub_heading: string;
-  };
+    heading: string
+    sub_heading: string
+  }
   seo: {
-    meta: MetadataField;
-    open_graph: OpenGraphField;
-    twitter?: TwitterField;
-  };
-  _status?: ('draft' | 'published') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
+  _status?: ('draft' | 'published') | null
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "logos_select".
  */
 export interface LogosSelect<T extends boolean = true> {
-  logo_dark?: T;
-  logo_light?: T;
-  minimal_dark?: T;
-  minimal_light?: T;
-  _status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+  logo_dark?: T
+  logo_light?: T
+  minimal_dark?: T
+  minimal_light?: T
+  _status?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1009,61 +1031,61 @@ export interface HomePageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        background_image?: T;
-        title?: T;
+        background_image?: T
+        title?: T
         locations_link?:
           | T
           | {
-              link_text?: T;
-              link_url?: T;
-            };
-      };
+              link_text?: T
+              link_url?: T
+            }
+      }
   overview?:
     | T
     | {
-        heading?: T;
-        description?: T;
-        images?: T;
+        heading?: T
+        description?: T
+        images?: T
         features?:
           | T
           | {
-              title?: T;
-              description?: T;
-              id?: T;
-            };
+              title?: T
+              description?: T
+              id?: T
+            }
         locations_link?:
           | T
           | {
-              link_text?: T;
-              link_url?: T;
-            };
-      };
+              link_text?: T
+              link_url?: T
+            }
+      }
   featured?:
     | T
     | {
-        heading?: T;
-        subheading?: T;
-        guesthouses?: T;
-      };
+        heading?: T
+        subheading?: T
+        guesthouses?: T
+      }
   socials?:
     | T
     | {
-        platform?: T;
-        url?: T;
-        id?: T;
-      };
-  contactPersons?: T;
+        platform?: T
+        url?: T
+        id?: T
+      }
+  contactPersons?: T
   seo?:
     | T
     | {
-        meta?: T | MetadataFieldSelect<T>;
-        open_graph?: T | OpenGraphFieldSelect<T>;
-        twitter?: T | TwitterFieldSelect<T>;
-      };
-  _status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
+  _status?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1073,28 +1095,28 @@ export interface AboutUsPageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        heading?: T;
-        sub_heading?: T;
-      };
+        heading?: T
+        sub_heading?: T
+      }
   overview?:
     | T
     | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  subsections?: T;
+        title?: T
+        description?: T
+        image?: T
+      }
+  subsections?: T
   seo?:
     | T
     | {
-        meta?: T | MetadataFieldSelect<T>;
-        open_graph?: T | OpenGraphFieldSelect<T>;
-        twitter?: T | TwitterFieldSelect<T>;
-      };
-  _status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
+  _status?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1104,29 +1126,28 @@ export interface AllGuesthousesPageSelect<T extends boolean = true> {
   content?:
     | T
     | {
-        heading?: T;
-        sub_heading?: T;
-      };
+        heading?: T
+        sub_heading?: T
+      }
   seo?:
     | T
     | {
-        meta?: T | MetadataFieldSelect<T>;
-        open_graph?: T | OpenGraphFieldSelect<T>;
-        twitter?: T | TwitterFieldSelect<T>;
-      };
-  _status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
+  _status?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown;
+  [k: string]: unknown
 }
-
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}

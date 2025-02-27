@@ -20,7 +20,7 @@ export const fetchHomePageData = unstable_cache(
     const payload = await getPayload({ config })
     const res = await payload.findGlobal({
       slug: 'home-page',
-      depth: 2,
+      depth: 3,
       ...(field && { select: { [field]: true } })
     })
     if (!res) {

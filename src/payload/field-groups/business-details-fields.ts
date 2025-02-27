@@ -1,6 +1,6 @@
 import { Field } from 'payload'
 
-export const BusinessDetailsFields: Field[] = [
+const BusinessDetailsFields: Field[] = [
   {
     type: 'group',
     label: 'Business Hours',
@@ -101,4 +101,104 @@ export const BusinessDetailsFields: Field[] = [
       }
     ]
   }
+  // {
+  //   name: 'policies',
+  //   label: 'Policies',
+  //   type: 'group',
+  //   fields: [
+  //     {
+  //       name: 'check_in_age_required',
+  //       label: 'Check-In Age Required (Optional)',
+  //       type: 'number',
+  //       defaultValue: 0
+  //     },
+  //     {
+  //       type: 'checkbox',
+  //       name: 'free_breakfast',
+  //       label: 'Free Breakfast',
+  //       defaultValue: true
+  //     },
+  //     {
+  //       name: 'laundry_service',
+  //       label: 'Laundry Service',
+  //       type: 'checkbox',
+  //       defaultValue: true
+  //     },
+
+  //     {
+  //       type: 'checkbox',
+  //       name: 'kids_alllowed',
+  //       label: 'Kids Allowed',
+  //       defaultValue: true
+  //     },
+  //     {
+  //       type: 'checkbox',
+  //       name: 'extra_beds',
+  //       label: 'Extra Beds Available',
+  //       defaultValue: true
+  //     },
+  //     {
+  //       type: 'checkbox',
+  //       name: 'pets_allowed',
+  //       label: 'Pets Allowed',
+  //       defaultValue: false
+  //     },
+  //     {
+  //       type: 'checkbox',
+  //       name: 'smoking_allowed',
+  //       label: 'Smoking Allowed',
+  //       defaultValue: false
+  //     },
+  //     {
+  //       type: 'checkbox',
+  //       name: 'events_allowed',
+  //       label: 'Events Allowed',
+  //       defaultValue: false
+  //     },
+  //     {
+  //       type: 'group',
+  //       name: 'quiet_hours',
+  //       label: 'Quiet Hours',
+  //       fields: [
+  //         {
+  //           name: 'enabled',
+  //           label: 'Enabled',
+  //           type: 'checkbox',
+  //           defaultValue: false
+  //         },
+  //         {
+  //           name: 'start',
+  //           label: 'Start',
+  //           type: 'select',
+  //           options: [
+  //             { label: '20:00', value: '20:00' },
+  //             { label: '21:00', value: '21:00' },
+  //             { label: '22:00', value: '22:00' },
+  //             { label: '23:00', value: '23:00' },
+  //             { label: '00:00', value: '00:00' }
+  //           ]
+  //         },
+  //         {
+  //           name: 'end',
+  //           label: 'End',
+  //           type: 'select',
+  //           options: [
+  //             { label: '06:00', value: '06:00' },
+  //             { label: '07:00', value: '07:00' },
+  //             { label: '08:00', value: '08:00' },
+  //             { label: '09:00', value: '09:00' },
+  //             { label: '10:00', value: '10:00' }
+  //           ]
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       name: 'cancelation_policy',
+  //       label: 'Cancelation Policy',
+  //       type: 'textarea'
+  //     }
+  //   ]
+  // }
 ]
+
+export default BusinessDetailsFields

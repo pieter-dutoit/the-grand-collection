@@ -23,7 +23,7 @@ export default function ContactUs({
   const { street, suburb, city, province, postalCode } = address
 
   return (
-    <section className='bg-gradient-to-b from-white to-sage-100 py-6 lg:py-16'>
+    <section className='bg-gradient-to-b from-olive-100 to-white py-6 lg:py-16'>
       <div className='container mx-auto mt-8 gap-4 md:mt-16'>
         <div id='contact' className='absolute -mt-36 lg:-mt-48' />
         <SectionHeading heading='Contact Us' subtitle='Get In Touch' />
