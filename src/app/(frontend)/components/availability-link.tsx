@@ -17,6 +17,8 @@ export default function AvailabilityLink({
     <div className='flex flex-col items-start'>
       <Link
         href={bookingUrl}
+        target='_blank'
+        rel='noopener noreferrer'
         className={twMerge(
           getButtonStyles({
             variant: 'default',

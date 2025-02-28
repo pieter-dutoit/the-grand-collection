@@ -17,6 +17,7 @@ import Gallery from './components/gallery'
 import Amenities from './components/amenities'
 import Rooms from './components/rooms'
 import ContactUs from './components/contact-us'
+import Policies from './components/policies'
 
 type Props = { params: Promise<{ guesthouse: string }> }
 
@@ -86,6 +87,7 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
       <Gallery data={data} />
       <Amenities data={data} />
       <Rooms data={data} />
+      <Policies data={data} />
       <ContactUs data={data} />
     </>
   )

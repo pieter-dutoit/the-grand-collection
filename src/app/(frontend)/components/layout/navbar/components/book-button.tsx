@@ -1,10 +1,10 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
+import { twMerge } from 'tailwind-merge'
+
 import { getButtonStyles } from '@/components/ui/button'
 import { NavigationMenuTrigger } from '@/components/ui/navigation-menu'
-import { usePathname } from 'next/navigation'
-
-import { twMerge } from 'tailwind-merge'
 
 export default function BookButton(): JSX.Element | null {
   const pathname = usePathname()

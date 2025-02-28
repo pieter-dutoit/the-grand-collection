@@ -17,7 +17,7 @@ export default function RoomDetails({
   bookingLink
 }: PropTypes): JSX.Element {
   const { name, description, base_price, details, amenities } = room
-  const { sleeps_adults, sleeps_children, bed_count } = details
+  const { sleeps_adults, sleeps_children, beds } = details
 
   const { url, alt } = extractImageProps(peopleIcon)
   return (
@@ -33,23 +33,17 @@ export default function RoomDetails({
       <ul className='mt-6 flex flex-col font-semibold'>
         <li className='flex items-center gap-2'>
           <Image src={url} alt={alt} height={20} width={20} />
-          <strong>Sleeps</strong> {sleeps_adults} Adults
-          {sleeps_children
-            ? ` & ${sleeps_children} Child${sleeps_children === 1 ? '' : 'ren'}`
-            : ''}
+          Sleeps {sleeps_adults + sleeps_children} People
         </li>
         <li className='flex flex-col'>
-          {bed_count.map(({ bed, quantity }) => {
-            if (typeof bed === 'string') return null
-            const { icon } = bed
+          {beds.map(({ type, quantity }) => {
+            if (typeof type === 'string') return null
+            const { icon } = type
             const { url, alt } = extractImageProps(icon)
             return (
-              <span key={bed.id} className='flex items-center gap-2'>
+              <span key={type.id} className='flex items-center gap-2'>
                 <Image src={url} alt={alt} height={20} width={20} />
-                <strong>
-                  {quantity} x {bed.name}
-                </strong>{' '}
-                Size Bed{quantity === 1 ? '' : 's'}
+                {quantity} x {type.name} Bed{quantity === 1 ? '' : 's'}
               </span>
             )
           })}
@@ -76,12 +70,13 @@ export default function RoomDetails({
       </ul>
 
       <div className='mt-8 flex flex-wrap items-center justify-between gap-4'>
-        <p className='text-2xl font-extrabold text-olive-900'>
-          R{base_price} per night
+        <p className='font-extrabold text-olive-900'>
+          from <span className='text-2xl'>R{base_price}</span> per night
         </p>
         <Link
           href={bookingLink}
           target='_blank'
+          rel='noopener noreferrer'
           className='flex items-center gap-2 rounded bg-olive-400 px-4 py-2 text-white hover:bg-gold-700'
         >
           Check Availability <ExternalLink className='size-4' />

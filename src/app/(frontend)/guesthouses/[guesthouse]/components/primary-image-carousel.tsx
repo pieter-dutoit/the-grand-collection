@@ -72,12 +72,12 @@ export default function PrimaryImageCarousel({
 
             return (
               <CarouselItem key={url + index} className='pl-1'>
-                <div className='relative aspect-video h-fit w-full overflow-hidden bg-olive-300'>
+                <div className='relative aspect-square h-fit w-full overflow-hidden bg-olive-300 md:aspect-[4/2.5]'>
                   <Image
                     alt={alt}
                     src={url}
                     fill
-                    className='object-cover object-center'
+                    className='object-contain object-center'
                     sizes='(max-width: 640px) 90vw, (max-width: 1025px) 80vw, 56rem'
                     priority={index === 0}
                   />

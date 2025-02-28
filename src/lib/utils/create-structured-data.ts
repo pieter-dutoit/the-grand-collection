@@ -44,6 +44,16 @@ export function createAmenitiesList(amenities: (Amenity | string)[]) {
   return [
     {
       '@type': 'LocationFeatureSpecification',
+      name: 'Smoking',
+      value: false
+    },
+    {
+      '@type': 'LocationFeatureSpecification',
+      name: 'PoolType',
+      value: 'OUTDOOR'
+    },
+    {
+      '@type': 'LocationFeatureSpecification',
       name: 'InternetType',
       value: 'FREE'
     },
@@ -115,8 +125,13 @@ export async function getOrganisationStructuredData({
 }: { minimal?: boolean } = {}) {
   // Home page data
   const homePageData = await fetchHomePageData()
-  const { hero, overview, socials, contactPersons } = homePageData
-  const { phoneLink, email } = extractContactDetails(contactPersons)[0]
+  const {
+    hero,
+    overview,
+    socials
+    // contactPersons
+  } = homePageData
+  // const { phoneLink, email } = extractContactDetails(contactPersons)[0]
 
   // Logo
   const logoData = await fetchLogo('minimal_dark')
@@ -137,13 +152,13 @@ export async function getOrganisationStructuredData({
         .filter(Boolean),
       description:
         'The Grand Collection offers a selection of luxury guesthouses across South Africa, catering to business and leisure travellers.',
-      slogan: 'Splendour Stay',
-      contactPoint: {
-        '@type': 'ContactPoint',
-        contactType: 'Customer Service',
-        email,
-        telephone: '+27' + phoneLink
-      }
+      slogan: 'Splendour Stay'
+      // contactPoint: {
+      //   '@type': 'ContactPoint',
+      //   contactType: 'Customer Service',
+      //   email,
+      //   telephone: '+27' + phoneLink
+      // }
     })
   }
 }
@@ -162,7 +177,7 @@ export async function createGuesthouseStructuredData({
     content: {
       description,
       images: { background_image, exterior, interior },
-      rooms,
+      rooms: { rooms },
       amenities: { general_amenities }
     },
     business_details: {
@@ -174,6 +189,10 @@ export async function createGuesthouseStructuredData({
 
   const telephone = '+27' + extractContactDetails(contact_persons)[0].phoneLink
   const email = extractContactDetails(contact_persons)[0].email
+
+  const roomsImages = rooms
+    ?.filter((room) => typeof room !== 'string')
+    .flatMap(({ gallery }) => gallery)
 
   return {
     '@context': 'https://schema.org',
@@ -209,7 +228,12 @@ export async function createGuesthouseStructuredData({
         telephone,
         email
       },
-      image: [background_image, ...interior, ...exterior]
+      image: [
+        background_image,
+        ...interior,
+        ...exterior,
+        ...(roomsImages || [])
+      ]
         .slice(0, 40)
         .filter((image) => typeof image !== 'string')
         .map(createMediaObject),
@@ -218,11 +242,11 @@ export async function createGuesthouseStructuredData({
       checkoutTime: check_out_time,
       currenciesAccepted: 'ZAR',
       audience: BUSINESS_AUDIENCE,
-      numberOfRooms: rooms.rooms?.length,
+      numberOfRooms: rooms?.length,
       sameAs: socials?.map(({ url }) => url),
       availableLanguage: LANGUAGES,
       amenityFeature: createAmenitiesList(general_amenities),
-      containsPlace: rooms.rooms
+      containsPlace: rooms
         ?.filter((room) => typeof room !== 'string')
         .map((room) => createRoomStructuredData(room, guesthouse))
     })
@@ -242,7 +266,7 @@ function createRoomStructuredData(room: Room, guesthouse: Guesthouse) {
     name,
     description,
     gallery,
-    details: { bed_count, sleeps_adults, sleeps_children },
+    details: { beds, sleeps_adults, sleeps_children },
     amenities
   } = room
 
@@ -270,9 +294,9 @@ function createRoomStructuredData(room: Room, guesthouse: Guesthouse) {
         priceCurrency: 'ZAR'
       }
     },
-    bed: bed_count.map(({ bed, quantity }) => {
-      if (typeof bed === 'string') return
-      const { googleName } = bed
+    bed: beds.map(({ type, quantity }) => {
+      if (typeof type === 'string') return
+      const { googleName } = type
 
       return {
         '@type': 'BedDetails',
