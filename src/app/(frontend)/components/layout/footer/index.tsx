@@ -37,18 +37,19 @@ export default async function Footer(): Promise<JSX.Element> {
             <Socials socials={socials} className='mx-auto mt-6 md:mx-0' />
           )}
 
-          {/* Get in touch */}
-          <div className='mt-8 flex flex-col text-olive-100'>
-            <h3 className='text-center text-lg font-bold uppercase md:text-left'>
-              Get in touch
-            </h3>
-            {contactPersons && (
+          {/* Contact Persons */}
+          {contactPersons && (
+            <div className='mt-8 flex flex-col text-olive-100'>
+              <h3 className='text-center text-lg font-bold uppercase md:text-left'>
+                Get in touch
+              </h3>
+
               <ContactPersons
                 contactPersons={contactPersons}
                 contactLinksClasses='md:justify-start'
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Home Page Links */}
