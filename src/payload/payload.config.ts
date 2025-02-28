@@ -11,6 +11,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { HomePage } from './globals/home-page'
 import { AllGuesthousesPage } from './globals/all-guesthouses-page'
 import { Logos } from './globals/logos'
+import { AboutUsPage } from './globals/about-us-page'
 
 import { Guesthouses } from './collections/guesthouses'
 import { ContactPersons } from './collections/contact-persons'
@@ -21,6 +22,7 @@ import { Media } from './collections/media'
 import { SEOMedia } from './collections/seo-media'
 import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
+import { RichtextSections } from './collections/richtext-section'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -43,7 +45,7 @@ export default buildConfig({
       }
     }
   },
-  globals: [Logos, HomePage, AllGuesthousesPage],
+  globals: [Logos, HomePage, AboutUsPage, AllGuesthousesPage],
   collections: [
     Amenities,
     Beds,
@@ -53,9 +55,10 @@ export default buildConfig({
     Guesthouses,
     Rooms,
     ContactPersons,
-    SocialMediaPlatforms
+    SocialMediaPlatforms,
+    RichtextSections
   ],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts')

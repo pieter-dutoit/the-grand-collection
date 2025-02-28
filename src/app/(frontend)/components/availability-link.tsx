@@ -17,6 +17,8 @@ export default function AvailabilityLink({
     <div className='flex flex-col items-start'>
       <Link
         href={bookingUrl}
+        target='_blank'
+        rel='noopener noreferrer'
         className={twMerge(
           getButtonStyles({
             variant: 'default',
@@ -29,7 +31,7 @@ export default function AvailabilityLink({
         Check Availability <ExternalLink />
       </Link>
       <em className='text-nowrap text-xs text-olive-500'>
-        Powered by <strong className='font-semibold'>{platformName}</strong>
+        Bookings on <strong className='font-semibold'>{platformName}</strong>
       </em>
     </div>
   )

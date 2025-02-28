@@ -18,6 +18,32 @@ export const Beds: CollectionConfig = {
       maxLength: 100
     },
     {
+      name: 'googleName',
+      type: 'select',
+      label: 'SEO Bed Type',
+      required: true,
+      options: [
+        {
+          label: 'King',
+          value: 'KING'
+        },
+        {
+          label: 'Queen',
+          value: 'QUEEN'
+        },
+
+        {
+          label: 'Double',
+          value: 'DOUBLE'
+        },
+
+        {
+          label: 'Single',
+          value: 'SINGLE'
+        }
+      ]
+    },
+    {
       name: 'icon',
       label:
         'Icon Upload (Recommended: SVG icons from https://lucide.dev/icons/)',

@@ -6,10 +6,65 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji'
+
 export interface Config {
   auth: {
     users: UserAuthOperations
   }
+  blocks: {}
   collections: {
     amenities: Amenity
     beds: Bed
@@ -20,6 +75,7 @@ export interface Config {
     rooms: Room
     'contact-persons': ContactPerson
     'social-media-platforms': SocialMediaPlatform
+    'richtext-sections': RichtextSection
     'payload-locked-documents': PayloadLockedDocument
     'payload-preferences': PayloadPreference
     'payload-migrations': PayloadMigration
@@ -37,6 +93,9 @@ export interface Config {
     'social-media-platforms':
       | SocialMediaPlatformsSelect<false>
       | SocialMediaPlatformsSelect<true>
+    'richtext-sections':
+      | RichtextSectionsSelect<false>
+      | RichtextSectionsSelect<true>
     'payload-locked-documents':
       | PayloadLockedDocumentsSelect<false>
       | PayloadLockedDocumentsSelect<true>
@@ -53,11 +112,13 @@ export interface Config {
   globals: {
     logos: Logo
     'home-page': HomePage
+    'about-us-page': AboutUsPage
     'all-guesthouses-page': AllGuesthousesPage
   }
   globalsSelect: {
     logos: LogosSelect<false> | LogosSelect<true>
     'home-page': HomePageSelect<false> | HomePageSelect<true>
+    'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>
     'all-guesthouses-page':
       | AllGuesthousesPageSelect<false>
       | AllGuesthousesPageSelect<true>
@@ -95,9 +156,17 @@ export interface UserAuthOperations {
  */
 export interface Amenity {
   id: string
+  slug?: string | null
+  featured: boolean
   name: string
+  googleName?: string | null
   description?: string | null
   icon: string | Media
+  price?: {
+    unit_price?: number | null
+    unit_type?: string | null
+    on_request?: boolean | null
+  }
   updatedAt: string
   createdAt: string
 }
@@ -138,6 +207,7 @@ export interface Media {
 export interface Bed {
   id: string
   name: string
+  googleName: 'KING' | 'QUEEN' | 'DOUBLE' | 'SINGLE'
   icon: string | Media
   updatedAt: string
   createdAt: string
@@ -205,7 +275,7 @@ export interface SeoMedia {
 export interface Guesthouse {
   id: string
   name: string
-  slug?: string | null
+  slug: string
   booking_platform: {
     name: 'NightsBridge'
     url: string
@@ -233,6 +303,32 @@ export interface Guesthouse {
       description: string
       people_icon: string | Media
       rooms?: (string | Room)[] | null
+    }
+  }
+  business_details: {
+    hours: {
+      opening_time: '00:00' | '06:00' | '07:00' | '08:00' | '09:00' | '10:00'
+      closing_time: '23:59' | '18:00' | '19:00' | '20:00' | '21:00' | '22:00'
+    }
+    check_in_out: {
+      check_in_time:
+        | 'T12:00:00+02:00'
+        | 'T13:00:00+02:00'
+        | 'T14:00:00+02:00'
+        | 'T15:00:00+02:00'
+        | 'T16:00:00+02:00'
+      check_out_time:
+        | 'T10:00:00+02:00'
+        | 'T11:00:00+02:00'
+        | 'T12:00:00+02:00'
+        | 'T13:00:00+02:00'
+        | 'T14:00:00+02:00'
+    }
+    geo: {
+      latitude: string
+      longitude: string
+      maps_link: string
+      maps_embed_url: string
     }
   }
   contact_details: {
@@ -276,13 +372,16 @@ export interface Guesthouse {
  */
 export interface Room {
   id: string
+  slug?: string | null
+  count: number
+  base_price: number
   name: string
   description: string
   details: {
     sleeps_adults: number
     sleeps_children: number
-    bed_count: {
-      bed: string | Bed
+    beds: {
+      type: string | Bed
       quantity: number
       id?: string | null
     }[]
@@ -344,6 +443,31 @@ export interface TwitterField {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "richtext-sections".
+ */
+export interface RichtextSection {
+  id: string
+  heading: string
+  content: {
+    root: {
+      type: string
+      children: {
+        type: string
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  }
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -384,6 +508,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'social-media-platforms'
         value: string | SocialMediaPlatform
+      } | null)
+    | ({
+        relationTo: 'richtext-sections'
+        value: string | RichtextSection
       } | null)
   globalSlug?: string | null
   user: {
@@ -432,9 +560,19 @@ export interface PayloadMigration {
  * via the `definition` "amenities_select".
  */
 export interface AmenitiesSelect<T extends boolean = true> {
+  slug?: T
+  featured?: T
   name?: T
+  googleName?: T
   description?: T
   icon?: T
+  price?:
+    | T
+    | {
+        unit_price?: T
+        unit_type?: T
+        on_request?: T
+      }
   updatedAt?: T
   createdAt?: T
 }
@@ -444,6 +582,7 @@ export interface AmenitiesSelect<T extends boolean = true> {
  */
 export interface BedsSelect<T extends boolean = true> {
   name?: T
+  googleName?: T
   icon?: T
   updatedAt?: T
   createdAt?: T
@@ -588,6 +727,30 @@ export interface GuesthousesSelect<T extends boolean = true> {
               rooms?: T
             }
       }
+  business_details?:
+    | T
+    | {
+        hours?:
+          | T
+          | {
+              opening_time?: T
+              closing_time?: T
+            }
+        check_in_out?:
+          | T
+          | {
+              check_in_time?: T
+              check_out_time?: T
+            }
+        geo?:
+          | T
+          | {
+              latitude?: T
+              longitude?: T
+              maps_link?: T
+              maps_embed_url?: T
+            }
+      }
   contact_details?:
     | T
     | {
@@ -651,6 +814,9 @@ export interface TwitterFieldSelect<T extends boolean = true> {
  * via the `definition` "rooms_select".
  */
 export interface RoomsSelect<T extends boolean = true> {
+  slug?: T
+  count?: T
+  base_price?: T
   name?: T
   description?: T
   details?:
@@ -658,10 +824,10 @@ export interface RoomsSelect<T extends boolean = true> {
     | {
         sleeps_adults?: T
         sleeps_children?: T
-        bed_count?:
+        beds?:
           | T
           | {
-              bed?: T
+              type?: T
               quantity?: T
               id?: T
             }
@@ -690,6 +856,16 @@ export interface ContactPersonsSelect<T extends boolean = true> {
 export interface SocialMediaPlatformsSelect<T extends boolean = true> {
   name?: T
   icon?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "richtext-sections_select".
+ */
+export interface RichtextSectionsSelect<T extends boolean = true> {
+  heading?: T
+  content?: T
   updatedAt?: T
   createdAt?: T
 }
@@ -791,6 +967,31 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us-page".
+ */
+export interface AboutUsPage {
+  id: string
+  hero: {
+    heading: string
+    sub_heading: string
+  }
+  overview: {
+    title: string
+    description: string
+    image: string | Media
+  }
+  subsections?: (string | RichtextSection)[] | null
+  seo: {
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
+  _status?: ('draft' | 'published') | null
+  updatedAt?: string | null
+  createdAt?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "all-guesthouses-page".
  */
 export interface AllGuesthousesPage {
@@ -874,6 +1075,37 @@ export interface HomePageSelect<T extends boolean = true> {
         id?: T
       }
   contactPersons?: T
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
+  _status?: T
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us-page_select".
+ */
+export interface AboutUsPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        heading?: T
+        sub_heading?: T
+      }
+  overview?:
+    | T
+    | {
+        title?: T
+        description?: T
+        image?: T
+      }
+  subsections?: T
   seo?:
     | T
     | {

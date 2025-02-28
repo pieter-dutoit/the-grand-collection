@@ -3,9 +3,10 @@ import type { ArrayField, CollectionConfig, GroupField } from 'payload'
 import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
 
 import { validateSlugFriendly } from '../utils/validation'
+import createCollectionSlug from '../hooks/collections/create-collection-slug'
 
 const BedCount: ArrayField = {
-  name: 'bed_count',
+  name: 'beds',
   label: 'Number of Beds',
   type: 'array',
   required: true,
@@ -13,13 +14,13 @@ const BedCount: ArrayField = {
   maxRows: 10,
   fields: [
     {
-      name: 'bed',
+      name: 'type',
       label: 'Type of Bed',
       type: 'relationship',
       relationTo: 'beds',
       hasMany: false,
       required: true,
-      unique: true
+      unique: false
     },
     {
       name: 'quantity',
@@ -65,8 +66,46 @@ export const Rooms: CollectionConfig = {
   admin: {
     useAsTitle: 'name'
   },
+  hooks: {
+    beforeChange: [createCollectionSlug]
+  },
   access: DEFAULT_COLLECTION_ACCESS,
   fields: [
+    {
+      name: 'slug',
+      label: 'Page Slug / URL (Auto Generated)',
+      type: 'text',
+      unique: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true
+      }
+    },
+    {
+      name: 'count',
+      label: 'Number of rooms',
+      type: 'number',
+      min: 1,
+      max: 100,
+      unique: false,
+      required: true,
+      defaultValue: 1,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'base_price',
+      label: 'Base Room Price',
+      type: 'number',
+      min: 0,
+      max: 10000,
+      defaultValue: 0,
+      required: true,
+      admin: {
+        position: 'sidebar'
+      }
+    },
     {
       name: 'name',
       label: 'Room Name',

@@ -2,7 +2,7 @@ import 'server-only'
 import Link from 'next/link'
 
 import Image from '@/components/ui/image'
-import { fetchHomePageData, getGuestHouses, getLogo } from '@/lib/data'
+import { fetchHomePageData, fetchGuestHouses, fetchLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 import Socials from '../../socials'
@@ -11,13 +11,13 @@ import ContactPersons from '../../contact-persons'
 export default async function Footer(): Promise<JSX.Element> {
   const { socials } = await fetchHomePageData('socials')
   const { contactPersons } = await fetchHomePageData('contactPersons')
-  const guesthouses = await getGuestHouses()
-  const logo = await getLogo('minimal_light')
+  const guesthouses = await fetchGuestHouses()
+  const logo = await fetchLogo('minimal_light')
   const { minimal_light } = logo
   const { url, alt } = extractImageProps(minimal_light)
 
   return (
-    <footer className='w-full justify-center bg-olive-500 py-8'>
+    <footer className='w-full justify-center bg-olive-950/95 py-8'>
       <div className='container mx-auto grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-5'>
         {/* Logo & Socials */}
         <div className='flex flex-col md:col-span-3 lg:col-span-2'>
@@ -37,18 +37,19 @@ export default async function Footer(): Promise<JSX.Element> {
             <Socials socials={socials} className='mx-auto mt-6 md:mx-0' />
           )}
 
-          {/* Get in touch */}
-          <div className='mt-8 flex flex-col text-olive-100'>
-            <h3 className='text-center text-lg font-bold uppercase md:text-left'>
-              Get in touch
-            </h3>
-            {contactPersons && (
+          {/* Contact Persons */}
+          {contactPersons && (
+            <div className='mt-8 flex flex-col text-olive-100'>
+              <h3 className='text-center text-lg font-bold uppercase md:text-left'>
+                Get in touch
+              </h3>
+
               <ContactPersons
                 contactPersons={contactPersons}
                 contactLinksClasses='md:justify-start'
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Home Page Links */}
@@ -117,6 +118,10 @@ export default async function Footer(): Promise<JSX.Element> {
           </ul>
         </div>
       </div>
+      <p className='mt-8 text-center text-sm text-white/60'>
+        &copy; {new Date().getFullYear()} The Grand Collection. All rights
+        reserved.
+      </p>
     </footer>
   )
 }

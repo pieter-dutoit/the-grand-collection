@@ -9,11 +9,15 @@ import FeaturedPropertiesFields from '@/payload/field-groups/featured-properties
 
 import SocialMediaLinks from '../field-groups/social-media-links'
 import SEOFields from '../field-groups/seo'
+import revalidateCache from '../hooks/globals/revalidate-cache'
 
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
   versions: {
     drafts: true
+  },
+  hooks: {
+    afterChange: [revalidateCache('home-page')]
   },
   access: {
     read: isLoggedInOrIsPublished,

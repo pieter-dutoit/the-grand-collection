@@ -8,21 +8,24 @@ import SEOFields from '../field-groups/seo'
 import SocialMediaLinks from '../field-groups/social-media-links'
 import GuestHouseContentFields from '../field-groups/guesthouse-content-fields'
 
-import createGuesthouseSlug from '../hooks/collections/create-guesthouse-slug'
+import createCollectionSlug from '../hooks/collections/create-collection-slug'
 import { validateSlugFriendly } from '../utils/validation'
+import revalidateCache from '../hooks/collections/revalidate-cache'
+import BusinessDetailsFields from '../field-groups/business-details-fields'
 
 export const Guesthouses: CollectionConfig = {
-  versions: {
-    drafts: true
-  },
   slug: 'guesthouses',
   admin: {
     useAsTitle: 'name'
   },
-  access: DEFAULT_COLLECTION_ACCESS,
-  hooks: {
-    beforeChange: [createGuesthouseSlug]
+  versions: {
+    drafts: true
   },
+  hooks: {
+    beforeChange: [createCollectionSlug],
+    afterChange: [revalidateCache('guesthouses', true)]
+  },
+  access: DEFAULT_COLLECTION_ACCESS,
   fields: [
     {
       name: 'name',
@@ -40,6 +43,7 @@ export const Guesthouses: CollectionConfig = {
       label: 'Page Slug / URL (Auto Generated)',
       type: 'text',
       unique: true,
+      required: true,
       admin: {
         position: 'sidebar',
         readOnly: true
@@ -54,6 +58,11 @@ export const Guesthouses: CollectionConfig = {
           name: 'content',
           label: 'Page Content',
           fields: GuestHouseContentFields
+        },
+        {
+          name: 'business_details',
+          label: 'Business Details',
+          fields: BusinessDetailsFields
         },
         {
           name: 'contact_details',

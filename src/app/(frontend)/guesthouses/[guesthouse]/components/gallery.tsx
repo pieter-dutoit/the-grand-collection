@@ -17,9 +17,14 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
     name,
     content: {
       images: { interior = [], exterior = [] },
-      gallery: { heading, description }
+      gallery: { heading, description },
+      rooms: { rooms }
     }
   } = data
+
+  const roomsImages = rooms
+    ?.filter((room) => typeof room !== 'string')
+    .flatMap(({ gallery }) => gallery)
   const preview = [...exterior?.slice(0, 3), ...interior?.slice(0, 3)]
 
   return (
@@ -42,8 +47,9 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
               const remainderCount =
                 showRemainder &&
                 (interior?.length || 0) +
-                  (exterior?.length || 0) -
-                  preview.length
+                  (exterior?.length || 0) +
+                  (roomsImages?.length || 0) +
+                  -preview.length
 
               const classes =
                 index === 1 ? 'col-span-4 row-span-2' : 'col-span-2 row-span-1'
@@ -82,7 +88,10 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
             })}
           </button>
         </DialogTrigger>
-        <GalleryDialog name={name} images={[...exterior, ...interior]} />
+        <GalleryDialog
+          name={name}
+          images={[...exterior, ...interior, ...(roomsImages || [])]}
+        />
       </Dialog>
     </section>
   )

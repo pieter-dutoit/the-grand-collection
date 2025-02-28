@@ -23,8 +23,11 @@ export function calculatePortraitHeight(width: number): number {
 
 const MOBILE_BREAK = 900
 
-function createSourceSet(src: string, portrait: boolean): string {
-  const [name, extension] = src.split('.')
+export function createSourceSet(src: string, portrait: boolean): string {
+  const pathSections = src.split('.')
+  const extension = pathSections[pathSections.length - 1]
+  const name = pathSections.slice(0, pathSections.length - 1).join('.')
+
   const result = ALLOWED_SIZES.reduce((acc, width, index) => {
     const height =
       width <= MOBILE_BREAK && portrait ? calculatePortraitHeight(width) : 0
@@ -38,7 +41,7 @@ function createSourceSet(src: string, portrait: boolean): string {
   return result
 }
 
-export default function Image(props: Props): JSX.Element | null {
+export default function Image(props: Props) {
   const {
     src,
     alt,
@@ -52,7 +55,7 @@ export default function Image(props: Props): JSX.Element | null {
   } = props
 
   const filename = src.split('/').pop()
-  const imagePath = `/images/${filename}`
+  const imagePath = `/api/images/${filename}`
 
   const defaultStyles = fill ? 'absolute inset-0 size-full' : ''
 

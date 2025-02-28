@@ -20,12 +20,12 @@ import NavOptions from './components/nav-options'
 
 import { getBookingOptions } from './data'
 import BookingOptions from './components/booking-options'
-import { getLogo } from '@/lib/data'
+import { fetchLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
 export default async function Navbar(): Promise<JSX.Element> {
   const bookingOptions = await getBookingOptions()
-  const logo = await getLogo('minimal_dark')
+  const logo = await fetchLogo('minimal_dark')
   const { minimal_dark } = logo
   const { url, alt } = extractImageProps(minimal_dark)
 
@@ -77,7 +77,10 @@ export default async function Navbar(): Promise<JSX.Element> {
         </NavigationMenu>
 
         {/* Right content */}
-        <CountryOutline className='hidden sm:block' />
+        <Link className='hidden sm:block' href='/guesthouses'>
+          <span className='sr-only'>View our properties</span>
+          <CountryOutline />
+        </Link>
       </div>
     </header>
   )

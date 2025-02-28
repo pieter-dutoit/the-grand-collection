@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/cms/*'
     },
-    sitemap: getBaseUrl()
+    sitemap: getBaseUrl() + '/sitemap.xml'
   }
 }

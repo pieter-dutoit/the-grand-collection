@@ -29,7 +29,9 @@ export async function GET(
     // Fetch image from bucket:
     const response = await fetch(path)
     if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${response.statusText}`)
+      throw new Error(
+        `Failed to fetch image ${filename} from ${path}: ${response.statusText}`
+      )
     }
 
     // Ensure the resource is a valid image:
