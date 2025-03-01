@@ -17,7 +17,7 @@ export default function SectionHeading({
     <>
       <h2
         className={twMerge(
-          'text-center text-3xl font-light text-olive-600 md:text-4xl lg:text-5xl',
+          'text-center text-4xl font-light text-olive-600 md:text-5xl',
           headingClassNames
         )}
       >
@@ -26,7 +26,7 @@ export default function SectionHeading({
       {subtitle && (
         <h3
           className={twMerge(
-            'playball mt-2 text-center text-xl capitalize text-olive-500 md:text-2xl lg:mt-5 lg:text-3xl',
+            'mt-2 text-center text-base font-bold uppercase text-olive-500 md:text-lg lg:mt-5 lg:text-xl',
             subtitleClassNames
           )}
         >
