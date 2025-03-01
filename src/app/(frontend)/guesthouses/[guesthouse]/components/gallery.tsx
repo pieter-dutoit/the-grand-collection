@@ -26,6 +26,10 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
     ?.filter((room) => typeof room !== 'string')
     .flatMap(({ gallery }) => gallery)
   const preview = [...exterior?.slice(0, 3), ...interior?.slice(0, 3)]
+  const allImages = [...exterior, ...interior, ...(roomsImages || [])].slice(
+    0,
+    20
+  )
 
   return (
     <section className='bg-gold-100 py-8 lg:py-16'>
@@ -88,10 +92,7 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
             })}
           </button>
         </DialogTrigger>
-        <GalleryDialog
-          name={name}
-          images={[...exterior, ...interior, ...(roomsImages || [])]}
-        />
+        <GalleryDialog name={name} images={allImages} />
       </Dialog>
     </section>
   )

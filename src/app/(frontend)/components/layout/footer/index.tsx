@@ -5,11 +5,11 @@ import Image from '@/components/ui/image'
 import { fetchHomePageData, fetchGuestHouses, fetchLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
-import Socials from '../../socials'
+// import Socials from '../../socials'
 import ContactPersons from '../../contact-persons'
 
 export default async function Footer(): Promise<JSX.Element> {
-  const { socials } = await fetchHomePageData('socials')
+  // const { socials } = await fetchHomePageData('socials')
   const { contactPersons } = await fetchHomePageData('contactPersons')
   const guesthouses = await fetchGuestHouses()
   const logo = await fetchLogo('minimal_light')
@@ -33,9 +33,9 @@ export default async function Footer(): Promise<JSX.Element> {
           </Link>
 
           {/* Socials */}
-          {socials && (
+          {/* {socials && (
             <Socials socials={socials} className='mx-auto mt-6 md:mx-0' />
-          )}
+          )} */}
 
           {/* Contact Persons */}
           {contactPersons && (
