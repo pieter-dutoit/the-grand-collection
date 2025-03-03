@@ -72,7 +72,7 @@ export default function PrimaryImageCarousel({
 
             return (
               <CarouselItem key={url + index} className='pl-1'>
-                <div className='relative aspect-square h-fit w-full overflow-hidden bg-olive-300 md:aspect-[4/2.5]'>
+                <div className='relative aspect-[0.8] h-fit w-full overflow-hidden bg-olive-300 sm:aspect-square md:aspect-video'>
                   <Image
                     alt={alt}
                     src={url}

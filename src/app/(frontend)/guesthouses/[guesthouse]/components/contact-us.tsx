@@ -24,7 +24,7 @@ export default function ContactUs({
 
   return (
     <section className='bg-gradient-to-b from-olive-100 to-white py-6 lg:py-16'>
-      <div className='container mx-auto mt-8 gap-4 md:mt-16'>
+      <div className='container mx-auto mt-8 gap-4'>
         <div id='contact' className='absolute -mt-36 lg:-mt-48' />
         <SectionHeading heading='Contact Us' subtitle='Get In Touch' />
 

@@ -2,6 +2,7 @@ import { Mail, Phone } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
 import { ContactPerson } from '@/payload/payload-types'
+import { extractContactDetails } from '@/lib/utils'
 
 interface ContactsProps {
   contactPersons: (ContactPerson | string)[]
@@ -14,13 +15,14 @@ export default function ContactPersons({
   className,
   contactLinksClasses
 }: ContactsProps): JSX.Element {
+  const contacts = extractContactDetails(contactPersons)
   return (
     <ul className={twMerge('mt-2 text-center md:text-left', className)}>
-      {contactPersons.map((contact) => {
+      {contacts.map((contact) => {
         if (typeof contact === 'string') return null
-        const { name, position, email, phone } = contact
+        const { name, position, email, phone, phoneLink } = contact
         return (
-          <li key={email}>
+          <li key={email} className='mt-8'>
             <h4 className='text-lg font-semibold'>{name}</h4>
             {position && <p className='text-sm font-semibold'>{position}</p>}
 
@@ -30,7 +32,8 @@ export default function ContactPersons({
                 contactLinksClasses
               )}
             >
-              <Phone className='size-5' /> <a href={`tel:${phone}`}>{phone}</a>
+              <Phone className='size-5' />{' '}
+              <a href={`tel:+27${phoneLink}`}>{phone}</a>
             </div>
             <div
               className={twMerge(

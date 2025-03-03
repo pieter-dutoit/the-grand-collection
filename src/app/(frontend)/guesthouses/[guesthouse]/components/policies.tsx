@@ -32,12 +32,11 @@ export default function Policies({ data }: PropTypes): JSX.Element {
 
   return (
     <section className='mx-auto bg-white py-8 lg:py-16'>
-      <div id='rooms' className='absolute -mt-36 lg:-mt-48' />
+      <div id='policies' className='absolute -mt-36 lg:-mt-48' />
+      <div className='container mx-auto mt-8 gap-4 md:mt-16'>
+        <SectionHeading heading='Policies & Important Information' />
 
-      <SectionHeading heading='Policies & Important Information' />
-
-      <div className='container mx-auto'>
-        <ul className='mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3'>
+        <ul className='mt-8 grid grid-cols-1 gap-8 lg:mt-16'>
           {policies?.map(({ id, title, items }) => (
             <li
               key={id}
@@ -45,7 +44,6 @@ export default function Policies({ data }: PropTypes): JSX.Element {
             >
               <div className='border-b border-gray-200 bg-gray-50 px-6 py-4'>
                 <h3 className='flex items-center gap-2 text-lg font-medium text-gray-900'>
-                  {/* <Icon className='h-5 w-5 text-gray-600' /> */}
                   {title}
                 </h3>
               </div>

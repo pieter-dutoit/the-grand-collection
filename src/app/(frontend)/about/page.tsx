@@ -37,7 +37,7 @@ export default async function About(): Promise<JSX.Element> {
         item: '/about'
       }
     ]),
-    mainEntity: getOrganisationStructuredData({ minimal: true })
+    mainEntity: await getOrganisationStructuredData()
   }
 
   return (

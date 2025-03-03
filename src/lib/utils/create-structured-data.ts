@@ -44,6 +44,11 @@ export function createAmenitiesList(amenities: (Amenity | string)[]) {
   return [
     {
       '@type': 'LocationFeatureSpecification',
+      name: 'InstantBookable',
+      value: true
+    },
+    {
+      '@type': 'LocationFeatureSpecification',
       name: 'Smoking',
       value: false
     },
@@ -98,7 +103,7 @@ export function createMediaObject(image: Media | string) {
 }
 
 export function createBreadCrumbs(
-  crumbs: { name: string; item?: string }[] = []
+  crumbs: { name: string; item: string }[] = []
 ) {
   return {
     '@context': 'https://schema.org',
@@ -114,24 +119,17 @@ export function createBreadCrumbs(
         '@type': 'ListItem',
         position: index + 2,
         name,
-        ...(item && { item: getBaseUrl() + item })
+        item: getBaseUrl() + item
       }))
     ]
   }
 }
 
-export async function getOrganisationStructuredData({
-  minimal = false
-}: { minimal?: boolean } = {}) {
+export async function getOrganisationStructuredData() {
   // Home page data
   const homePageData = await fetchHomePageData()
-  const {
-    hero,
-    overview,
-    socials
-    // contactPersons
-  } = homePageData
-  // const { phoneLink, email } = extractContactDetails(contactPersons)[0]
+  const { hero, overview, socials, contactPersons } = homePageData
+  const contacts = extractContactDetails(contactPersons)
 
   // Logo
   const logoData = await fetchLogo('minimal_dark')
@@ -141,25 +139,23 @@ export async function getOrganisationStructuredData({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': getBaseUrl() + '/#organization',
+    url: getBaseUrl(),
     name: 'The Grand Collection',
-    ...(!minimal && {
-      url: getBaseUrl(),
-      sameAs: socials?.map(({ url }) => url),
-      logo: createAbsoluteImagePath(logoURL),
-      image: [hero?.background_image, ...(overview?.images || [])]
-        .filter((image) => typeof image !== 'string')
-        .map((image) => (image ? createMediaObject(image) : null))
-        .filter(Boolean),
-      description:
-        'The Grand Collection offers a selection of luxury guesthouses across South Africa, catering to business and leisure travellers.',
-      slogan: 'Splendour Stay'
-      // contactPoint: {
-      //   '@type': 'ContactPoint',
-      //   contactType: 'Customer Service',
-      //   email,
-      //   telephone: '+27' + phoneLink
-      // }
-    })
+    sameAs: socials?.map(({ url }) => url),
+    logo: createAbsoluteImagePath(logoURL),
+    image: [hero?.background_image, ...(overview?.images || [])]
+      .filter((image) => typeof image !== 'string')
+      .map((image) => (image ? createMediaObject(image) : null))
+      .filter(Boolean),
+    description:
+      'The Grand Collection offers a selection of luxury guesthouses across South Africa, catering to business and leisure travellers.',
+    slogan: 'Splendour Stay',
+    contactPoint: contacts.map(({ email, phoneLink }) => ({
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      email,
+      telephone: '+27' + phoneLink
+    }))
   }
 }
 
@@ -212,9 +208,7 @@ export async function createGuesthouseStructuredData({
     // Full data:
     ...(!minimal && {
       identifier: 'hotel-id-' + slug,
-      parentOrganization: await getOrganisationStructuredData({
-        minimal: true
-      }),
+      parentOrganization: await getOrganisationStructuredData(),
       geo: {
         '@type': 'GeoCoordinates',
         latitude,
@@ -238,7 +232,7 @@ export async function createGuesthouseStructuredData({
         .filter((image) => typeof image !== 'string')
         .map(createMediaObject),
       openingHours: ['Mo-Su ' + opening_time + '-' + closing_time],
-      checkingTime: check_in_time,
+      checkinTime: check_in_time,
       checkoutTime: check_out_time,
       currenciesAccepted: 'ZAR',
       audience: BUSINESS_AUDIENCE,
