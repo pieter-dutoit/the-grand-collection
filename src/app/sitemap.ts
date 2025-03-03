@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ? new Date(homePage.updatedAt)
         : new Date(),
       changeFrequency: 'monthly',
-      priority: 1
+      priority: 0.9
     },
     // All Guesthouses Page
     {
@@ -49,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: baseURL + '/guesthouses/' + slug,
       lastModified: new Date(updatedAt || createdAt),
       changeFrequency: 'monthly' as const,
-      priority: 0.8
+      priority: 1
     }))
   ]
 }
