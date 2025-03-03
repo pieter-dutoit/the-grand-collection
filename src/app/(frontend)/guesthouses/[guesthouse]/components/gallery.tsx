@@ -25,7 +25,11 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
   const roomsImages = rooms
     ?.filter((room) => typeof room !== 'string')
     .flatMap(({ gallery }) => gallery)
-  const preview = [...exterior?.slice(0, 3), ...interior?.slice(0, 3)]
+  const preview = [
+    ...exterior?.slice(0, 2),
+    ...interior?.slice(0, 2),
+    ...(roomsImages?.slice(0, 2) || [])
+  ]
   const allImages = [...exterior, ...interior, ...(roomsImages || [])].slice(
     0,
     20
@@ -45,15 +49,9 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
           >
             {preview.map((image, index) => {
               const { url, alt } = extractImageProps(image)
-
               const showRemainder = index === preview.length - 1
-
               const remainderCount =
-                showRemainder &&
-                (interior?.length || 0) +
-                  (exterior?.length || 0) +
-                  (roomsImages?.length || 0) +
-                  -preview.length
+                showRemainder && allImages.length + -preview.length
 
               const classes =
                 index === 1 ? 'col-span-4 row-span-2' : 'col-span-2 row-span-1'

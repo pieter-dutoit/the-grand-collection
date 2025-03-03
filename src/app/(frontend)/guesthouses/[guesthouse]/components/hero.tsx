@@ -13,6 +13,7 @@ export default function Hero({
 }): JSX.Element {
   const {
     name,
+
     booking_platform: { url: bookingURL, name: platformName },
     content: {
       description,
@@ -32,7 +33,8 @@ export default function Hero({
           containerClassNames='p-0 lg:p-0'
           headingClassNames='text-left'
         />
-        <h2 className='mt-2 text-sm font-bold text-sage-700'>Guesthouse</h2>
+        <span className='mt-2 text-sm font-bold text-sage-700'>Guesthouse</span>
+
         <div className='mt-2 flex items-center text-sage-700'>
           <MapPin className='mr-1 size-5' />
           <span>{city}</span>

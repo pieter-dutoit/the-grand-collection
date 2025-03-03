@@ -7,7 +7,8 @@ const NAV_OPTIONS = [
   { href: '#gallery', text: 'Gallery' },
   { href: '#amenities', text: 'Amenities' },
   { href: '#rooms', text: 'Rooms' },
-  { href: '#contact', text: 'Contact Us' }
+  { href: '#contact', text: 'Contact Us' },
+  { href: '#policies', text: 'Important Info' }
 ]
 
 export default function Navbar(): JSX.Element {

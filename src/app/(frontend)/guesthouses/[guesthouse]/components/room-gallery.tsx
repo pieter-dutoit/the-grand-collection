@@ -41,6 +41,7 @@ export default function RoomGallery({ room }: PropTypes): JSX.Element {
                     fill
                     className='bg-olive-300 object-cover object-center lg:size-full'
                     sizes={sizes}
+                    portrait
                   />
                   {index === thumbnails.length - 1 && (
                     <span className='absolute inset-0 flex items-center justify-center bg-olive-800/50 text-2xl font-semibold text-white'>

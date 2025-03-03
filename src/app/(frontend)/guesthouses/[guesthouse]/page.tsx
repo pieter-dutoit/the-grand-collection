@@ -87,8 +87,9 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
       <Gallery data={data} />
       <Amenities data={data} />
       <Rooms data={data} />
-      <Policies data={data} />
+
       <ContactUs data={data} />
+      <Policies data={data} />
     </>
   )
 }

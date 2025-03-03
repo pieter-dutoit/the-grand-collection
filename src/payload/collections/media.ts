@@ -17,7 +17,7 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      label: 'Brief image description, e.g. "Wifi icon" or "View of pool"',
+      label: 'Brief image description, e.g. "View of pool"',
       required: true
     }
   ],
