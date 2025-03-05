@@ -10,7 +10,7 @@ export const validateSlug = (value: string | null | undefined) => {
 }
 
 export const validateSlugFriendly = (value: string | null | undefined) => {
-  if (typeof value !== 'string' || !value.match(/^[a-zA-Z0-9 \-&]+$/)) {
+  if (typeof value !== 'string' || !value.match(/^[a-zA-Z0-9 \-&\/]+$/)) {
     return 'Invalid name. Only letters, numbers, and spaces are allowed.'
   }
 
