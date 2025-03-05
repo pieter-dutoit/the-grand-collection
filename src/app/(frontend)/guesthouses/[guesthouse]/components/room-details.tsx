@@ -62,7 +62,13 @@ export default function RoomDetails({
               key={amenity.id}
               className='flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm'
             >
-              <Image src={url} alt={alt} height={16} width={16} />
+              <Image
+                src={url}
+                alt={alt}
+                height={16}
+                width={16}
+                className='size-4 object-contain object-center'
+              />
               {name}
             </li>
           )
