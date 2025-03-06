@@ -50,13 +50,20 @@ export function extractContactDetails(
 }
 
 export function getBaseUrl(): string {
+  console.log('env', process.env.VERCEL_ENV)
+  console.log('prod', process.env.VERCEL_PROJECT_PRODUCTION_URL)
+  console.log('vercel', process.env.VERCEL_URL)
+  console.log('branch', process.env.VERCEL_BRANCH_URL)
+
   const env = process.env.VERCEL_ENV || ''
 
   if (env === 'production') {
+    console.log('prod')
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   }
 
   if (['development', 'preview'].includes(env)) {
+    console.log('preview/branch')
     return `https://${process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL}`
   }
 
