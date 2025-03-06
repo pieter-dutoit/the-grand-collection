@@ -41,6 +41,7 @@ export async function Hero(): Promise<JSX.Element> {
               fill
               className='object-contain object-center'
               sizes='(max-width: 510px) 90vw, 30rem'
+              priority
             />
           </div>
 
