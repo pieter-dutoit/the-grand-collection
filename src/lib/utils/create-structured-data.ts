@@ -96,9 +96,7 @@ export function createMediaObject(image: Media | string) {
       '@id': getBaseUrl() + '/#organization',
       name: 'The Grand Collection'
     },
-    copyrightNotice: `© ${currentYear} The Grand Collection. All Rights Reserved.`,
-    license: getBaseUrl(),
-    acquireLicensePage: getBaseUrl()
+    copyrightNotice: `© ${currentYear} The Grand Collection. All Rights Reserved.`
   }
 }
 
