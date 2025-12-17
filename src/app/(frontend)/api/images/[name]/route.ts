@@ -85,7 +85,16 @@ export async function GET(
     // Cache response to browser for better user experience
     const mimeType = `image/${extension}`
 
-    return new Response(buffer, {
+    const responseBody =
+      buffer instanceof ArrayBuffer
+        ? buffer
+        : new Uint8Array(
+            buffer.buffer as ArrayBuffer,
+            buffer.byteOffset,
+            buffer.byteLength
+          )
+
+    return new Response(responseBody, {
       status: 200,
       statusText: 'OK',
       headers: {
