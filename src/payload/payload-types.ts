@@ -54,6 +54,7 @@ export type SupportedTimezones =
   | 'Asia/Singapore'
   | 'Asia/Tokyo'
   | 'Asia/Seoul'
+  | 'Australia/Brisbane'
   | 'Australia/Sydney'
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
@@ -66,6 +67,7 @@ export interface Config {
   }
   blocks: {}
   collections: {
+    articles: Article
     amenities: Amenity
     beds: Bed
     users: User
@@ -76,12 +78,14 @@ export interface Config {
     'contact-persons': ContactPerson
     'social-media-platforms': SocialMediaPlatform
     'richtext-sections': RichtextSection
+    'payload-kv': PayloadKv
     'payload-locked-documents': PayloadLockedDocument
     'payload-preferences': PayloadPreference
     'payload-migrations': PayloadMigration
   }
   collectionsJoins: {}
   collectionsSelect: {
+    articles: ArticlesSelect<false> | ArticlesSelect<true>
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>
     beds: BedsSelect<false> | BedsSelect<true>
     users: UsersSelect<false> | UsersSelect<true>
@@ -96,6 +100,7 @@ export interface Config {
     'richtext-sections':
       | RichtextSectionsSelect<false>
       | RichtextSectionsSelect<true>
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>
     'payload-locked-documents':
       | PayloadLockedDocumentsSelect<false>
       | PayloadLockedDocumentsSelect<true>
@@ -109,6 +114,7 @@ export interface Config {
   db: {
     defaultIDType: string
   }
+  fallbackLocale: null
   globals: {
     logos: Logo
     'home-page': HomePage
@@ -152,23 +158,32 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "amenities".
+ * via the `definition` "articles".
  */
-export interface Amenity {
+export interface Article {
   id: string
   slug?: string | null
-  featured: boolean
-  name: string
-  googleName?: string | null
-  description?: string | null
-  icon: string | Media
-  price?: {
-    unit_price?: number | null
-    unit_type?: string | null
-    on_request?: boolean | null
+  author: string
+  thumbnail: string | Media
+  title: string
+  body: {
+    root: {
+      type: string
+      children: {
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
   }
   updatedAt: string
   createdAt: string
+  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -202,6 +217,26 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "amenities".
+ */
+export interface Amenity {
+  id: string
+  slug?: string | null
+  featured: boolean
+  name: string
+  googleName?: string | null
+  description?: string | null
+  icon: string | Media
+  price?: {
+    unit_price?: number | null
+    unit_type?: string | null
+    on_request?: boolean | null
+  }
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "beds".
  */
 export interface Bed {
@@ -228,6 +263,13 @@ export interface User {
   hash?: string | null
   loginAttempts?: number | null
   lockUntil?: string | null
+  sessions?:
+    | {
+        id: string
+        createdAt?: string | null
+        expiresAt: string
+      }[]
+    | null
   password?: string | null
 }
 /**
@@ -452,7 +494,7 @@ export interface RichtextSection {
     root: {
       type: string
       children: {
-        type: string
+        type: any
         version: number
         [k: string]: unknown
       }[]
@@ -468,11 +510,32 @@ export interface RichtextSection {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: string
+  key: string
+  data:
+    | {
+        [k: string]: unknown
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
   id: string
   document?:
+    | ({
+        relationTo: 'articles'
+        value: string | Article
+      } | null)
     | ({
         relationTo: 'amenities'
         value: string | Amenity
@@ -557,6 +620,20 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles_select".
+ */
+export interface ArticlesSelect<T extends boolean = true> {
+  slug?: T
+  author?: T
+  thumbnail?: T
+  title?: T
+  body?: T
+  updatedAt?: T
+  createdAt?: T
+  _status?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "amenities_select".
  */
 export interface AmenitiesSelect<T extends boolean = true> {
@@ -602,6 +679,13 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T
   loginAttempts?: T
   lockUntil?: T
+  sessions?:
+    | T
+    | {
+        id?: T
+        createdAt?: T
+        expiresAt?: T
+      }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -868,6 +952,14 @@ export interface RichtextSectionsSelect<T extends boolean = true> {
   content?: T
   updatedAt?: T
   createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv_select".
+ */
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T
+  data?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
