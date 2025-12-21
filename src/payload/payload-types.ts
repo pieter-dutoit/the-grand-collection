@@ -67,6 +67,7 @@ export interface Config {
   }
   blocks: {}
   collections: {
+    articles: Article
     amenities: Amenity
     beds: Bed
     users: User
@@ -84,6 +85,7 @@ export interface Config {
   }
   collectionsJoins: {}
   collectionsSelect: {
+    articles: ArticlesSelect<false> | ArticlesSelect<true>
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>
     beds: BedsSelect<false> | BedsSelect<true>
     users: UsersSelect<false> | UsersSelect<true>
@@ -156,23 +158,32 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "amenities".
+ * via the `definition` "articles".
  */
-export interface Amenity {
+export interface Article {
   id: string
   slug?: string | null
-  featured: boolean
-  name: string
-  googleName?: string | null
-  description?: string | null
-  icon: string | Media
-  price?: {
-    unit_price?: number | null
-    unit_type?: string | null
-    on_request?: boolean | null
+  author: string
+  thumbnail: string | Media
+  title: string
+  body: {
+    root: {
+      type: string
+      children: {
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
   }
   updatedAt: string
   createdAt: string
+  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -203,6 +214,26 @@ export interface Media {
       filename?: string | null
     }
   }
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "amenities".
+ */
+export interface Amenity {
+  id: string
+  slug?: string | null
+  featured: boolean
+  name: string
+  googleName?: string | null
+  description?: string | null
+  icon: string | Media
+  price?: {
+    unit_price?: number | null
+    unit_type?: string | null
+    on_request?: boolean | null
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -502,6 +533,10 @@ export interface PayloadLockedDocument {
   id: string
   document?:
     | ({
+        relationTo: 'articles'
+        value: string | Article
+      } | null)
+    | ({
         relationTo: 'amenities'
         value: string | Amenity
       } | null)
@@ -582,6 +617,20 @@ export interface PayloadMigration {
   batch?: number | null
   updatedAt: string
   createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles_select".
+ */
+export interface ArticlesSelect<T extends boolean = true> {
+  slug?: T
+  author?: T
+  thumbnail?: T
+  title?: T
+  body?: T
+  updatedAt?: T
+  createdAt?: T
+  _status?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
