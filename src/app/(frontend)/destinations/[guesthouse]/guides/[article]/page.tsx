@@ -25,6 +25,7 @@ export async function generateStaticParams() {
     fetchArticles(),
     fetchGuestHouses()
   ])
+
   const guesthouseById = new Map(
     guesthouses.map((guesthouse) => [guesthouse.id, guesthouse.slug])
   )

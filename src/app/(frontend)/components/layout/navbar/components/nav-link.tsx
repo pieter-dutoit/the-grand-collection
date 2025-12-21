@@ -13,20 +13,19 @@ function BlockLink({ label, href }: NavOption): JSX.Element {
   const { variant, color, text } = label
 
   return (
-    <Link legacyBehavior href={href ?? '#'} passHref>
-      <NavigationMenuLink
-        className={twMerge(
-          getButtonStyles({
-            ...label,
-            variant,
-            colour: color
-          }),
-          'mb-1 w-full bg-olive-50 lg:bg-olive-50/50'
-        )}
-      >
-        {text}
-      </NavigationMenuLink>
-    </Link>
+    <NavigationMenuLink
+      asChild
+      className={twMerge(
+        getButtonStyles({
+          ...label,
+          variant,
+          colour: color
+        }),
+        'mb-1 w-full bg-olive-50 lg:bg-olive-50/50'
+      )}
+    >
+      <Link href={href ?? '#'}>{text}</Link>
+    </NavigationMenuLink>
   )
 }
 
@@ -39,8 +38,11 @@ function DetailedNavLink({
   const { text } = label
   const { alt, url } = image ? extractImageProps(image) : { alt: '', url: '' }
   return (
-    <Link legacyBehavior href={href ?? '#'} passHref className='my-1 flex'>
-      <NavigationMenuLink className='my-1 w-[250px] overflow-hidden rounded-lg border border-olive-100 bg-olive-50 transition-colors hover:bg-olive-50/50 active:border-olive-300 sm:w-[350px] lg:bg-transparent'>
+    <NavigationMenuLink
+      asChild
+      className='my-1 w-[250px] overflow-hidden rounded-lg border border-olive-100 bg-olive-50 transition-colors hover:bg-olive-50/50 active:border-olive-300 sm:w-[350px] lg:bg-transparent'
+    >
+      <Link href={href ?? '#'}>
         <div className='flex grow'>
           <Image
             width={90}
@@ -73,8 +75,8 @@ function DetailedNavLink({
             </p>
           </div>
         </div>
-      </NavigationMenuLink>
-    </Link>
+      </Link>
+    </NavigationMenuLink>
   )
 }
 
@@ -113,17 +115,16 @@ function DefaultLink({ label, href }: NavOption): JSX.Element {
   const { text, variant, color } = label
 
   return (
-    <Link legacyBehavior href={href ?? '#'} passHref>
-      <NavigationMenuLink
-        className={getButtonStyles({
-          ...label,
-          variant,
-          colour: color
-        })}
-      >
-        {text}
-      </NavigationMenuLink>
-    </Link>
+    <NavigationMenuLink
+      asChild
+      className={getButtonStyles({
+        ...label,
+        variant,
+        colour: color
+      })}
+    >
+      <Link href={href ?? '#'}>{text}</Link>
+    </NavigationMenuLink>
   )
 }
 
