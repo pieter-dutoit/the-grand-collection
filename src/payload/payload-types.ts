@@ -162,7 +162,8 @@ export interface UserAuthOperations {
  */
 export interface Article {
   id: string
-  slug?: string | null
+  slug: string
+  guesthouse: string | Guesthouse
   author: string
   thumbnail: string | Media
   title: string
@@ -184,131 +185,6 @@ export interface Article {
   updatedAt: string
   createdAt: string
   _status?: ('draft' | 'published') | null
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string
-  alt: string
-  prefix?: string | null
-  updatedAt: string
-  createdAt: string
-  url?: string | null
-  thumbnailURL?: string | null
-  filename?: string | null
-  mimeType?: string | null
-  filesize?: number | null
-  width?: number | null
-  height?: number | null
-  focalX?: number | null
-  focalY?: number | null
-  sizes?: {
-    thumbnail?: {
-      url?: string | null
-      width?: number | null
-      height?: number | null
-      mimeType?: string | null
-      filesize?: number | null
-      filename?: string | null
-    }
-  }
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "amenities".
- */
-export interface Amenity {
-  id: string
-  slug?: string | null
-  featured: boolean
-  name: string
-  googleName?: string | null
-  description?: string | null
-  icon: string | Media
-  price?: {
-    unit_price?: number | null
-    unit_type?: string | null
-    on_request?: boolean | null
-  }
-  updatedAt: string
-  createdAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "beds".
- */
-export interface Bed {
-  id: string
-  name: string
-  googleName: 'KING' | 'QUEEN' | 'DOUBLE' | 'SINGLE'
-  icon: string | Media
-  updatedAt: string
-  createdAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string
-  roles?: ('admin' | 'editor')[] | null
-  updatedAt: string
-  createdAt: string
-  email: string
-  resetPasswordToken?: string | null
-  resetPasswordExpiration?: string | null
-  salt?: string | null
-  hash?: string | null
-  loginAttempts?: number | null
-  lockUntil?: string | null
-  sessions?:
-    | {
-        id: string
-        createdAt?: string | null
-        expiresAt: string
-      }[]
-    | null
-  password?: string | null
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "seo-media".
- */
-export interface SeoMedia {
-  id: string
-  alt: string
-  prefix?: string | null
-  updatedAt: string
-  createdAt: string
-  url?: string | null
-  thumbnailURL?: string | null
-  filename?: string | null
-  mimeType?: string | null
-  filesize?: number | null
-  width?: number | null
-  height?: number | null
-  focalX?: number | null
-  focalY?: number | null
-  sizes?: {
-    thumbnail?: {
-      url?: string | null
-      width?: number | null
-      height?: number | null
-      mimeType?: string | null
-      filesize?: number | null
-      filename?: string | null
-    }
-    twitter?: {
-      url?: string | null
-      width?: number | null
-      height?: number | null
-      mimeType?: string | null
-      filesize?: number | null
-      filename?: string | null
-    }
-  }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -410,6 +286,56 @@ export interface Guesthouse {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string
+  alt: string
+  prefix?: string | null
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
+  filename?: string | null
+  mimeType?: string | null
+  filesize?: number | null
+  width?: number | null
+  height?: number | null
+  focalX?: number | null
+  focalY?: number | null
+  sizes?: {
+    thumbnail?: {
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
+  }
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "amenities".
+ */
+export interface Amenity {
+  id: string
+  slug?: string | null
+  featured: boolean
+  name: string
+  googleName?: string | null
+  description?: string | null
+  icon: string | Media
+  price?: {
+    unit_price?: number | null
+    unit_type?: string | null
+    on_request?: boolean | null
+  }
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rooms".
  */
 export interface Room {
@@ -430,6 +356,18 @@ export interface Room {
   }
   amenities: (string | Amenity)[]
   gallery: (string | Media)[]
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "beds".
+ */
+export interface Bed {
+  id: string
+  name: string
+  googleName: 'KING' | 'QUEEN' | 'DOUBLE' | 'SINGLE'
+  icon: string | Media
   updatedAt: string
   createdAt: string
 }
@@ -477,11 +415,74 @@ export interface OpenGraphField {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-media".
+ */
+export interface SeoMedia {
+  id: string
+  alt: string
+  prefix?: string | null
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
+  filename?: string | null
+  mimeType?: string | null
+  filesize?: number | null
+  width?: number | null
+  height?: number | null
+  focalX?: number | null
+  focalY?: number | null
+  sizes?: {
+    thumbnail?: {
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
+    twitter?: {
+      url?: string | null
+      width?: number | null
+      height?: number | null
+      mimeType?: string | null
+      filesize?: number | null
+      filename?: string | null
+    }
+  }
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TwitterField".
  */
 export interface TwitterField {
   creator?: string | null
   creatorId?: string | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string
+  roles?: ('admin' | 'editor')[] | null
+  updatedAt: string
+  createdAt: string
+  email: string
+  resetPasswordToken?: string | null
+  resetPasswordExpiration?: string | null
+  salt?: string | null
+  hash?: string | null
+  loginAttempts?: number | null
+  lockUntil?: string | null
+  sessions?:
+    | {
+        id: string
+        createdAt?: string | null
+        expiresAt: string
+      }[]
+    | null
+  password?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -624,6 +625,7 @@ export interface PayloadMigration {
  */
 export interface ArticlesSelect<T extends boolean = true> {
   slug?: T
+  guesthouse?: T
   author?: T
   thumbnail?: T
   title?: T

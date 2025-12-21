@@ -1,22 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
-// import revalidateCollection, {
-//   revalidateAfterDelete,
-//   revalidateCollectionByField
-// } from '../hooks/revalidate-collection'
 import createSlug from '../hooks/collections/create-collection-slug'
+import revalidateCache from '../hooks/collections/revalidate-cache'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
   hooks: {
-    beforeChange: [createSlug]
-    // afterChange: [
-    //   revalidateCollectionByField('slug'),
-    //   revalidateCollection('services')
-    // ],
-    // afterDelete: [
-    //   revalidateAfterDelete({ fieldNames: ['slug'], tags: ['services'] })
-    // ]
+    beforeChange: [createSlug],
+    afterChange: [revalidateCache('articles', true)]
   },
   admin: {
     useAsTitle: 'title'
@@ -30,10 +21,21 @@ export const Articles: CollectionConfig = {
       label: 'Article Slug / URL (Auto Generated)',
       type: 'text',
       unique: true,
-      required: false,
+      required: true,
       admin: {
         position: 'sidebar',
         readOnly: true
+      }
+    },
+    {
+      name: 'guesthouse',
+      label: 'Guesthouse',
+      type: 'relationship',
+      relationTo: 'guesthouses',
+      hasMany: false,
+      required: true,
+      admin: {
+        position: 'sidebar'
       }
     },
     {
