@@ -5,19 +5,22 @@ import { extractImageProps } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 
-type GuideTileProps = {
+type ArticleTileProps = {
   article: Pick<
     Article,
     'id' | 'slug' | 'title' | 'excerpt' | 'thumbnail' | 'featured'
   >
-  guesthouseSlug: string
+  destinationSlug: string
   badgeText?: string
 }
 
-export default function GuideTile({ article, guesthouseSlug }: GuideTileProps) {
+export default function ArticleTile({
+  article,
+  destinationSlug
+}: ArticleTileProps) {
   const { url, alt } = extractImageProps(article.thumbnail)
   const thumbnailAlt = alt || article.title
-  const href = `/destinations/${guesthouseSlug}/guides/${article.slug}`
+  const href = `/destinations/${destinationSlug}/articles/${article.slug}`
 
   return (
     <li className='group relative rounded-2xl border border-olive-200 bg-white transition-shadow hover:shadow-lg'>
@@ -27,13 +30,13 @@ export default function GuideTile({ article, guesthouseSlug }: GuideTileProps) {
             src={url}
             alt={thumbnailAlt}
             sizes='(min-width: 1024px) 320px, (min-width: 768px) 45vw, 85vw'
-            containerClassName='relative rounded-t-xl bg-olive-100'
+            containerClassName='relative rounded-t-xl bg-olive-100 z-0'
             foregroundClassName='transition duration-300 group-hover:scale-105'
           />
         )}
 
         {article.featured && (
-          <Badge className='absolute left-4 top-4'>Featured</Badge>
+          <Badge className='absolute left-4 top-4 z-10'>Featured</Badge>
         )}
 
         <div className='flex flex-col gap-2 p-4'>

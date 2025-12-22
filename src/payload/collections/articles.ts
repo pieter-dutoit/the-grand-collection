@@ -28,12 +28,37 @@ export const Articles: CollectionConfig = {
       }
     },
     {
+      name: 'type',
+      label: 'Article Type',
+      type: 'select',
+      defaultValue: 'destination_guide',
+      options: [
+        {
+          label: 'Destination Guide',
+          value: 'destination_guide'
+        }
+      ],
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'destination',
+      label: 'Destination',
+      type: 'relationship',
+      relationTo: 'destinations',
+      hasMany: false,
+      index: true,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
       name: 'guesthouse',
       label: 'Guesthouse',
       type: 'relationship',
       relationTo: 'guesthouses',
       hasMany: false,
-      required: true,
       admin: {
         position: 'sidebar'
       }

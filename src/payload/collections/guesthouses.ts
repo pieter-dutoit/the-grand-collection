@@ -49,6 +49,17 @@ export const Guesthouses: CollectionConfig = {
         readOnly: true
       }
     },
+    {
+      name: 'destination',
+      label: 'Destination',
+      type: 'relationship',
+      relationTo: 'destinations',
+      hasMany: false,
+      index: true,
+      admin: {
+        position: 'sidebar'
+      }
+    },
     BookingPlatform,
     //  TABS
     {
@@ -58,28 +69,6 @@ export const Guesthouses: CollectionConfig = {
           name: 'content',
           label: 'Page Content',
           fields: GuestHouseContentFields
-        },
-        {
-          name: 'guides',
-          label: 'Guides Page',
-          fields: [
-            {
-              name: 'title',
-              label: 'Guides Page Title',
-              type: 'text',
-              minLength: 3,
-              maxLength: 120,
-              required: true
-            },
-            {
-              name: 'description',
-              label: 'Guides Page Description',
-              type: 'textarea',
-              minLength: 10,
-              maxLength: 400,
-              required: true
-            }
-          ]
         },
         {
           name: 'business_details',

@@ -8,6 +8,7 @@ import config from '@payload-config'
 import type {
   Article,
   Guesthouse,
+  Destination,
   AllGuesthousesPage,
   HomePage,
   Logo,
@@ -119,7 +120,26 @@ export const fetchGuestHouses = unstable_cache(
   { revalidate: false, tags: ['guesthouses'] }
 )
 
-type ArticleWithGuesthouse = Article & { guesthouse: string | Guesthouse }
+export const fetchDestinations = unstable_cache(
+  async (query?: Where): Promise<Destination[]> => {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      collection: 'destinations',
+      depth: 2,
+      pagination: false,
+      sort: 'name',
+      ...(query && { where: query })
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch destinations data')
+    }
+
+    return res.docs
+  },
+  [],
+  { revalidate: false, tags: ['destinations'] }
+)
 
 export const fetchArticles = unstable_cache(
   async (
@@ -127,7 +147,7 @@ export const fetchArticles = unstable_cache(
     options?: {
       sort?: Sort
     }
-  ): Promise<ArticleWithGuesthouse[]> => {
+  ): Promise<Article[]> => {
     const payload = await getPayload({ config })
     const res = await payload.find({
       draft: false,
@@ -147,7 +167,7 @@ export const fetchArticles = unstable_cache(
       throw new Error('Failed to fetch articles data')
     }
 
-    return res.docs as ArticleWithGuesthouse[]
+    return res.docs
   },
   [],
   { revalidate: false, tags: ['articles', 'guesthouses'] }

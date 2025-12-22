@@ -67,7 +67,7 @@ export default async function Navbar(): Promise<JSX.Element> {
                   'text-sm font-bold uppercase'
                 )}
               >
-                Book Now
+                Book your stay
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <BookingOptions options={bookingOptions} />

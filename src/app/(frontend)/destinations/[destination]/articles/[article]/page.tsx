@@ -7,30 +7,30 @@ import { ArrowLeft } from 'lucide-react'
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
-import { fetchArticles, fetchGuestHouses } from '@/lib/data'
+import { fetchArticles, fetchDestinations } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
 import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 import { Badge } from '@/components/ui/badge'
 import { ArticleRichText } from '@/components/rich-text'
-import type { Guesthouse, Media } from '@/payload/payload-types'
+import type { Destination, Media } from '@/payload/payload-types'
 import { twMerge } from 'tailwind-merge'
 
-import GuideTile from '../components/guide-tile'
+import ArticleTile from '../components/article-tile'
 
 type Props = {
-  params: Promise<{ guesthouse: string; article: string }>
+  params: Promise<{ destination: string; article: string }>
 }
 
-const resolveGuesthouseSlug = (
-  guesthouse: string | Guesthouse,
-  guesthouseById: Map<string, string>
+const resolveDestinationSlug = (
+  destination: string | Destination,
+  destinationById: Map<string, string>
 ) => {
-  if (typeof guesthouse === 'string') {
-    return guesthouseById.get(guesthouse)
+  if (typeof destination === 'string') {
+    return destinationById.get(destination)
   }
 
-  return guesthouse.slug
+  return destination.slug
 }
 
 const formatDate = (value: string) => {
@@ -71,13 +71,13 @@ const getAbsoluteImageUrl = (image: Media | string) => {
 }
 
 export async function generateStaticParams() {
-  const [articles, guesthouses] = await Promise.all([
+  const [articles, destinations] = await Promise.all([
     fetchArticles(),
-    fetchGuestHouses()
+    fetchDestinations()
   ])
 
-  const guesthouseById = new Map(
-    guesthouses.map((guesthouse) => [guesthouse.id, guesthouse.slug])
+  const destinationById = new Map(
+    destinations.map((destination) => [destination.id, destination.slug])
   )
 
   return articles.flatMap((article) => {
@@ -85,18 +85,22 @@ export async function generateStaticParams() {
       return []
     }
 
-    const guesthouseSlug = resolveGuesthouseSlug(
-      article.guesthouse,
-      guesthouseById
+    if (!article.destination) {
+      return []
+    }
+
+    const destinationSlug = resolveDestinationSlug(
+      article.destination,
+      destinationById
     )
 
-    if (!guesthouseSlug) {
+    if (!destinationSlug) {
       return []
     }
 
     return [
       {
-        guesthouse: guesthouseSlug,
+        destination: destinationSlug,
         article: article.slug
       }
     ]
@@ -104,30 +108,32 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { guesthouse: guesthouseSlug, article: articleSlug } = await params
+  const { destination: destinationSlug, article: articleSlug } = await params
 
-  const [guesthouse] = await fetchGuestHouses({
-    slug: { equals: guesthouseSlug }
+  const [destination] = await fetchDestinations({
+    slug: { equals: destinationSlug }
   })
 
-  if (!guesthouse) return {}
+  if (!destination) return {}
 
   const [article] = await fetchArticles({
     slug: { equals: articleSlug },
-    guesthouse: { equals: guesthouse.id }
+    destination: { equals: destination.id }
   })
 
   if (!article) return {}
 
   const description =
-    getDescriptionFromBody(article.body) || guesthouse.content.description
+    getDescriptionFromBody(article.body) ||
+    destination.guides?.description ||
+    destination.seo?.meta?.description
 
   const { alt: thumbnailAlt } = extractImageProps(article.thumbnail)
   const ogImage = getAbsoluteImageUrl(article.thumbnail)
-  const canonical = `${getBaseUrl()}/destinations/${guesthouseSlug}/guides/${article.slug}`
+  const canonical = `${getBaseUrl()}/destinations/${destinationSlug}/articles/${article.slug}`
 
   return {
-    title: `${article.title} | ${guesthouse.name} | The Grand Collection`,
+    title: `${article.title} | ${destination.name} | The Grand Collection`,
     description,
     alternates: {
       canonical
@@ -149,21 +155,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function GuidePage({ params }: Props) {
-  const { guesthouse: guesthouseSlug, article: articleSlug } = await params
+export default async function ArticlePage({ params }: Props) {
+  const { destination: destinationSlug, article: articleSlug } = await params
 
-  const guesthouses = await fetchGuestHouses({
-    slug: { equals: guesthouseSlug }
+  const destinations = await fetchDestinations({
+    slug: { equals: destinationSlug }
   })
-  const [guesthouse] = guesthouses
+  const [destination] = destinations
 
-  if (!guesthouse) {
+  if (!destination) {
     notFound()
   }
 
   const articles = await fetchArticles({
     slug: { equals: articleSlug },
-    guesthouse: { equals: guesthouse.id }
+    destination: { equals: destination.id }
   })
   const [article] = articles
 
@@ -199,7 +205,7 @@ export default async function GuidePage({ params }: Props) {
 
   const relatedArticles = await fetchArticles(
     {
-      guesthouse: { equals: guesthouse.id },
+      destination: { equals: destination.id },
       id: { not_equals: article.id },
       slug: { exists: true }
     },
@@ -211,16 +217,12 @@ export default async function GuidePage({ params }: Props) {
   const jsonLd = [
     createBreadCrumbs([
       {
-        name: guesthouse.name,
-        item: `/guesthouses/${guesthouse.slug}`
-      },
-      {
-        name: 'Guides',
-        item: `/destinations/${guesthouse.slug}/guides`
+        name: 'Articles',
+        item: `/destinations/${destination.slug}/articles`
       },
       {
         name: article.title,
-        item: `/destinations/${guesthouse.slug}/guides/${article.slug}`
+        item: `/destinations/${destination.slug}/articles/${article.slug}`
       }
     ]),
     {
@@ -243,7 +245,7 @@ export default async function GuidePage({ params }: Props) {
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `${getBaseUrl()}/destinations/${guesthouse.slug}/guides/${article.slug}`
+        '@id': `${getBaseUrl()}/destinations/${destination.slug}/articles/${article.slug}`
       },
       ...(ogImage && {
         image: [ogImage]
@@ -261,11 +263,11 @@ export default async function GuidePage({ params }: Props) {
       <section className='bg-olive-50'>
         <div className='mx-auto flex w-full max-w-3xl flex-col gap-6 py-10 lg:py-20'>
           <Link
-            href={`/destinations/${guesthouse.slug}/guides`}
+            href={`/destinations/${destination.slug}/articles`}
             className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
           >
             <ArrowLeft className='size-4' />
-            Back to guides
+            Back to articles
           </Link>
 
           <div className='flex flex-col gap-4'>
@@ -279,13 +281,10 @@ export default async function GuidePage({ params }: Props) {
               • The Grand Collection
             </p>
             <Badge
-              asChild
               variant='outline'
               className='w-fit border-olive-200 bg-olive-50 text-olive-700 hover:bg-olive-100'
             >
-              <Link href={`/guesthouses/${guesthouse.slug}`}>
-                {guesthouse.name}
-              </Link>
+              {destination.name}
             </Badge>
           </div>
 
@@ -316,19 +315,19 @@ export default async function GuidePage({ params }: Props) {
           <div className='container mx-auto py-10 lg:py-20'>
             <div className='flex flex-col gap-1'>
               <h2 className='text-lg font-semibold text-olive-900 md:text-xl lg:text-2xl'>
-                More guides
+                More articles
               </h2>
               <p className='text-xs font-extrabold uppercase tracking-widest text-sage-500'>
-                {guesthouse.name}
+                {destination.name}
               </p>
             </div>
 
             <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
               {relatedArticles.map((related) => (
-                <GuideTile
+                <ArticleTile
                   key={related.id}
                   article={related}
-                  guesthouseSlug={guesthouse.slug}
+                  destinationSlug={destination.slug}
                 />
               ))}
             </ul>
