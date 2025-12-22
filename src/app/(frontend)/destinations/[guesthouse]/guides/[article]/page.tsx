@@ -10,10 +10,13 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import { fetchArticles, fetchGuestHouses } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
 import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
+import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
+import { Badge } from '@/components/ui/badge'
 import Image from '@/components/ui/image'
 import SectionHeading from '@/components/ui/section-heading'
 import { ArticleRichText } from '@/components/rich-text'
 import type { Guesthouse, Media } from '@/payload/payload-types'
+import { twMerge } from 'tailwind-merge'
 
 type Props = {
   params: Promise<{ guesthouse: string; article: string }>
@@ -37,7 +40,7 @@ const formatDate = (value: string) => {
     dateTime: date.toISOString(),
     humanReadable: new Intl.DateTimeFormat('en-ZA', {
       day: '2-digit',
-      month: 'long',
+      month: 'short',
       year: 'numeric'
     }).format(date)
   }
@@ -185,6 +188,19 @@ export default async function GuidePage({ params }: Props) {
     article.thumbnail
   )
   const thumbnailAltText = thumbnailAlt || article.title
+  const { width: thumbnailWidth, height: thumbnailHeight } = extractImageProps(
+    article.thumbnail
+  )
+  const thumbnailAspectRatio =
+    thumbnailWidth && thumbnailHeight
+      ? thumbnailWidth / thumbnailHeight
+      : undefined
+  const thumbnailIsPortrait =
+    typeof thumbnailAspectRatio === 'number' && thumbnailAspectRatio < 1
+  const thumbnailMaxWidth = 'max-w-full'
+  const thumbnailSizes = thumbnailIsPortrait
+    ? '(min-width: 1024px) 576px, 90vw'
+    : '(min-width: 1024px) 768px, 90vw'
   const ogImage = getAbsoluteImageUrl(article.thumbnail)
   const jsonLd = [
     createBreadCrumbs([
@@ -238,63 +254,48 @@ export default async function GuidePage({ params }: Props) {
 
       <section className='bg-olive-50'>
         <div className='container mx-auto px-8 py-10 lg:py-20'>
-          <div className='mx-auto flex max-w-4xl flex-col gap-6'>
+          <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
             <Link
               href={`/destinations/${guesthouse.slug}/guides`}
-              className='inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-sage-700 transition hover:text-sage-900'
+              className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
             >
               <ArrowLeft className='size-4' />
               Back to guides
             </Link>
 
-            <div className='space-y-3'>
-              <p className='text-xs font-semibold uppercase tracking-[0.3em] text-sage-700'>
-                Guide
-              </p>
-              <h1 className='text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
+            <div className='flex flex-col gap-4'>
+              <h1 className='max-w-[40rem] text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
                 {article.title}
               </h1>
-              <div className='flex flex-wrap items-center gap-3 text-xs font-semibold text-olive-700'>
-                <span>{article.author}</span>
-                <span className='text-olive-300'>|</span>
-                <span>
-                  Published{' '}
-                  <time dateTime={createdDate.dateTime}>
-                    {createdDate.humanReadable}
-                  </time>
-                </span>
-                {updatedDate && (
-                  <>
-                    <span className='text-olive-300'>|</span>
-                    <span>
-                      Updated{' '}
-                      <time dateTime={updatedDate.dateTime}>
-                        {updatedDate.humanReadable}
-                      </time>
-                    </span>
-                  </>
-                )}
-              </div>
-              <p className='text-sm font-semibold text-sage-700'>
-                Guesthouse{' '}
-                <Link
-                  href={`/guesthouses/${guesthouse.slug}`}
-                  className='underline underline-offset-4 transition hover:text-sage-900'
-                >
+              <p className='text-xs font-medium text-olive-500'>
+                <time dateTime={createdDate.dateTime}>
+                  {createdDate.humanReadable}
+                </time>{' '}
+                • The Grand Collection
+              </p>
+              <Badge
+                asChild
+                variant='outline'
+                className='w-fit border-olive-200 bg-olive-50 text-olive-700 hover:bg-olive-100'
+              >
+                <Link href={`/guesthouses/${guesthouse.slug}`}>
                   {guesthouse.name}
                 </Link>
-              </p>
+              </Badge>
             </div>
 
             {thumbnailUrl && (
-              <figure className='relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-olive-200 bg-olive-100'>
-                <Image
+              <figure className='w-full'>
+                <BlurredBackdropImage
                   src={thumbnailUrl}
                   alt={thumbnailAltText}
-                  fill
-                  className='object-cover object-center'
-                  sizes='(min-width: 1024px) 768px, 90vw'
+                  sizes={thumbnailSizes}
                   priority
+                  aspectRatio={thumbnailAspectRatio}
+                  containerClassName={twMerge(
+                    'w-full rounded-2xl border border-olive-200 bg-olive-100 lg:max-h-[50vh]',
+                    thumbnailMaxWidth
+                  )}
                 />
               </figure>
             )}
@@ -303,7 +304,7 @@ export default async function GuidePage({ params }: Props) {
       </section>
 
       <section className='container mx-auto px-8 pb-12 pt-6 lg:pb-20 lg:pt-10'>
-        <div className='mx-auto max-w-4xl'>
+        <div className='mx-auto w-full max-w-3xl'>
           <ArticleRichText data={article.body} className='lg:prose-lg' />
         </div>
       </section>
