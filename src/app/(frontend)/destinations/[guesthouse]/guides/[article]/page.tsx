@@ -12,11 +12,11 @@ import { extractImageProps, getBaseUrl } from '@/lib/utils'
 import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 import { Badge } from '@/components/ui/badge'
-import Image from '@/components/ui/image'
-import SectionHeading from '@/components/ui/section-heading'
 import { ArticleRichText } from '@/components/rich-text'
 import type { Guesthouse, Media } from '@/payload/payload-types'
 import { twMerge } from 'tailwind-merge'
+
+import GuideTile from '../components/guide-tile'
 
 type Props = {
   params: Promise<{ guesthouse: string; article: string }>
@@ -171,12 +171,6 @@ export default async function GuidePage({ params }: Props) {
     notFound()
   }
 
-  const relatedArticles = (
-    await fetchArticles({
-      guesthouse: { equals: guesthouse.id }
-    })
-  ).filter((related) => related.id !== article.id && related.slug)
-
   const createdDate = formatDate(article.createdAt)
   const showUpdatedAt = shouldShowUpdatedAt(
     article.createdAt,
@@ -202,6 +196,18 @@ export default async function GuidePage({ params }: Props) {
     ? '(min-width: 1024px) 576px, 90vw'
     : '(min-width: 1024px) 768px, 90vw'
   const ogImage = getAbsoluteImageUrl(article.thumbnail)
+
+  const relatedArticles = await fetchArticles(
+    {
+      guesthouse: { equals: guesthouse.id },
+      id: { not_equals: article.id },
+      slug: { exists: true }
+    },
+    {
+      sort: ['-featured', '-updatedAt', '-createdAt']
+    }
+  )
+
   const jsonLd = [
     createBreadCrumbs([
       {
@@ -253,113 +259,78 @@ export default async function GuidePage({ params }: Props) {
       />
 
       <section className='bg-olive-50'>
-        <div className='container mx-auto px-8 py-10 lg:py-20'>
-          <div className='mx-auto flex w-full max-w-3xl flex-col gap-6'>
-            <Link
-              href={`/destinations/${guesthouse.slug}/guides`}
-              className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
+        <div className='mx-auto flex w-full max-w-3xl flex-col gap-6 py-10 lg:py-20'>
+          <Link
+            href={`/destinations/${guesthouse.slug}/guides`}
+            className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
+          >
+            <ArrowLeft className='size-4' />
+            Back to guides
+          </Link>
+
+          <div className='flex flex-col gap-4'>
+            <h1 className='max-w-[40rem] text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
+              {article.title}
+            </h1>
+            <p className='text-xs font-medium text-olive-500'>
+              <time dateTime={createdDate.dateTime}>
+                {createdDate.humanReadable}
+              </time>{' '}
+              • The Grand Collection
+            </p>
+            <Badge
+              asChild
+              variant='outline'
+              className='w-fit border-olive-200 bg-olive-50 text-olive-700 hover:bg-olive-100'
             >
-              <ArrowLeft className='size-4' />
-              Back to guides
-            </Link>
-
-            <div className='flex flex-col gap-4'>
-              <h1 className='max-w-[40rem] text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
-                {article.title}
-              </h1>
-              <p className='text-xs font-medium text-olive-500'>
-                <time dateTime={createdDate.dateTime}>
-                  {createdDate.humanReadable}
-                </time>{' '}
-                • The Grand Collection
-              </p>
-              <Badge
-                asChild
-                variant='outline'
-                className='w-fit border-olive-200 bg-olive-50 text-olive-700 hover:bg-olive-100'
-              >
-                <Link href={`/guesthouses/${guesthouse.slug}`}>
-                  {guesthouse.name}
-                </Link>
-              </Badge>
-            </div>
-
-            {thumbnailUrl && (
-              <figure className='w-full'>
-                <BlurredBackdropImage
-                  src={thumbnailUrl}
-                  alt={thumbnailAltText}
-                  sizes={thumbnailSizes}
-                  priority
-                  aspectRatio={thumbnailAspectRatio}
-                  containerClassName={twMerge(
-                    'w-full rounded-2xl border border-olive-200 bg-olive-100 lg:max-h-[50vh]',
-                    thumbnailMaxWidth
-                  )}
-                />
-              </figure>
-            )}
+              <Link href={`/guesthouses/${guesthouse.slug}`}>
+                {guesthouse.name}
+              </Link>
+            </Badge>
           </div>
+
+          {thumbnailUrl && (
+            <figure className='w-full'>
+              <BlurredBackdropImage
+                src={thumbnailUrl}
+                alt={thumbnailAltText}
+                sizes={thumbnailSizes}
+                priority
+                aspectRatio={thumbnailAspectRatio}
+                containerClassName={twMerge(
+                  'w-full rounded-2xl border border-olive-200 bg-olive-100 lg:max-h-[50vh]',
+                  thumbnailMaxWidth
+                )}
+              />
+            </figure>
+          )}
         </div>
       </section>
 
-      <section className='container mx-auto px-8 pb-12 pt-6 lg:pb-20 lg:pt-10'>
-        <div className='mx-auto w-full max-w-3xl'>
-          <ArticleRichText data={article.body} className='lg:prose-lg' />
-        </div>
+      <section className='mx-auto flex w-full max-w-3xl flex-col gap-6 py-10 lg:py-20'>
+        <ArticleRichText data={article.body} className='lg:prose-lg' />
       </section>
 
       {relatedArticles.length > 0 && (
-        <section className='bg-olive-50/60'>
-          <div className='container mx-auto px-8 py-10 lg:py-20'>
-            <SectionHeading
-              heading='More guides'
-              subtitle={guesthouse.name}
-              headingClassNames='text-left'
-              subtitleClassNames='text-left'
-            />
+        <section className='bg-olive-100'>
+          <div className='container mx-auto py-10 lg:py-20'>
+            <div className='flex flex-col gap-1'>
+              <h2 className='text-lg font-semibold text-olive-900 md:text-xl lg:text-2xl'>
+                More guides
+              </h2>
+              <p className='text-xs font-extrabold uppercase tracking-widest text-sage-500'>
+                {guesthouse.name}
+              </p>
+            </div>
 
-            <ul className='mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-              {relatedArticles.map((related) => {
-                const { url, alt } = extractImageProps(related.thumbnail)
-                const relatedAlt = alt || related.title
-                const href = `/destinations/${guesthouse.slug}/guides/${related.slug}`
-
-                return (
-                  <li
-                    key={related.id}
-                    className='group rounded-2xl border border-olive-200 bg-white p-4 transition-shadow hover:shadow-lg'
-                  >
-                    <Link href={href} className='block'>
-                      <div className='relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-olive-100'>
-                        {url ? (
-                          <Image
-                            src={url}
-                            alt={relatedAlt}
-                            fill
-                            className='object-cover object-center transition duration-300 group-hover:scale-105'
-                            sizes='(min-width: 1024px) 320px, (min-width: 768px) 45vw, 85vw'
-                          />
-                        ) : (
-                          <div className='flex size-full items-center justify-center text-xs font-semibold uppercase tracking-widest text-olive-500'>
-                            Guide
-                          </div>
-                        )}
-                      </div>
-
-                      <p className='mt-4 text-xs font-semibold uppercase tracking-widest text-sage-700'>
-                        Guide
-                      </p>
-                      <h3 className='mt-2 text-lg font-semibold text-olive-900 transition group-hover:text-olive-800'>
-                        {related.title}
-                      </h3>
-                      <p className='mt-2 text-xs font-semibold text-olive-600'>
-                        {related.author}
-                      </p>
-                    </Link>
-                  </li>
-                )
-              })}
+            <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+              {relatedArticles.map((related) => (
+                <GuideTile
+                  key={related.id}
+                  article={related}
+                  guesthouseSlug={guesthouse.slug}
+                />
+              ))}
             </ul>
           </div>
         </section>

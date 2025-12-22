@@ -2,7 +2,7 @@
 import 'server-only'
 
 import { unstable_cache } from 'next/cache'
-import { getPayload, Where } from 'payload'
+import { getPayload, Sort, Where } from 'payload'
 import config from '@payload-config'
 
 import type {
@@ -122,14 +122,19 @@ export const fetchGuestHouses = unstable_cache(
 type ArticleWithGuesthouse = Article & { guesthouse: string | Guesthouse }
 
 export const fetchArticles = unstable_cache(
-  async (query?: Where): Promise<ArticleWithGuesthouse[]> => {
+  async (
+    query?: Where,
+    options?: {
+      sort?: Sort
+    }
+  ): Promise<ArticleWithGuesthouse[]> => {
     const payload = await getPayload({ config })
     const res = await payload.find({
       draft: false,
       collection: 'articles',
       depth: 1,
       pagination: false,
-      sort: '-createdAt',
+      sort: options?.sort ?? '-createdAt',
       where: {
         ...query,
         _status: {

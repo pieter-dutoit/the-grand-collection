@@ -6,9 +6,10 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 
 import { fetchArticles, fetchArticlesCount, fetchGuestHouses } from '@/lib/data'
-import { extractImageProps, getBaseUrl } from '@/lib/utils'
+import { getBaseUrl } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
+
+import GuideTile from './components/guide-tile'
 
 type Props = {
   params: Promise<{ guesthouse: string }>
@@ -93,8 +94,8 @@ export default async function GuidePage({ params }: Props) {
   return (
     <>
       <section className='bg-olive-50'>
-        <div className='container mx-auto px-8 py-10 lg:py-20'>
-          <div className='mx-auto w-full max-w-5xl'>
+        <div className='container mx-auto py-10 lg:py-20'>
+          <div className='w-full max-w-5xl'>
             <Link
               href={`/guesthouses/${guesthouse.slug}`}
               className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
@@ -128,51 +129,39 @@ export default async function GuidePage({ params }: Props) {
         </div>
       </section>
 
-      <section className='container mx-auto px-8 pb-12 pt-6 lg:pb-20 lg:pt-10'>
-        <div className='mx-auto w-full max-w-5xl'>
+      <section className='container mx-auto pb-12 pt-6 lg:pb-20 lg:pt-10'>
+        <div className='w-full max-w-5xl'>
           {featuredGuides.length > 0 && (
             <div>
               <h2 className='text-xl font-semibold text-olive-900 md:text-2xl'>
                 Featured guides
               </h2>
               <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-                {featuredGuides.map((article) => {
-                  const { url, alt } = extractImageProps(article.thumbnail)
-                  const thumbnailAlt = alt || article.title
-                  const href = `/destinations/${guesthouse.slug}/guides/${article.slug}`
+                {featuredGuides.map((article) => (
+                  <GuideTile
+                    key={article.id}
+                    article={article}
+                    guesthouseSlug={guesthouse.slug}
+                    badgeText='Featured'
+                  />
+                ))}
+              </ul>
+            </div>
+          )}
 
-                  return (
-                    <li
-                      key={article.id}
-                      className='group relative rounded-2xl border border-olive-200 bg-white transition-shadow hover:shadow-lg'
-                    >
-                      <Link href={href} className='block'>
-                        {url && (
-                          <BlurredBackdropImage
-                            src={url}
-                            alt={thumbnailAlt}
-                            sizes='(min-width: 1024px) 320px, (min-width: 768px) 45vw, 85vw'
-                            containerClassName='relative rounded-t-xl bg-olive-100'
-                            foregroundClassName='transition duration-300 group-hover:scale-105'
-                          />
-                        )}
-
-                        <Badge className='absolute left-4 top-4'>
-                          Featured
-                        </Badge>
-
-                        <div className='gap-2 p-4'>
-                          <h3 className='text-lg font-semibold text-olive-900 transition group-hover:text-olive-800'>
-                            {article.title}
-                          </h3>
-                          <p className='text-sm text-olive-700'>
-                            {article.excerpt}
-                          </p>
-                        </div>
-                      </Link>
-                    </li>
-                  )
-                })}
+          {otherGuides.length > 0 && (
+            <div className={featuredGuides.length > 0 ? 'mt-12' : undefined}>
+              <h2 className='text-xl font-semibold text-olive-900 md:text-2xl'>
+                All guides
+              </h2>
+              <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+                {otherGuides.map((article) => (
+                  <GuideTile
+                    key={article.id}
+                    article={article}
+                    guesthouseSlug={guesthouse.slug}
+                  />
+                ))}
               </ul>
             </div>
           )}
