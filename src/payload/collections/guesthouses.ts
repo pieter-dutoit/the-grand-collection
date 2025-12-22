@@ -60,6 +60,28 @@ export const Guesthouses: CollectionConfig = {
           fields: GuestHouseContentFields
         },
         {
+          name: 'guides',
+          label: 'Guides Page',
+          fields: [
+            {
+              name: 'title',
+              label: 'Guides Page Title',
+              type: 'text',
+              minLength: 3,
+              maxLength: 120,
+              required: true
+            },
+            {
+              name: 'description',
+              label: 'Guides Page Description',
+              type: 'textarea',
+              minLength: 10,
+              maxLength: 400,
+              required: true
+            }
+          ]
+        },
+        {
           name: 'business_details',
           label: 'Business Details',
           fields: BusinessDetailsFields

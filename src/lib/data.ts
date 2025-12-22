@@ -147,3 +147,26 @@ export const fetchArticles = unstable_cache(
   [],
   { revalidate: false, tags: ['articles', 'guesthouses'] }
 )
+
+export const fetchArticlesCount = unstable_cache(
+  async (query?: Where): Promise<number> => {
+    const payload = await getPayload({ config })
+    const res = await payload.count({
+      collection: 'articles',
+      where: {
+        ...query,
+        _status: {
+          equals: 'published'
+        }
+      }
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch articles count')
+    }
+
+    return res.totalDocs
+  },
+  [],
+  { revalidate: false, tags: ['articles', 'guesthouses'] }
+)

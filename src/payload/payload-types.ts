@@ -164,9 +164,11 @@ export interface Article {
   id: string
   slug: string
   guesthouse: string | Guesthouse
+  featured?: boolean | null
   author: string
   thumbnail: string | Media
   title: string
+  excerpt: string
   body: {
     root: {
       type: string
@@ -222,6 +224,10 @@ export interface Guesthouse {
       people_icon: string | Media
       rooms?: (string | Room)[] | null
     }
+  }
+  guides: {
+    title: string
+    description: string
   }
   business_details: {
     hours: {
@@ -626,9 +632,11 @@ export interface PayloadMigration {
 export interface ArticlesSelect<T extends boolean = true> {
   slug?: T
   guesthouse?: T
+  featured?: T
   author?: T
   thumbnail?: T
   title?: T
+  excerpt?: T
   body?: T
   updatedAt?: T
   createdAt?: T
@@ -812,6 +820,12 @@ export interface GuesthousesSelect<T extends boolean = true> {
               people_icon?: T
               rooms?: T
             }
+      }
+  guides?:
+    | T
+    | {
+        title?: T
+        description?: T
       }
   business_details?:
     | T

@@ -39,6 +39,16 @@ export const Articles: CollectionConfig = {
       }
     },
     {
+      name: 'featured',
+      label: 'Featured',
+      type: 'checkbox',
+      defaultValue: false,
+      index: true,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
       name: 'author',
       label: 'Author',
       type: 'text',
@@ -64,6 +74,14 @@ export const Articles: CollectionConfig = {
       required: true,
       minLength: 1,
       maxLength: 200
+    },
+    {
+      name: 'excerpt',
+      type: 'text',
+      label: 'Excerpt',
+      required: true,
+      minLength: 10,
+      maxLength: 300
     },
     {
       name: 'body',
