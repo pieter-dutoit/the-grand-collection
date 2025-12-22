@@ -41,23 +41,6 @@ export const Destinations: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          name: 'guides',
-          label: 'Guides',
-          fields: [
-            {
-              name: 'title',
-              label: 'Guides Title',
-              type: 'text',
-              required: true
-            },
-            {
-              name: 'description',
-              label: 'Guides Description',
-              type: 'textarea'
-            }
-          ]
-        },
-        {
           name: 'seo',
           label: 'SEO',
           fields: SEOFields

@@ -165,10 +165,10 @@ export interface UserAuthOperations {
 export interface Article {
   id: string
   slug: string
-  type?: 'destination_guide' | null
-  destination?: (string | null) | Destination
-  guesthouse?: (string | null) | Guesthouse
+  destination?: (string | Destination)[] | null
+  guesthouse?: (string | Guesthouse)[] | null
   featured?: boolean | null
+  type: 'guide'
   author: string
   thumbnail: string | Media
   title: string
@@ -201,10 +201,6 @@ export interface Destination {
   name: string
   slug: string
   image: string | Media
-  guides: {
-    title: string
-    description?: string | null
-  }
   seo: {
     meta: MetadataField
     open_graph: OpenGraphField
@@ -657,10 +653,10 @@ export interface PayloadMigration {
  */
 export interface ArticlesSelect<T extends boolean = true> {
   slug?: T
-  type?: T
   destination?: T
   guesthouse?: T
   featured?: T
+  type?: T
   author?: T
   thumbnail?: T
   title?: T
@@ -678,12 +674,6 @@ export interface DestinationsSelect<T extends boolean = true> {
   name?: T
   slug?: T
   image?: T
-  guides?:
-    | T
-    | {
-        title?: T
-        description?: T
-      }
   seo?:
     | T
     | {
