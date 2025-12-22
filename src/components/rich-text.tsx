@@ -40,9 +40,16 @@ const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
         <div className='relative aspect-video w-full overflow-hidden rounded-2xl border border-olive-200 bg-olive-100'>
           <Image
             src={url}
+            alt=''
+            fill
+            className='not-prose z-0 scale-125 object-cover object-center blur-xl'
+            sizes='(min-width: 1024px) 768px, 90vw'
+          />
+          <Image
+            src={url}
             alt={alt}
             fill
-            className='object-cover object-center'
+            className='not-prose z-10 object-contain object-center'
             sizes='(min-width: 1024px) 768px, 90vw'
           />
         </div>
@@ -60,7 +67,7 @@ export function ArticleRichText({ data, className }: Props) {
       data={data}
       converters={jsxConverters}
       className={twMerge(
-        'prose max-w-none prose-headings:font-light prose-p:leading-relaxed prose-p:text-olive-800 prose-blockquote:text-olive-800 prose-figcaption:text-olive-700 prose-strong:text-olive-900 prose-img:rounded-2xl',
+        'prose max-w-none prose-headings:font-light prose-p:leading-relaxed prose-p:text-olive-800 prose-blockquote:text-olive-800 prose-figcaption:text-olive-700 prose-strong:text-olive-900 prose-li:opacity-90 prose-img:rounded-2xl',
         className
       )}
     />

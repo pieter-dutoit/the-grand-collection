@@ -304,10 +304,7 @@ export default async function GuidePage({ params }: Props) {
 
       <section className='container mx-auto px-8 pb-12 pt-6 lg:pb-20 lg:pt-10'>
         <div className='mx-auto max-w-4xl'>
-          <ArticleRichText
-            data={article.body}
-            className='prose-lg lg:prose-xl'
-          />
+          <ArticleRichText data={article.body} className='lg:prose-lg' />
         </div>
       </section>
 
