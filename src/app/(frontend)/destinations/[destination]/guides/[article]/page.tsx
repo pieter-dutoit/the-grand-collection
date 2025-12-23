@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
-import { fetchArticles, fetchDestinations } from '@/lib/data'
+import { fetchArticles, fetchDestinations, fetchGuestHouses } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
 import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
@@ -15,6 +15,7 @@ import { ArticleRichText } from '@/components/rich-text'
 import type { Destination, Media } from '@/payload/payload-types'
 
 import MoreArticlesSection from '../components/more-articles'
+import WhereToStaySection from '../components/where-to-stay'
 
 type Props = {
   params: Promise<{ destination: string; article: string }>
@@ -191,17 +192,22 @@ export default async function ArticlePage({ params }: Props) {
     : '(min-width: 1024px) 768px, 90vw'
   const ogImage = getAbsoluteImageUrl(article.thumbnail)
 
-  const relatedArticles = await fetchArticles(
-    {
-      destination: { equals: destination.id },
-      id: { not_equals: article.id },
-      slug: { exists: true }
-    },
-    {
-      sort: ['-featured', '-updatedAt', '-createdAt'],
-      limit: 6
-    }
-  )
+  const [relatedArticles, guesthouses] = await Promise.all([
+    fetchArticles(
+      {
+        destination: { equals: destination.id },
+        id: { not_equals: article.id },
+        slug: { exists: true }
+      },
+      {
+        sort: ['-featured', '-updatedAt', '-createdAt'],
+        limit: 6
+      }
+    ),
+    fetchGuestHouses({
+      destination: { equals: destination.id }
+    })
+  ])
 
   const jsonLd = [
     createBreadCrumbs([
@@ -296,13 +302,15 @@ export default async function ArticlePage({ params }: Props) {
       </section>
 
       <section className='container mx-auto flex w-full max-w-3xl gap-6 py-10 lg:py-20'>
-        <ArticleRichText data={article.body} className='lg:prose-lg' />
+        <ArticleRichText data={article.body} className='w-full lg:prose-lg' />
       </section>
 
       <MoreArticlesSection
         destination={destination}
         relatedArticles={relatedArticles}
       />
+
+      <WhereToStaySection guesthouses={guesthouses} />
     </>
   )
 }
