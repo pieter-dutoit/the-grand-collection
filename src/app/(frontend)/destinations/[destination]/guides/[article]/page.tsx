@@ -205,8 +205,8 @@ export default async function ArticlePage({ params }: Props) {
   const jsonLd = [
     createBreadCrumbs([
       {
-        name: 'Articles',
-        item: `/destinations/${destination.slug}/articles`
+        name: 'Guides',
+        item: `/destinations/${destination.slug}/guides`
       },
       {
         name: article.title,
@@ -251,11 +251,11 @@ export default async function ArticlePage({ params }: Props) {
       <section className='bg-olive-50'>
         <div className='mx-auto flex w-full max-w-3xl flex-col gap-6 py-10 lg:py-20'>
           <Link
-            href={`/destinations/${destination.slug}/articles`}
+            href={`/destinations/${destination.slug}/guides`}
             className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
           >
             <ArrowLeft className='size-4' />
-            Back to articles
+            Back to guides
           </Link>
 
           <div className='flex flex-col gap-4'>
@@ -303,11 +303,9 @@ export default async function ArticlePage({ params }: Props) {
           <div className='container mx-auto py-10 lg:py-20'>
             <div className='flex flex-col gap-1'>
               <h2 className='text-lg font-semibold text-olive-900 md:text-xl lg:text-2xl'>
-                More articles
+                Plan your stay in{' '}
+                <span className='text-sage-700'>{destination.name}</span>
               </h2>
-              <p className='text-xs font-extrabold uppercase tracking-widest text-sage-500'>
-                {destination.name}
-              </p>
             </div>
 
             <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>

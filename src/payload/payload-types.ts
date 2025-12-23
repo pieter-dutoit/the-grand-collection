@@ -206,6 +206,14 @@ export interface Destination {
     open_graph: OpenGraphField
     twitter?: TwitterField
   }
+  guides: {
+    title: string
+    description: string
+    image: string | Media
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
   updatedAt: string
   createdAt: string
 }
@@ -677,6 +685,16 @@ export interface DestinationsSelect<T extends boolean = true> {
   seo?:
     | T
     | {
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
+  guides?:
+    | T
+    | {
+        title?: T
+        description?: T
+        image?: T
         meta?: T | MetadataFieldSelect<T>
         open_graph?: T | OpenGraphFieldSelect<T>
         twitter?: T | TwitterFieldSelect<T>
@@ -1285,6 +1303,18 @@ export interface AllGuesthousesPageSelect<T extends boolean = true> {
   updatedAt?: T
   createdAt?: T
   globalType?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GoogleMapBlock".
+ */
+export interface GoogleMapBlock {
+  title?: string | null
+  maps_embed_url: string
+  maps_link?: string | null
+  id?: string | null
+  blockName?: string | null
+  blockType: 'googleMap'
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

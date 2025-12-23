@@ -2,7 +2,10 @@ import {
   RichText as RichTextConverter,
   type JSXConvertersFunction
 } from '@payloadcms/richtext-lexical/react'
-import type { DefaultNodeTypes } from '@payloadcms/richtext-lexical'
+import type {
+  DefaultNodeTypes,
+  SerializedBlockNode
+} from '@payloadcms/richtext-lexical'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { twMerge } from 'tailwind-merge'
 
@@ -15,6 +18,16 @@ type Props = {
   className?: string
 }
 
+type GoogleMapBlockFields = {
+  title?: string | null
+  maps_embed_url: string
+  maps_link?: string | null
+}
+
+type NodeTypes =
+  | DefaultNodeTypes
+  | SerializedBlockNode<GoogleMapBlockFields & { blockType: 'googleMap' }>
+
 const isMedia = (value: unknown): value is Media => {
   return (
     typeof value === 'object' &&
@@ -25,10 +38,65 @@ const isMedia = (value: unknown): value is Media => {
   )
 }
 
-const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({
+const isGoogleMapBlockFields = (
+  value: unknown
+): value is GoogleMapBlockFields => {
+  if (typeof value !== 'object' || value === null) return false
+  if (!('maps_embed_url' in value)) return false
+  return (
+    typeof (value as { maps_embed_url?: unknown }).maps_embed_url === 'string'
+  )
+}
+
+const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
   defaultConverters
 }) => ({
   ...defaultConverters,
+  blocks: {
+    ...(defaultConverters.blocks || {}),
+    googleMap: ({ node }) => {
+      if (!isGoogleMapBlockFields(node.fields)) return null
+
+      const title =
+        typeof node.fields.title === 'string' ? node.fields.title : null
+      const mapsLink =
+        typeof node.fields.maps_link === 'string' ? node.fields.maps_link : null
+
+      return (
+        <figure className='my-8'>
+          <div className='aspect-video overflow-hidden rounded-2xl border-2 border-olive-200 bg-olive-100'>
+            <iframe
+              title={title || 'Google Map'}
+              src={node.fields.maps_embed_url}
+              width='600'
+              height='400'
+              style={{ border: 0 }}
+              allowFullScreen
+              loading='lazy'
+              referrerPolicy='no-referrer-when-downgrade'
+              className='size-full'
+            />
+          </div>
+          {title || mapsLink ? (
+            <figcaption className='mt-2 text-xs font-semibold text-olive-500'>
+              {title ? `Map: ${title}` : null}
+              {title && mapsLink ? ' • ' : null}
+              {mapsLink ? (
+                <a
+                  href={mapsLink}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='underline underline-offset-2'
+                >
+                  Open in Google Maps
+                </a>
+              ) : null}
+            </figcaption>
+          ) : null}
+        </figure>
+      )
+    }
+  },
   upload: ({ node }) => {
     if (!isMedia(node.value)) return null
 

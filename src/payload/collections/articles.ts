@@ -1,7 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
+import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+
 import createSlug from '../hooks/collections/create-collection-slug'
 import revalidateCache from '../hooks/collections/revalidate-cache'
+import { GoogleMapBlock } from '../blocks/google-map'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
@@ -113,7 +116,15 @@ export const Articles: CollectionConfig = {
       name: 'body',
       type: 'richText',
       label: 'Content',
-      required: true
+      required: true,
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          BlocksFeature({
+            blocks: [GoogleMapBlock]
+          })
+        ]
+      })
     }
   ]
 }

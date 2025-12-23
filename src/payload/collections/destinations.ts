@@ -44,6 +44,32 @@ export const Destinations: CollectionConfig = {
           name: 'seo',
           label: 'SEO',
           fields: SEOFields
+        },
+        {
+          name: 'guides',
+          label: 'Guides Page',
+          fields: [
+            {
+              name: 'title',
+              label: 'Title',
+              type: 'text',
+              required: true
+            },
+            {
+              name: 'description',
+              label: 'Description',
+              type: 'textarea',
+              required: true
+            },
+            {
+              name: 'image',
+              label: 'Image',
+              type: 'upload',
+              required: true,
+              relationTo: 'media'
+            },
+            ...SEOFields
+          ]
         }
       ]
     }

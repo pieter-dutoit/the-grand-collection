@@ -8,8 +8,10 @@ import {
   fetchArticlesCount,
   fetchDestinations
 } from '@/lib/data'
-import { getBaseUrl } from '@/lib/utils'
+import { extractImageProps, getBaseUrl } from '@/lib/utils'
+import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import { Badge } from '@/components/ui/badge'
+import Image from '@/components/ui/image'
 
 import ArticleTile from './components/article-tile'
 
@@ -34,21 +36,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!destination) return {}
 
-  const title = destination.guides?.title || 'Articles'
-  const description =
-    destination.guides?.description || destination.seo?.meta?.description
-  const canonical = `${getBaseUrl()}/destinations/${destination.slug}/articles`
+  const canonical = `${getBaseUrl()}/destinations/${destination.slug}/guides`
+
+  const seo =
+    destination.guides?.meta && destination.guides?.open_graph
+      ? destination.guides
+      : destination.seo
+
+  const metadata = createMetadataConfig({
+    meta: seo.meta,
+    open_graph: seo.open_graph,
+    twitter: seo.twitter || {}
+  })
 
   return {
-    title: `${title} | ${destination.name} | The Grand Collection`,
-    description,
+    ...metadata,
     alternates: {
       canonical
     },
     openGraph: {
-      title,
-      description,
-      type: 'website',
+      ...(metadata.openGraph ?? {}),
       url: canonical
     }
   }
@@ -92,24 +99,28 @@ export default async function ArticlesPage({ params }: Props) {
     (article) => !featuredArticleIds.has(article.id)
   )
 
-  const articlesTitle = destination.guides?.title || 'Articles'
-  const articlesDescription = destination.guides?.description
+  const pageTitle = destination.guides?.title || 'Guides'
+  const pageDescription = destination.guides?.description || ''
+  const { url: heroImageUrl, alt: heroImageAlt } = extractImageProps(
+    destination.guides?.image || destination.image
+  )
+  const heroImageAltText = heroImageAlt || pageTitle || destination.name
 
   return (
     <>
-      <section className='bg-olive-50'>
-        <div className='container mx-auto py-10 lg:py-20'>
+      <section className='relative bg-olive-50'>
+        <div className='container relative z-10 mx-auto py-10 lg:py-20'>
           <div className='w-full max-w-5xl'>
             <div className='flex max-w-3xl flex-col gap-3'>
               <p className='text-xs font-extrabold uppercase tracking-widest text-sage-500'>
-                Articles
+                Guides
               </p>
               <h1 className='text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
-                {articlesTitle}
+                {pageTitle}
               </h1>
-              {articlesDescription && (
+              {pageDescription && (
                 <p className='text-base text-olive-700 md:text-lg'>
-                  {articlesDescription}
+                  {pageDescription}
                 </p>
               )}
               <div className='pt-1'>
@@ -117,12 +128,26 @@ export default async function ArticlesPage({ params }: Props) {
                   variant='outline'
                   className='border-olive-200 bg-white text-olive-700'
                 >
-                  {totalArticles} article{totalArticles !== 1 ? 's' : ''}
+                  {totalArticles} guide{totalArticles !== 1 ? 's' : ''}
                 </Badge>
               </div>
             </div>
           </div>
         </div>
+
+        {heroImageUrl && (
+          <div className='absolute right-0 top-0 h-full w-1/2 opacity-40 sm:w-4/6 sm:opacity-100'>
+            <Image
+              src={heroImageUrl}
+              alt={heroImageAltText}
+              fill
+              className='object-cover object-center'
+              priority
+              sizes='(max-width: 768px) 50vw, 60vw'
+            />
+            <div className='absolute inset-0 bg-gradient-to-r from-olive-50 to-olive-50/50 sm:to-transparent' />
+          </div>
+        )}
       </section>
 
       <section className='container mx-auto pb-12 pt-6 lg:pb-20 lg:pt-10'>
