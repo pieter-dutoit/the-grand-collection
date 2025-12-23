@@ -146,14 +146,17 @@ export const fetchArticles = unstable_cache(
     query?: Where,
     options?: {
       sort?: Sort
+      limit?: number
     }
   ): Promise<Article[]> => {
     const payload = await getPayload({ config })
+    const shouldPaginate = typeof options?.limit === 'number'
     const res = await payload.find({
       draft: false,
       collection: 'articles',
       depth: 1,
-      pagination: false,
+      pagination: shouldPaginate ? true : false,
+      ...(shouldPaginate && { limit: options?.limit }),
       sort: options?.sort ?? '-createdAt',
       where: {
         ...query,

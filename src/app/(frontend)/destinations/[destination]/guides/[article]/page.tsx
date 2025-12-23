@@ -1,8 +1,8 @@
 import 'server-only'
 
 import { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge'
 import { ArticleRichText } from '@/components/rich-text'
 import type { Destination, Media } from '@/payload/payload-types'
 
-import ArticleTile from '../components/article-tile'
+import MoreArticlesSection from '../components/more-articles'
 
 type Props = {
   params: Promise<{ destination: string; article: string }>
@@ -198,7 +198,8 @@ export default async function ArticlePage({ params }: Props) {
       slug: { exists: true }
     },
     {
-      sort: ['-featured', '-updatedAt', '-createdAt']
+      sort: ['-featured', '-updatedAt', '-createdAt'],
+      limit: 6
     }
   )
 
@@ -249,7 +250,7 @@ export default async function ArticlePage({ params }: Props) {
       />
 
       <section className='bg-olive-50'>
-        <div className='mx-auto flex w-full max-w-3xl flex-col gap-6 py-10 lg:py-20'>
+        <div className='container mx-auto flex w-full max-w-3xl flex-col gap-6 py-10 lg:py-20'>
           <Link
             href={`/destinations/${destination.slug}/guides`}
             className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
@@ -294,32 +295,14 @@ export default async function ArticlePage({ params }: Props) {
         </div>
       </section>
 
-      <section className='mx-auto flex w-full max-w-3xl flex-col gap-6 py-10 lg:py-20'>
+      <section className='container mx-auto flex w-full max-w-3xl gap-6 py-10 lg:py-20'>
         <ArticleRichText data={article.body} className='lg:prose-lg' />
       </section>
 
-      {relatedArticles.length > 0 && (
-        <section className='bg-olive-100'>
-          <div className='container mx-auto py-10 lg:py-20'>
-            <div className='flex flex-col gap-1'>
-              <h2 className='text-lg font-semibold text-olive-900 md:text-xl lg:text-2xl'>
-                Plan your stay in{' '}
-                <span className='text-sage-700'>{destination.name}</span>
-              </h2>
-            </div>
-
-            <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-              {relatedArticles.map((related) => (
-                <ArticleTile
-                  key={related.id}
-                  article={related}
-                  destinationSlug={destination.slug}
-                />
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
+      <MoreArticlesSection
+        destination={destination}
+        relatedArticles={relatedArticles}
+      />
     </>
   )
 }

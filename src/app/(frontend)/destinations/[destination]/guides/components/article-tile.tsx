@@ -1,11 +1,11 @@
 import Link from 'next/link'
 
 import type { Article } from '@/payload/payload-types'
-import { extractImageProps } from '@/lib/utils'
+import { cn, extractImageProps } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 
-type ArticleTileProps = {
+type ArticleTileBaseProps = {
   article: Pick<
     Article,
     'id' | 'slug' | 'title' | 'excerpt' | 'thumbnail' | 'featured'
@@ -14,16 +14,26 @@ type ArticleTileProps = {
   badgeText?: string
 }
 
+type ArticleTileProps = ArticleTileBaseProps & {
+  className?: string
+}
+
 export default function ArticleTile({
   article,
-  destinationSlug
+  destinationSlug,
+  className
 }: ArticleTileProps) {
   const { url, alt } = extractImageProps(article.thumbnail)
   const thumbnailAlt = alt || article.title
   const href = `/destinations/${destinationSlug}/guides/${article.slug}`
 
   return (
-    <li className='group relative rounded-2xl border border-olive-200 bg-white transition-shadow hover:shadow-lg'>
+    <div
+      className={cn(
+        'group relative w-full rounded-2xl border border-olive-200 bg-white transition-shadow hover:shadow-lg',
+        className
+      )}
+    >
       <Link href={href} className='block'>
         {url && (
           <BlurredBackdropImage
@@ -48,6 +58,6 @@ export default function ArticleTile({
           </p>
         </div>
       </Link>
-    </li>
+    </div>
   )
 }
