@@ -165,8 +165,8 @@ export interface UserAuthOperations {
 export interface Article {
   id: string
   slug: string
-  destination?: (string | Destination)[] | null
-  guesthouse?: (string | Guesthouse)[] | null
+  destination?: (string | null) | Destination
+  guesthouse?: (string | null) | Guesthouse
   featured?: boolean | null
   type: 'guide'
   author: string

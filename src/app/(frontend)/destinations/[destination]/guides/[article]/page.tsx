@@ -4,8 +4,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
-import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import { twMerge } from 'tailwind-merge'
 
 import { fetchArticles, fetchDestinations } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
@@ -14,7 +13,6 @@ import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 import { Badge } from '@/components/ui/badge'
 import { ArticleRichText } from '@/components/rich-text'
 import type { Destination, Media } from '@/payload/payload-types'
-import { twMerge } from 'tailwind-merge'
 
 import ArticleTile from '../components/article-tile'
 
@@ -51,13 +49,6 @@ const shouldShowUpdatedAt = (createdAt: string, updatedAt: string) => {
   const updated = new Date(updatedAt).getTime()
 
   return Math.abs(updated - created) >= 1000 * 60 * 60 * 24
-}
-
-const getDescriptionFromBody = (body: SerializedEditorState) => {
-  const text = convertLexicalToPlaintext({ data: body })
-  const cleaned = text.replace(/\s+/g, ' ').trim()
-
-  return cleaned.slice(0, 160)
 }
 
 const getAbsoluteImageUrl = (image: Media | string) => {
@@ -123,14 +114,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!article) return {}
 
-  const description =
-    getDescriptionFromBody(article.body) ||
-    destination.guides?.description ||
-    destination.seo?.meta?.description
+  const description = article.excerpt
 
   const { alt: thumbnailAlt } = extractImageProps(article.thumbnail)
   const ogImage = getAbsoluteImageUrl(article.thumbnail)
-  const canonical = `${getBaseUrl()}/destinations/${destinationSlug}/articles/${article.slug}`
+  const canonical = `${getBaseUrl()}/destinations/${destinationSlug}/guides/${article.slug}`
 
   return {
     title: `${article.title} | ${destination.name} | The Grand Collection`,
@@ -222,7 +210,7 @@ export default async function ArticlePage({ params }: Props) {
       },
       {
         name: article.title,
-        item: `/destinations/${destination.slug}/articles/${article.slug}`
+        item: `/destinations/${destination.slug}/guides/${article.slug}`
       }
     ]),
     {
@@ -245,7 +233,7 @@ export default async function ArticlePage({ params }: Props) {
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `${getBaseUrl()}/destinations/${destination.slug}/articles/${article.slug}`
+        '@id': `${getBaseUrl()}/destinations/${destination.slug}/guides/${article.slug}`
       },
       ...(ogImage && {
         image: [ogImage]

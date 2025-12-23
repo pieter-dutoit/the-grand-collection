@@ -32,7 +32,7 @@ export const Articles: CollectionConfig = {
       label: 'Destination',
       type: 'relationship',
       relationTo: 'destinations',
-      hasMany: true,
+      hasMany: false,
       index: true,
       admin: {
         position: 'sidebar'
@@ -43,7 +43,7 @@ export const Articles: CollectionConfig = {
       label: 'Guesthouse',
       type: 'relationship',
       relationTo: 'guesthouses',
-      hasMany: true,
+      hasMany: false,
       admin: {
         position: 'sidebar'
       }

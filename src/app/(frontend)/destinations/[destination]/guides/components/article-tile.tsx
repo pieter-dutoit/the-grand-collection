@@ -20,7 +20,7 @@ export default function ArticleTile({
 }: ArticleTileProps) {
   const { url, alt } = extractImageProps(article.thumbnail)
   const thumbnailAlt = alt || article.title
-  const href = `/destinations/${destinationSlug}/articles/${article.slug}`
+  const href = `/destinations/${destinationSlug}/guides/${article.slug}`
 
   return (
     <li className='group relative rounded-2xl border border-olive-200 bg-white transition-shadow hover:shadow-lg'>
