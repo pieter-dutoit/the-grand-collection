@@ -29,12 +29,14 @@ export default function MoreArticlesSection({
   }
 
   return (
-    <section className='bg-olive-100 py-10 lg:py-20'>
+    <section className='bg-olive-100 py-10 lg:py-20' id='more-articles'>
       <div className='container mx-auto flex flex-col gap-1'>
-        <h2 className='text-xl font-semibold text-olive-900 md:text-2xl'>
-          Plan your stay in{' '}
-          <span className='text-sage-700'>{destination.name}</span>
+        <h2 className='text-sm font-extrabold text-olive-500'>
+          What to do in {destination.name}
         </h2>
+        <span className='text-3xl font-semibold text-olive-900 md:text-4xl'>
+          Top things to do in {destination.name}
+        </span>
       </div>
 
       <div>

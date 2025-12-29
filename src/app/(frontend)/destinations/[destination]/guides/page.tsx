@@ -6,7 +6,8 @@ import { notFound } from 'next/navigation'
 import {
   fetchArticles,
   fetchArticlesCount,
-  fetchDestinations
+  fetchDestinations,
+  fetchGuestHouses
 } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
@@ -14,6 +15,7 @@ import { Badge } from '@/components/ui/badge'
 import Image from '@/components/ui/image'
 
 import ArticleTile from './components/article-tile'
+import WhereToStaySection from './components/where-to-stay'
 
 type Props = {
   params: Promise<{ destination: string }>
@@ -85,6 +87,10 @@ export default async function ArticlesPage({ params }: Props) {
     destination: { equals: destination.id }
   })
 
+  const guesthouses = await fetchGuestHouses({
+    destination: { equals: destination.id }
+  })
+
   const articles = allArticles
     .filter((article) => article.slug)
     .sort(sortByMostRecentlyUpdated)
@@ -112,9 +118,9 @@ export default async function ArticlesPage({ params }: Props) {
         <div className='container relative z-10 mx-auto py-10 lg:py-20'>
           <div className='w-full max-w-5xl'>
             <div className='flex max-w-3xl flex-col gap-3'>
-              <p className='text-xs font-extrabold uppercase tracking-widest text-sage-500'>
+              <span className='text-xs font-extrabold uppercase tracking-widest text-sage-500'>
                 Guides
-              </p>
+              </span>
               <h1 className='text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
                 {pageTitle}
               </h1>
@@ -155,7 +161,7 @@ export default async function ArticlesPage({ params }: Props) {
           {featuredArticles.length > 0 && (
             <div>
               <h2 className='text-xl font-semibold text-olive-900 md:text-2xl'>
-                Featured articles
+                Featured guides
               </h2>
               <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
                 {featuredArticles.map((article) => (
@@ -173,7 +179,7 @@ export default async function ArticlesPage({ params }: Props) {
           {otherArticles.length > 0 && (
             <div className={featuredArticles.length > 0 ? 'mt-12' : undefined}>
               <h2 className='text-xl font-semibold text-olive-900 md:text-2xl'>
-                All articles
+                All {destination.name} guides
               </h2>
               <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
                 {otherArticles.map((article) => (
@@ -196,6 +202,8 @@ export default async function ArticlesPage({ params }: Props) {
           )}
         </div>
       </section>
+
+      <WhereToStaySection guesthouses={guesthouses} destination={destination} />
     </>
   )
 }

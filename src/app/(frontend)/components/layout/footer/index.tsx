@@ -21,7 +21,7 @@ export default async function Footer(): Promise<JSX.Element> {
   const { url, alt } = extractImageProps(minimal_light)
 
   return (
-    <footer className='w-full justify-center bg-olive-950/95 py-8'>
+    <footer className='w-full justify-center bg-black py-8'>
       <div className='container mx-auto grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-5'>
         {/* Logo & Socials */}
         <div className='flex flex-col md:col-span-3 lg:col-span-2'>

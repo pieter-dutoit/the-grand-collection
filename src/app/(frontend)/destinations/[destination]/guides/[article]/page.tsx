@@ -16,6 +16,7 @@ import type { Destination, Media } from '@/payload/payload-types'
 
 import MoreArticlesSection from '../components/more-articles'
 import WhereToStaySection from '../components/where-to-stay'
+import { Button } from '@/components/ui/button'
 
 type Props = {
   params: Promise<{ destination: string; article: string }>
@@ -254,9 +255,11 @@ export default async function ArticlePage({ params }: Props) {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      <section className='bg-olive-50'>
-        <div className='container mx-auto flex w-full max-w-3xl flex-col gap-6 py-10 lg:py-20'>
+      <section
+        id={article.slug}
+        className='relative flex w-full flex-col justify-between bg-olive-50'
+      >
+        <div className='container mx-auto flex flex-col items-start gap-6 py-10 lg:py-20'>
           <Link
             href={`/destinations/${destination.slug}/guides`}
             className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
@@ -264,23 +267,30 @@ export default async function ArticlePage({ params }: Props) {
             <ArrowLeft className='size-4' />
             Back to guides
           </Link>
+          <h1 className='max-w-3xl text-pretty text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
+            {article.title}
+          </h1>
 
-          <div className='flex flex-col gap-4'>
-            <h1 className='max-w-[40rem] text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
-              {article.title}
-            </h1>
-            <p className='text-xs font-medium text-olive-500'>
+          {/* Meta data */}
+          <div className='flex flex-row flex-wrap gap-2'>
+            <Badge className='flex flex-wrap items-center gap-x-1 gap-y-0.5'>
+              <span>The Grand Collection</span>
+              <span className='mx-1'>&bull;</span>
               <time dateTime={createdDate.dateTime}>
                 {createdDate.humanReadable}
-              </time>{' '}
-              • The Grand Collection
-            </p>
-            <Badge
-              variant='outline'
-              className='w-fit border-olive-200 bg-olive-50 text-olive-700 hover:bg-olive-100'
-            >
-              {destination.name}
+              </time>
             </Badge>
+            {updatedDate && (
+              <Badge
+                variant='outline'
+                className='flex flex-wrap items-center gap-x-1 gap-y-0.5'
+              >
+                <span>Updated on</span>
+                <time dateTime={updatedDate.dateTime}>
+                  {updatedDate.humanReadable}
+                </time>
+              </Badge>
+            )}
           </div>
 
           {thumbnailUrl && (
@@ -292,7 +302,7 @@ export default async function ArticlePage({ params }: Props) {
                 priority
                 aspectRatio={thumbnailAspectRatio}
                 containerClassName={twMerge(
-                  'w-full rounded-2xl border border-olive-200 bg-olive-100 lg:max-h-[50vh]',
+                  'w-full rounded-2xl border border-olive-200 bg-olive-100 lg:max-h-[40vh]',
                   thumbnailMaxWidth
                 )}
               />
@@ -301,16 +311,56 @@ export default async function ArticlePage({ params }: Props) {
         </div>
       </section>
 
-      <section className='container mx-auto flex w-full max-w-3xl gap-6 py-10 lg:py-20'>
-        <ArticleRichText data={article.body} className='w-full lg:prose-lg' />
-      </section>
+      {/* Article body */}
+      <div className='relative'>
+        <div className='container mx-auto flex w-full justify-between gap-8 lg:gap-12'>
+          {/* Left content - Richtext */}
+          <section className='flex w-full max-w-prose flex-col gap-6 py-10 lg:py-20'>
+            <ArticleRichText
+              data={article.body}
+              className='w-full lg:prose-lg'
+            />
+          </section>
+
+          {/* Right content - sticky */}
+          <div className='sticky top-16 hidden w-80 flex-col self-start py-10 md:block lg:py-20'>
+            <nav
+              aria-label='On this page'
+              className='flex w-full flex-col items-end gap-2 rounded-lg border border-gold-100 p-4'
+            >
+              <h2 className='pr-4 text-lg font-extrabold text-gold-600'>
+                On this page
+              </h2>
+              <ul className='flex w-full flex-col items-end'>
+                <li>
+                  <Button asChild variant='ghost' colour='gold'>
+                    <Link href={`#more-articles`}>More things to do</Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button asChild variant='ghost' colour='gold'>
+                    <Link href={`#where-to-stay`}>
+                      Where to stay in {destination.name}
+                    </Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button asChild variant='ghost' colour='gold'>
+                    <Link href={`#${article.slug}`}>Back to top</Link>
+                  </Button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
 
       <MoreArticlesSection
         destination={destination}
         relatedArticles={relatedArticles}
       />
 
-      <WhereToStaySection guesthouses={guesthouses} />
+      <WhereToStaySection guesthouses={guesthouses} destination={destination} />
     </>
   )
 }
