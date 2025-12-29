@@ -31,12 +31,12 @@ export default function MoreArticlesSection({
   return (
     <section className='bg-olive-100 py-10 lg:py-20' id='more-articles'>
       <div className='container mx-auto flex flex-col gap-1'>
-        <h2 className='text-sm font-extrabold text-olive-500'>
+        <span className='text-sm font-extrabold text-olive-500'>
           What to do in {destination.name}
-        </h2>
-        <span className='text-3xl font-semibold text-olive-900 md:text-4xl'>
-          Top things to do in {destination.name}
         </span>
+        <h2 className='text-3xl font-semibold text-olive-900 md:text-4xl'>
+          Best things to do in {destination.name}
+        </h2>
       </div>
 
       <div>
@@ -63,7 +63,9 @@ export default function MoreArticlesSection({
                 href={`/destinations/${destination.slug}/guides`}
                 className='flex size-full flex-row items-center justify-center gap-2 rounded-xl border border-olive-100 bg-gradient-to-r from-olive-300 to-olive-50 text-olive-800 underline-offset-1 hover:text-olive-600 hover:underline'
               >
-                <span className='text-base font-semibold'>View all guides</span>
+                <span className='text-base font-semibold'>
+                  View all {destination.name} guides
+                </span>
                 <ArrowRight className='size-4' />
               </Link>
             </CarouselItem>

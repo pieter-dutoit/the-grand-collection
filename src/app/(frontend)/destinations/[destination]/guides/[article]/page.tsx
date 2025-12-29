@@ -17,6 +17,7 @@ import type { Destination, Media } from '@/payload/payload-types'
 import MoreArticlesSection from '../components/more-articles'
 import WhereToStaySection from '../components/where-to-stay'
 import { Button } from '@/components/ui/button'
+import { ShareButton } from './share-button'
 
 type Props = {
   params: Promise<{ destination: string; article: string }>
@@ -192,6 +193,7 @@ export default async function ArticlePage({ params }: Props) {
     ? '(min-width: 1024px) 576px, 90vw'
     : '(min-width: 1024px) 768px, 90vw'
   const ogImage = getAbsoluteImageUrl(article.thumbnail)
+  const canonical = `${getBaseUrl()}/destinations/${destination.slug}/guides/${article.slug}`
 
   const [relatedArticles, guesthouses] = await Promise.all([
     fetchArticles(
@@ -241,7 +243,7 @@ export default async function ArticlePage({ params }: Props) {
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `${getBaseUrl()}/destinations/${destination.slug}/guides/${article.slug}`
+        '@id': canonical
       },
       ...(ogImage && {
         image: [ogImage]
@@ -265,32 +267,46 @@ export default async function ArticlePage({ params }: Props) {
             className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
           >
             <ArrowLeft className='size-4' />
-            Back to guides
+            Back to all guides
           </Link>
           <h1 className='max-w-3xl text-pretty text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
             {article.title}
           </h1>
 
           {/* Meta data */}
-          <div className='flex flex-row flex-wrap gap-2'>
-            <Badge className='flex flex-wrap items-center gap-x-1 gap-y-0.5'>
-              <span>The Grand Collection</span>
-              <span className='mx-1'>&bull;</span>
-              <time dateTime={createdDate.dateTime}>
-                {createdDate.humanReadable}
-              </time>
-            </Badge>
-            {updatedDate && (
-              <Badge
-                variant='outline'
-                className='flex flex-wrap items-center gap-x-1 gap-y-0.5'
-              >
-                <span>Updated on</span>
-                <time dateTime={updatedDate.dateTime}>
-                  {updatedDate.humanReadable}
+          <div className='flex w-full flex-row flex-wrap items-center justify-between gap-2'>
+            {/* Left meta */}
+            <div className='flex flex-wrap gap-2'>
+              <Badge className='flex flex-wrap items-center gap-x-1 gap-y-0.5'>
+                <span>The Grand Collection</span>
+                <span className='mx-1'>&bull;</span>
+                <time dateTime={createdDate.dateTime}>
+                  {createdDate.humanReadable}
                 </time>
               </Badge>
-            )}
+              {updatedDate && (
+                <Badge
+                  variant='outline'
+                  className='flex flex-wrap items-center gap-x-1 gap-y-0.5'
+                >
+                  <span>Updated on</span>
+                  <time dateTime={updatedDate.dateTime}>
+                    {updatedDate.humanReadable}
+                  </time>
+                </Badge>
+              )}
+            </div>
+
+            {/* Right meta  */}
+            <div className='flex flex-wrap gap-2'>
+              <ShareButton
+                size='icon'
+                colour='sage'
+                title={article.title}
+                text={article.excerpt || undefined}
+                url={canonical}
+              />
+            </div>
           </div>
 
           {thumbnailUrl && (
