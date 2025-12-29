@@ -10,6 +10,7 @@ import {
   createBreadCrumbs,
   createGuesthouseStructuredData
 } from '@/lib/utils/create-structured-data'
+import FaqSection from '@/components/faq-section'
 
 import Hero from './components/hero'
 import Navbar from './components/navbar'
@@ -75,6 +76,12 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
       }
     ])
   ]
+  const hasFaq =
+    typeof data.faq === 'object' &&
+    data.faq !== null &&
+    'items' in data.faq &&
+    Array.isArray(data.faq.items) &&
+    data.faq.items.length > 0
 
   return (
     <>
@@ -83,13 +90,18 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero guesthouse={data} />
-      <Navbar />
+      <Navbar showFaq={hasFaq} />
       <Gallery data={data} />
       <Amenities data={data} />
       <Rooms data={data} />
 
       <ContactUs data={data} />
       <Policies data={data} />
+      <FaqSection
+        faq={data.faq}
+        parentLabel='Frequently asked questions'
+        title={`${data.name} FAQs`}
+      />
     </>
   )
 }

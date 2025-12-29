@@ -13,6 +13,7 @@ import { extractImageProps, getBaseUrl } from '@/lib/utils'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import { Badge } from '@/components/ui/badge'
 import Image from '@/components/ui/image'
+import FaqSection from '@/components/faq-section'
 
 import ArticleTile from './components/article-tile'
 import WhereToStaySection from './components/where-to-stay'
@@ -204,6 +205,11 @@ export default async function ArticlesPage({ params }: Props) {
       </section>
 
       <WhereToStaySection guesthouses={guesthouses} destination={destination} />
+      <FaqSection
+        faq={destination.guides?.faq}
+        parentLabel='Planning your trip'
+        title={`${destination.name} FAQs`}
+      />
     </>
   )
 }

@@ -213,6 +213,7 @@ export interface Destination {
     title: string
     description: string
     image: string | Media
+    faq?: (string | null) | Faq
     meta: MetadataField
     open_graph: OpenGraphField
     twitter?: TwitterField
@@ -316,6 +317,24 @@ export interface TwitterField {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: string
+  title: string
+  items?:
+    | {
+        question: string
+        answer: string
+        id?: string | null
+      }[]
+    | null
+  updatedAt: string
+  createdAt: string
+  _status?: ('draft' | 'published') | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "guesthouses".
  */
 export interface Guesthouse {
@@ -323,6 +342,7 @@ export interface Guesthouse {
   name: string
   slug: string
   destination?: (string | null) | Destination
+  faq?: (string | null) | Faq
   booking_platform: {
     name: 'NightsBridge'
     url: string
@@ -493,24 +513,6 @@ export interface SocialMediaPlatform {
   icon: string | Media
   updatedAt: string
   createdAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
- */
-export interface Faq {
-  id: string
-  title: string
-  items?:
-    | {
-        question: string
-        answer: string
-        id?: string | null
-      }[]
-    | null
-  updatedAt: string
-  createdAt: string
-  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -721,6 +723,7 @@ export interface DestinationsSelect<T extends boolean = true> {
         title?: T
         description?: T
         image?: T
+        faq?: T
         meta?: T | MetadataFieldSelect<T>
         open_graph?: T | OpenGraphFieldSelect<T>
         twitter?: T | TwitterFieldSelect<T>
@@ -910,6 +913,7 @@ export interface GuesthousesSelect<T extends boolean = true> {
   name?: T
   slug?: T
   destination?: T
+  faq?: T
   booking_platform?:
     | T
     | {
@@ -1154,6 +1158,7 @@ export interface HomePage {
     subheading: string
     guesthouses: (string | Guesthouse)[]
   }
+  faq?: (string | null) | Faq
   socials?:
     | {
         platform: string | SocialMediaPlatform
@@ -1273,6 +1278,7 @@ export interface HomePageSelect<T extends boolean = true> {
         subheading?: T
         guesthouses?: T
       }
+  faq?: T
   socials?:
     | T
     | {

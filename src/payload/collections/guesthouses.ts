@@ -60,6 +60,21 @@ export const Guesthouses: CollectionConfig = {
         position: 'sidebar'
       }
     },
+    {
+      name: 'faq',
+      label: 'FAQ Section',
+      type: 'relationship',
+      relationTo: 'faqs',
+      hasMany: false,
+      admin: {
+        position: 'sidebar'
+      },
+      filterOptions: {
+        _status: {
+          equals: 'published'
+        }
+      }
+    },
     BookingPlatform,
     //  TABS
     {

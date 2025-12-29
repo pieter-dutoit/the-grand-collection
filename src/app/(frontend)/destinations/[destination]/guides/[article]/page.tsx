@@ -274,7 +274,7 @@ export default async function ArticlePage({ params }: Props) {
             className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
           >
             <ArrowLeft className='size-4' />
-            Back to all guides
+            Back to all {destination.name} guides
           </Link>
           <h1 className='max-w-3xl text-pretty text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
             {article.title}
@@ -376,7 +376,7 @@ export default async function ArticlePage({ params }: Props) {
                 {hasFaq && (
                   <li>
                     <Button asChild variant='ghost' colour='gold'>
-                      <Link href='#faq'>FAQ</Link>
+                      <Link href='#faq'>FAQs</Link>
                     </Button>
                   </li>
                 )}

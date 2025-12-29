@@ -31,7 +31,7 @@ export const fetchHomePageData = unstable_cache(
     return res
   },
   [],
-  { revalidate: false, tags: ['home-page', 'guesthouses'] }
+  { revalidate: false, tags: ['home-page', 'guesthouses', 'faqs'] }
 )
 
 type AboutPageData = Partial<AboutUsPage>
@@ -117,7 +117,7 @@ export const fetchGuestHouses = unstable_cache(
     return res.docs
   },
   [],
-  { revalidate: false, tags: ['guesthouses'] }
+  { revalidate: false, tags: ['guesthouses', 'faqs'] }
 )
 
 export const fetchDestinations = unstable_cache(
@@ -138,7 +138,7 @@ export const fetchDestinations = unstable_cache(
     return res.docs
   },
   [],
-  { revalidate: false, tags: ['destinations'] }
+  { revalidate: false, tags: ['destinations', 'faqs'] }
 )
 
 export const fetchArticles = unstable_cache(
