@@ -32,7 +32,7 @@ export default function MoreArticlesSection({
     <section className='bg-olive-100 py-10 lg:py-20' id='more-articles'>
       <div className='container mx-auto flex flex-col gap-1'>
         <span className='text-sm font-extrabold text-olive-500'>
-          What to do in {destination.name}
+          Explore {destination.name}
         </span>
         <h2 className='text-3xl font-semibold text-olive-900 md:text-4xl'>
           Best things to do in {destination.name}

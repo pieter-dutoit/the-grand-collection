@@ -21,7 +21,7 @@ export default function WhereToStaySection({
     >
       <div className='container mx-auto flex flex-col items-start'>
         <span className='text-sm font-extrabold text-olive-500'>
-          Close to many of the places above
+          Close to the places above
         </span>
         <h2 className='text-3xl font-semibold text-olive-900 md:text-4xl'>
           Where to stay in {destination.name}

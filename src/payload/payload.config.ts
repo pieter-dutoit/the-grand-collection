@@ -26,6 +26,7 @@ import { Beds } from './collections/beds'
 import { RichtextSections } from './collections/richtext-section'
 import { Articles } from './collections/articles'
 import { Destinations } from './collections/destinations'
+import { Faqs } from './collections/faqs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -52,6 +53,7 @@ export default buildConfig({
   collections: [
     Articles,
     Destinations,
+    Faqs,
     Amenities,
     Beds,
     Users,

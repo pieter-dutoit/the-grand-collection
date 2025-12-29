@@ -52,6 +52,16 @@ export const Articles: CollectionConfig = {
       }
     },
     {
+      name: 'faq',
+      label: 'FAQ Section',
+      type: 'relationship',
+      relationTo: 'faqs',
+      hasMany: false,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
       name: 'featured',
       label: 'Featured',
       type: 'checkbox',

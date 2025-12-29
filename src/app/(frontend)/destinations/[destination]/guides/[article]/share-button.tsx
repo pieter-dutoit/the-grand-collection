@@ -117,6 +117,7 @@ export function ShareButton({
           type={type}
           className={cn('transition-transform active:scale-[0.95]', className)}
           aria-label='Share article'
+          colour='olive'
         >
           <Share2 className='size-4' />
           <span className='sr-only'>Share article</span>

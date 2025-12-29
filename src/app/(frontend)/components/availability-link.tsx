@@ -31,7 +31,7 @@ export default function AvailabilityLink({
         Check Availability <ExternalLink />
       </Link>
       <em className='text-nowrap text-xs text-olive-500'>
-        Bookings on <strong className='font-semibold'>{platformName}</strong>
+        Best rates on <strong className='font-semibold'>{platformName}</strong>
       </em>
     </div>
   )

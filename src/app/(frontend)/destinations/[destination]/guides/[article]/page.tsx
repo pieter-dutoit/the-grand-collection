@@ -12,6 +12,7 @@ import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 import { Badge } from '@/components/ui/badge'
 import { ArticleRichText } from '@/components/rich-text'
+import FaqSection from '@/components/faq-section'
 import type { Destination, Media } from '@/payload/payload-types'
 
 import MoreArticlesSection from '../components/more-articles'
@@ -194,6 +195,12 @@ export default async function ArticlePage({ params }: Props) {
     : '(min-width: 1024px) 768px, 90vw'
   const ogImage = getAbsoluteImageUrl(article.thumbnail)
   const canonical = `${getBaseUrl()}/destinations/${destination.slug}/guides/${article.slug}`
+  const hasFaq =
+    typeof article.faq === 'object' &&
+    article.faq !== null &&
+    'items' in article.faq &&
+    Array.isArray(article.faq.items) &&
+    article.faq.items.length > 0
 
   const [relatedArticles, guesthouses] = await Promise.all([
     fetchArticles(
@@ -350,6 +357,11 @@ export default async function ArticlePage({ params }: Props) {
               <ul className='flex w-full flex-col items-end'>
                 <li>
                   <Button asChild variant='ghost' colour='gold'>
+                    <Link href={`#${article.slug}`}>Back to top</Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button asChild variant='ghost' colour='gold'>
                     <Link href={`#more-articles`}>More things to do</Link>
                   </Button>
                 </li>
@@ -360,16 +372,21 @@ export default async function ArticlePage({ params }: Props) {
                     </Link>
                   </Button>
                 </li>
-                <li>
-                  <Button asChild variant='ghost' colour='gold'>
-                    <Link href={`#${article.slug}`}>Back to top</Link>
-                  </Button>
-                </li>
+
+                {hasFaq && (
+                  <li>
+                    <Button asChild variant='ghost' colour='gold'>
+                      <Link href='#faq'>FAQ</Link>
+                    </Button>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>
         </div>
       </div>
+
+      <FaqSection faq={article.faq} id='faq' />
 
       <MoreArticlesSection
         destination={destination}

@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     articles: Article
     destinations: Destination
+    faqs: Faq
     amenities: Amenity
     beds: Bed
     users: User
@@ -88,6 +89,7 @@ export interface Config {
   collectionsSelect: {
     articles: ArticlesSelect<false> | ArticlesSelect<true>
     destinations: DestinationsSelect<false> | DestinationsSelect<true>
+    faqs: FaqsSelect<false> | FaqsSelect<true>
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>
     beds: BedsSelect<false> | BedsSelect<true>
     users: UsersSelect<false> | UsersSelect<true>
@@ -167,6 +169,7 @@ export interface Article {
   slug: string
   destination?: (string | null) | Destination
   guesthouse?: (string | null) | Guesthouse
+  faq?: (string | null) | Faq
   featured?: boolean | null
   type: 'guide'
   author: string
@@ -493,6 +496,24 @@ export interface SocialMediaPlatform {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: string
+  title: string
+  items?:
+    | {
+        question: string
+        answer: string
+        id?: string | null
+      }[]
+    | null
+  updatedAt: string
+  createdAt: string
+  _status?: ('draft' | 'published') | null
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -572,6 +593,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'destinations'
         value: string | Destination
+      } | null)
+    | ({
+        relationTo: 'faqs'
+        value: string | Faq
       } | null)
     | ({
         relationTo: 'amenities'
@@ -663,6 +688,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   slug?: T
   destination?: T
   guesthouse?: T
+  faq?: T
   featured?: T
   type?: T
   author?: T
@@ -727,6 +753,23 @@ export interface OpenGraphFieldSelect<T extends boolean = true> {
 export interface TwitterFieldSelect<T extends boolean = true> {
   creator?: T
   creatorId?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  title?: T
+  items?:
+    | T
+    | {
+        question?: T
+        answer?: T
+        id?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  _status?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

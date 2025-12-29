@@ -173,7 +173,7 @@ export const fetchArticles = unstable_cache(
     return res.docs
   },
   [],
-  { revalidate: false, tags: ['articles', 'guesthouses'] }
+  { revalidate: false, tags: ['articles', 'guesthouses', 'faqs'] }
 )
 
 export const fetchArticlesCount = unstable_cache(
