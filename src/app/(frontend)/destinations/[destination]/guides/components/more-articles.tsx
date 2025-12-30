@@ -41,7 +41,7 @@ export default function MoreArticlesSection({
       <div className='container mx-auto flex flex-col gap-1'>
         <SectionHeading
           parentLabel='Explore'
-          title={`More things to do in ${destination.name}`}
+          title={`Things to do in ${destination.name}`}
         />
       </div>
 

@@ -3,7 +3,7 @@ import 'server-only'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { fetchGuestHouses } from '@/lib/data'
+import { fetchArticles, fetchGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import {
@@ -20,6 +20,7 @@ import Rooms from './components/rooms'
 import ContactUs from './components/contact-us'
 import Policies from './components/policies'
 import Divider from './components/divider'
+import MoreArticlesSection from '../../destinations/[destination]/guides/components/more-articles'
 
 type Props = { params: Promise<{ guesthouse: string }> }
 
@@ -84,6 +85,19 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
     Array.isArray(data.faq.items) &&
     data.faq.items.length > 0
 
+  const relatedArticles =
+    typeof data.destination === 'object' && data.destination !== null
+      ? await fetchArticles(
+          {
+            destination: { equals: data.destination.id }
+          },
+          {
+            sort: ['-featured', '-updatedAt', '-createdAt'],
+            limit: 6
+          }
+        )
+      : []
+
   return (
     <>
       <script
@@ -104,6 +118,17 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
         parentLabel='Frequently asked questions'
         title={`${data.name} FAQs`}
       />
+
+      <Divider />
+
+      {data.destination &&
+        typeof data.destination !== 'string' &&
+        relatedArticles.length > 0 && (
+          <MoreArticlesSection
+            destination={data.destination}
+            relatedArticles={relatedArticles}
+          />
+        )}
     </>
   )
 }
