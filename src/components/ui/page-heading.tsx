@@ -19,7 +19,7 @@ export default function PageHeading({
     <div className={twMerge('w-full py-8 lg:py-16', containerClassNames)}>
       <h1
         className={twMerge(
-          'font-base whitespace-pre-line text-center text-4xl capitalize text-olive-600 md:text-5xl lg:text-6xl',
+          'font-base whitespace-pre-line text-center text-4xl capitalize text-olive-800 md:text-5xl lg:text-6xl',
           headingClassNames
         )}
       >

@@ -44,7 +44,7 @@ export default function Socials({
               )}
             >
               <span className='sr-only'>{name}</span>
-              <Image src={url} alt={alt} height={30} width={30} />
+              <Image src={url} alt={alt} height={25} width={25} />
             </Link>
           </li>
         )

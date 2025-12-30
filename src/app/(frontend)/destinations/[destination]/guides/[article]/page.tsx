@@ -19,6 +19,7 @@ import MoreArticlesSection from '../components/more-articles'
 import WhereToStaySection from '../components/where-to-stay'
 import { Button } from '@/components/ui/button'
 import { ShareButton } from './share-button'
+import Divider from '@/app/(frontend)/guesthouses/[guesthouse]/components/divider'
 
 type Props = {
   params: Promise<{ destination: string; article: string }>
@@ -351,22 +352,22 @@ export default async function ArticlePage({ params }: Props) {
               aria-label='On this page'
               className='flex w-full flex-col items-end gap-2 rounded-lg border border-gold-100 p-4'
             >
-              <h2 className='pr-4 text-lg font-extrabold text-gold-600'>
+              <h2 className='pr-4 text-lg font-extrabold text-olive-600'>
                 On this page
               </h2>
               <ul className='flex w-full flex-col items-end'>
                 <li>
-                  <Button asChild variant='ghost' colour='gold'>
+                  <Button asChild variant='ghost' colour='olive'>
                     <Link href={`#${article.slug}`}>Back to top</Link>
                   </Button>
                 </li>
                 <li>
-                  <Button asChild variant='ghost' colour='gold'>
+                  <Button asChild variant='ghost' colour='olive'>
                     <Link href={`#more-articles`}>More things to do</Link>
                   </Button>
                 </li>
                 <li>
-                  <Button asChild variant='ghost' colour='gold'>
+                  <Button asChild variant='ghost' colour='olive'>
                     <Link href={`#where-to-stay`}>
                       Where to stay in {destination.name}
                     </Link>
@@ -386,7 +387,7 @@ export default async function ArticlePage({ params }: Props) {
         </div>
       </div>
 
-      <FaqSection faq={article.faq} id='faq' />
+      <Divider />
 
       <MoreArticlesSection
         destination={destination}
@@ -394,6 +395,8 @@ export default async function ArticlePage({ params }: Props) {
       />
 
       <WhereToStaySection guesthouses={guesthouses} destination={destination} />
+
+      <FaqSection faq={article.faq} id='faq' />
     </>
   )
 }

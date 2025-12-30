@@ -19,6 +19,7 @@ import Amenities from './components/amenities'
 import Rooms from './components/rooms'
 import ContactUs from './components/contact-us'
 import Policies from './components/policies'
+import Divider from './components/divider'
 
 type Props = { params: Promise<{ guesthouse: string }> }
 
@@ -91,11 +92,12 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
       />
       <Hero guesthouse={data} />
       <Navbar showFaq={hasFaq} />
-      <Gallery data={data} />
-      <Amenities data={data} />
       <Rooms data={data} />
-
+      <Amenities data={data} />
+      <Gallery data={data} />
+      <Divider />
       <ContactUs data={data} />
+      <Divider />
       <Policies data={data} />
       <FaqSection
         faq={data.faq}

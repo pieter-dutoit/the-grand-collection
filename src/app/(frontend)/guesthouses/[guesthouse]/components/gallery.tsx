@@ -4,9 +4,9 @@ import Image from '@/components/ui/image'
 import { extractImageProps } from '@/lib/utils'
 import { Guesthouse } from '@/payload/payload-types'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import SectionHeading from '@/components/ui/section-heading'
 
 import GalleryDialog from './gallery-dialog'
+import SectionHeading from '@/components/section-heading'
 
 interface GalleryProps {
   data: Guesthouse
@@ -17,7 +17,7 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
     name,
     content: {
       images: { interior = [], exterior = [] },
-      gallery: { heading, description },
+      gallery: { label, heading, description },
       rooms: { rooms }
     }
   } = data
@@ -36,15 +36,20 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
   )
 
   return (
-    <section className='bg-gold-100 py-8 lg:py-16'>
+    <section className='flex flex-col gap-8 py-8 lg:py-16'>
       <div id='gallery' className='absolute -mt-36 lg:-mt-48' />
 
-      <SectionHeading heading={heading} subtitle={description} />
+      <SectionHeading
+        title={heading}
+        parentLabel={label}
+        className='container mx-auto'
+        description={description}
+      />
 
       <Dialog>
         <DialogTrigger asChild>
           <button
-            className='container mx-auto mt-5 grid grid-cols-6 gap-2 md:mt-8 md:gap-4 lg:mt-10'
+            className='container mx-auto grid grid-cols-6 gap-2 md:gap-3'
             aria-label='View Gallery'
           >
             {preview.map((image, index) => {
@@ -64,7 +69,7 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
                 <div
                   key={url + index}
                   className={twMerge(
-                    'relative h-full min-h-20 w-full overflow-hidden rounded-lg border-2 border-gold-500 bg-olive-700 shadow-md md:min-h-32 xl:min-h-40',
+                    'relative h-full min-h-20 w-full overflow-hidden rounded-lg border border-gold-200 bg-olive-700 shadow-md md:min-h-32 xl:min-h-40',
                     classes
                   )}
                 >

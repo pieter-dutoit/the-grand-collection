@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ExternalLink, MapPin } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
 import Image from '@/components/ui/image'
@@ -65,13 +65,13 @@ function DetailedNavLink({
               className={twMerge(
                 getButtonStyles({
                   variant: 'link',
-                  colour: 'default',
+                  colour: 'olive',
                   size: 'sm'
                 }),
                 'hidden pl-0 sm:flex'
               )}
             >
-              See More
+              View details
             </p>
           </div>
         </div>
@@ -83,30 +83,19 @@ function DetailedNavLink({
 function ExternalNavLink({
   label,
   href,
-  externalSiteName,
   isHighlighted
 }: NavOption): JSX.Element {
-  const highlightedStyles = isHighlighted ? 'bg-olive-100' : 'bg-white'
+  const highlightedStyles = isHighlighted ? 'bg-olive-50' : 'bg-white'
 
   return (
     <NavigationMenuLink
       href={href}
-      target='_blank'
-      rel='noopener noreferrer'
       className={twMerge(
-        'my-1 flex min-w-48 flex-row items-center justify-end rounded-sm border border-olive-200 py-1 pl-4 pr-2 transition-colors hover:border-olive-950 active:border-olive-500',
+        'my-1 flex min-w-44 flex-row items-center rounded-sm border border-olive-200 py-1 pl-4 pr-2 font-semibold transition-colors hover:border-olive-950 active:border-olive-500',
         highlightedStyles
       )}
     >
-      <div className='flex flex-col items-end'>
-        <span className='text-nowrap text-base text-olive-800'>
-          {label.text}
-        </span>
-        <em className='text-nowrap text-xs'>
-          Book on <strong className='font-semibold'>{externalSiteName}</strong>
-        </em>
-      </div>
-      <ExternalLink className='ml-2 text-olive-800' />
+      <span className='text-nowrap text-base text-olive-800'>{label.text}</span>
     </NavigationMenuLink>
   )
 }

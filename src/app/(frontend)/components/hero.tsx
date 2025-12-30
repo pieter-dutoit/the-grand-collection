@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { House } from 'lucide-react'
 
 import Image from '@/components/ui/image'
 import { getButtonStyles } from '@/components/ui/button'
@@ -60,7 +59,6 @@ export async function Hero(): Promise<JSX.Element> {
             )}
             href={locations_link.link_url}
           >
-            <House />
             {locations_link.link_text}
           </Link>
         </div>

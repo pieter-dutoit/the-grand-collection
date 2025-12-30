@@ -32,7 +32,7 @@ export default function RoomGallery({ room }: PropTypes): JSX.Element {
                   key={url}
                   className={twMerge(
                     classes,
-                    'relative min-h-48 overflow-hidden rounded-lg border-2 border-sage-300 bg-sage-300'
+                    'relative min-h-48 overflow-hidden rounded-lg border border-gold-200 bg-sage-300'
                   )}
                 >
                   <Image

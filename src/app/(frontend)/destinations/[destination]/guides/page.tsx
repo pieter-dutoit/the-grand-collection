@@ -17,6 +17,8 @@ import FaqSection from '@/components/faq-section'
 
 import ArticleTile from './components/article-tile'
 import WhereToStaySection from './components/where-to-stay'
+import SectionHeading from '@/components/section-heading'
+import Divider from '@/app/(frontend)/guesthouses/[guesthouse]/components/divider'
 
 type Props = {
   params: Promise<{ destination: string }>
@@ -115,7 +117,7 @@ export default async function ArticlesPage({ params }: Props) {
 
   return (
     <>
-      <section className='relative bg-olive-50'>
+      <section className='relative bg-gradient-to-b from-olive-50 to-transparent'>
         <div className='container relative z-10 mx-auto py-10 lg:py-20'>
           <div className='w-full max-w-5xl'>
             <div className='flex max-w-3xl flex-col gap-3'>
@@ -152,7 +154,7 @@ export default async function ArticlesPage({ params }: Props) {
               priority
               sizes='(max-width: 768px) 50vw, 60vw'
             />
-            <div className='absolute inset-0 bg-gradient-to-r from-olive-50 to-olive-50/50 sm:to-transparent' />
+            <div className='absolute inset-0 bg-gradient-to-r from-white to-olive-50 sm:to-transparent' />
           </div>
         )}
       </section>
@@ -161,9 +163,10 @@ export default async function ArticlesPage({ params }: Props) {
         <div className='w-full max-w-5xl'>
           {featuredArticles.length > 0 && (
             <div>
-              <h2 className='text-xl font-semibold text-olive-900 md:text-2xl'>
-                Featured guides
-              </h2>
+              <SectionHeading
+                parentLabel='Highlights'
+                title={`Featured ${destination.name} guides`}
+              />
               <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
                 {featuredArticles.map((article) => (
                   <ArticleTile
@@ -179,9 +182,10 @@ export default async function ArticlesPage({ params }: Props) {
 
           {otherArticles.length > 0 && (
             <div className={featuredArticles.length > 0 ? 'mt-12' : undefined}>
-              <h2 className='text-xl font-semibold text-olive-900 md:text-2xl'>
-                All {destination.name} guides
-              </h2>
+              <SectionHeading
+                parentLabel='Browse'
+                title={`All ${destination.name} guides`}
+              />
               <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
                 {otherArticles.map((article) => (
                   <ArticleTile
@@ -203,6 +207,8 @@ export default async function ArticlesPage({ params }: Props) {
           )}
         </div>
       </section>
+
+      <Divider />
 
       <WhereToStaySection guesthouses={guesthouses} destination={destination} />
       <FaqSection

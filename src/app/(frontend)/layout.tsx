@@ -39,7 +39,7 @@ export default function RootLayout({
 
       <body>
         <Navbar />
-        <main>
+        <main className='bg-gradient-to-b from-white via-white to-olive-100'>
           {children}
           <Footer />
         </main>

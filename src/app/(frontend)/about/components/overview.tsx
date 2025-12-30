@@ -1,4 +1,4 @@
-import SectionHeading from '@/components/ui/section-heading'
+import SectionHeading from '@/components/section-heading'
 import Image from '@/components/ui/image'
 import { fetchAboutPageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
@@ -11,7 +11,7 @@ export default async function Overview(): Promise<JSX.Element> {
   const { url, alt } = extractImageProps(image)
 
   return (
-    <section className='w-full bg-gray-100'>
+    <section className='w-full bg-gradient-to-tr from-sage-50 to-sage-100'>
       <div className='grid items-center gap-8 sm:grid-cols-2'>
         {/* Image */}
 
@@ -27,7 +27,7 @@ export default async function Overview(): Promise<JSX.Element> {
 
         {/* Text */}
         <div className='container mx-auto py-8 lg:py-16'>
-          <SectionHeading heading={title} headingClassNames='sm:text-left' />
+          <SectionHeading title={title} />
 
           <p className='mx-auto mt-4 text-center font-light sm:text-left md:text-lg'>
             {description}

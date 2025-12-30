@@ -22,6 +22,7 @@ export default async function Home() {
       <Hero />
       <Overview />
       <FeaturedProperties />
+      {/* <Divider /> */}
       <FaqSection
         faq={faq}
         parentLabel='Frequently asked questions'

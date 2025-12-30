@@ -8,7 +8,14 @@ import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 type ArticleTileBaseProps = {
   article: Pick<
     Article,
-    'id' | 'slug' | 'title' | 'excerpt' | 'thumbnail' | 'featured'
+    | 'id'
+    | 'slug'
+    | 'title'
+    | 'excerpt'
+    | 'thumbnail'
+    | 'featured'
+    | 'createdAt'
+    | 'updatedAt'
   >
   destinationSlug: string
   badgeText?: string
@@ -49,10 +56,11 @@ export default function ArticleTile({
           <Badge className='absolute left-4 top-4 z-10'>Featured</Badge>
         )}
 
-        <div className='flex flex-col gap-2 p-4'>
+        <div className='flex flex-col items-start gap-2 p-4'>
           <h3 className='line-clamp-1 text-lg font-semibold text-olive-900 transition group-hover:text-olive-800'>
             {article.title}
           </h3>
+
           <p className='line-clamp-1 text-sm text-olive-700'>
             {article.excerpt}
           </p>

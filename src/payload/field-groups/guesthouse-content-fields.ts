@@ -6,6 +6,14 @@ const Amenities: GroupField = {
   label: 'Amenities',
   fields: [
     {
+      name: 'label',
+      label: 'Amenities Label',
+      type: 'text',
+      required: true,
+      minLength: 3,
+      maxLength: 100
+    },
+    {
       name: 'heading',
       label: 'Amenities Heading',
       type: 'text',
@@ -47,6 +55,14 @@ const Gallery: GroupField = {
   label: 'Gallery',
   fields: [
     {
+      name: 'label',
+      label: 'Gallery Label',
+      type: 'text',
+      required: true,
+      minLength: 3,
+      maxLength: 100
+    },
+    {
       name: 'heading',
       label: 'Gallery Heading',
       type: 'text',
@@ -70,6 +86,14 @@ const Rooms: GroupField = {
   label: 'Rooms',
   type: 'group',
   fields: [
+    {
+      name: 'label',
+      label: 'Rooms Label',
+      type: 'text',
+      required: true,
+      minLength: 3,
+      maxLength: 100
+    },
     {
       name: 'heading',
       label: 'Rooms Heading',
@@ -140,6 +164,48 @@ const Images: GroupField = {
   ]
 }
 
+const Policies: GroupField = {
+  name: 'policies',
+  type: 'group',
+  label: 'Policies',
+  fields: [
+    {
+      name: 'label',
+      label: 'Policies Label',
+      type: 'text',
+      required: true,
+      minLength: 3,
+      maxLength: 100
+    },
+    {
+      name: 'heading',
+      label: 'Policies Heading',
+      type: 'text',
+      required: true,
+      minLength: 3,
+      maxLength: 100
+    },
+    {
+      name: 'description',
+      label: 'Policies Description',
+      type: 'textarea',
+      required: true,
+      minLength: 3,
+      maxLength: 1000
+    },
+    {
+      name: 'policies_list',
+      label: 'Policies List',
+      type: 'relationship',
+      relationTo: 'policies',
+      hasMany: true,
+      required: true,
+      minRows: 1,
+      maxRows: 50
+    }
+  ]
+}
+
 export const GuesthouseContentFields: Field[] = [
   {
     name: 'heading',
@@ -160,10 +226,11 @@ export const GuesthouseContentFields: Field[] = [
     minLength: 50,
     maxLength: 1000
   },
+  Rooms,
+  Amenities,
   Gallery,
   Images,
-  Amenities,
-  Rooms
+  Policies
 ]
 
 export default GuesthouseContentFields

@@ -8,11 +8,11 @@ type NavbarProps = {
 }
 
 const NAV_OPTIONS = [
-  { href: '#gallery', text: 'Gallery' },
+  { href: '#rooms', text: 'Rooms & Rates' },
   { href: '#amenities', text: 'Amenities' },
-  { href: '#rooms', text: 'Rooms' },
-  { href: '#contact', text: 'Contact Us' },
-  { href: '#policies', text: 'Important Info' }
+  { href: '#gallery', text: 'Gallery' },
+  { href: '#contact', text: 'Contact' },
+  { href: '#policies', text: 'Policies' }
 ]
 
 const FAQ_OPTION = { href: '#faq', text: 'FAQs' }
@@ -21,7 +21,7 @@ export default function Navbar({ showFaq = true }: NavbarProps): JSX.Element {
   const navOptions = showFaq ? [...NAV_OPTIONS, FAQ_OPTION] : NAV_OPTIONS
 
   return (
-    <nav className='sticky left-0 top-16 z-40 h-14 w-full border-b-2 border-olive-200 bg-olive-50 lg:h-16'>
+    <nav className='sticky left-0 top-16 z-40 h-14 w-full border-b border-olive-200 bg-white/80 backdrop-blur-lg lg:h-16'>
       <ul className='container mx-auto flex h-full snap-x items-center space-x-1 overflow-x-auto'>
         {navOptions.map(({ href, text }) => (
           <li key={href} className='snap-center'>

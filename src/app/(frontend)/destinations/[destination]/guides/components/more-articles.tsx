@@ -11,12 +11,20 @@ import {
 } from '@/components/ui/carousel'
 
 import ArticleTileCard from './article-tile'
+import SectionHeading from '@/components/section-heading'
 
 type MoreArticlesProps = {
   destination: Pick<Destination, 'name' | 'slug'>
   relatedArticles: Pick<
     Article,
-    'id' | 'slug' | 'title' | 'excerpt' | 'thumbnail' | 'featured'
+    | 'id'
+    | 'slug'
+    | 'title'
+    | 'excerpt'
+    | 'thumbnail'
+    | 'featured'
+    | 'createdAt'
+    | 'updatedAt'
   >[]
 }
 
@@ -29,14 +37,12 @@ export default function MoreArticlesSection({
   }
 
   return (
-    <section className='bg-olive-100 py-10 lg:py-20' id='more-articles'>
+    <section className='py-10 lg:py-20' id='more-articles'>
       <div className='container mx-auto flex flex-col gap-1'>
-        <span className='text-sm font-extrabold text-olive-500'>
-          Explore {destination.name}
-        </span>
-        <h2 className='text-3xl font-semibold text-olive-900 md:text-4xl'>
-          Best things to do in {destination.name}
-        </h2>
+        <SectionHeading
+          parentLabel='Explore'
+          title={`More things to do in ${destination.name}`}
+        />
       </div>
 
       <div>

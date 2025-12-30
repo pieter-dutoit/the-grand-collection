@@ -70,6 +70,7 @@ export interface Config {
     articles: Article
     destinations: Destination
     faqs: Faq
+    policies: Policy
     amenities: Amenity
     beds: Bed
     users: User
@@ -90,6 +91,7 @@ export interface Config {
     articles: ArticlesSelect<false> | ArticlesSelect<true>
     destinations: DestinationsSelect<false> | DestinationsSelect<true>
     faqs: FaqsSelect<false> | FaqsSelect<true>
+    policies: PoliciesSelect<false> | PoliciesSelect<true>
     amenities: AmenitiesSelect<false> | AmenitiesSelect<true>
     beds: BedsSelect<false> | BedsSelect<true>
     users: UsersSelect<false> | UsersSelect<true>
@@ -350,7 +352,22 @@ export interface Guesthouse {
   content: {
     heading: string
     description: string
+    rooms: {
+      label: string
+      heading: string
+      description: string
+      people_icon: string | Media
+      rooms?: (string | Room)[] | null
+    }
+    amenities: {
+      label: string
+      heading: string
+      description: string
+      background_image: string | Media
+      general_amenities: (string | Amenity)[]
+    }
     gallery: {
+      label: string
       heading: string
       description: string
     }
@@ -359,17 +376,11 @@ export interface Guesthouse {
       exterior: (string | Media)[]
       interior: (string | Media)[]
     }
-    amenities: {
+    policies: {
+      label: string
       heading: string
       description: string
-      background_image: string | Media
-      general_amenities: (string | Amenity)[]
-    }
-    rooms: {
-      heading: string
-      description: string
-      people_icon: string | Media
-      rooms?: (string | Room)[] | null
+      policies_list: (string | Policy)[]
     }
   }
   business_details: {
@@ -435,26 +446,6 @@ export interface Guesthouse {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "amenities".
- */
-export interface Amenity {
-  id: string
-  slug?: string | null
-  featured: boolean
-  name: string
-  googleName?: string | null
-  description?: string | null
-  icon: string | Media
-  price?: {
-    unit_price?: number | null
-    unit_type?: string | null
-    on_request?: boolean | null
-  }
-  updatedAt: string
-  createdAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rooms".
  */
 export interface Room {
@@ -489,6 +480,44 @@ export interface Bed {
   icon: string | Media
   updatedAt: string
   createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "amenities".
+ */
+export interface Amenity {
+  id: string
+  slug?: string | null
+  featured: boolean
+  name: string
+  googleName?: string | null
+  description?: string | null
+  icon: string | Media
+  price?: {
+    unit_price?: number | null
+    unit_type?: string | null
+    on_request?: boolean | null
+  }
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "policies".
+ */
+export interface Policy {
+  id: string
+  title: string
+  items?:
+    | {
+        heading: string
+        description: string
+        id?: string | null
+      }[]
+    | null
+  updatedAt: string
+  createdAt: string
+  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -599,6 +628,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'faqs'
         value: string | Faq
+      } | null)
+    | ({
+        relationTo: 'policies'
+        value: string | Policy
       } | null)
     | ({
         relationTo: 'amenities'
@@ -776,6 +809,23 @@ export interface FaqsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "policies_select".
+ */
+export interface PoliciesSelect<T extends boolean = true> {
+  title?: T
+  items?:
+    | T
+    | {
+        heading?: T
+        description?: T
+        id?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  _status?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "amenities_select".
  */
 export interface AmenitiesSelect<T extends boolean = true> {
@@ -925,9 +975,28 @@ export interface GuesthousesSelect<T extends boolean = true> {
     | {
         heading?: T
         description?: T
+        rooms?:
+          | T
+          | {
+              label?: T
+              heading?: T
+              description?: T
+              people_icon?: T
+              rooms?: T
+            }
+        amenities?:
+          | T
+          | {
+              label?: T
+              heading?: T
+              description?: T
+              background_image?: T
+              general_amenities?: T
+            }
         gallery?:
           | T
           | {
+              label?: T
               heading?: T
               description?: T
             }
@@ -938,21 +1007,13 @@ export interface GuesthousesSelect<T extends boolean = true> {
               exterior?: T
               interior?: T
             }
-        amenities?:
+        policies?:
           | T
           | {
+              label?: T
               heading?: T
               description?: T
-              background_image?: T
-              general_amenities?: T
-            }
-        rooms?:
-          | T
-          | {
-              heading?: T
-              description?: T
-              people_icon?: T
-              rooms?: T
+              policies_list?: T
             }
       }
   business_details?:

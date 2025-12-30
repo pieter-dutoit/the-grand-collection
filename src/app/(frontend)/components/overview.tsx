@@ -7,7 +7,6 @@ import { getButtonStyles } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
-import SectionHeading from '@/components/ui/section-heading'
 
 export default async function Overview(): Promise<JSX.Element> {
   const data = await fetchHomePageData('overview')
@@ -25,18 +24,13 @@ export default async function Overview(): Promise<JSX.Element> {
   } = data
 
   return (
-    <section className='relative w-full bg-olive-50'>
+    <section className='relative w-full'>
       <div id='overview' className='absolute -top-16' />
-      <div className='container mx-auto py-8'>
+      <div className='container mx-auto py-8 lg:py-16'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
-          {/* Q1 */}
-          {/* <h2 className='max-w-72 whitespace-normal text-5xl font-light capitalize text-gold-700 sm:max-w-full sm:text-5xl md:max-w-96 md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
+          <h2 className='max-w-72 whitespace-normal text-5xl font-light capitalize text-gold-700 sm:max-w-full sm:text-5xl md:max-w-96 md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
             {heading}
-          </h2> */}
-          <SectionHeading
-            heading={heading}
-            headingClassNames='text-4xl lg:text-6xl text-center md:text-left md:text-5xl max-w-72 sm:max-w-full md:leading-tight mx-auto sm:mx-0 lg:leading-tight lg:max-w-96'
-          />
+          </h2>
 
           {/* Q2  */}
           <p className='text-justify text-lg font-light leading-normal tracking-wide text-olive-700 lg:leading-loose'>

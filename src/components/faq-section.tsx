@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/collapsible'
 import { cn } from '@/lib/utils'
 import type { Faq } from '@/payload/payload-types'
+import SectionHeading from './section-heading'
 
 type FaqSectionProps = {
   title?: string
@@ -74,13 +75,7 @@ export default function FaqSection({
   }
 
   return (
-    <section
-      id={id}
-      className={cn(
-        'bg-gradient-to-b from-transparent to-olive-100 py-10 lg:py-20',
-        className
-      )}
-    >
+    <section id={id} className={cn('py-8 lg:py-16', className)}>
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{
@@ -88,20 +83,16 @@ export default function FaqSection({
         }}
       />
       <div className='container mx-auto flex flex-col gap-8'>
-        <div className='flex flex-col items-start'>
-          <span className='text-sm font-extrabold text-olive-500'>
-            {parentLabel || 'Good to know'}
-          </span>
-          <h2 className='text-3xl font-semibold text-olive-900 md:text-4xl'>
-            {title || 'Frequently Asked Questions'}
-          </h2>
-        </div>
+        <SectionHeading
+          title={title || 'Frequently Asked Questions'}
+          parentLabel={parentLabel || 'Good to know'}
+        />
 
         <div className='flex flex-col gap-3'>
           {items.map((item) => (
             <Collapsible
               key={item.id}
-              className='rounded-2xl border border-olive-200 bg-white/90 shadow-sm'
+              className='rounded-2xl border border-gold-200 bg-white/90 shadow-sm'
             >
               <CollapsibleTrigger className='group flex w-full items-center justify-between gap-4 px-5 py-4 text-left'>
                 <span className='text-base font-semibold text-olive-900'>

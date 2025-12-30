@@ -71,7 +71,7 @@ export default function PropertyPreview({
           return (
             <div
               className={twMerge(
-                'h-30 relative size-40 w-full overflow-hidden rounded-lg border-2 border-sage-300 bg-sage-300',
+                'h-30 relative size-40 w-full overflow-hidden rounded-lg border border-gold-200 bg-olive-100',
                 sizeClasses
               )}
               key={url}
@@ -92,7 +92,7 @@ export default function PropertyPreview({
         <div className='flex flex-col'>
           <span className='text-xs font-bold text-sage-400'>Guesthouse</span>
 
-          <h3 className='text-2xl font-bold leading-tight text-sage-900'>
+          <h3 className='text-2xl font-semibold leading-tight text-olive-800'>
             {name}
           </h3>
           <div className='mt-2 flex items-center'>

@@ -1,4 +1,3 @@
-import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
 import { getButtonStyles } from '@/components/ui/button'
@@ -6,19 +5,19 @@ import { twMerge } from 'tailwind-merge'
 
 export default function AvailabilityLink({
   className = '',
-  bookingUrl,
-  platformName
+  bookingUrl
+  // platformName = 'NightsBridge'
 }: {
   className?: string
   bookingUrl: string
-  platformName: string
+  platformName?: string
 }) {
   return (
     <div className='flex flex-col items-start'>
       <Link
         href={bookingUrl}
-        target='_blank'
-        rel='noopener noreferrer'
+        // target='_blank'
+        // rel='noopener noreferrer'
         className={twMerge(
           getButtonStyles({
             variant: 'default',
@@ -28,11 +27,11 @@ export default function AvailabilityLink({
           'items-center'
         )}
       >
-        Check Availability <ExternalLink />
+        Check Availability
       </Link>
-      <em className='text-nowrap text-xs text-olive-500'>
-        Best rates on <strong className='font-semibold'>{platformName}</strong>
-      </em>
+      {/* <em className='text-nowrap text-xs text-olive-500'>
+        Book on <strong className='font-semibold'>{platformName}</strong>
+      </em> */}
     </div>
   )
 }
