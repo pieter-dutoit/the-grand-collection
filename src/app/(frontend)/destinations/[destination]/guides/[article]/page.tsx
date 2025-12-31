@@ -8,7 +8,10 @@ import { twMerge } from 'tailwind-merge'
 
 import { fetchArticles, fetchDestinations, fetchGuestHouses } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
-import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
+import {
+  createBreadCrumbs,
+  getOrganisationStructuredData
+} from '@/lib/utils/create-structured-data'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 import { Badge } from '@/components/ui/badge'
 import { ArticleRichText } from '@/components/rich-text'
@@ -175,7 +178,8 @@ export default async function ArticlePage({ params }: Props) {
     article.createdAt,
     article.updatedAt
   )
-  const updatedDate = showUpdatedAt ? formatDate(article.updatedAt) : null
+  const modifiedDate = formatDate(article.updatedAt)
+  const updatedDate = showUpdatedAt ? modifiedDate : null
 
   const { url: thumbnailUrl, alt: thumbnailAlt } = extractImageProps(
     article.thumbnail
@@ -202,6 +206,9 @@ export default async function ArticlePage({ params }: Props) {
     'items' in article.faq &&
     Array.isArray(article.faq.items) &&
     article.faq.items.length > 0
+  const authorName = article.author?.trim() || 'The Grand Collection'
+  const authorType =
+    authorName === 'The Grand Collection' ? 'Organization' : 'Person'
 
   const [relatedArticles, guesthouses] = await Promise.all([
     fetchArticles(
@@ -220,6 +227,7 @@ export default async function ArticlePage({ params }: Props) {
     })
   ])
 
+  const organisationSD = await getOrganisationStructuredData()
   const jsonLd = [
     createBreadCrumbs([
       {
@@ -231,23 +239,23 @@ export default async function ArticlePage({ params }: Props) {
         item: `/destinations/${destination.slug}/guides/${article.slug}`
       }
     ]),
+    organisationSD,
     {
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline: article.title,
+      description: article.excerpt,
       datePublished: createdDate.dateTime,
-      ...(showUpdatedAt &&
-        updatedDate && {
-          dateModified: updatedDate.dateTime
-        }),
+      dateModified: modifiedDate.dateTime,
       author: {
-        '@type': 'Organization',
-        name: article.author
+        '@type': authorType,
+        name: authorName
       },
       publisher: {
         '@type': 'Organization',
         name: 'The Grand Collection',
-        '@id': `${getBaseUrl()}/#organization`
+        '@id': organisationSD['@id'],
+        logo: organisationSD.logo
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
@@ -263,7 +271,9 @@ export default async function ArticlePage({ params }: Props) {
     <>
       <script
         type='application/ld+json'
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+        }}
       />
       <section
         id={article.slug}
@@ -286,7 +296,7 @@ export default async function ArticlePage({ params }: Props) {
             {/* Left meta */}
             <div className='flex flex-wrap gap-2'>
               <Badge className='flex flex-wrap items-center gap-x-1 gap-y-0.5'>
-                <span>The Grand Collection</span>
+                <span>{authorName}</span>
                 <span className='mx-1'>&bull;</span>
                 <time dateTime={createdDate.dateTime}>
                   {createdDate.humanReadable}

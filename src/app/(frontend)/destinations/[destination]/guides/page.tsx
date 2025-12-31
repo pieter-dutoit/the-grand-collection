@@ -10,6 +10,7 @@ import {
   fetchGuestHouses
 } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
+import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import { Badge } from '@/components/ui/badge'
 import Image from '@/components/ui/image'
@@ -108,15 +109,54 @@ export default async function ArticlesPage({ params }: Props) {
     (article) => !featuredArticleIds.has(article.id)
   )
 
+  const canonical = `${getBaseUrl()}/destinations/${destination.slug}/guides`
   const pageTitle = destination.guides?.title || 'Guides'
   const pageDescription = destination.guides?.description || ''
   const { url: heroImageUrl, alt: heroImageAlt } = extractImageProps(
     destination.guides?.image || destination.image
   )
   const heroImageAltText = heroImageAlt || pageTitle || destination.name
+  const orderedArticles = [...featuredArticles, ...otherArticles]
+  const listItems = orderedArticles.map((article, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Article',
+      name: article.title,
+      url: `${getBaseUrl()}/destinations/${destination.slug}/guides/${article.slug}`
+    }
+  }))
+
+  const jsonLd = [
+    createBreadCrumbs([
+      {
+        name: pageTitle,
+        item: `/destinations/${destination.slug}/guides`
+      }
+    ]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: pageTitle,
+      ...(pageDescription && { description: pageDescription }),
+      url: canonical,
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListOrder: 'https://schema.org/ItemListOrderDescending',
+        numberOfItems: listItems.length,
+        itemListElement: listItems
+      }
+    }
+  ]
 
   return (
     <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+        }}
+      />
       <section className='relative bg-gradient-to-b from-olive-50 to-transparent'>
         <div className='container relative z-10 mx-auto py-10 lg:py-20'>
           <div className='w-full max-w-5xl'>
