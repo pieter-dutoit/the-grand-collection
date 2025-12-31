@@ -1,5 +1,8 @@
-import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
 import { getBaseUrl } from '@/lib/utils'
+import {
+  createBreadcrumbListStructuredData,
+  getDestinationBreadcrumbs
+} from '@/lib/utils/breadcrumbs'
 
 import { getDestinationData } from '../lib/destination-data'
 
@@ -15,6 +18,7 @@ export default async function DestinationGuidesStructuredData({
   const pageDescription = destination.description || ''
   const baseUrl = getBaseUrl()
   const canonical = `${baseUrl}/destinations/${destination.slug}`
+  const breadcrumbs = getDestinationBreadcrumbs(destination)
   const listItems = articles.map((article, index) => ({
     '@type': 'ListItem',
     position: index + 1,
@@ -26,12 +30,7 @@ export default async function DestinationGuidesStructuredData({
   }))
 
   const jsonLd = [
-    createBreadCrumbs([
-      {
-        name: pageTitle,
-        item: `/destinations/${destination.slug}`
-      }
-    ]),
+    createBreadcrumbListStructuredData(breadcrumbs),
     {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',

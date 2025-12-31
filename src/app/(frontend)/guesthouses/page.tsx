@@ -1,11 +1,13 @@
 import { Metadata } from 'next'
 
 import { fetchGuesthousesPageData, fetchGuestHouses } from '@/lib/data'
+import Breadcrumbs from '@/components/ui/breadcrumbs'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
+import { getGuesthouseListStructure } from '@/lib/utils/create-structured-data'
 import {
-  createBreadCrumbs,
-  getGuesthouseListStructure
-} from '@/lib/utils/create-structured-data'
+  createBreadcrumbListStructuredData,
+  getGuesthousesBreadcrumbs
+} from '@/lib/utils/breadcrumbs'
 
 import PageHeading from '@/components/ui/page-heading'
 
@@ -26,25 +28,24 @@ export default async function AllGuestHouses(): Promise<JSX.Element> {
   const { heading, sub_heading } = content
 
   const guesthouses = await fetchGuestHouses()
+  const breadcrumbs = getGuesthousesBreadcrumbs()
 
   const guesthouseListStructuredData = await getGuesthouseListStructure()
   const jsonLd = [
     guesthouseListStructuredData,
-    createBreadCrumbs([
-      {
-        name: 'All Guesthouses',
-        item: '/guesthouses'
-      }
-    ])
+    createBreadcrumbListStructuredData(breadcrumbs)
   ]
 
   return (
     <>
       <script
         type='application/ld+json'
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+        }}
       />
       <section className='container mx-auto grid w-full px-8 py-10 lg:py-20'>
+        <Breadcrumbs items={breadcrumbs} className='mb-6' />
         <PageHeading heading={heading} subHeading={sub_heading} />
         {!!guesthouses && (
           <ul className='mt-4 flex flex-col gap-8 lg:mt-8'>

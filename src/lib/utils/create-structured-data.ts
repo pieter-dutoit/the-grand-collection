@@ -100,29 +100,6 @@ export function createMediaObject(image: Media | string) {
   }
 }
 
-export function createBreadCrumbs(
-  crumbs: { name: string; item: string }[] = []
-) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: getBaseUrl()
-      },
-      ...crumbs.map(({ name, item }, index) => ({
-        '@type': 'ListItem',
-        position: index + 2,
-        name,
-        item: getBaseUrl() + item
-      }))
-    ]
-  }
-}
-
 export async function getOrganisationStructuredData() {
   // Home page data
   const homePageData = await fetchHomePageData()

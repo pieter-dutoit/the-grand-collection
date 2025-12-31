@@ -6,10 +6,12 @@ import { notFound } from 'next/navigation'
 import { fetchArticles, fetchGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
+import { createGuesthouseStructuredData } from '@/lib/utils/create-structured-data'
+import Breadcrumbs from '@/components/ui/breadcrumbs'
 import {
-  createBreadCrumbs,
-  createGuesthouseStructuredData
-} from '@/lib/utils/create-structured-data'
+  createBreadcrumbListStructuredData,
+  getGuesthouseBreadcrumbs
+} from '@/lib/utils/breadcrumbs'
 import FaqSection from '@/components/faq-section'
 
 import Hero from './components/hero'
@@ -65,18 +67,15 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
     guesthouse: data
   })
 
+  if (!data.destination || typeof data.destination === 'string') {
+    notFound()
+  }
+
+  const breadcrumbs = getGuesthouseBreadcrumbs(data.destination, data)
+
   const jsonLd = [
     guesthouseStructuredData,
-    createBreadCrumbs([
-      {
-        name: 'All Guesthouses',
-        item: '/guesthouses'
-      },
-      {
-        name: data.name,
-        item: '/guesthouses/' + data.slug
-      }
-    ])
+    createBreadcrumbListStructuredData(breadcrumbs)
   ]
   const hasFaq =
     typeof data.faq === 'object' &&
@@ -102,8 +101,13 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
     <>
       <script
         type='application/ld+json'
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+        }}
       />
+      <section className='container mx-auto px-8 pt-6'>
+        <Breadcrumbs items={breadcrumbs} />
+      </section>
       <Hero guesthouse={data} />
       <Navbar showFaq={hasFaq} />
       <Rooms data={data} />

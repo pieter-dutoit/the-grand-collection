@@ -4,6 +4,8 @@ import { Metadata } from 'next'
 
 import { fetchArticles, fetchDestinations } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
+import Breadcrumbs from '@/components/ui/breadcrumbs'
+import { getArticleBreadcrumbs } from '@/lib/utils/breadcrumbs'
 
 import Divider from '@/app/(frontend)/guesthouses/[guesthouse]/components/divider'
 import ArticleHero from './components/hero'
@@ -17,6 +19,7 @@ import {
   resolveDestinationSlug,
   getAbsoluteImageUrl
 } from './lib/article-utils'
+import { getArticlePageData } from './lib/article-data'
 
 type Props = {
   params: Promise<{ destination: string; article: string }>
@@ -106,6 +109,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { destination: destinationSlug, article: articleSlug } = await params
+  const { destination, article } = await getArticlePageData(
+    destinationSlug,
+    articleSlug
+  )
+  const breadcrumbs = getArticleBreadcrumbs(destination, article)
 
   return (
     <>
@@ -113,6 +121,9 @@ export default async function ArticlePage({ params }: Props) {
         destinationSlug={destinationSlug}
         articleSlug={articleSlug}
       />
+      <section className='container mx-auto px-8 pt-6'>
+        <Breadcrumbs items={breadcrumbs} />
+      </section>
       <ArticleHero
         destinationSlug={destinationSlug}
         articleSlug={articleSlug}

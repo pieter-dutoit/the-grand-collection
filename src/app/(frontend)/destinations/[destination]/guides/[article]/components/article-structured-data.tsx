@@ -1,7 +1,8 @@
+import { getOrganisationStructuredData } from '@/lib/utils/create-structured-data'
 import {
-  createBreadCrumbs,
-  getOrganisationStructuredData
-} from '@/lib/utils/create-structured-data'
+  createBreadcrumbListStructuredData,
+  getArticleBreadcrumbs
+} from '@/lib/utils/breadcrumbs'
 
 import { getArticlePageData } from '../lib/article-data'
 
@@ -25,18 +26,10 @@ export default async function ArticleStructuredData({
     ogImage
   } = await getArticlePageData(destinationSlug, articleSlug)
   const organisationSD = await getOrganisationStructuredData()
+  const breadcrumbs = getArticleBreadcrumbs(destination, article)
 
   const jsonLd = [
-    createBreadCrumbs([
-      {
-        name: 'Guides',
-        item: `/destinations/${destination.slug}`
-      },
-      {
-        name: article.title,
-        item: `/destinations/${destination.slug}/guides/${article.slug}`
-      }
-    ]),
+    createBreadcrumbListStructuredData(breadcrumbs),
     organisationSD,
     {
       '@context': 'https://schema.org',

@@ -57,7 +57,7 @@ function DetailedNavLink({
               {text}
             </h3>
 
-            <p className='my-1 flex items-center text-xs font-semibold italic text-olive-500 sm:text-sm'>
+            <p className='my-1 flex items-center text-xs font-semibold text-olive-500 sm:text-sm'>
               <MapPin className='mr-1 size-4' /> {address}
             </p>
 
