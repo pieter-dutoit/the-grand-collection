@@ -16,7 +16,7 @@ export default async function ArticleIndex({
   const { slug, guides } = destination
 
   return (
-    <section className='bg-gradient-to-b from-olive-50 to-transparent py-10 lg:py-20'>
+    <section className='py-10 lg:py-20'>
       <div className='container mx-auto flex flex-col gap-6'>
         <SectionHeading
           parentLabel={guides.label}
