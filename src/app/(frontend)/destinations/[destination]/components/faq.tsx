@@ -1,6 +1,6 @@
 import FaqSection from '@/components/faq-section'
 
-import { getDestinationGuidesData } from '../lib/destination-data'
+import { getDestinationData } from '../lib/destination-data'
 
 type DestinationFaqProps = {
   destinationSlug: string
@@ -9,7 +9,7 @@ type DestinationFaqProps = {
 export default async function DestinationFaq({
   destinationSlug
 }: DestinationFaqProps) {
-  const { destination } = await getDestinationGuidesData(destinationSlug)
+  const { destination } = await getDestinationData(destinationSlug)
 
   return (
     <FaqSection

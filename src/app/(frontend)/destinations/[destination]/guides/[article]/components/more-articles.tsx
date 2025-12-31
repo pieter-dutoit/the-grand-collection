@@ -10,8 +10,8 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel'
 
-import ArticleTileCard from './article-tile'
 import SectionHeading from '@/components/section-heading'
+import ArticleTile from '@/components/article-tile'
 
 type MoreArticlesProps = {
   destination: Pick<Destination, 'name' | 'slug'>
@@ -58,7 +58,7 @@ export default function MoreArticlesSection({
                 key={related.id}
                 className='basis-11/12 pl-0 pr-4 md:basis-1/2 lg:basis-1/3'
               >
-                <ArticleTileCard
+                <ArticleTile
                   article={related}
                   destinationSlug={destination.slug}
                 />

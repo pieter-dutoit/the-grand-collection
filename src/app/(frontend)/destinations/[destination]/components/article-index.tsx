@@ -1,7 +1,7 @@
 import SectionHeading from '@/components/section-heading'
-import ArticleTile from '../guides/components/article-tile'
 
-import { getDestinationGuidesData } from '../lib/destination-data'
+import { getDestinationData } from '../lib/destination-data'
+import ArticleTile from '@/components/article-tile'
 
 type ArticleIndexProps = {
   destinationSlug: string
@@ -11,7 +11,7 @@ export default async function ArticleIndex({
   destinationSlug
 }: ArticleIndexProps) {
   const { destination, featuredArticles, otherArticles, articles } =
-    await getDestinationGuidesData(destinationSlug)
+    await getDestinationData(destinationSlug)
   const totalArticles = articles.length
   const guidesCountLabel = `${totalArticles} ${
     totalArticles === 1 ? 'guide' : 'guides'

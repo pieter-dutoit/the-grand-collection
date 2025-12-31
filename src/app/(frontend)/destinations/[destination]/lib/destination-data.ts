@@ -6,17 +6,16 @@ import { notFound } from 'next/navigation'
 import { fetchArticles, fetchDestinations, fetchGuestHouses } from '@/lib/data'
 import type { Article, Destination, Guesthouse } from '@/payload/payload-types'
 
-type DestinationGuidesData = {
+type DestinationData = {
   destination: Destination
   articles: Article[]
   featuredArticles: Article[]
   otherArticles: Article[]
-  orderedArticles: Article[]
   guesthouses: Guesthouse[]
 }
 
-export const getDestinationGuidesData = cache(
-  async (destinationSlug: string): Promise<DestinationGuidesData> => {
+export const getDestinationData = cache(
+  async (destinationSlug: string): Promise<DestinationData> => {
     const [destination] = await fetchDestinations({
       slug: { equals: destinationSlug }
     })
@@ -56,7 +55,6 @@ export const getDestinationGuidesData = cache(
       articles,
       featuredArticles,
       otherArticles,
-      orderedArticles: [...featuredArticles, ...otherArticles],
       guesthouses
     }
   }

@@ -6,17 +6,17 @@ import { fetchArticles, fetchDestinations } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
 
 import Divider from '@/app/(frontend)/guesthouses/[guesthouse]/components/divider'
-import ArticleHero from '../components/hero'
-import ArticleBody from '../components/article-body'
-import ArticleStructuredData from '../components/article-structured-data'
-import ArticleRelatedArticles from '../components/article-related-articles'
-import ArticleWhereToStay from '../components/article-where-to-stay'
-import ArticleFaq from '../components/article-faq'
+import ArticleHero from './components/hero'
+import ArticleBody from './components/article-body'
+import ArticleStructuredData from './components/article-structured-data'
+import ArticleRelatedArticles from './components/article-related-articles'
+import ArticleWhereToStay from './components/article-where-to-stay'
+import ArticleFaq from './components/article-faq'
 
 import {
   resolveDestinationSlug,
   getAbsoluteImageUrl
-} from '../lib/article-utils'
+} from './lib/article-utils'
 
 type Props = {
   params: Promise<{ destination: string; article: string }>

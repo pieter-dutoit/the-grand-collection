@@ -1,7 +1,7 @@
 import { createBreadCrumbs } from '@/lib/utils/create-structured-data'
 import { getBaseUrl } from '@/lib/utils'
 
-import { getDestinationGuidesData } from '../lib/destination-data'
+import { getDestinationData } from '../lib/destination-data'
 
 type DestinationGuidesStructuredDataProps = {
   destinationSlug: string
@@ -10,13 +10,12 @@ type DestinationGuidesStructuredDataProps = {
 export default async function DestinationGuidesStructuredData({
   destinationSlug
 }: DestinationGuidesStructuredDataProps) {
-  const { destination, orderedArticles } =
-    await getDestinationGuidesData(destinationSlug)
+  const { destination, articles } = await getDestinationData(destinationSlug)
   const pageTitle = destination.title || destination.name
   const pageDescription = destination.description || ''
   const baseUrl = getBaseUrl()
   const canonical = `${baseUrl}/destinations/${destination.slug}`
-  const listItems = orderedArticles.map((article, index) => ({
+  const listItems = articles.map((article, index) => ({
     '@type': 'ListItem',
     position: index + 1,
     item: {

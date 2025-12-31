@@ -62,13 +62,9 @@ export default async function ArticlesPage({ params }: Props) {
   return (
     <>
       <DestinationGuidesStructuredData destinationSlug={destinationSlug} />
-
       <DestinationHero destinationSlug={destinationSlug} />
-
       <ArticleIndex destinationSlug={destinationSlug} />
-
       <Divider />
-
       <DestinationWhereToStay destinationSlug={destinationSlug} />
       <DestinationFaq destinationSlug={destinationSlug} />
     </>
