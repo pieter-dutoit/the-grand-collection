@@ -1,4 +1,8 @@
-import { getOrganisationStructuredData } from '@/lib/utils/create-structured-data'
+import JsonLd from '@/components/seo/json-ld'
+import {
+  createFaqStructuredData,
+  getOrganisationStructuredData
+} from '@/lib/utils/create-structured-data'
 import {
   createBreadcrumbListStructuredData,
   getArticleBreadcrumbs
@@ -27,6 +31,10 @@ export default async function ArticleStructuredData({
   } = await getArticlePageData(destinationSlug, articleSlug)
   const organisationSD = await getOrganisationStructuredData()
   const breadcrumbs = getArticleBreadcrumbs(destination, article)
+  const faqStructuredData = createFaqStructuredData({
+    faq: article.faq,
+    pageUrl: canonical
+  })
 
   const jsonLd = [
     createBreadcrumbListStructuredData(breadcrumbs),
@@ -55,15 +63,9 @@ export default async function ArticleStructuredData({
       ...(ogImage && {
         image: [ogImage]
       })
-    }
+    },
+    ...(faqStructuredData ? [faqStructuredData] : [])
   ]
 
-  return (
-    <script
-      type='application/ld+json'
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
-      }}
-    />
-  )
+  return <JsonLd data={jsonLd} />
 }

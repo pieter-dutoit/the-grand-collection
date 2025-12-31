@@ -121,8 +121,10 @@ export default async function ArticlePage({ params }: Props) {
         destinationSlug={destinationSlug}
         articleSlug={articleSlug}
       />
-      <section className='container mx-auto px-8 pt-6'>
-        <Breadcrumbs items={breadcrumbs} />
+      <section className='bg-olive-50'>
+        <div className='container mx-auto py-6'>
+          <Breadcrumbs items={breadcrumbs} />
+        </div>
       </section>
       <ArticleHero
         destinationSlug={destinationSlug}

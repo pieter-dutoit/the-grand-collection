@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 
 import { fetchArticles, fetchDestinations } from '@/lib/data'
 import { extractImageProps, getBaseUrl } from '@/lib/utils'
+import { hasFaqItems } from '@/lib/utils/faq'
 import type { Article, Destination } from '@/payload/payload-types'
 
 import { getAbsoluteImageUrl } from './article-utils'
@@ -55,13 +56,6 @@ const shouldShowUpdatedAt = (createdAt: string, updatedAt: string) => {
 
   return Math.abs(updated - created) >= 1000 * 60 * 60 * 24
 }
-
-const hasFaqItems = (faq: Article['faq']) =>
-  typeof faq === 'object' &&
-  faq !== null &&
-  'items' in faq &&
-  Array.isArray(faq.items) &&
-  faq.items.length > 0
 
 export const getArticlePageData = cache(
   async (

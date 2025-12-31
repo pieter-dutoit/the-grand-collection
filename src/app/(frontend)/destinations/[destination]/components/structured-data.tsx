@@ -1,8 +1,10 @@
+import JsonLd from '@/components/seo/json-ld'
 import { getBaseUrl } from '@/lib/utils'
 import {
   createBreadcrumbListStructuredData,
   getDestinationBreadcrumbs
 } from '@/lib/utils/breadcrumbs'
+import { createFaqStructuredData } from '@/lib/utils/create-structured-data'
 
 import { getDestinationData } from '../lib/destination-data'
 
@@ -19,6 +21,10 @@ export default async function DestinationGuidesStructuredData({
   const baseUrl = getBaseUrl()
   const canonical = `${baseUrl}/destinations/${destination.slug}`
   const breadcrumbs = getDestinationBreadcrumbs(destination)
+  const faqStructuredData = createFaqStructuredData({
+    faq: destination.faq,
+    pageUrl: canonical
+  })
   const listItems = articles.map((article, index) => ({
     '@type': 'ListItem',
     position: index + 1,
@@ -43,15 +49,9 @@ export default async function DestinationGuidesStructuredData({
         numberOfItems: listItems.length,
         itemListElement: listItems
       }
-    }
+    },
+    ...(faqStructuredData ? [faqStructuredData] : [])
   ]
 
-  return (
-    <script
-      type='application/ld+json'
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
-      }}
-    />
-  )
+  return <JsonLd data={jsonLd} />
 }

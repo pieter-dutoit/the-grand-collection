@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/collapsible'
 import { cn } from '@/lib/utils'
 import type { Faq } from '@/payload/payload-types'
+import { getFaqItems } from '@/lib/utils/faq'
 import SectionHeading from './section-heading'
 
 type FaqSectionProps = {
@@ -19,32 +20,6 @@ type FaqSectionProps = {
   className?: string
 }
 
-type FaqItem = NonNullable<Faq['items']>[number]
-
-const isFaqDocument = (value: Faq | string | null | undefined): value is Faq =>
-  typeof value === 'object' && value !== null && 'items' in value
-
-const getFaqItems = (items: FaqItem[]) =>
-  items.reduce<{ id: string; question: string; answer: string }[]>(
-    (acc, item, index) => {
-      const question = item.question?.trim()
-      const answer = item.answer?.trim()
-
-      if (!question || !answer) {
-        return acc
-      }
-
-      const id =
-        typeof item.id === 'string' && item.id.length > 0
-          ? item.id
-          : `${index}-${question}`
-
-      acc.push({ id, question, answer })
-      return acc
-    },
-    []
-  )
-
 export default function FaqSection({
   faq,
   id = 'faq',
@@ -52,36 +27,13 @@ export default function FaqSection({
   title,
   className
 }: FaqSectionProps) {
-  if (!isFaqDocument(faq)) {
-    return null
-  }
-
-  const items = getFaqItems(faq.items ?? [])
+  const items = getFaqItems(faq)
   if (items.length === 0) {
     return null
   }
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: items.map(({ question, answer }) => ({
-      '@type': 'Question',
-      name: question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: answer
-      }
-    }))
-  }
-
   return (
     <section id={id} className={cn('py-8 lg:py-16', className)}>
-      <script
-        type='application/ld+json'
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
-        }}
-      />
       <div className='container mx-auto flex flex-col gap-8'>
         <SectionHeading
           title={title || 'Frequently Asked Questions'}

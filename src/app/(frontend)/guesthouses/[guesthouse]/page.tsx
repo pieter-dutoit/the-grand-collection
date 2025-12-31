@@ -5,14 +5,20 @@ import { notFound } from 'next/navigation'
 
 import { fetchArticles, fetchGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
+import { getBaseUrl } from '@/lib/utils'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
-import { createGuesthouseStructuredData } from '@/lib/utils/create-structured-data'
+import {
+  createFaqStructuredData,
+  createGuesthouseStructuredData
+} from '@/lib/utils/create-structured-data'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
 import {
   createBreadcrumbListStructuredData,
   getGuesthouseBreadcrumbs
 } from '@/lib/utils/breadcrumbs'
 import FaqSection from '@/components/faq-section'
+import JsonLd from '@/components/seo/json-ld'
+import { hasFaqItems } from '@/lib/utils/faq'
 
 import Hero from './components/hero'
 import Navbar from './components/navbar'
@@ -72,17 +78,16 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
   }
 
   const breadcrumbs = getGuesthouseBreadcrumbs(data.destination, data)
-
+  const faqStructuredData = createFaqStructuredData({
+    faq: data.faq,
+    pageUrl: `${getBaseUrl()}/guesthouses/${data.slug}`
+  })
   const jsonLd = [
     guesthouseStructuredData,
-    createBreadcrumbListStructuredData(breadcrumbs)
+    createBreadcrumbListStructuredData(breadcrumbs),
+    ...(faqStructuredData ? [faqStructuredData] : [])
   ]
-  const hasFaq =
-    typeof data.faq === 'object' &&
-    data.faq !== null &&
-    'items' in data.faq &&
-    Array.isArray(data.faq.items) &&
-    data.faq.items.length > 0
+  const hasFaq = hasFaqItems(data.faq)
 
   const relatedArticles =
     typeof data.destination === 'object' && data.destination !== null
@@ -99,13 +104,8 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
 
   return (
     <>
-      <script
-        type='application/ld+json'
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
-        }}
-      />
-      <section className='container mx-auto px-8 pt-6'>
+      <JsonLd data={jsonLd} />
+      <section className='container mx-auto py-4'>
         <Breadcrumbs items={breadcrumbs} />
       </section>
       <Hero guesthouse={data} />

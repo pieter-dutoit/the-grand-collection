@@ -1,8 +1,9 @@
-import { Amenity, Guesthouse, Media, Room } from '@/payload/payload-types'
+import { Amenity, Faq, Guesthouse, Media, Room } from '@/payload/payload-types'
 import { createSourceSet } from '@/components/ui/image'
 
 import { extractContactDetails, extractImageProps, getBaseUrl } from '.'
 import { fetchGuestHouses, fetchHomePageData, fetchLogo } from '../data'
+import { getFaqItems } from './faq'
 
 const LANGUAGES = [
   {
@@ -130,6 +131,34 @@ export async function getOrganisationStructuredData() {
       contactType: 'Customer Service',
       email,
       telephone: '+27' + phoneLink
+    }))
+  }
+}
+
+export function createFaqStructuredData({
+  faq,
+  pageUrl
+}: {
+  faq: Faq | string | null | undefined
+  pageUrl?: string
+}) {
+  const items = getFaqItems(faq)
+
+  if (items.length === 0) {
+    return null
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    ...(pageUrl && { '@id': `${pageUrl}#faq`, url: pageUrl }),
+    mainEntity: items.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: answer
+      }
     }))
   }
 }

@@ -10,6 +10,7 @@ import {
 } from '@/lib/utils/breadcrumbs'
 
 import PageHeading from '@/components/ui/page-heading'
+import JsonLd from '@/components/seo/json-ld'
 
 import PropertyPreview from '../components/property-preview'
 
@@ -38,12 +39,7 @@ export default async function AllGuestHouses(): Promise<JSX.Element> {
 
   return (
     <>
-      <script
-        type='application/ld+json'
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
-        }}
-      />
+      <JsonLd data={jsonLd} />
       <section className='container mx-auto grid w-full px-8 py-10 lg:py-20'>
         <Breadcrumbs items={breadcrumbs} className='mb-6' />
         <PageHeading heading={heading} subHeading={sub_heading} />

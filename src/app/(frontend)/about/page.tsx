@@ -6,6 +6,7 @@ import Overview from './components/overview'
 
 import { fetchAboutPageData } from '@/lib/data'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
+import JsonLd from '@/components/seo/json-ld'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import { getOrganisationStructuredData } from '@/lib/utils/create-structured-data'
 import { getBaseUrl } from '@/lib/utils'
@@ -43,12 +44,7 @@ export default async function About(): Promise<JSX.Element> {
 
   return (
     <>
-      <script
-        type='application/ld+json'
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
-        }}
-      />
+      <JsonLd data={jsonLd} />
       <section className='container mx-auto px-8 pt-6'>
         <Breadcrumbs items={breadcrumbs} />
       </section>
