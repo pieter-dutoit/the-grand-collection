@@ -1,4 +1,4 @@
-import WhereToStaySection from '../guides/[article]/components/where-to-stay'
+import WhereToStaySection from '@/components/where-to-stay'
 import { getDestinationData } from '../lib/destination-data'
 
 type DestinationWhereToStayProps = {
@@ -9,8 +9,17 @@ export default async function DestinationWhereToStay({
   destinationSlug
 }: DestinationWhereToStayProps) {
   const { destination, guesthouses } = await getDestinationData(destinationSlug)
+  const {
+    accommodation: { title, description, label }
+  } = destination
 
   return (
-    <WhereToStaySection guesthouses={guesthouses} destination={destination} />
+    <WhereToStaySection
+      title={title}
+      label={label}
+      description={description}
+      guesthouses={guesthouses}
+      destination={destination}
+    />
   )
 }

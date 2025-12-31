@@ -19,10 +19,10 @@ export default async function DestinationHero({
   const heroImageAltText = heroImageAlt || title || name
 
   return (
-    <section className='relative bg-gradient-to-b from-olive-50 to-transparent'>
+    <section className='relative bg-olive-100'>
       <div className='container relative z-10 mx-auto py-10 lg:py-20'>
-        <div className='flex max-w-2xl flex-col gap-3'>
-          <span className='text-xs font-extrabold uppercase tracking-widest text-sage-500'>
+        <div className='flex max-w-2xl flex-col gap-2'>
+          <span className='text-xs font-extrabold uppercase tracking-wide text-sage-500'>
             {label}
           </span>
           <h1 className='text-pretty text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
@@ -35,16 +35,16 @@ export default async function DestinationHero({
       </div>
 
       {heroImageUrl && (
-        <div className='absolute right-0 top-0 h-full w-1/2 opacity-40 sm:w-4/6 sm:opacity-100'>
+        <div className='absolute inset-0'>
           <Image
             src={heroImageUrl}
             alt={heroImageAltText}
             fill
             className='object-cover object-center'
             priority
-            sizes='(max-width: 768px) 50vw, 60vw'
+            sizes='100vw'
           />
-          <div className='absolute inset-0 bg-gradient-to-r from-white to-olive-50 sm:to-transparent' />
+          <div className='absolute inset-0 bg-gradient-to-r from-white to-white/50 sm:to-transparent' />
         </div>
       )}
     </section>

@@ -1,7 +1,7 @@
 export default function Divider() {
   return (
     <div className='container mx-auto'>
-      <div className='w-full px-20'>
+      <div className='w-full px-8 md:px-20'>
         <div
           className='w-full border-t border-gold-200'
           style={{

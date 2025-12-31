@@ -20,7 +20,7 @@ import Rooms from './components/rooms'
 import ContactUs from './components/contact-us'
 import Policies from './components/policies'
 import Divider from './components/divider'
-import MoreArticlesSection from '../../destinations/[destination]/guides/components/more-articles'
+import MoreArticlesSection from '@/components/more-articles'
 
 type Props = { params: Promise<{ guesthouse: string }> }
 
@@ -125,6 +125,9 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
         typeof data.destination !== 'string' &&
         relatedArticles.length > 0 && (
           <MoreArticlesSection
+            label='Nearby highlights'
+            title={`Things to do near ${data.destination.name}`}
+            description='A short list of local favorites, plus a few guides to help you choose what to do.'
             destination={data.destination}
             relatedArticles={relatedArticles}
           />

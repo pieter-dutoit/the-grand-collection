@@ -14,6 +14,9 @@ import SectionHeading from '@/components/section-heading'
 import ArticleTile from '@/components/article-tile'
 
 type MoreArticlesProps = {
+  title?: string
+  label?: string
+  description?: string
   destination: Pick<Destination, 'name' | 'slug'>
   relatedArticles: Pick<
     Article,
@@ -29,6 +32,9 @@ type MoreArticlesProps = {
 }
 
 export default function MoreArticlesSection({
+  label,
+  title,
+  description,
   destination,
   relatedArticles
 }: MoreArticlesProps) {
@@ -40,8 +46,9 @@ export default function MoreArticlesSection({
     <section className='py-10 lg:py-20' id='more-articles'>
       <div className='container mx-auto flex flex-col gap-1'>
         <SectionHeading
-          parentLabel='Explore'
-          title={`Things to do in ${destination.name}`}
+          parentLabel={label || 'Explore'}
+          title={title || `Things to do in ${destination.name}`}
+          description={description}
         />
       </div>
 

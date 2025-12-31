@@ -215,6 +215,18 @@ export interface Destination {
     open_graph: OpenGraphField
     twitter?: TwitterField
   }
+  guides: {
+    label: string
+    title: string
+    description: string
+    featuredGuidesTitle: string
+    otherGuidesTitle: string
+  }
+  accommodation: {
+    label: string
+    title: string
+    description: string
+  }
   updatedAt: string
   createdAt: string
 }
@@ -748,6 +760,22 @@ export interface DestinationsSelect<T extends boolean = true> {
         meta?: T | MetadataFieldSelect<T>
         open_graph?: T | OpenGraphFieldSelect<T>
         twitter?: T | TwitterFieldSelect<T>
+      }
+  guides?:
+    | T
+    | {
+        label?: T
+        title?: T
+        description?: T
+        featuredGuidesTitle?: T
+        otherGuidesTitle?: T
+      }
+  accommodation?:
+    | T
+    | {
+        label?: T
+        title?: T
+        description?: T
       }
   updatedAt?: T
   createdAt?: T

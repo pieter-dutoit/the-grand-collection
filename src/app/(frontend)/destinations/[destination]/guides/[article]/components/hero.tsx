@@ -5,8 +5,8 @@ import { twMerge } from 'tailwind-merge'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 import { Badge } from '@/components/ui/badge'
 
-import { ShareButton } from '../[article]/share-button'
 import { getArticlePageData } from '../lib/article-data'
+import { ShareButton } from '../share-button'
 
 type ArticleHeroProps = {
   destinationSlug: string

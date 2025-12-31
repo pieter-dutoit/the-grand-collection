@@ -1,7 +1,7 @@
 import { fetchGuestHouses } from '@/lib/data'
 
-import WhereToStaySection from './where-to-stay'
 import { getArticlePageData } from '../lib/article-data'
+import WhereToStaySection from '@/components/where-to-stay'
 
 type ArticleWhereToStayProps = {
   destinationSlug: string
@@ -18,6 +18,10 @@ export default async function ArticleWhereToStay({
   })
 
   return (
-    <WhereToStaySection guesthouses={guesthouses} destination={destination} />
+    <WhereToStaySection
+      description='Our recommended place to stay. Close to the places above, with the comfort to match your trip.'
+      guesthouses={guesthouses}
+      destination={destination}
+    />
   )
 }

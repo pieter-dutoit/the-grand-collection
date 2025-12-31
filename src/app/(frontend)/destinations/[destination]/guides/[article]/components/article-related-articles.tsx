@@ -1,6 +1,6 @@
 import { fetchArticles } from '@/lib/data'
+import MoreArticlesSection from '@/components/more-articles'
 
-import MoreArticlesSection from './more-articles'
 import { getArticlePageData } from '../lib/article-data'
 
 type ArticleRelatedArticlesProps = {
@@ -31,6 +31,9 @@ export default async function ArticleRelatedArticles({
 
   return (
     <MoreArticlesSection
+      label='Explore more'
+      title={`More things to do in ${destination.name}`}
+      description={`A few more hand-picked places and ideas to help you make the most of your time in ${destination.name}.`}
       destination={destination}
       relatedArticles={relatedArticles}
     />
