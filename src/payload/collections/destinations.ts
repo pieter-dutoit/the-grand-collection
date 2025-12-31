@@ -33,11 +33,48 @@ export const Destinations: CollectionConfig = {
       }
     },
     {
+      name: 'label',
+      type: 'text',
+      label: 'Label',
+      required: true,
+      minLength: 1,
+      maxLength: 200
+    },
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Title',
+      required: true,
+      minLength: 1,
+      maxLength: 200
+    },
+    {
+      name: 'description',
+      type: 'text',
+      label: 'Description',
+      required: true,
+      minLength: 10,
+      maxLength: 300
+    },
+
+    {
       name: 'image',
       label: 'Destination Image',
       type: 'upload',
       relationTo: 'media',
       required: true
+    },
+    {
+      name: 'faq',
+      label: 'FAQ Section',
+      type: 'relationship',
+      relationTo: 'faqs',
+      hasMany: false,
+      filterOptions: {
+        _status: {
+          equals: 'published'
+        }
+      }
     },
     {
       type: 'tabs',
@@ -46,44 +83,6 @@ export const Destinations: CollectionConfig = {
           name: 'seo',
           label: 'SEO',
           fields: SEOFields
-        },
-        {
-          name: 'guides',
-          label: 'Guides Page',
-          fields: [
-            {
-              name: 'title',
-              label: 'Title',
-              type: 'text',
-              required: true
-            },
-            {
-              name: 'description',
-              label: 'Description',
-              type: 'textarea',
-              required: true
-            },
-            {
-              name: 'image',
-              label: 'Image',
-              type: 'upload',
-              required: true,
-              relationTo: 'media'
-            },
-            {
-              name: 'faq',
-              label: 'FAQ Section',
-              type: 'relationship',
-              relationTo: 'faqs',
-              hasMany: false,
-              filterOptions: {
-                _status: {
-                  equals: 'published'
-                }
-              }
-            },
-            ...SEOFields
-          ]
         }
       ]
     }

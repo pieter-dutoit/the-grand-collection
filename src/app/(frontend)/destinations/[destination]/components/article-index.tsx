@@ -1,7 +1,7 @@
 import SectionHeading from '@/components/section-heading'
 import ArticleTile from '../guides/components/article-tile'
 
-import { getDestinationGuidesData } from '../lib/guides-data'
+import { getDestinationGuidesData } from '../lib/destination-data'
 
 type ArticleIndexProps = {
   destinationSlug: string
@@ -13,16 +13,26 @@ export default async function ArticleIndex({
   const { destination, featuredArticles, otherArticles, articles } =
     await getDestinationGuidesData(destinationSlug)
   const totalArticles = articles.length
+  const guidesCountLabel = `${totalArticles} ${
+    totalArticles === 1 ? 'guide' : 'guides'
+  }`
 
   return (
     <section className='container mx-auto pb-12 pt-6 lg:pb-20 lg:pt-10'>
+      <SectionHeading
+        parentLabel='Explore'
+        title={`Guides for ${destination.name}`}
+        description={
+          totalArticles > 0 ? `Browse ${guidesCountLabel}.` : undefined
+        }
+      />
+
       <div className='w-full max-w-5xl'>
         {featuredArticles.length > 0 && (
           <div>
-            <SectionHeading
-              parentLabel='Highlights'
-              title={`Featured ${destination.name} guides`}
-            />
+            <h3 className='text-lg font-semibold text-olive-900'>
+              Popular things to do in {destination.name}
+            </h3>
             <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
               {featuredArticles.map((article) => (
                 <ArticleTile
@@ -38,10 +48,9 @@ export default async function ArticleIndex({
 
         {otherArticles.length > 0 && (
           <div className={featuredArticles.length > 0 ? 'mt-12' : undefined}>
-            <SectionHeading
-              parentLabel='Browse'
-              title={`All ${destination.name} guides`}
-            />
+            <h3 className='text-lg font-semibold text-olive-900'>
+              Travel tips & guides
+            </h3>
             <ul className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
               {otherArticles.map((article) => (
                 <ArticleTile

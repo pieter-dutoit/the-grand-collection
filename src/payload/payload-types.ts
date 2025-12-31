@@ -205,17 +205,12 @@ export interface Destination {
   id: string
   name: string
   slug: string
+  label: string
+  title: string
+  description: string
   image: string | Media
+  faq?: (string | null) | Faq
   seo: {
-    meta: MetadataField
-    open_graph: OpenGraphField
-    twitter?: TwitterField
-  }
-  guides: {
-    title: string
-    description: string
-    image: string | Media
-    faq?: (string | null) | Faq
     meta: MetadataField
     open_graph: OpenGraphField
     twitter?: TwitterField
@@ -252,6 +247,24 @@ export interface Media {
       filename?: string | null
     }
   }
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: string
+  title: string
+  items?:
+    | {
+        question: string
+        answer: string
+        id?: string | null
+      }[]
+    | null
+  updatedAt: string
+  createdAt: string
+  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -316,24 +329,6 @@ export interface SeoMedia {
 export interface TwitterField {
   creator?: string | null
   creatorId?: string | null
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
- */
-export interface Faq {
-  id: string
-  title: string
-  items?:
-    | {
-        question: string
-        answer: string
-        id?: string | null
-      }[]
-    | null
-  updatedAt: string
-  createdAt: string
-  _status?: ('draft' | 'published') | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -742,21 +737,14 @@ export interface ArticlesSelect<T extends boolean = true> {
 export interface DestinationsSelect<T extends boolean = true> {
   name?: T
   slug?: T
+  label?: T
+  title?: T
+  description?: T
   image?: T
+  faq?: T
   seo?:
     | T
     | {
-        meta?: T | MetadataFieldSelect<T>
-        open_graph?: T | OpenGraphFieldSelect<T>
-        twitter?: T | TwitterFieldSelect<T>
-      }
-  guides?:
-    | T
-    | {
-        title?: T
-        description?: T
-        image?: T
-        faq?: T
         meta?: T | MetadataFieldSelect<T>
         open_graph?: T | OpenGraphFieldSelect<T>
         twitter?: T | TwitterFieldSelect<T>

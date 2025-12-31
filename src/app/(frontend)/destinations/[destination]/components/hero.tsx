@@ -2,7 +2,7 @@ import Image from '@/components/ui/image'
 
 import { extractImageProps } from '@/lib/utils'
 
-import { getDestinationGuidesData } from '../lib/guides-data'
+import { getDestinationGuidesData } from '../lib/destination-data'
 
 type DestinationHeroProps = {
   destinationSlug: string
@@ -12,11 +12,12 @@ export default async function DestinationHero({
   destinationSlug
 }: DestinationHeroProps) {
   const { destination } = await getDestinationGuidesData(destinationSlug)
-  const pageTitle = destination.guides?.title || 'Guides'
-  const pageDescription = destination.guides?.description || ''
+  const pageLabel = destination.label || 'Guides'
+  const pageTitle = destination.title || destination.name
+  const pageDescription = destination.description || ''
 
   const { url: heroImageUrl, alt: heroImageAlt } = extractImageProps(
-    destination.guides?.image || destination.image
+    destination.image
   )
   const heroImageAltText = heroImageAlt || pageTitle || destination.name
 
@@ -26,7 +27,7 @@ export default async function DestinationHero({
         <div className='w-full max-w-5xl'>
           <div className='flex max-w-3xl flex-col gap-3'>
             <span className='text-xs font-extrabold uppercase tracking-widest text-sage-500'>
-              Guides
+              {pageLabel}
             </span>
             <h1 className='text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
               {pageTitle}

@@ -1,6 +1,6 @@
 import WhereToStaySection from '../guides/components/where-to-stay'
 
-import { getDestinationGuidesData } from '../lib/guides-data'
+import { getDestinationGuidesData } from '../lib/destination-data'
 
 type DestinationWhereToStayProps = {
   destinationSlug: string

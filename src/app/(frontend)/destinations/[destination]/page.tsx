@@ -36,10 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = `${getBaseUrl()}/destinations/${destination.slug}`
 
-  const seo =
-    destination.guides?.meta && destination.guides?.open_graph
-      ? destination.guides
-      : destination.seo
+  const seo = destination.seo
 
   const metadata = createMetadataConfig({
     meta: seo.meta,
