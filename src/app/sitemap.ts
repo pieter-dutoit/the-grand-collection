@@ -90,7 +90,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const guideIndexEntries = Array.from(
     guideIndexLastModifiedByDestination.entries()
   ).map(([destinationSlug, lastModified]) => ({
-    url: baseURL + '/destinations/' + destinationSlug + '/guides',
+    url: baseURL + '/destinations/' + destinationSlug,
     lastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.7

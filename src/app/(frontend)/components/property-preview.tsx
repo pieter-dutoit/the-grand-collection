@@ -108,7 +108,7 @@ export default function PropertyPreview({
         <div className='mt-2 flex flex-wrap items-start lg:mt-0 lg:flex-row'>
           {hasDestination && (
             <Link
-              href={`/destinations/${destinationData.slug}/guides`}
+              href={`/destinations/${destinationData.slug}`}
               className={twMerge(
                 getButtonStyles({
                   variant: 'outline',

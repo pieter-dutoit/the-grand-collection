@@ -66,7 +66,7 @@ export default function MoreArticlesSection({
             ))}
             <CarouselItem className='basis-11/12 pl-0 pr-4 md:basis-1/2 lg:basis-1/3'>
               <Link
-                href={`/destinations/${destination.slug}/guides`}
+                href={`/destinations/${destination.slug}`}
                 className='flex size-full flex-row items-center justify-center gap-2 rounded-xl border border-olive-100 bg-gradient-to-r from-olive-300 to-olive-50 text-olive-800 underline-offset-1 hover:text-olive-600 hover:underline'
               >
                 <span className='text-base font-semibold'>
