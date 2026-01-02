@@ -22,7 +22,8 @@ export const buildBreadcrumbs = (crumbs: BreadcrumbItem[] = []) => [
 
 export const createBreadcrumbListStructuredData = (
   items: BreadcrumbItem[],
-  pageUrl?: string
+  pageUrl?: string,
+  name?: string
 ) => {
   const baseUrl = getBaseUrl()
   const listItems = items
@@ -40,6 +41,7 @@ export const createBreadcrumbListStructuredData = (
 
   return {
     '@type': 'BreadcrumbList',
+    name: name?.trim() || 'Breadcrumbs',
     ...(pageUrl && { '@id': `${pageUrl}#breadcrumb` }),
     itemListElement: listItems
   }

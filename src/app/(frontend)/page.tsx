@@ -19,11 +19,11 @@ export default async function Home() {
   const breadcrumbs = getHomeBreadcrumbs()
   const faqStructuredData = createFaqStructuredData({
     faq,
-    pageUrl
+    pageUrl,
+    name: 'The Grand Collection FAQs'
   })
   const jsonLd = await createPageStructuredData({
     pageUrl,
-    pageType: 'HomePage',
     name: 'The Grand Collection',
     breadcrumbs,
     mainEntityId: getOrganisationId(),

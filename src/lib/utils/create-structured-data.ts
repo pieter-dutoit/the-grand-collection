@@ -107,7 +107,11 @@ export async function createPageStructuredData({
   additionalNodes
 }: PageStructuredDataInput): Promise<StructuredDataGraph> {
   const breadcrumbStructuredData = breadcrumbs
-    ? createBreadcrumbListStructuredData(breadcrumbs, pageUrl)
+    ? createBreadcrumbListStructuredData(
+        breadcrumbs,
+        pageUrl,
+        name ? `${name} Breadcrumbs` : undefined
+      )
     : null
   const webPageStructuredData = createWebPageStructuredData({
     pageUrl,
@@ -130,6 +134,7 @@ export async function createPageStructuredData({
 
 type ItemListStructuredDataInput = {
   pageUrl: string
+  idSuffix?: string
   name?: string
   description?: string
   itemListOrder?: string
@@ -138,6 +143,7 @@ type ItemListStructuredDataInput = {
 
 export function createItemListStructuredData({
   pageUrl,
+  idSuffix = 'itemlist',
   name,
   description,
   itemListOrder,
@@ -145,7 +151,7 @@ export function createItemListStructuredData({
 }: ItemListStructuredDataInput): StructuredDataNode {
   return {
     '@type': 'ItemList',
-    '@id': `${pageUrl}#itemlist`,
+    '@id': `${pageUrl}#${idSuffix}`,
     ...(name && { name }),
     ...(description && { description }),
     ...(itemListOrder && { itemListOrder }),
@@ -182,6 +188,7 @@ export function createArticleStructuredData({
     '@type': 'Article',
     '@id': `${pageUrl}#article`,
     url: pageUrl,
+    name: headline,
     headline,
     ...(description && { description }),
     datePublished,
@@ -214,11 +221,6 @@ const LANGUAGES = [
 ]
 
 const BUSINESS_AUDIENCE = [
-  {
-    '@type': 'TouristAudience',
-    audienceType: 'Leisure Travelers',
-    geographicArea: { '@type': 'Country', name: 'South Africa' }
-  },
   {
     '@type': 'BusinessAudience',
     audienceType: 'Corporate Travelers',
@@ -292,6 +294,7 @@ export async function getOrganisationStructuredData() {
     sameAs: socials?.map(({ url }) => url),
     logo: createAbsoluteImagePath(logoURL),
     image: [hero?.background_image, ...(overview?.images || [])]
+      .slice(0, 3)
       .filter((image) => typeof image !== 'string')
       .map((image) => (image ? createMediaObject(image) : null))
       .filter(Boolean),
@@ -309,25 +312,30 @@ export async function getOrganisationStructuredData() {
 
 export function createFaqStructuredData({
   faq,
-  pageUrl
+  pageUrl,
+  name
 }: {
   faq: Faq | string | null | undefined
   pageUrl?: string
+  name?: string
 }) {
   const items = getFaqItems(faq)
 
   if (items.length === 0) {
     return null
   }
+  const faqName = name?.trim() || 'Frequently Asked Questions'
 
   return {
     '@type': 'FAQPage',
+    name: faqName,
+    headline: faqName,
     ...(pageUrl && {
       '@id': `${pageUrl}#faq`,
-      url: pageUrl,
-      isPartOf: {
-        '@id': pageUrl
-      }
+      url: pageUrl
+      // isPartOf: {
+      //   '@id': pageUrl
+      // }
     }),
     mainEntity: items.map(({ question, answer }) => ({
       '@type': 'Question',
@@ -409,11 +417,11 @@ export async function createGuesthouseStructuredData({
       },
       image: [
         background_image,
-        ...interior,
-        ...exterior,
-        ...(roomsImages || [])
+        interior[0],
+        exterior[0],
+        ...(roomsImages || []).slice(0, 1)
       ]
-        .slice(0, 40)
+        .slice(0, 5)
         .filter((image) => typeof image !== 'string')
         .map(createMediaObject),
       openingHours: ['Mo-Su ' + opening_time + '-' + closing_time],
@@ -456,7 +464,7 @@ function createRoomStructuredData(
   return {
     '@type': ['HotelRoom', 'Product'],
     '@id': `${guesthouseUrl}#room-${slug}`,
-    image: gallery.map(createMediaObject),
+    image: gallery.map(createMediaObject).slice(0, 4),
     name,
     description,
     identifier: roomIdentifier,

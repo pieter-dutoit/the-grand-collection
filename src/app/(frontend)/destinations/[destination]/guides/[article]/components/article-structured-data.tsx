@@ -30,7 +30,8 @@ export default async function ArticleStructuredData({
   const breadcrumbs = getArticleBreadcrumbs(destination, article)
   const faqStructuredData = createFaqStructuredData({
     faq: article.faq,
-    pageUrl: canonical
+    pageUrl: canonical,
+    name: 'Frequently Asked Questions'
   })
 
   const articleStructuredData = createArticleStructuredData({

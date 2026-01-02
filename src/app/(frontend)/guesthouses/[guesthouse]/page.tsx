@@ -80,14 +80,15 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
   const breadcrumbs = getGuesthouseBreadcrumbs(data.destination, data)
   const faqStructuredData = createFaqStructuredData({
     faq: data.faq,
-    pageUrl
+    pageUrl,
+    name: `${data.name} FAQs`
   })
   const jsonLd = await createPageStructuredData({
     pageUrl,
     name: data.name,
     description: data.content.description,
     breadcrumbs,
-    mainEntityId: guesthouseStructuredData['@id'] as string | undefined,
+    mainEntityId: guesthouseStructuredData['@id'],
     additionalNodes: [guesthouseStructuredData, faqStructuredData]
   })
   const hasFaq = hasFaqItems(data.faq)
