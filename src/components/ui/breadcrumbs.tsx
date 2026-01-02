@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 import type { BreadcrumbItem } from '@/lib/utils/breadcrumbs'
+import { ChevronRight } from 'lucide-react'
 
 type BreadcrumbsProps = {
   items: BreadcrumbItem[]
@@ -26,31 +27,26 @@ export default function Breadcrumbs({
         className
       )}
     >
-      <ol className={cn('flex flex-wrap items-center', listClassName)}>
+      <ol
+        className={cn('flex items-center gap-2 overflow-x-auto', listClassName)}
+      >
         {items.map((item, index) => {
           const isLast = index === items.length - 1
 
           return (
             <li key={`${item.name}-${index}`} className='flex items-center'>
-              {index > 0 && (
-                <span
-                  className='mx-0 text-olive-300 lg:mx-1'
-                  aria-hidden='true'
-                >
-                  &gt;
-                </span>
-              )}
+              {index > 0 && <ChevronRight className='size-4 text-olive-600' />}
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className='rounded-sm bg-white/20 px-2 py-1 backdrop-blur-md transition-colors hover:text-olive-800'
+                  className='rounded-sm bg-white/60 px-2 py-1 backdrop-blur-md transition-colors hover:text-olive-800'
                 >
                   {item.name}
                 </Link>
               ) : (
                 <span
                   className={cn(
-                    'rounded-sm bg-white/20 px-2 py-1 backdrop-blur-md',
+                    'line-clamp-1 rounded-sm bg-white/60 px-2 py-1 backdrop-blur-md',
                     isLast ? 'text-olive-800' : 'text-olive-500'
                   )}
                   aria-current={isLast ? 'page' : undefined}

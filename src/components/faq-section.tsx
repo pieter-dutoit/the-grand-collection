@@ -33,7 +33,8 @@ export default function FaqSection({
   }
 
   return (
-    <section id={id} className={cn('py-8 lg:py-16', className)}>
+    <section className={cn('relative py-8 lg:py-16', className)}>
+      <div id={id} className='absolute -mt-36 lg:-mt-48' />
       <div className='container mx-auto flex flex-col gap-8'>
         <SectionHeading
           title={title || 'Frequently Asked Questions'}

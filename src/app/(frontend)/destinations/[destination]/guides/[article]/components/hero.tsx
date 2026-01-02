@@ -32,7 +32,7 @@ export default async function ArticleHero({
       id={article.slug}
       className='relative flex w-full flex-col justify-between bg-olive-50'
     >
-      <div className='container mx-auto flex flex-col items-start gap-6 py-10 lg:py-20'>
+      <div className='container mx-auto flex flex-col items-start gap-6 pb-10 pt-14'>
         <Link
           href={`/destinations/${destination.slug}`}
           className='inline-flex items-center gap-2 text-sm font-medium text-olive-500 transition hover:text-olive-700'
@@ -45,7 +45,7 @@ export default async function ArticleHero({
         </h1>
 
         {/* Meta data */}
-        <div className='flex w-full flex-row flex-wrap items-center justify-between gap-2'>
+        <div className='flex w-full flex-row flex-wrap items-center justify-between gap-4'>
           {/* Left meta */}
           <div className='flex flex-wrap gap-2'>
             <Badge className='flex flex-wrap items-center gap-x-1 gap-y-0.5'>

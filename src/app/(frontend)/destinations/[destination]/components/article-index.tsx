@@ -30,7 +30,7 @@ export default async function ArticleIndex({
               <h3 className='text-xl font-bold text-olive-900 md:text-2xl'>
                 {guides.featuredGuidesTitle}
               </h3>
-              <ul className='mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+              <ul className='mt-4 grid gap-8 lg:grid-cols-2'>
                 {featuredArticles.map((article) => (
                   <ArticleTile
                     key={article.id}

@@ -5,12 +5,14 @@ import { twMerge } from 'tailwind-merge'
 
 export default function AvailabilityLink({
   className = '',
-  bookingUrl
+  bookingUrl,
+  large
   // platformName = 'NightsBridge'
 }: {
   className?: string
   bookingUrl: string
   platformName?: string
+  large?: boolean
 }) {
   return (
     <div className='flex flex-col items-start'>
@@ -21,7 +23,8 @@ export default function AvailabilityLink({
         className={twMerge(
           getButtonStyles({
             variant: 'default',
-            colour: 'olive'
+            colour: 'olive',
+            size: large ? 'lg' : 'default'
           }),
           className,
           'items-center'

@@ -12,6 +12,7 @@ import {
 
 import SectionHeading from '@/components/section-heading'
 import ArticleTile from '@/components/article-tile'
+import { Button } from './ui/button'
 
 type MoreArticlesProps = {
   title?: string
@@ -44,12 +45,20 @@ export default function MoreArticlesSection({
 
   return (
     <section className='py-10 lg:py-20' id='more-articles'>
-      <div className='container mx-auto flex flex-col gap-1'>
+      <div className='container mx-auto flex flex-col gap-2'>
         <SectionHeading
           parentLabel={label || 'Explore'}
           title={title || `Things to do in ${destination.name}`}
           description={description}
         />
+        <Button asChild variant='outline'>
+          <Link
+            href={`/destinations/${destination.slug}`}
+            className='flex flex-row items-center gap-2 self-start'
+          >
+            View all {destination.name} guides <ArrowRight className='size-2' />
+          </Link>
+        </Button>
       </div>
 
       <div>
