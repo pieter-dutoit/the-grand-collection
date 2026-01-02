@@ -2,13 +2,16 @@ import Link from 'next/link'
 
 import { getButtonStyles } from '@/components/ui/button'
 import { twMerge } from 'tailwind-merge'
+import { Lock } from 'lucide-react'
 
 export default function AvailabilityLink({
+  text = 'Check availability',
   className = '',
   bookingUrl,
-  large
-  // platformName = 'NightsBridge'
+  large,
+  platformName = 'NightsBridge'
 }: {
+  text?: string
   className?: string
   bookingUrl: string
   platformName?: string
@@ -30,11 +33,12 @@ export default function AvailabilityLink({
           'items-center'
         )}
       >
-        Check Availability
+        {text}
       </Link>
-      {/* <em className='text-nowrap text-xs text-olive-500'>
-        Book on <strong className='font-semibold'>{platformName}</strong>
-      </em> */}
+      <em className='mt-0.5 flex items-center gap-1 text-nowrap text-xs text-olive-500'>
+        <Lock className='size-2' /> Opens{' '}
+        <strong className='font-semibold'>{platformName}</strong>
+      </em>
     </div>
   )
 }

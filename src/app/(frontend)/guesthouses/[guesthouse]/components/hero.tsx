@@ -30,7 +30,7 @@ export default function Hero({
   return (
     <section className='relative bg-olive-50'>
       {/* Mobile hero image */}
-      <div className='relative aspect-video sm:hidden'>
+      <div className='relative aspect-[20/8] sm:hidden'>
         <Image
           src={heroSrc}
           alt={alt}
@@ -44,43 +44,52 @@ export default function Hero({
       {/* Hero text */}
       <div className='container mx-auto grid w-full grid-cols-1 gap-8'>
         {/* Left content */}
-        <div className='z-10 w-full max-w-4xl py-10 sm:py-20 md:py-24 lg:py-32'>
+        <div className='z-10 flex w-full max-w-4xl flex-col gap-6 py-8 sm:py-20 md:gap-10 md:py-24 lg:py-32'>
           <div>
             <h1 className='text-4xl font-semibold text-olive-800 md:text-5xl lg:text-6xl'>
               {name}
             </h1>
-            <p className='mt-2 text-xs font-bold text-olive-500 md:text-sm lg:mt-3'>
+            <p className='text-xs font-bold text-olive-500 md:text-sm'>
               Luxury Accommodation in {city}, {province}
             </p>
           </div>
 
-          <p className='mt-4 max-w-80 text-sm md:text-base lg:mt-6 lg:max-w-[500px]'>
+          <p className='max-w-80 text-sm md:text-base lg:max-w-[500px]'>
             {description}
           </p>
 
-          <div className='mt-4 flex flex-row flex-wrap gap-2'>
-            <AvailabilityLink
-              bookingUrl={bookingURL}
-              platformName={platformName}
-            />
-            <Button asChild variant='outline' colour='olive'>
-              <Link
-                href={`tel:+27${contacts[0]?.phoneLink}`}
-                className='flex items-center gap-2'
-              >
-                <Phone className='size-6' />
-                <span>{contacts[0]?.phone}</span>
-              </Link>
-            </Button>
-            <Button asChild variant='outline' colour='olive'>
-              <Link
-                href={`mailto:${contacts[0]?.email}`}
-                className='flex items-center gap-2'
-              >
-                <Mail className='size-6' />
-                <span>{contacts[0]?.email}</span>
-              </Link>
-            </Button>
+          <div className='flex flex-col gap-4'>
+            <p className='text-base font-bold md:text-lg lg:text-xl'>
+              Book online, or contact us directly.
+            </p>
+
+            <div className='flex flex-row flex-wrap gap-2'>
+              <AvailabilityLink
+                bookingUrl={bookingURL}
+                platformName={platformName}
+                text='Book online'
+              />
+              <Button asChild variant='outline' colour='olive'>
+                <Link
+                  href={`tel:+27${contacts[0]?.phoneLink}`}
+                  className='flex items-center gap-1'
+                  aria-label='Call us'
+                >
+                  <Phone className='size-4' />
+                  <span>{contacts[0]?.phone}</span>
+                </Link>
+              </Button>
+              <Button asChild variant='outline' colour='olive'>
+                <Link
+                  href={`mailto:${contacts[0]?.email}`}
+                  className='flex items-center gap-1'
+                  aria-label='Email us'
+                >
+                  <Mail className='size-4' />
+                  <span>{contacts[0]?.email}</span>
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
