@@ -109,8 +109,10 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <section className='container mx-auto py-4'>
-        <Breadcrumbs items={breadcrumbs} />
+      <section className='absolute inset-x-0 top-14 z-20 w-full py-5'>
+        <div className='container mx-auto w-full'>
+          <Breadcrumbs items={breadcrumbs} />
+        </div>
       </section>
       <Hero guesthouse={data} />
       <Navbar showFaq={hasFaq} />

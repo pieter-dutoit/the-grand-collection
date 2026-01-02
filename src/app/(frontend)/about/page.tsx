@@ -42,7 +42,7 @@ export default async function About(): Promise<JSX.Element> {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <section className='container mx-auto px-8 pt-6'>
+      <section className='container mx-auto pt-5'>
         <Breadcrumbs items={breadcrumbs} />
       </section>
       <Hero />

@@ -121,8 +121,8 @@ export default async function ArticlePage({ params }: Props) {
         destinationSlug={destinationSlug}
         articleSlug={articleSlug}
       />
-      <section className='bg-olive-50'>
-        <div className='container mx-auto py-6'>
+      <section className='absolute inset-x-0 top-14 z-20 w-full py-5'>
+        <div className='container mx-auto w-full'>
           <Breadcrumbs items={breadcrumbs} />
         </div>
       </section>

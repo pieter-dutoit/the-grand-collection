@@ -67,8 +67,10 @@ export default async function ArticlesPage({ params }: Props) {
   return (
     <>
       <DestinationGuidesStructuredData destinationSlug={destinationSlug} />
-      <section className='container mx-auto py-4'>
-        <Breadcrumbs items={breadcrumbs} />
+      <section className='absolute inset-x-0 top-14 z-20 w-full py-5'>
+        <div className='container mx-auto w-full'>
+          <Breadcrumbs items={breadcrumbs} />
+        </div>
       </section>
       <DestinationHero destinationSlug={destinationSlug} />
       <ArticleIndex destinationSlug={destinationSlug} />

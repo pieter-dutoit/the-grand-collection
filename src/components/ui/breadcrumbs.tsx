@@ -33,20 +33,26 @@ export default function Breadcrumbs({
           return (
             <li key={`${item.name}-${index}`} className='flex items-center'>
               {index > 0 && (
-                <span className='mx-2 text-olive-300' aria-hidden='true'>
+                <span
+                  className='mx-0 text-olive-300 lg:mx-1'
+                  aria-hidden='true'
+                >
                   &gt;
                 </span>
               )}
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className='transition-colors hover:text-olive-800'
+                  className='rounded-sm bg-white/20 px-2 py-1 backdrop-blur-md transition-colors hover:text-olive-800'
                 >
                   {item.name}
                 </Link>
               ) : (
                 <span
-                  className={cn(isLast ? 'text-olive-800' : 'text-olive-500')}
+                  className={cn(
+                    'rounded-sm bg-white/20 px-2 py-1 backdrop-blur-md',
+                    isLast ? 'text-olive-800' : 'text-olive-500'
+                  )}
                   aria-current={isLast ? 'page' : undefined}
                 >
                   {item.name}

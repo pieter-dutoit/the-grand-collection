@@ -35,7 +35,7 @@ export default async function ArticleHero({
       <div className='container mx-auto flex flex-col items-start gap-6 py-10 lg:py-20'>
         <Link
           href={`/destinations/${destination.slug}`}
-          className='inline-flex items-center gap-2 text-xs font-medium text-olive-500 transition hover:text-olive-700'
+          className='inline-flex items-center gap-2 text-sm font-medium text-olive-500 transition hover:text-olive-700'
         >
           <ArrowLeft className='size-4' />
           Back to all {destination.name} guides
