@@ -8,26 +8,27 @@ import { fetchHomePageData } from '@/lib/data'
 import { getBaseUrl } from '@/lib/utils'
 import {
   createFaqStructuredData,
-  getOrganisationStructuredData
+  createPageStructuredData,
+  getOrganisationId
 } from '@/lib/utils/create-structured-data'
-import {
-  createBreadcrumbListStructuredData,
-  getHomeBreadcrumbs
-} from '@/lib/utils/breadcrumbs'
+import { getHomeBreadcrumbs } from '@/lib/utils/breadcrumbs'
 
 export default async function Home() {
-  const organisationSD = await getOrganisationStructuredData()
   const { faq } = await fetchHomePageData('faq')
+  const pageUrl = getBaseUrl()
   const breadcrumbs = getHomeBreadcrumbs()
   const faqStructuredData = createFaqStructuredData({
     faq,
-    pageUrl: getBaseUrl()
+    pageUrl
   })
-  const jsonLd = [
-    createBreadcrumbListStructuredData(breadcrumbs),
-    organisationSD,
-    ...(faqStructuredData ? [faqStructuredData] : [])
-  ]
+  const jsonLd = await createPageStructuredData({
+    pageUrl,
+    pageType: 'HomePage',
+    name: 'The Grand Collection',
+    breadcrumbs,
+    mainEntityId: getOrganisationId(),
+    additionalNodes: [faqStructuredData]
+  })
 
   return (
     <>

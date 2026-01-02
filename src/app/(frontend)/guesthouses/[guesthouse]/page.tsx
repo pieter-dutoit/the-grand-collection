@@ -9,13 +9,11 @@ import { getBaseUrl } from '@/lib/utils'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import {
   createFaqStructuredData,
-  createGuesthouseStructuredData
+  createGuesthouseStructuredData,
+  createPageStructuredData
 } from '@/lib/utils/create-structured-data'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
-import {
-  createBreadcrumbListStructuredData,
-  getGuesthouseBreadcrumbs
-} from '@/lib/utils/breadcrumbs'
+import { getGuesthouseBreadcrumbs } from '@/lib/utils/breadcrumbs'
 import FaqSection from '@/components/faq-section'
 import JsonLd from '@/components/seo/json-ld'
 import { hasFaqItems } from '@/lib/utils/faq'
@@ -69,8 +67,10 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
     notFound()
   }
 
+  const pageUrl = `${getBaseUrl()}/guesthouses/${data.slug}`
   const guesthouseStructuredData = await createGuesthouseStructuredData({
-    guesthouse: data
+    guesthouse: data,
+    pageUrl
   })
 
   if (!data.destination || typeof data.destination === 'string') {
@@ -80,13 +80,16 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
   const breadcrumbs = getGuesthouseBreadcrumbs(data.destination, data)
   const faqStructuredData = createFaqStructuredData({
     faq: data.faq,
-    pageUrl: `${getBaseUrl()}/guesthouses/${data.slug}`
+    pageUrl
   })
-  const jsonLd = [
-    guesthouseStructuredData,
-    createBreadcrumbListStructuredData(breadcrumbs),
-    ...(faqStructuredData ? [faqStructuredData] : [])
-  ]
+  const jsonLd = await createPageStructuredData({
+    pageUrl,
+    name: data.name,
+    description: data.content.description,
+    breadcrumbs,
+    mainEntityId: guesthouseStructuredData['@id'] as string | undefined,
+    additionalNodes: [guesthouseStructuredData, faqStructuredData]
+  })
   const hasFaq = hasFaqItems(data.faq)
 
   const relatedArticles =

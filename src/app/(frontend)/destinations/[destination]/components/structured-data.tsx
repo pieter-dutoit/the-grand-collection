@@ -1,10 +1,11 @@
 import JsonLd from '@/components/seo/json-ld'
 import { getBaseUrl } from '@/lib/utils'
+import { getDestinationBreadcrumbs } from '@/lib/utils/breadcrumbs'
 import {
-  createBreadcrumbListStructuredData,
-  getDestinationBreadcrumbs
-} from '@/lib/utils/breadcrumbs'
-import { createFaqStructuredData } from '@/lib/utils/create-structured-data'
+  createFaqStructuredData,
+  createItemListStructuredData,
+  createPageStructuredData
+} from '@/lib/utils/create-structured-data'
 
 import { getDestinationData } from '../lib/destination-data'
 
@@ -30,28 +31,28 @@ export default async function DestinationGuidesStructuredData({
     position: index + 1,
     item: {
       '@type': 'Article',
+      '@id': `${baseUrl}/destinations/${destination.slug}/guides/${article.slug}#article`,
       name: article.title,
       url: `${baseUrl}/destinations/${destination.slug}/guides/${article.slug}`
     }
   }))
 
-  const jsonLd = [
-    createBreadcrumbListStructuredData(breadcrumbs),
-    {
-      '@context': 'https://schema.org',
-      '@type': 'CollectionPage',
-      name: pageTitle,
-      ...(pageDescription && { description: pageDescription }),
-      url: canonical,
-      mainEntity: {
-        '@type': 'ItemList',
-        itemListOrder: 'https://schema.org/ItemListOrderDescending',
-        numberOfItems: listItems.length,
-        itemListElement: listItems
-      }
-    },
-    ...(faqStructuredData ? [faqStructuredData] : [])
-  ]
+  const itemListStructuredData = createItemListStructuredData({
+    pageUrl: canonical,
+    name: `${pageTitle} Guides`,
+    description: pageDescription || undefined,
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    itemListElement: listItems
+  })
+  const jsonLd = await createPageStructuredData({
+    pageUrl: canonical,
+    pageType: 'CollectionPage',
+    name: pageTitle,
+    description: pageDescription || undefined,
+    breadcrumbs,
+    mainEntityId: itemListStructuredData['@id'] as string | undefined,
+    additionalNodes: [itemListStructuredData, faqStructuredData]
+  })
 
   return <JsonLd data={jsonLd} />
 }

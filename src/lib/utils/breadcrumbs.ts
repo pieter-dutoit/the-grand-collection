@@ -20,30 +20,28 @@ export const buildBreadcrumbs = (crumbs: BreadcrumbItem[] = []) => [
   ...crumbs
 ]
 
-export const createBreadcrumbListStructuredData = (items: BreadcrumbItem[]) => {
+export const createBreadcrumbListStructuredData = (
+  items: BreadcrumbItem[],
+  pageUrl?: string
+) => {
   const baseUrl = getBaseUrl()
+  const listItems = items
+    .filter((item) => item.href)
+    .map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: toAbsoluteUrl(baseUrl, item.href as string)
+    }))
+
+  if (listItems.length === 0) {
+    return null
+  }
 
   return {
-    '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => {
-      const listItem: {
-        '@type': 'ListItem'
-        position: number
-        name: string
-        item?: string
-      } = {
-        '@type': 'ListItem',
-        position: index + 1,
-        name: item.name
-      }
-
-      if (item.href) {
-        listItem.item = toAbsoluteUrl(baseUrl, item.href)
-      }
-
-      return listItem
-    })
+    ...(pageUrl && { '@id': `${pageUrl}#breadcrumb` }),
+    itemListElement: listItems
   }
 }
 

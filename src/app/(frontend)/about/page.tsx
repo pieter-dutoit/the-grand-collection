@@ -8,12 +8,12 @@ import { fetchAboutPageData } from '@/lib/data'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
 import JsonLd from '@/components/seo/json-ld'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
-import { getOrganisationStructuredData } from '@/lib/utils/create-structured-data'
-import { getBaseUrl } from '@/lib/utils'
 import {
-  createBreadcrumbListStructuredData,
-  getAboutBreadcrumbs
-} from '@/lib/utils/breadcrumbs'
+  createPageStructuredData,
+  getOrganisationId
+} from '@/lib/utils/create-structured-data'
+import { getBaseUrl } from '@/lib/utils'
+import { getAboutBreadcrumbs } from '@/lib/utils/breadcrumbs'
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await fetchAboutPageData('seo')
@@ -28,19 +28,16 @@ export default async function About(): Promise<JSX.Element> {
   const { seo } = await fetchAboutPageData('seo')
   const breadcrumbs = getAboutBreadcrumbs()
   const baseUrl = getBaseUrl()
+  const pageUrl = `${baseUrl}/about`
 
-  const jsonLd = [
-    createBreadcrumbListStructuredData(breadcrumbs),
-    {
-      '@context': 'https://schema.org',
-      '@type': 'AboutPage',
-      '@id': `${baseUrl}/about`,
-      url: `${baseUrl}/about`,
-      name: seo?.meta.title,
-      description: seo?.meta.description,
-      mainEntity: await getOrganisationStructuredData()
-    }
-  ]
+  const jsonLd = await createPageStructuredData({
+    pageUrl,
+    pageType: 'AboutPage',
+    name: seo?.meta.title,
+    description: seo?.meta.description,
+    breadcrumbs,
+    mainEntityId: getOrganisationId()
+  })
 
   return (
     <>

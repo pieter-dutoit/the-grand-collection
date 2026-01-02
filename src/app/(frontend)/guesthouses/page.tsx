@@ -3,11 +3,12 @@ import { Metadata } from 'next'
 import { fetchGuesthousesPageData, fetchGuestHouses } from '@/lib/data'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
-import { getGuesthouseListStructure } from '@/lib/utils/create-structured-data'
+import { getBaseUrl } from '@/lib/utils'
 import {
-  createBreadcrumbListStructuredData,
-  getGuesthousesBreadcrumbs
-} from '@/lib/utils/breadcrumbs'
+  createPageStructuredData,
+  getGuesthouseListStructure
+} from '@/lib/utils/create-structured-data'
+import { getGuesthousesBreadcrumbs } from '@/lib/utils/breadcrumbs'
 
 import PageHeading from '@/components/ui/page-heading'
 import JsonLd from '@/components/seo/json-ld'
@@ -30,12 +31,18 @@ export default async function AllGuestHouses(): Promise<JSX.Element> {
 
   const guesthouses = await fetchGuestHouses()
   const breadcrumbs = getGuesthousesBreadcrumbs()
+  const pageUrl = `${getBaseUrl()}/guesthouses`
 
   const guesthouseListStructuredData = await getGuesthouseListStructure()
-  const jsonLd = [
-    guesthouseListStructuredData,
-    createBreadcrumbListStructuredData(breadcrumbs)
-  ]
+  const jsonLd = await createPageStructuredData({
+    pageUrl,
+    pageType: 'CollectionPage',
+    name: heading,
+    description: sub_heading,
+    breadcrumbs,
+    mainEntityId: guesthouseListStructuredData['@id'] as string | undefined,
+    additionalNodes: [guesthouseListStructuredData]
+  })
 
   return (
     <>

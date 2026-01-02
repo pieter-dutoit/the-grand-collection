@@ -1,12 +1,10 @@
 import JsonLd from '@/components/seo/json-ld'
 import {
+  createArticleStructuredData,
   createFaqStructuredData,
-  getOrganisationStructuredData
+  createPageStructuredData
 } from '@/lib/utils/create-structured-data'
-import {
-  createBreadcrumbListStructuredData,
-  getArticleBreadcrumbs
-} from '@/lib/utils/breadcrumbs'
+import { getArticleBreadcrumbs } from '@/lib/utils/breadcrumbs'
 
 import { getArticlePageData } from '../lib/article-data'
 
@@ -29,43 +27,30 @@ export default async function ArticleStructuredData({
     authorType,
     ogImage
   } = await getArticlePageData(destinationSlug, articleSlug)
-  const organisationSD = await getOrganisationStructuredData()
   const breadcrumbs = getArticleBreadcrumbs(destination, article)
   const faqStructuredData = createFaqStructuredData({
     faq: article.faq,
     pageUrl: canonical
   })
 
-  const jsonLd = [
-    createBreadcrumbListStructuredData(breadcrumbs),
-    organisationSD,
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: article.title,
-      description: article.excerpt,
-      datePublished: createdDate.dateTime,
-      dateModified: modifiedDate.dateTime,
-      author: {
-        '@type': authorType,
-        name: authorName
-      },
-      publisher: {
-        '@type': 'Organization',
-        name: 'The Grand Collection',
-        '@id': organisationSD['@id'],
-        logo: organisationSD.logo
-      },
-      mainEntityOfPage: {
-        '@type': 'WebPage',
-        '@id': canonical
-      },
-      ...(ogImage && {
-        image: [ogImage]
-      })
-    },
-    ...(faqStructuredData ? [faqStructuredData] : [])
-  ]
+  const articleStructuredData = createArticleStructuredData({
+    pageUrl: canonical,
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: createdDate.dateTime,
+    dateModified: modifiedDate.dateTime,
+    authorName,
+    authorType,
+    image: ogImage
+  })
+  const jsonLd = await createPageStructuredData({
+    pageUrl: canonical,
+    name: article.title,
+    description: article.excerpt,
+    breadcrumbs,
+    mainEntityId: articleStructuredData['@id'] as string | undefined,
+    additionalNodes: [articleStructuredData, faqStructuredData]
+  })
 
   return <JsonLd data={jsonLd} />
 }

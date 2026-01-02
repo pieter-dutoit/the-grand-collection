@@ -3,7 +3,202 @@ import { createSourceSet } from '@/components/ui/image'
 
 import { extractContactDetails, extractImageProps, getBaseUrl } from '.'
 import { fetchGuestHouses, fetchHomePageData, fetchLogo } from '../data'
+import { createBreadcrumbListStructuredData } from './breadcrumbs'
 import { getFaqItems } from './faq'
+import type { BreadcrumbItem } from './breadcrumbs'
+
+const SCHEMA_CONTEXT = 'https://schema.org'
+
+export type StructuredDataNode = {
+  '@type': string | string[]
+  '@id'?: string
+} & Record<string, unknown>
+
+export type StructuredDataGraph = {
+  '@context': typeof SCHEMA_CONTEXT
+  '@graph': StructuredDataNode[]
+}
+
+export const createStructuredDataGraph = (
+  nodes: Array<StructuredDataNode | null | undefined>
+): StructuredDataGraph => ({
+  '@context': SCHEMA_CONTEXT,
+  '@graph': nodes.filter(Boolean) as StructuredDataNode[]
+})
+
+export const getOrganisationId = () => `${getBaseUrl()}#organization`
+export const getWebSiteId = () => `${getBaseUrl()}#website`
+
+type WebPageStructuredDataInput = {
+  pageUrl: string
+  pageType?: string | string[]
+  name?: string
+  description?: string
+  breadcrumbId?: string
+  mainEntityId?: string
+}
+
+export function createWebSiteStructuredData(): StructuredDataNode {
+  const baseUrl = getBaseUrl()
+
+  return {
+    '@type': 'WebSite',
+    '@id': getWebSiteId(),
+    url: baseUrl,
+    name: 'The Grand Collection',
+    publisher: {
+      '@id': getOrganisationId()
+    },
+    inLanguage: 'en-ZA'
+  }
+}
+
+export function createWebPageStructuredData({
+  pageUrl,
+  pageType = 'WebPage',
+  name,
+  description,
+  breadcrumbId,
+  mainEntityId
+}: WebPageStructuredDataInput): StructuredDataNode {
+  return {
+    '@type': pageType,
+    '@id': pageUrl,
+    url: pageUrl,
+    ...(name && { name }),
+    ...(description && { description }),
+    isPartOf: {
+      '@id': getWebSiteId()
+    },
+    publisher: {
+      '@id': getOrganisationId()
+    },
+    ...(breadcrumbId && {
+      breadcrumb: {
+        '@id': breadcrumbId
+      }
+    }),
+    ...(mainEntityId && {
+      mainEntity: {
+        '@id': mainEntityId
+      }
+    }),
+    inLanguage: 'en-ZA'
+  }
+}
+
+type PageStructuredDataInput = {
+  pageUrl: string
+  pageType?: string | string[]
+  name?: string
+  description?: string
+  breadcrumbs?: BreadcrumbItem[]
+  mainEntityId?: string
+  additionalNodes?: Array<StructuredDataNode | null | undefined>
+}
+
+export async function createPageStructuredData({
+  pageUrl,
+  pageType,
+  name,
+  description,
+  breadcrumbs,
+  mainEntityId,
+  additionalNodes
+}: PageStructuredDataInput): Promise<StructuredDataGraph> {
+  const breadcrumbStructuredData = breadcrumbs
+    ? createBreadcrumbListStructuredData(breadcrumbs, pageUrl)
+    : null
+  const webPageStructuredData = createWebPageStructuredData({
+    pageUrl,
+    pageType,
+    name,
+    description,
+    breadcrumbId: breadcrumbStructuredData?.['@id'] as string | undefined,
+    mainEntityId
+  })
+  const organisationStructuredData = await getOrganisationStructuredData()
+
+  return createStructuredDataGraph([
+    createWebSiteStructuredData(),
+    organisationStructuredData,
+    webPageStructuredData,
+    breadcrumbStructuredData,
+    ...(additionalNodes ?? [])
+  ])
+}
+
+type ItemListStructuredDataInput = {
+  pageUrl: string
+  name?: string
+  description?: string
+  itemListOrder?: string
+  itemListElement: StructuredDataNode[]
+}
+
+export function createItemListStructuredData({
+  pageUrl,
+  name,
+  description,
+  itemListOrder,
+  itemListElement
+}: ItemListStructuredDataInput): StructuredDataNode {
+  return {
+    '@type': 'ItemList',
+    '@id': `${pageUrl}#itemlist`,
+    ...(name && { name }),
+    ...(description && { description }),
+    ...(itemListOrder && { itemListOrder }),
+    url: pageUrl,
+    numberOfItems: itemListElement.length,
+    itemListElement
+  }
+}
+
+type ArticleAuthorType = 'Organization' | 'Person'
+
+type ArticleStructuredDataInput = {
+  pageUrl: string
+  headline: string
+  description?: string | null
+  datePublished: string
+  dateModified: string
+  authorName: string
+  authorType: ArticleAuthorType
+  image?: string
+}
+
+export function createArticleStructuredData({
+  pageUrl,
+  headline,
+  description,
+  datePublished,
+  dateModified,
+  authorName,
+  authorType,
+  image
+}: ArticleStructuredDataInput): StructuredDataNode {
+  return {
+    '@type': 'Article',
+    '@id': `${pageUrl}#article`,
+    url: pageUrl,
+    headline,
+    ...(description && { description }),
+    datePublished,
+    dateModified,
+    author: {
+      '@type': authorType,
+      name: authorName
+    },
+    publisher: {
+      '@id': getOrganisationId()
+    },
+    mainEntityOfPage: {
+      '@id': pageUrl
+    },
+    ...(image && { image: [image] })
+  }
+}
 
 const LANGUAGES = [
   {
@@ -42,41 +237,18 @@ export function createAbsoluteImagePath(cmsPath: string): string {
 }
 
 export function createAmenitiesList(amenities: (Amenity | string)[]) {
-  return [
-    {
-      '@type': 'LocationFeatureSpecification',
-      name: 'InstantBookable',
-      value: true
-    },
-    {
-      '@type': 'LocationFeatureSpecification',
-      name: 'Smoking',
-      value: false
-    },
-    {
-      '@type': 'LocationFeatureSpecification',
-      name: 'PoolType',
-      value: 'OUTDOOR'
-    },
-    {
-      '@type': 'LocationFeatureSpecification',
-      name: 'InternetType',
-      value: 'FREE'
-    },
-    {
-      '@type': 'LocationFeatureSpecification',
-      name: 'ParkingType',
-      value: 'FREE'
-    },
-    ...amenities
-      .filter((amenity) => typeof amenity !== 'string')
-      .map(({ googleName }) => ({
-        '@type': 'LocationFeatureSpecification',
-        name: googleName,
-        value: true
-      }))
-      .filter(({ name }) => !!name)
-  ]
+  return amenities
+    .filter((amenity) => typeof amenity !== 'string')
+    .map(({ googleName }) =>
+      googleName
+        ? {
+            '@type': 'LocationFeatureSpecification',
+            name: googleName,
+            value: true
+          }
+        : null
+    )
+    .filter(Boolean)
 }
 
 export function createMediaObject(image: Media | string) {
@@ -94,7 +266,7 @@ export function createMediaObject(image: Media | string) {
     creditText: 'The Grand Collection',
     creator: {
       '@type': 'Organization',
-      '@id': getBaseUrl() + '/#organization',
+      '@id': getOrganisationId(),
       name: 'The Grand Collection'
     },
     copyrightNotice: `© ${currentYear} The Grand Collection. All Rights Reserved.`
@@ -106,16 +278,16 @@ export async function getOrganisationStructuredData() {
   const homePageData = await fetchHomePageData()
   const { hero, overview, socials, contactPersons } = homePageData
   const contacts = extractContactDetails(contactPersons)
+  const baseUrl = getBaseUrl()
 
   // Logo
   const logoData = await fetchLogo('minimal_dark')
   const { url: logoURL } = extractImageProps(logoData.minimal_dark)
 
   return {
-    '@context': 'https://schema.org',
     '@type': 'Organization',
-    '@id': getBaseUrl() + '/#organization',
-    url: getBaseUrl(),
+    '@id': getOrganisationId(),
+    url: baseUrl,
     name: 'The Grand Collection',
     sameAs: socials?.map(({ url }) => url),
     logo: createAbsoluteImagePath(logoURL),
@@ -149,9 +321,14 @@ export function createFaqStructuredData({
   }
 
   return {
-    '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    ...(pageUrl && { '@id': `${pageUrl}#faq`, url: pageUrl }),
+    ...(pageUrl && {
+      '@id': `${pageUrl}#faq`,
+      url: pageUrl,
+      isPartOf: {
+        '@id': pageUrl
+      }
+    }),
     mainEntity: items.map(({ question, answer }) => ({
       '@type': 'Question',
       name: question,
@@ -165,10 +342,12 @@ export function createFaqStructuredData({
 
 export async function createGuesthouseStructuredData({
   guesthouse,
-  minimal = false
+  minimal = false,
+  pageUrl
 }: {
   guesthouse: Guesthouse
   minimal?: boolean
+  pageUrl?: string
 }) {
   const {
     slug,
@@ -187,6 +366,7 @@ export async function createGuesthouseStructuredData({
     }
   } = guesthouse
 
+  const guesthouseUrl = pageUrl ?? `${getBaseUrl()}/guesthouses/${slug}`
   const telephone = '+27' + extractContactDetails(contact_persons)[0].phoneLink
   const email = extractContactDetails(contact_persons)[0].email
 
@@ -195,10 +375,9 @@ export async function createGuesthouseStructuredData({
     .flatMap(({ gallery }) => gallery)
 
   return {
-    '@context': 'https://schema.org',
     '@type': 'LodgingBusiness',
-    '@id': getBaseUrl() + '/guesthouses/' + slug + '/#lodgingBusiness',
-    url: getBaseUrl() + '/guesthouses/' + slug,
+    '@id': `${guesthouseUrl}#lodgingbusiness`,
+    url: guesthouseUrl,
     name,
     telephone,
     address: {
@@ -212,7 +391,9 @@ export async function createGuesthouseStructuredData({
     // Full data:
     ...(!minimal && {
       identifier: 'hotel-id-' + slug,
-      parentOrganization: await getOrganisationStructuredData(),
+      parentOrganization: {
+        '@id': getOrganisationId()
+      },
       geo: {
         '@type': 'GeoCoordinates',
         latitude,
@@ -246,18 +427,18 @@ export async function createGuesthouseStructuredData({
       amenityFeature: createAmenitiesList(general_amenities),
       containsPlace: rooms
         ?.filter((room) => typeof room !== 'string')
-        .map((room) => createRoomStructuredData(room, guesthouse))
+        .map((room) =>
+          createRoomStructuredData(room, guesthouse, guesthouseUrl)
+        )
     })
   }
 }
 
-function createRoomStructuredData(room: Room, guesthouse: Guesthouse) {
-  const {
-    business_details: {
-      check_in_out: { check_in_time, check_out_time }
-    }
-  } = guesthouse
-
+function createRoomStructuredData(
+  room: Room,
+  guesthouse: Guesthouse,
+  guesthouseUrl: string
+) {
   const {
     base_price,
     slug,
@@ -274,34 +455,31 @@ function createRoomStructuredData(room: Room, guesthouse: Guesthouse) {
 
   return {
     '@type': ['HotelRoom', 'Product'],
-    '@id': getBaseUrl() + '/guesthouses/' + guesthouse.slug + '/#' + slug,
+    '@id': `${guesthouseUrl}#room-${slug}`,
     image: gallery.map(createMediaObject),
     name,
     description,
     identifier: roomIdentifier,
     offers: {
-      '@type': ['Offer', 'LodgingReservation'],
-      identifier: roomIdentifier + '-standard-rate',
-      checkinTime: check_in_time,
-      checkoutTime: check_out_time,
+      '@type': 'Offer',
+      '@id': `${guesthouseUrl}#offer-${roomIdentifier}`,
       url: guesthouse.booking_platform.url,
       availability: 'https://schema.org/InStock',
-      priceSpecification: {
-        '@type': 'CompoundPriceSpecification',
-        price: base_price,
-        priceCurrency: 'ZAR'
-      }
+      price: base_price,
+      priceCurrency: 'ZAR'
     },
-    bed: beds.map(({ type, quantity }) => {
-      if (typeof type === 'string') return
-      const { googleName } = type
+    bed: beds
+      .map(({ type, quantity }) => {
+        if (typeof type === 'string') return
+        const { googleName } = type
 
-      return {
-        '@type': 'BedDetails',
-        typeOfBed: googleName,
-        numberOfBeds: quantity
-      }
-    }),
+        return {
+          '@type': 'BedDetails',
+          typeOfBed: googleName,
+          numberOfBeds: quantity
+        }
+      })
+      .filter(Boolean),
     occupancy: {
       '@type': 'QuantitativeValue',
       value: sleepsCount,
@@ -313,14 +491,14 @@ function createRoomStructuredData(room: Room, guesthouse: Guesthouse) {
 
 export async function getGuesthouseListStructure() {
   const guesthouses = await fetchGuestHouses()
+  const baseUrl = getBaseUrl()
+  const pageUrl = `${baseUrl}/guesthouses`
 
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
+  return createItemListStructuredData({
+    pageUrl,
     name: 'The Grand Collection Guesthouses',
     description:
       'A curated list of luxury guesthouses under The Grand Collection across South Africa.',
-    url: getBaseUrl() + '/guesthouses',
     itemListElement: guesthouses.map(
       (
         {
@@ -333,15 +511,21 @@ export async function getGuesthouseListStructure() {
         },
         index
       ) => {
+        const guesthouseUrl = `${baseUrl}/guesthouses/${slug}`
+
         return {
           '@type': 'ListItem',
           position: index + 1,
-          name,
-          url: getBaseUrl() + '/guesthouses/' + slug,
-          image: createMediaObject(exterior[0]),
-          description
+          item: {
+            '@type': 'LodgingBusiness',
+            '@id': `${guesthouseUrl}#lodgingbusiness`,
+            name,
+            url: guesthouseUrl,
+            image: createMediaObject(exterior[0]),
+            description
+          }
         }
       }
     )
-  }
+  })
 }
