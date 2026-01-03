@@ -78,7 +78,6 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
                     alt={alt}
                     fill
                     className='object-cover object-center'
-                    priority
                     sizes={sizes}
                   />
                   {showRemainder && (

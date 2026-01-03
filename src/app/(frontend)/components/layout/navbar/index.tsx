@@ -49,6 +49,7 @@ export default async function Navbar(): Promise<JSX.Element> {
                 alt={alt}
                 fill
                 className='object-contain object-center'
+                sizes='(max-width: 640px) 8rem, 9rem'
               />
             </div>
           </Link>

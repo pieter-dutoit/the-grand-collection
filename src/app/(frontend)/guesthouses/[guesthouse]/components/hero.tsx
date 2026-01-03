@@ -29,17 +29,19 @@ export default function Hero({
   const { url: heroSrc, alt } = extractImageProps(background_image)
   return (
     <section className='relative bg-olive-50'>
-      {/* Mobile hero image */}
-      <div className='relative aspect-[20/8] sm:hidden'>
-        <Image
-          src={heroSrc}
-          alt={alt}
-          fill
-          className='object-cover object-center sm:hidden'
-          priority
-          sizes='100vw'
-        />
-      </div>
+      {heroSrc && (
+        <div className='relative aspect-[20/8] w-full sm:absolute sm:inset-y-0 sm:left-[35vw] sm:right-0 sm:aspect-auto sm:h-full'>
+          <Image
+            src={heroSrc}
+            alt={alt}
+            fill
+            className='object-cover object-center'
+            priority
+            sizes='(max-width: 640px) 100vw, 65vw'
+          />
+          <div className='absolute inset-0 hidden from-olive-50 sm:block sm:bg-gradient-to-r sm:via-olive-50/70 sm:to-transparent' />
+        </div>
+      )}
 
       {/* Hero text */}
       <div className='container mx-auto grid w-full grid-cols-1 gap-8'>
@@ -92,19 +94,6 @@ export default function Hero({
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Desktop image */}
-      <div className='absolute inset-y-0 left-[35vw] right-0'>
-        <Image
-          src={heroSrc}
-          alt={alt}
-          fill
-          className='hidden object-cover object-center sm:block'
-          priority
-          sizes='65vw'
-        />
-        <div className='absolute inset-0 hidden from-olive-50 sm:block sm:bg-gradient-to-r sm:via-olive-50/70 sm:to-transparent' />
       </div>
     </section>
   )

@@ -20,9 +20,8 @@ export default async function DestinationHero({
 
   return (
     <section className='relative bg-olive-200'>
-      {/* Mobile image */}
       {heroImageUrl && (
-        <div className='relative aspect-video w-full sm:hidden'>
+        <div className='relative aspect-video w-full sm:absolute sm:inset-0 sm:aspect-auto sm:size-full'>
           <Image
             src={heroImageUrl}
             alt={heroImageAltText}
@@ -31,6 +30,7 @@ export default async function DestinationHero({
             priority
             sizes='100vw'
           />
+          <div className='absolute inset-0 hidden bg-gradient-to-r from-olive-300 via-olive-200 to-transparent sm:block' />
         </div>
       )}
 
@@ -47,21 +47,6 @@ export default async function DestinationHero({
           )}
         </div>
       </div>
-
-      {/* Desktop image */}
-      {heroImageUrl && (
-        <div className='absolute inset-0 hidden sm:block'>
-          <Image
-            src={heroImageUrl}
-            alt={heroImageAltText}
-            fill
-            className='object-cover object-center'
-            priority
-            sizes='100vw'
-          />
-          <div className='absolute inset-0 bg-gradient-to-r from-olive-300 via-olive-200 to-transparent' />
-        </div>
-      )}
     </section>
   )
 }

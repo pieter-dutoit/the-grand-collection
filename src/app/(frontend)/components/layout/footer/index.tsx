@@ -32,6 +32,7 @@ export default async function Footer(): Promise<JSX.Element> {
                 alt={alt}
                 fill
                 className='object-contain object-center'
+                sizes='(max-width: 640px) 60vw, 13rem'
               />
             </div>
           </Link>
