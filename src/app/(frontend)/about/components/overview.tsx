@@ -27,7 +27,7 @@ export default async function Overview(): Promise<JSX.Element> {
 
         {/* Text */}
         <div className='container mx-auto py-8 lg:py-16'>
-          <SectionHeading title={title} />
+          <SectionHeading title={title} className='text-center sm:text-left' />
 
           <p className='mx-auto mt-4 text-center font-light sm:text-left md:text-lg'>
             {description}

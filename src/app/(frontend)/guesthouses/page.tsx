@@ -47,7 +47,7 @@ export default async function AllGuestHouses(): Promise<JSX.Element> {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <section className='container mx-auto pt-5'>
+      <section className='container mx-auto pt-3'>
         <Breadcrumbs items={breadcrumbs} />
       </section>
       <section className='container mx-auto grid w-full pb-10 lg:pb-20'>

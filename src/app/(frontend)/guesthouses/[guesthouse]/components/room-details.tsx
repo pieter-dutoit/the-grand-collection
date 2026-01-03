@@ -20,9 +20,7 @@ export default function RoomDetails({
   const { url, alt } = extractImageProps(peopleIcon)
   return (
     <>
-      <h3 className='text-base font-semibold text-olive-500 md:text-xl'>
-        {name}
-      </h3>
+      <h3 className='text-xl font-semibold text-olive-500'>{name}</h3>
       <p className='mt-2 text-pretty text-sm'>{description}</p>
 
       <div className='mt-6 flex flex-col gap-6'>

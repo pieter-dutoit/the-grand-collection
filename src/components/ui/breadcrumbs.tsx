@@ -23,30 +23,35 @@ export default function Breadcrumbs({
     <nav
       aria-label='Breadcrumb'
       className={cn(
-        'text-xs font-semibold tracking-wide text-olive-500',
+        'flex text-xs font-semibold tracking-wide text-olive-500',
         className
       )}
     >
       <ol
-        className={cn('flex items-center gap-2 overflow-x-auto', listClassName)}
+        className={cn(
+          'flex items-center overflow-x-auto rounded-sm bg-white/70 px-2 py-1 backdrop-blur-md',
+          listClassName
+        )}
       >
         {items.map((item, index) => {
           const isLast = index === items.length - 1
 
           return (
             <li key={`${item.name}-${index}`} className='flex items-center'>
-              {index > 0 && <ChevronRight className='size-4 text-olive-600' />}
+              {index > 0 && (
+                <ChevronRight className='mx-1 size-3 text-olive-600' />
+              )}
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className='rounded-sm bg-white/60 px-2 py-1 backdrop-blur-md transition-colors hover:text-olive-800'
+                  className='rounded-sm transition-colors hover:text-olive-800'
                 >
                   {item.name}
                 </Link>
               ) : (
                 <span
                   className={cn(
-                    'line-clamp-1 rounded-sm bg-white/60 px-2 py-1 backdrop-blur-md',
+                    'line-clamp-1 rounded-sm',
                     isLast ? 'text-olive-800' : 'text-olive-500'
                   )}
                   aria-current={isLast ? 'page' : undefined}

@@ -109,7 +109,7 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <section className='absolute inset-x-0 top-14 z-20 w-full py-5'>
+      <section className='absolute inset-x-0 top-16 z-20 w-full py-3'>
         <div className='container mx-auto w-full'>
           <Breadcrumbs items={breadcrumbs} />
         </div>

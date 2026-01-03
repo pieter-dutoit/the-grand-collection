@@ -12,6 +12,7 @@ import {
   getOrganisationId
 } from '@/lib/utils/create-structured-data'
 import { getHomeBreadcrumbs } from '@/lib/utils/breadcrumbs'
+import Divider from './guesthouses/[guesthouse]/components/divider'
 
 export default async function Home() {
   const { faq } = await fetchHomePageData('faq')
@@ -35,8 +36,9 @@ export default async function Home() {
       <JsonLd data={jsonLd} />
       <Hero />
       <Overview />
+      <Divider />
       <FeaturedProperties />
-      {/* <Divider /> */}
+
       <FaqSection
         faq={faq}
         parentLabel='Frequently asked questions'

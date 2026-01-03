@@ -15,6 +15,7 @@ import DestinationGuidesStructuredData from './components/structured-data'
 import DestinationWhereToStay from './components/where-to-stay'
 import DestinationFaq from './components/faq'
 import { getDestinationData } from './lib/destination-data'
+import DestinationNav from './components/nav'
 
 type Props = {
   params: Promise<{ destination: string }>
@@ -67,12 +68,13 @@ export default async function ArticlesPage({ params }: Props) {
   return (
     <>
       <DestinationGuidesStructuredData destinationSlug={destinationSlug} />
-      <section className='absolute inset-x-0 top-14 z-20 w-full py-5'>
+      <section className='absolute inset-x-0 top-16 z-20 w-full py-3'>
         <div className='container mx-auto w-full'>
           <Breadcrumbs items={breadcrumbs} />
         </div>
       </section>
       <DestinationHero destinationSlug={destinationSlug} />
+      <DestinationNav />
       <ArticleIndex destinationSlug={destinationSlug} />
       <Divider />
       <DestinationWhereToStay destinationSlug={destinationSlug} />

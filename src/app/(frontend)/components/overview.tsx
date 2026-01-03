@@ -39,7 +39,7 @@ export default async function Overview(): Promise<JSX.Element> {
 
           {/* Q3 */}
           <div className='h-fit w-full place-self-center'>
-            <ul className='my-auto grid h-fit grid-cols-2 gap-4'>
+            <ul className='my-auto grid h-fit grid-cols-2 gap-2'>
               {images.map((image, index) => {
                 const { url, alt } = extractImageProps(image)
                 const { classes, sizes } =
@@ -60,7 +60,7 @@ export default async function Overview(): Promise<JSX.Element> {
                     key={url}
                     className={twMerge(
                       classes,
-                      'relative overflow-hidden rounded-lg border border-gold-200 bg-olive-300'
+                      'relative overflow-hidden rounded-lg border-2 border-gold-300 bg-olive-300'
                     )}
                   >
                     <Image
@@ -81,7 +81,7 @@ export default async function Overview(): Promise<JSX.Element> {
             {features.map(({ title, description }) => {
               return (
                 <li key={title} className='mb-3'>
-                  <h3 className='text-xl font-semibold text-sage-600 md:text-2xl'>
+                  <h3 className='text-xl font-semibold text-olive-600 md:text-2xl'>
                     {title}
                   </h3>
                   <p className='mt-2 text-base font-light'>{description}</p>

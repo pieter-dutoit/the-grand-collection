@@ -46,7 +46,7 @@ export default function PropertyPreview({
   return (
     <div
       className={twMerge(
-        'flex w-full flex-col gap-2 rounded-xl border border-gold-100 bg-gold-50 p-4 shadow-md transition-shadow ease-in hover:shadow-xl',
+        'flex w-full flex-col gap-2 rounded-xl border border-gold-200 bg-white p-4 shadow-lg transition-shadow ease-in hover:shadow-xl',
         margin
       )}
     >
@@ -90,17 +90,17 @@ export default function PropertyPreview({
 
       <div className='flex flex-col lg:flex-row lg:items-start lg:justify-between'>
         <div className='flex flex-col'>
-          <span className='text-xs font-bold text-sage-400'>Guesthouse</span>
+          <span className='text-xs font-bold text-olive-400'>Guesthouse</span>
 
           <h3 className='text-2xl font-semibold leading-tight text-olive-800'>
             {name}
           </h3>
           <div className='mt-2 flex items-center'>
-            <MapPin className='size-4 text-sage-400' />
-            <p className='ml-1 text-xs font-bold text-sage-400'>{`${city}, ${province}`}</p>
+            <MapPin className='size-4 text-olive-400' />
+            <p className='ml-1 text-xs font-bold text-olive-400'>{`${city}, ${province}`}</p>
           </div>
 
-          <div className='mt-2 text-sm font-extrabold text-sage-900'>
+          <div className='mt-2 text-sm font-extrabold text-olive-900'>
             from <span className='text-xl'>R{lowestPrice}</span> per night
           </div>
         </div>
@@ -144,7 +144,7 @@ export default function PropertyPreview({
         </div>
       </div>
 
-      <p className='mt-4 text-justify text-base font-normal tracking-wide text-olive-500'>
+      <p className='mt-4 text-justify text-base font-normal tracking-wide text-olive-950'>
         {heading}
       </p>
     </div>

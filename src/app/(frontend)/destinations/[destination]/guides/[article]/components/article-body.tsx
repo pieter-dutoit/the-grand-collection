@@ -57,7 +57,7 @@ export default async function ArticleBody({
 
               {hasFaq && (
                 <li>
-                  <Button asChild variant='ghost' colour='gold'>
+                  <Button asChild variant='ghost' colour='olive'>
                     <Link href='#faq'>FAQs</Link>
                   </Button>
                 </li>

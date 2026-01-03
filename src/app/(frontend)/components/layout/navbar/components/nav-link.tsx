@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { MapPin } from 'lucide-react'
+import { Lock, MapPin } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
 import Image from '@/components/ui/image'
@@ -83,19 +83,30 @@ function DetailedNavLink({
 function ExternalNavLink({
   label,
   href,
+  externalSiteName,
   isHighlighted
 }: NavOption): JSX.Element {
-  const highlightedStyles = isHighlighted ? 'bg-olive-50' : 'bg-white'
+  const highlightedStyles = isHighlighted ? 'bg-olive-100' : 'bg-white'
 
   return (
     <NavigationMenuLink
       href={href}
       className={twMerge(
-        'my-1 flex min-w-44 flex-row items-center rounded-sm border border-olive-200 py-1 pl-4 pr-2 font-semibold transition-colors hover:border-olive-950 active:border-olive-500',
+        'my-1 flex min-w-48 flex-row items-center justify-end rounded-sm border border-olive-200 py-1 pl-4 pr-2 transition-colors hover:border-olive-950 active:border-olive-500',
         highlightedStyles
       )}
     >
-      <span className='text-nowrap text-base text-olive-800'>{label.text}</span>
+      <div className='flex flex-col items-end'>
+        <span className='text-nowrap text-base text-olive-800'>
+          {label.text}
+        </span>
+        <div className='flex items-center gap-1'>
+          <Lock className='size-2' />
+          <em className='text-nowrap text-xs'>
+            Opens <strong className='font-semibold'>{externalSiteName}</strong>
+          </em>
+        </div>
+      </div>
     </NavigationMenuLink>
   )
 }
