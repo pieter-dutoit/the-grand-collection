@@ -24,6 +24,13 @@ const extractPathname = (value: string) => {
   }
 }
 
+const isSvgPath = (value: string) => {
+  if (!value) return false
+  const pathname = extractPathname(value)
+  const cleaned = pathname.split(/[?#]/)[0]
+  return cleaned.toLowerCase().endsWith('.svg')
+}
+
 const stripBucketPrefix = (pathname: string) => {
   const bucket = process.env.S3_BUCKET
   if (bucket && pathname.startsWith(`${bucket}/`)) {
@@ -109,16 +116,24 @@ export function extractImageProps(
   alt: string
   width: number
   height: number
+  isSvg: boolean
 } {
   if (!image || image === null || typeof image === 'string') {
-    return { url: '', alt: '', height: 0, width: 0 }
+    return { url: '', alt: '', height: 0, width: 0, isSvg: false }
   }
   const { alt, height, width } = image
+  const url = getPublicImageUrl(image)
+  const isSvg =
+    image.mimeType?.toLowerCase() === 'image/svg+xml' ||
+    isSvgPath(image.filename ?? '') ||
+    isSvgPath(url) ||
+    isSvgPath(image.url ?? '')
   return {
-    url: getPublicImageUrl(image),
+    url,
     alt: alt ?? '',
     height: height ?? 0,
-    width: width ?? 0
+    width: width ?? 0,
+    isSvg
   }
 }
 
