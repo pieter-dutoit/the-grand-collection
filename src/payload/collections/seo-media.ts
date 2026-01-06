@@ -4,7 +4,7 @@ import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
 const WEBP_FORMAT = {
   format: 'webp',
   options: {
-    quality: 100
+    quality: 75
   }
 } satisfies ImageUploadFormatOptions
 

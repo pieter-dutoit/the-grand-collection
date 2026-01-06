@@ -27,7 +27,7 @@ export default async function Navbar(): Promise<JSX.Element> {
   const bookingOptions = await getBookingOptions()
   const logo = await fetchLogo('minimal_dark')
   const { minimal_dark } = logo
-  const { url, alt } = extractImageProps(minimal_dark)
+  const logoProps = extractImageProps(minimal_dark)
 
   return (
     <header className='sticky left-0 top-0 z-50 h-16 w-full border-b border-b-olive-100 bg-white'>
@@ -45,11 +45,12 @@ export default async function Navbar(): Promise<JSX.Element> {
           <Link href='/' aria-label='Home'>
             <div className='relative h-14 w-32 sm:w-36'>
               <Image
-                src={url}
-                alt={alt}
+                src={logoProps.url}
+                alt={logoProps.alt}
                 fill
                 className='object-contain object-center'
                 sizes='(max-width: 640px) 8rem, 9rem'
+                unoptimized={logoProps.isSvg}
               />
             </div>
           </Link>

@@ -18,7 +18,7 @@ export default async function Footer(): Promise<JSX.Element> {
   const guesthouses = await fetchGuestHouses()
   const logo = await fetchLogo('minimal_light')
   const { minimal_light } = logo
-  const { url, alt } = extractImageProps(minimal_light)
+  const logoProps = extractImageProps(minimal_light)
 
   return (
     <footer className='w-full justify-center bg-black py-8'>
@@ -28,11 +28,12 @@ export default async function Footer(): Promise<JSX.Element> {
           <Link href='/'>
             <div className='relative mx-auto h-16 w-52 max-w-full md:mx-0'>
               <Image
-                src={url}
-                alt={alt}
+                src={logoProps.url}
+                alt={logoProps.alt}
                 fill
                 className='object-contain object-center'
                 sizes='(max-width: 640px) 60vw, 13rem'
+                unoptimized={logoProps.isSvg}
               />
             </div>
           </Link>

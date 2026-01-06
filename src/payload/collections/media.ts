@@ -8,7 +8,7 @@ const NEXT_IMAGE_WIDTHS = [
 const WEBP_FORMAT = {
   format: 'webp',
   options: {
-    quality: 100
+    quality: 75
   }
 } satisfies ImageUploadFormatOptions
 
