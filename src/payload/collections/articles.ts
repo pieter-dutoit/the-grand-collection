@@ -2,14 +2,14 @@ import type { CollectionConfig } from 'payload'
 
 import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 
-import createSlug from '../hooks/collections/create-collection-slug'
+import createArticleSlug from '../hooks/collections/create-article-slug'
 import revalidateCache from '../hooks/collections/revalidate-cache'
 import { GoogleMapBlock } from '../blocks/google-map'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
   hooks: {
-    beforeChange: [createSlug],
+    beforeChange: [createArticleSlug],
     afterChange: [revalidateCache('articles', true)]
   },
   admin: {
@@ -26,8 +26,7 @@ export const Articles: CollectionConfig = {
       unique: true,
       required: true,
       admin: {
-        position: 'sidebar',
-        readOnly: true
+        position: 'sidebar'
       }
     },
     {
@@ -120,7 +119,7 @@ export const Articles: CollectionConfig = {
       label: 'Excerpt',
       required: true,
       minLength: 10,
-      maxLength: 300
+      maxLength: 500
     },
     {
       name: 'body',
