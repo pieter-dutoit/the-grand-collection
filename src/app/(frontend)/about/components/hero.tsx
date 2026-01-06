@@ -8,7 +8,7 @@ export default async function Hero(): Promise<JSX.Element> {
   const { heading, sub_heading } = hero
 
   return (
-    <section className='container mx-auto grid w-full px-8 py-10 lg:py-20'>
+    <section className='container mx-auto grid w-full px-8 pb-10 lg:pb-20'>
       <PageHeading heading={heading} subHeading={sub_heading} />
     </section>
   )

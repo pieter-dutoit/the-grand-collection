@@ -9,7 +9,7 @@ import {
   CarouselItem
 } from '@/components/ui/carousel'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { Media } from '@/payload/payload-types'
 import { extractImageProps } from '@/lib/utils'
 
@@ -64,7 +64,7 @@ export default function PrimaryImageCarousel({
           align: 'center',
           loop: true
         }}
-        className='relative mb-4 mt-2 w-full overflow-hidden rounded-lg border-2 border-gold-500 drop-shadow-md lg:rounded-2xl'
+        className='relative mb-4 mt-2 w-full overflow-hidden rounded-lg border border-gold-200 drop-shadow-md lg:rounded-2xl'
       >
         <CarouselContent className='-ml-1'>
           {images.map((image, index) => {

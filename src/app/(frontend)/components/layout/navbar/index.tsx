@@ -13,7 +13,7 @@ import {
 
 import { CountryOutline } from '@/components/ui/logos'
 import { getButtonStyles } from '@/components/ui/button'
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 
 import MobileDrawer from './components/mobile-drawer'
 import NavOptions from './components/nav-options'
@@ -49,6 +49,7 @@ export default async function Navbar(): Promise<JSX.Element> {
                 alt={alt}
                 fill
                 className='object-contain object-center'
+                sizes='(max-width: 640px) 8rem, 9rem'
               />
             </div>
           </Link>
@@ -67,7 +68,7 @@ export default async function Navbar(): Promise<JSX.Element> {
                   'text-sm font-bold uppercase'
                 )}
               >
-                Book Now
+                Book now
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <BookingOptions options={bookingOptions} />

@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { ExternalLink, MapPin } from 'lucide-react'
+import { Lock, MapPin } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { NavigationMenuLink } from '@/components/ui/navigation-menu'
 import { getButtonStyles } from '@/components/ui/button'
 import { extractImageProps } from '@/lib/utils'
@@ -13,20 +13,19 @@ function BlockLink({ label, href }: NavOption): JSX.Element {
   const { variant, color, text } = label
 
   return (
-    <Link legacyBehavior href={href ?? '#'} passHref>
-      <NavigationMenuLink
-        className={twMerge(
-          getButtonStyles({
-            ...label,
-            variant,
-            colour: color
-          }),
-          'mb-1 w-full bg-olive-50 lg:bg-olive-50/50'
-        )}
-      >
-        {text}
-      </NavigationMenuLink>
-    </Link>
+    <NavigationMenuLink
+      asChild
+      className={twMerge(
+        getButtonStyles({
+          ...label,
+          variant,
+          colour: color
+        }),
+        'mb-1 w-full bg-olive-50 lg:bg-olive-50/50'
+      )}
+    >
+      <Link href={href ?? '#'}>{text}</Link>
+    </NavigationMenuLink>
   )
 }
 
@@ -39,8 +38,11 @@ function DetailedNavLink({
   const { text } = label
   const { alt, url } = image ? extractImageProps(image) : { alt: '', url: '' }
   return (
-    <Link legacyBehavior href={href ?? '#'} passHref className='my-1 flex'>
-      <NavigationMenuLink className='my-1 w-[250px] overflow-hidden rounded-lg border border-olive-100 bg-olive-50 transition-colors hover:bg-olive-50/50 active:border-olive-300 sm:w-[350px] lg:bg-transparent'>
+    <NavigationMenuLink
+      asChild
+      className='my-1 w-[250px] overflow-hidden rounded-lg border border-olive-100 bg-olive-50 transition-colors hover:bg-olive-50/50 active:border-olive-300 sm:w-[350px] lg:bg-transparent'
+    >
+      <Link href={href ?? '#'}>
         <div className='flex grow'>
           <Image
             width={90}
@@ -55,7 +57,7 @@ function DetailedNavLink({
               {text}
             </h3>
 
-            <p className='my-1 flex items-center text-xs font-semibold italic text-olive-500 sm:text-sm'>
+            <p className='my-1 flex items-center text-xs font-semibold text-olive-500 sm:text-sm'>
               <MapPin className='mr-1 size-4' /> {address}
             </p>
 
@@ -63,18 +65,18 @@ function DetailedNavLink({
               className={twMerge(
                 getButtonStyles({
                   variant: 'link',
-                  colour: 'default',
+                  colour: 'olive',
                   size: 'sm'
                 }),
                 'hidden pl-0 sm:flex'
               )}
             >
-              See More
+              View details
             </p>
           </div>
         </div>
-      </NavigationMenuLink>
-    </Link>
+      </Link>
+    </NavigationMenuLink>
   )
 }
 
@@ -89,8 +91,6 @@ function ExternalNavLink({
   return (
     <NavigationMenuLink
       href={href}
-      target='_blank'
-      rel='noopener noreferrer'
       className={twMerge(
         'my-1 flex min-w-48 flex-row items-center justify-end rounded-sm border border-olive-200 py-1 pl-4 pr-2 transition-colors hover:border-olive-950 active:border-olive-500',
         highlightedStyles
@@ -100,11 +100,13 @@ function ExternalNavLink({
         <span className='text-nowrap text-base text-olive-800'>
           {label.text}
         </span>
-        <em className='text-nowrap text-xs'>
-          Book on <strong className='font-semibold'>{externalSiteName}</strong>
-        </em>
+        <div className='flex items-center gap-1'>
+          <Lock className='size-2' />
+          <em className='text-nowrap text-xs'>
+            Opens <strong className='font-semibold'>{externalSiteName}</strong>
+          </em>
+        </div>
       </div>
-      <ExternalLink className='ml-2 text-olive-800' />
     </NavigationMenuLink>
   )
 }
@@ -113,17 +115,16 @@ function DefaultLink({ label, href }: NavOption): JSX.Element {
   const { text, variant, color } = label
 
   return (
-    <Link legacyBehavior href={href ?? '#'} passHref>
-      <NavigationMenuLink
-        className={getButtonStyles({
-          ...label,
-          variant,
-          colour: color
-        })}
-      >
-        {text}
-      </NavigationMenuLink>
-    </Link>
+    <NavigationMenuLink
+      asChild
+      className={getButtonStyles({
+        ...label,
+        variant,
+        colour: color
+      })}
+    >
+      <Link href={href ?? '#'}>{text}</Link>
+    </NavigationMenuLink>
   )
 }
 

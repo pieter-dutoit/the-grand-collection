@@ -25,6 +25,9 @@ import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
 import { RichtextSections } from './collections/richtext-section'
 import { Articles } from './collections/articles'
+import { Destinations } from './collections/destinations'
+import { Faqs } from './collections/faqs'
+import { Policies } from './collections/policies'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,6 +53,9 @@ export default buildConfig({
   globals: [Logos, HomePage, AboutUsPage, AllGuesthousesPage],
   collections: [
     Articles,
+    Destinations,
+    Faqs,
+    Policies,
     Amenities,
     Beds,
     Users,

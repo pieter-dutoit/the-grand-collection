@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge'
 import { MapPin } from 'lucide-react'
 import Link from 'next/link'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { getButtonStyles } from '@/components/ui/button'
 import { Guesthouse } from '@/payload/payload-types'
 
@@ -23,8 +23,13 @@ export default function PropertyPreview({
     contact_details: {
       address: { city, province }
     },
-    content: { images, heading, rooms }
+    content: { images, heading, rooms },
+    destination
   } = guesthouse
+
+  const destinationData =
+    destination && typeof destination !== 'string' ? destination : null
+  const hasDestination = destinationData !== null
 
   const filteredRooms = rooms.rooms?.filter((room) => typeof room !== 'string')
   const { interior, exterior } = images
@@ -41,32 +46,34 @@ export default function PropertyPreview({
   return (
     <div
       className={twMerge(
-        'flex w-full flex-col rounded-xl bg-gold-50 p-4 transition-shadow ease-in hover:shadow-xl',
+        'flex w-full flex-col gap-2 rounded-xl border border-gold-200 bg-white p-4 shadow-lg transition-shadow ease-in hover:shadow-xl',
         margin
       )}
     >
-      <div className='mb-1 grid gap-4 sm:grid-cols-4 xl:grid-cols-5'>
+      <div className='mb-1 grid gap-2 lg:grid-cols-4 xl:grid-cols-5'>
         {gallery.map((image, index) => {
           const { alt, url } = extractImageProps(image)
 
           const sizeClasses =
             index === 0
-              ? 'col-span-4 sm:col-span-2'
+              ? 'col-span-4 lg:col-span-2'
               : index === 1
-                ? 'col-span-1 hidden sm:block col-span-2 md:col-span-1'
+                ? 'col-span-1 hidden lg:block col-span-2 lg:col-span-1'
                 : index === 2
-                  ? 'col-span-1 hidden md:block'
+                  ? 'col-span-1 hidden lg:block'
                   : 'hidden xl:block'
 
           const sizes =
             index === 0
               ? '(max-width: 640px) 85vw, (max-width: 768px) 16rem, (max-width: 1024px) 21rem, 26rem'
-              : '(max-width: 640px) 0vw, (max-width: 768px) 16rem, (max-width: 1280px) 10rem, 13rem'
+              : index === 3
+                ? '(max-width: 1279px) 0px, 13rem'
+                : '(max-width: 1023px) 0px, (max-width: 1279px) 10rem, 13rem'
 
           return (
             <div
               className={twMerge(
-                'h-30 relative size-40 w-full overflow-hidden rounded-lg border-2 border-sage-300 bg-sage-300',
+                'h-30 relative size-40 w-full overflow-hidden rounded-lg border border-gold-200 bg-olive-100',
                 sizeClasses
               )}
               key={url}
@@ -83,14 +90,16 @@ export default function PropertyPreview({
         })}
       </div>
 
-      <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between'>
+      <div className='flex flex-col lg:flex-row lg:items-start lg:justify-between'>
         <div className='flex flex-col'>
-          <span className='text-sm font-bold text-sage-400'>Guesthouse</span>
+          <span className='text-xs font-bold text-olive-400'>Guesthouse</span>
 
-          <h3 className='text-2xl text-olive-900'>{name}</h3>
+          <h3 className='text-2xl font-semibold leading-tight text-olive-800'>
+            {name}
+          </h3>
           <div className='mt-2 flex items-center'>
-            <MapPin className='size-4 text-sage-400' />
-            <p className='ml-1 text-xs font-bold text-sage-400'>{`${city}, ${province}`}</p>
+            <MapPin className='size-4 text-olive-400' />
+            <p className='ml-1 text-xs font-bold text-olive-400'>{`${city}, ${province}`}</p>
           </div>
 
           <div className='mt-2 text-sm font-extrabold text-olive-900'>
@@ -98,7 +107,22 @@ export default function PropertyPreview({
           </div>
         </div>
 
-        <div className='mt-2 flex flex-wrap items-start sm:mt-0 sm:flex-row'>
+        <div className='mt-2 flex flex-wrap items-start lg:mt-0 lg:flex-row'>
+          {hasDestination && (
+            <Link
+              href={`/destinations/${destinationData.slug}`}
+              className={twMerge(
+                getButtonStyles({
+                  variant: 'outline',
+                  colour: 'default'
+                }),
+                'mr-2 mt-2 lg:mt-0'
+              )}
+            >
+              Things to do in {destinationData.name}
+            </Link>
+          )}
+
           {/* Link to guesthouse details page */}
           <Link
             href={`/guesthouses/${slug}`}
@@ -107,22 +131,22 @@ export default function PropertyPreview({
                 variant: 'outline',
                 colour: 'default'
               }),
-              'mr-2 mt-2 sm:mt-0'
+              'mr-2 mt-2 lg:mt-0'
             )}
           >
-            View Details
+            View property details
           </Link>
 
           {/* Booking / Availability button */}
           <AvailabilityLink
             bookingUrl={bookingUrl}
             platformName={platformName}
-            className='mt-2 sm:mt-0'
+            className='mt-2 lg:mt-0'
           />
         </div>
       </div>
 
-      <p className='mt-4 text-justify text-base font-normal tracking-wide text-olive-900'>
+      <p className='mt-4 text-justify text-base font-normal tracking-wide text-olive-950'>
         {heading}
       </p>
     </div>

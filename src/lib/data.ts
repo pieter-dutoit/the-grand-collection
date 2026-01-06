@@ -2,11 +2,13 @@
 import 'server-only'
 
 import { unstable_cache } from 'next/cache'
-import { getPayload, Where } from 'payload'
+import { getPayload, Sort, Where } from 'payload'
 import config from '@payload-config'
 
-import {
+import type {
+  Article,
   Guesthouse,
+  Destination,
   AllGuesthousesPage,
   HomePage,
   Logo,
@@ -29,7 +31,7 @@ export const fetchHomePageData = unstable_cache(
     return res
   },
   [],
-  { revalidate: false, tags: ['home-page', 'guesthouses'] }
+  { revalidate: false, tags: ['home-page', 'guesthouses', 'faqs'] }
 )
 
 type AboutPageData = Partial<AboutUsPage>
@@ -115,5 +117,84 @@ export const fetchGuestHouses = unstable_cache(
     return res.docs
   },
   [],
-  { revalidate: false, tags: ['guesthouses'] }
+  { revalidate: false, tags: ['guesthouses', 'faqs'] }
+)
+
+export const fetchDestinations = unstable_cache(
+  async (query?: Where): Promise<Destination[]> => {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      collection: 'destinations',
+      depth: 2,
+      pagination: false,
+      sort: 'name',
+      ...(query && { where: query })
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch destinations data')
+    }
+
+    return res.docs
+  },
+  [],
+  { revalidate: false, tags: ['destinations', 'faqs'] }
+)
+
+export const fetchArticles = unstable_cache(
+  async (
+    query?: Where,
+    options?: {
+      sort?: Sort
+      limit?: number
+    }
+  ): Promise<Article[]> => {
+    const payload = await getPayload({ config })
+    const shouldPaginate = typeof options?.limit === 'number'
+    const res = await payload.find({
+      draft: false,
+      collection: 'articles',
+      depth: 1,
+      pagination: shouldPaginate ? true : false,
+      ...(shouldPaginate && { limit: options?.limit }),
+      sort: options?.sort ?? '-createdAt',
+      where: {
+        ...query,
+        _status: {
+          equals: 'published'
+        }
+      }
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch articles data')
+    }
+
+    return res.docs
+  },
+  [],
+  { revalidate: false, tags: ['articles', 'guesthouses', 'faqs'] }
+)
+
+export const fetchArticlesCount = unstable_cache(
+  async (query?: Where): Promise<number> => {
+    const payload = await getPayload({ config })
+    const res = await payload.count({
+      collection: 'articles',
+      where: {
+        ...query,
+        _status: {
+          equals: 'published'
+        }
+      }
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch articles count')
+    }
+
+    return res.totalDocs
+  },
+  [],
+  { revalidate: false, tags: ['articles', 'guesthouses'] }
 )

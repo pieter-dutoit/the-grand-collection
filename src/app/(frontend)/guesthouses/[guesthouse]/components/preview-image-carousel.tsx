@@ -8,7 +8,7 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { Media } from '@/payload/payload-types'
 import { extractImageProps } from '@/lib/utils'
 
@@ -36,7 +36,7 @@ export default function PreviewImageCarousel({
           const { url, alt } = extractImageProps(image)
           const borderClass =
             selectedPhoto === index
-              ? 'border-gold-400 shadow-lg'
+              ? 'border-gold-200 shadow-lg'
               : 'border-gold-50  opacity-50 grayscale-[40%]'
 
           return (
@@ -47,7 +47,7 @@ export default function PreviewImageCarousel({
               <button
                 onClick={() => onPhotoSelect(index)}
                 className={twMerge(
-                  'relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg border-2 bg-olive-700 sm:aspect-video',
+                  'relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg border bg-gold-200 sm:aspect-video',
                   borderClass
                 )}
               >

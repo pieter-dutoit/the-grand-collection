@@ -1,6 +1,6 @@
 import { fetchHomePageData } from '@/lib/data'
 
-import SectionHeading from '@/components/ui/section-heading'
+import SectionHeading from '@/components/section-heading'
 import PropertyPreview from './property-preview'
 
 export default async function Properties(): Promise<JSX.Element> {
@@ -13,19 +13,22 @@ export default async function Properties(): Promise<JSX.Element> {
     <section className='relative w-full'>
       <div id='locations' className='absolute -top-16' />
       <div className='container mx-auto py-8 lg:py-16'>
-        <SectionHeading heading={heading} subtitle={subheading} />
+        <SectionHeading
+          title={heading}
+          parentLabel={subheading}
+          description='Take a look at our featured properties in Paarl and Kathu. Compare photos, check availability, and book a stay that suits your plans.'
+        />
 
-        <div className='my-8 flex flex-col gap-12'>
+        <ul className='my-8 flex flex-col gap-12'>
           {guesthouses?.map((guesthouse, index) => {
             if (typeof guesthouse === 'string') return null
             return (
-              <PropertyPreview
-                key={guesthouse.slug + '-' + index}
-                guesthouse={guesthouse}
-              />
+              <li key={guesthouse.slug + '-' + index}>
+                <PropertyPreview guesthouse={guesthouse} />
+              </li>
             )
           })}
-        </div>
+        </ul>
       </div>
     </section>
   )

@@ -37,7 +37,7 @@ export async function getNavOptions(): Promise<NavOption[]> {
       label: { text: 'About Us', ...DEFAULT_LABEL_STYLE }
     },
     {
-      label: { text: 'Our Locations', ...DEFAULT_LABEL_STYLE },
+      label: { text: 'Guesthouses', ...DEFAULT_LABEL_STYLE },
       nested: [
         {
           href: '/guesthouses',

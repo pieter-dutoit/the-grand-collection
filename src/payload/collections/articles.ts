@@ -1,22 +1,16 @@
 import type { CollectionConfig } from 'payload'
 
-// import revalidateCollection, {
-//   revalidateAfterDelete,
-//   revalidateCollectionByField
-// } from '../hooks/revalidate-collection'
-import createSlug from '../hooks/collections/create-collection-slug'
+import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+
+import createArticleSlug from '../hooks/collections/create-article-slug'
+import revalidateCache from '../hooks/collections/revalidate-cache'
+import { GoogleMapBlock } from '../blocks/google-map'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
   hooks: {
-    beforeChange: [createSlug]
-    // afterChange: [
-    //   revalidateCollectionByField('slug'),
-    //   revalidateCollection('services')
-    // ],
-    // afterDelete: [
-    //   revalidateAfterDelete({ fieldNames: ['slug'], tags: ['services'] })
-    // ]
+    beforeChange: [createArticleSlug],
+    afterChange: [revalidateCache('articles', true)]
   },
   admin: {
     useAsTitle: 'title'
@@ -30,10 +24,66 @@ export const Articles: CollectionConfig = {
       label: 'Article Slug / URL (Auto Generated)',
       type: 'text',
       unique: true,
-      required: false,
+      required: true,
       admin: {
-        position: 'sidebar',
-        readOnly: true
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'destination',
+      label: 'Destination',
+      type: 'relationship',
+      relationTo: 'destinations',
+      hasMany: false,
+      index: true,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'guesthouse',
+      label: 'Guesthouse',
+      type: 'relationship',
+      relationTo: 'guesthouses',
+      hasMany: false,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'faq',
+      label: 'FAQ Section',
+      type: 'relationship',
+      relationTo: 'faqs',
+      hasMany: false,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'featured',
+      label: 'Featured',
+      type: 'checkbox',
+      defaultValue: false,
+      index: true,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'type',
+      label: 'Type',
+      type: 'select',
+      required: true,
+      defaultValue: 'guide',
+      options: [
+        {
+          label: 'Guide',
+          value: 'guide'
+        }
+      ],
+      admin: {
+        position: 'sidebar'
       }
     },
     {
@@ -64,10 +114,26 @@ export const Articles: CollectionConfig = {
       maxLength: 200
     },
     {
+      name: 'excerpt',
+      type: 'text',
+      label: 'Excerpt',
+      required: true,
+      minLength: 10,
+      maxLength: 500
+    },
+    {
       name: 'body',
       type: 'richText',
       label: 'Content',
-      required: true
+      required: true,
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          BlocksFeature({
+            blocks: [GoogleMapBlock]
+          })
+        ]
+      })
     }
   ]
 }

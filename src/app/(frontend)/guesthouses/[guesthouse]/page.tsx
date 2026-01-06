@@ -3,13 +3,20 @@ import 'server-only'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { fetchGuestHouses } from '@/lib/data'
+import { fetchArticles, fetchGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
+import { getBaseUrl } from '@/lib/utils'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import {
-  createBreadCrumbs,
-  createGuesthouseStructuredData
+  createFaqStructuredData,
+  createGuesthouseStructuredData,
+  createPageStructuredData
 } from '@/lib/utils/create-structured-data'
+import Breadcrumbs from '@/components/ui/breadcrumbs'
+import { getGuesthouseBreadcrumbs } from '@/lib/utils/breadcrumbs'
+import FaqSection from '@/components/faq-section'
+import JsonLd from '@/components/seo/json-ld'
+import { hasFaqItems } from '@/lib/utils/faq'
 
 import Hero from './components/hero'
 import Navbar from './components/navbar'
@@ -18,6 +25,8 @@ import Amenities from './components/amenities'
 import Rooms from './components/rooms'
 import ContactUs from './components/contact-us'
 import Policies from './components/policies'
+import Divider from './components/divider'
+import MoreArticlesSection from '@/components/more-articles'
 
 type Props = { params: Promise<{ guesthouse: string }> }
 
@@ -58,38 +67,81 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
     notFound()
   }
 
+  const pageUrl = `${getBaseUrl()}/guesthouses/${data.slug}`
   const guesthouseStructuredData = await createGuesthouseStructuredData({
-    guesthouse: data
+    guesthouse: data,
+    pageUrl
   })
 
-  const jsonLd = [
-    guesthouseStructuredData,
-    createBreadCrumbs([
-      {
-        name: 'All Guesthouses',
-        item: '/guesthouses'
-      },
-      {
-        name: data.name,
-        item: '/guesthouses/' + data.slug
-      }
-    ])
-  ]
+  if (!data.destination || typeof data.destination === 'string') {
+    notFound()
+  }
+
+  const breadcrumbs = getGuesthouseBreadcrumbs(data.destination, data)
+  const faqStructuredData = createFaqStructuredData({
+    faq: data.faq,
+    pageUrl,
+    name: `${data.name} FAQs`
+  })
+  const jsonLd = await createPageStructuredData({
+    pageUrl,
+    name: data.name,
+    description: data.content.description,
+    breadcrumbs,
+    mainEntityId: guesthouseStructuredData['@id'],
+    additionalNodes: [guesthouseStructuredData, faqStructuredData]
+  })
+  const hasFaq = hasFaqItems(data.faq)
+
+  const relatedArticles =
+    typeof data.destination === 'object' && data.destination !== null
+      ? await fetchArticles(
+          {
+            destination: { equals: data.destination.id }
+          },
+          {
+            sort: ['-featured', '-updatedAt', '-createdAt'],
+            limit: 6
+          }
+        )
+      : []
 
   return (
     <>
-      <script
-        type='application/ld+json'
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      <section className='absolute inset-x-0 top-16 z-20 w-full py-3'>
+        <div className='container mx-auto w-full'>
+          <Breadcrumbs items={breadcrumbs} />
+        </div>
+      </section>
       <Hero guesthouse={data} />
-      <Navbar />
-      <Gallery data={data} />
-      <Amenities data={data} />
+      <Navbar showFaq={hasFaq} />
       <Rooms data={data} />
-
+      <Amenities data={data} />
+      <Gallery data={data} />
+      <Divider />
       <ContactUs data={data} />
+      <Divider />
       <Policies data={data} />
+      <FaqSection
+        faq={data.faq}
+        parentLabel='Frequently asked questions'
+        title={`${data.name} FAQs`}
+      />
+
+      <Divider />
+
+      {data.destination &&
+        typeof data.destination !== 'string' &&
+        relatedArticles.length > 0 && (
+          <MoreArticlesSection
+            label='Nearby highlights'
+            title={`Things to do near ${data.destination.name}`}
+            description='A short list of local favorites, plus a few guides to help you choose what to do.'
+            destination={data.destination}
+            relatedArticles={relatedArticles}
+          />
+        )}
     </>
   )
 }

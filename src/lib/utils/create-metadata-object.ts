@@ -6,7 +6,7 @@ import {
   TwitterField
 } from '@/payload/payload-types'
 
-import { extractImageProps, getBaseUrl } from '.'
+import { extractImageProps, getBaseUrl, getPublicImageSizeUrl } from '.'
 
 interface SEO {
   meta: MetadataField
@@ -23,6 +23,11 @@ export default function createMetadataConfig(seo: SEO): Metadata {
     width: ogWidth,
     height: ogHeight
   } = extractImageProps(open_graph.image)
+
+  const twitterImageUrl =
+    typeof open_graph.image === 'object'
+      ? getPublicImageSizeUrl(open_graph.image, 'twitter') || ogURL || ''
+      : ''
 
   return {
     // Basic fields:
@@ -67,11 +72,7 @@ export default function createMetadataConfig(seo: SEO): Metadata {
       ...(twitter?.creatorId && {
         creatorId: twitter.creatorId
       }),
-      ...(typeof open_graph.image === 'object'
-        ? {
-            images: [open_graph.image.sizes?.twitter?.url || ogURL || '']
-          }
-        : {})
+      ...(twitterImageUrl ? { images: [twitterImageUrl] } : {})
     }
   }
 }
