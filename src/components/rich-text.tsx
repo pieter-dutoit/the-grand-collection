@@ -64,7 +64,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
 
       return (
         <figure className='my-8'>
-          <div className='aspect-video overflow-hidden rounded-2xl border-2 border-olive-200 bg-olive-100'>
+          <div className='aspect-video overflow-hidden rounded-2xl border border-olive-200 bg-olive-100'>
             <iframe
               title={title || 'Google Map'}
               src={node.fields.maps_embed_url}
@@ -118,7 +118,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
           sizes={sizes}
           aspectRatio={aspectRatio}
           containerClassName={twMerge(
-            'w-full rounded-2xl border-2 border-olive-200 bg-olive-100 lg:max-h-[50vh]',
+            'w-full rounded-2xl border border-olive-200 bg-olive-100 lg:max-h-[50vh]',
             maxWidth
           )}
         />

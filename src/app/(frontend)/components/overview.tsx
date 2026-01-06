@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { Home } from 'lucide-react'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { getButtonStyles } from '@/components/ui/button'
 
 import { fetchHomePageData } from '@/lib/data'

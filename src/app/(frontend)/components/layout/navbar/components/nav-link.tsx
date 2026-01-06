@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Lock, MapPin } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { NavigationMenuLink } from '@/components/ui/navigation-menu'
 import { getButtonStyles } from '@/components/ui/button'
 import { extractImageProps } from '@/lib/utils'

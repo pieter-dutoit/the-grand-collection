@@ -1,5 +1,12 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, ImageUploadFormatOptions } from 'payload'
 import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
+
+const WEBP_FORMAT = {
+  format: 'webp',
+  options: {
+    quality: 100
+  }
+} satisfies ImageUploadFormatOptions
 
 export const SEOMedia: CollectionConfig = {
   slug: 'seo-media',
@@ -34,24 +41,14 @@ export const SEOMedia: CollectionConfig = {
         fit: 'cover',
         width: 600,
         height: 315,
-        formatOptions: {
-          format: 'jpeg',
-          options: {
-            quality: 75
-          }
-        }
+        formatOptions: WEBP_FORMAT
       },
       {
         name: 'twitter',
         fit: 'cover',
         width: 1600,
         height: 675,
-        formatOptions: {
-          format: 'jpeg',
-          options: {
-            quality: 75
-          }
-        }
+        formatOptions: WEBP_FORMAT
       }
     ],
     resizeOptions: {
@@ -60,12 +57,7 @@ export const SEOMedia: CollectionConfig = {
       fit: 'cover',
       position: 'center'
     },
-    formatOptions: {
-      format: 'jpeg',
-      options: {
-        quality: 75
-      }
-    },
+    formatOptions: WEBP_FORMAT,
     mimeTypes: ['image/*']
   }
 }

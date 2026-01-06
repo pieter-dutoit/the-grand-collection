@@ -31,11 +31,7 @@ export default async function DestinationGuidesStructuredData({
   const listItems = articles.map((article, index) => {
     const authorName = article.author?.trim() || 'The Grand Collection'
     const authorType = 'Organization'
-    const { url: thumbnailUrl } = extractImageProps(article.thumbnail)
-    const thumbnailFilename = thumbnailUrl.split('/').pop()
-    const thumbnail = thumbnailFilename
-      ? `${baseUrl}/api/images/${thumbnailFilename}`
-      : undefined
+    const { url: thumbnail } = extractImageProps(article.thumbnail)
 
     return {
       '@type': 'ListItem',
@@ -74,10 +70,7 @@ export default async function DestinationGuidesStructuredData({
       const { url: imageUrl } = extractImageProps(
         guesthouse.content.images.exterior[0]
       )
-      const imageFilename = imageUrl.split('/').pop()
-      const image = imageFilename
-        ? `${baseUrl}/api/images/${imageFilename}`
-        : undefined
+      const image = imageUrl || undefined
 
       return {
         '@type': 'ListItem',

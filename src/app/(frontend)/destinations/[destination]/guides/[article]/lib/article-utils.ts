@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { extractImageProps, getBaseUrl } from '@/lib/utils'
+import { extractImageProps } from '@/lib/utils'
 import type { Destination, Media } from '@/payload/payload-types'
 
 export const resolveDestinationSlug = (
@@ -16,10 +16,5 @@ export const resolveDestinationSlug = (
 
 export const getAbsoluteImageUrl = (image: Media | string) => {
   const { url } = extractImageProps(image)
-  if (!url) return undefined
-
-  const filename = url.split('/').pop()
-  if (!filename) return undefined
-
-  return `${getBaseUrl()}/api/images/${filename}`
+  return url || undefined
 }

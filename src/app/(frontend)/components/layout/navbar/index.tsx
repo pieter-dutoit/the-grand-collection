@@ -13,7 +13,7 @@ import {
 
 import { CountryOutline } from '@/components/ui/logos'
 import { getButtonStyles } from '@/components/ui/button'
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 
 import MobileDrawer from './components/mobile-drawer'
 import NavOptions from './components/nav-options'

@@ -1,6 +1,6 @@
 import { extractImageProps } from '@/lib/utils'
 import { Media, Room } from '@/payload/payload-types'
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import AvailabilityLink from '@/app/(frontend)/components/availability-link'
 
 interface PropTypes {

@@ -1,6 +1,6 @@
 import { Guesthouse } from '@/payload/payload-types'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { extractImageProps } from '@/lib/utils'
 import SectionHeading from '@/components/section-heading'
 

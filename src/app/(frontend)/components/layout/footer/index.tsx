@@ -1,7 +1,7 @@
 import 'server-only'
 import Link from 'next/link'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import {
   // fetchHomePageData,
   fetchGuestHouses,

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { getButtonStyles } from '@/components/ui/button'
 import { extractImageProps } from '@/lib/utils'
 import { SocialMediaPlatform } from '@/payload/payload-types'

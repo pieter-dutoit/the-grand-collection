@@ -1,6 +1,6 @@
 import { twMerge } from 'tailwind-merge'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { extractImageProps } from '@/lib/utils'
 import { Guesthouse } from '@/payload/payload-types'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'

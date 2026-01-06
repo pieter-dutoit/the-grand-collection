@@ -1,13 +1,11 @@
+import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
-
-import Image from '@/components/ui/image'
 
 type Props = {
   src: string
   alt: string
   sizes?: string
   priority?: boolean
-  portrait?: boolean
   aspectRatio?: number
   containerClassName?: string
   backdropClassName?: string
@@ -19,13 +17,13 @@ export default function BlurredBackdropImage({
   alt,
   sizes,
   priority,
-  portrait,
   aspectRatio,
   containerClassName,
   backdropClassName,
   foregroundClassName
 }: Props) {
   if (!src) return null
+  const resolvedSizes = sizes ?? '100vw'
 
   return (
     <div
@@ -44,9 +42,8 @@ export default function BlurredBackdropImage({
           'not-prose z-0 scale-125 object-cover object-center blur-xl',
           backdropClassName
         )}
-        sizes={sizes}
         priority={priority}
-        portrait={portrait}
+        sizes={resolvedSizes}
       />
       <Image
         src={src}
@@ -56,9 +53,8 @@ export default function BlurredBackdropImage({
           'not-prose z-10 object-contain object-center',
           foregroundClassName
         )}
-        sizes={sizes}
         priority={priority}
-        portrait={portrait}
+        sizes={resolvedSizes}
       />
     </div>
   )

@@ -1,4 +1,4 @@
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { extractContactDetails, extractImageProps } from '@/lib/utils'
 import { Guesthouse } from '@/payload/payload-types'
 import AvailabilityLink from '@/app/(frontend)/components/availability-link'

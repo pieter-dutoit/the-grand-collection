@@ -8,7 +8,7 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { Media } from '@/payload/payload-types'
 import { extractImageProps } from '@/lib/utils'
 

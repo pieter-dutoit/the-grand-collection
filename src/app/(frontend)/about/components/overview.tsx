@@ -1,5 +1,5 @@
 import SectionHeading from '@/components/section-heading'
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { fetchAboutPageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 

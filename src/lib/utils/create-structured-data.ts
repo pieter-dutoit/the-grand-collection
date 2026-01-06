@@ -1,7 +1,12 @@
 import { Amenity, Faq, Guesthouse, Media, Room } from '@/payload/payload-types'
-import { createSourceSet } from '@/components/ui/image'
 
-import { extractContactDetails, extractImageProps, getBaseUrl } from '.'
+import {
+  extractContactDetails,
+  extractImageProps,
+  getBaseUrl,
+  getPublicImageSizeUrl,
+  getPublicImageUrl
+} from '.'
 import { fetchGuestHouses, fetchHomePageData, fetchLogo } from '../data'
 import { createBreadcrumbListStructuredData } from './breadcrumbs'
 import { getFaqItems } from './faq'
@@ -233,11 +238,6 @@ const BUSINESS_AUDIENCE = [
   { '@type': 'Audience', audienceType: 'Solo Travelers' }
 ]
 
-export function createAbsoluteImagePath(cmsPath: string): string {
-  const filename = cmsPath.split('/').pop()
-  return `${getBaseUrl()}/api/images/${filename}`
-}
-
 export function createAmenitiesList(amenities: (Amenity | string)[]) {
   return amenities
     .filter((amenity) => typeof amenity !== 'string')
@@ -254,11 +254,11 @@ export function createAmenitiesList(amenities: (Amenity | string)[]) {
 }
 
 export function createMediaObject(image: Media | string) {
-  const { url, alt } = extractImageProps(image)
-  const contentUrl = createAbsoluteImagePath(url)
-  const thumbnailUrl = createSourceSet(contentUrl, false)
-    .split(',')[0]
-    .split(' ')[0]
+  const { alt } = extractImageProps(image)
+  const contentUrl = getPublicImageUrl(image)
+  if (!contentUrl) return null
+
+  const thumbnailUrl = getPublicImageSizeUrl(image, 'w384') || contentUrl
   const currentYear = new Date().getFullYear()
   return {
     '@type': 'ImageObject',
@@ -284,7 +284,7 @@ export async function getOrganisationStructuredData() {
 
   // Logo
   const logoData = await fetchLogo('minimal_dark')
-  const { url: logoURL } = extractImageProps(logoData.minimal_dark)
+  const logoURL = getPublicImageUrl(logoData.minimal_dark)
 
   return {
     '@type': 'Organization',
@@ -292,7 +292,7 @@ export async function getOrganisationStructuredData() {
     url: baseUrl,
     name: 'The Grand Collection',
     sameAs: socials?.map(({ url }) => url),
-    logo: createAbsoluteImagePath(logoURL),
+    ...(logoURL && { logo: logoURL }),
     image: [hero?.background_image, ...(overview?.images || [])]
       .slice(0, 3)
       .filter((image) => typeof image !== 'string')

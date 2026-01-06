@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { getButtonStyles } from '@/components/ui/button'
 import { fetchHomePageData, fetchLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
@@ -28,7 +28,6 @@ export async function Hero(): Promise<JSX.Element> {
             fill
             sizes='100vw'
             priority
-            portrait
           />
         )}
         <div className='absolute inset-0 bg-custom-gradient-mobile sm:bg-custom-gradient' />
