@@ -10,9 +10,11 @@ import { extractImageProps } from '@/lib/utils'
 import AvailabilityLink from './availability-link'
 
 export default function PropertyPreview({
-  guesthouse
+  guesthouse,
+  aboveFold = false
 }: {
   guesthouse: Guesthouse
+  aboveFold?: boolean
 }): JSX.Element {
   const margin = 'mx-auto'
 
@@ -53,6 +55,7 @@ export default function PropertyPreview({
       <div className='mb-1 grid gap-2 lg:grid-cols-4 xl:grid-cols-5'>
         {gallery.map((image, index) => {
           const { alt, url } = extractImageProps(image)
+          const isAboveFoldImage = aboveFold && index === 0
 
           const sizeClasses =
             index === 0
@@ -84,6 +87,8 @@ export default function PropertyPreview({
                 fill
                 className='object-cover object-center'
                 sizes={sizes}
+                priority={isAboveFoldImage}
+                fetchPriority={isAboveFoldImage ? 'high' : undefined}
               />
             </div>
           )

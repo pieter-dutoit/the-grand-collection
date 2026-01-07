@@ -28,6 +28,7 @@ export async function Hero(): Promise<JSX.Element> {
             fill
             sizes='100vw'
             priority
+            fetchPriority='high'
           />
         )}
         <div className='absolute inset-0 bg-custom-gradient-mobile sm:bg-custom-gradient' />
@@ -40,6 +41,7 @@ export async function Hero(): Promise<JSX.Element> {
               className='object-contain object-center'
               sizes='(max-width: 510px) 90vw, 30rem'
               priority
+              fetchPriority='high'
               unoptimized={logoProps.isSvg}
             />
           </div>

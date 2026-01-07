@@ -50,6 +50,7 @@ function DetailedNavLink({
             alt={alt}
             src={url}
             className='h-14 w-12 content-center rounded-l-lg bg-olive-100 object-cover sm:size-[90px]'
+            fetchPriority='low'
           />
 
           <div className='flex size-full flex-col items-start px-2 py-1'>

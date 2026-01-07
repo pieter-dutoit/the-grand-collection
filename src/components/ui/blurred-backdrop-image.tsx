@@ -6,6 +6,7 @@ type Props = {
   alt: string
   sizes?: string
   priority?: boolean
+  fetchPriority?: 'high' | 'low' | 'auto'
   aspectRatio?: number
   containerClassName?: string
   backdropClassName?: string
@@ -17,6 +18,7 @@ export default function BlurredBackdropImage({
   alt,
   sizes,
   priority,
+  fetchPriority,
   aspectRatio,
   containerClassName,
   backdropClassName,
@@ -24,6 +26,7 @@ export default function BlurredBackdropImage({
 }: Props) {
   if (!src) return null
   const resolvedSizes = sizes ?? '100vw'
+  const resolvedFetchPriority = fetchPriority ?? (priority ? 'high' : undefined)
 
   return (
     <div
@@ -44,6 +47,9 @@ export default function BlurredBackdropImage({
         )}
         priority={priority}
         sizes={resolvedSizes}
+        fetchPriority={
+          resolvedFetchPriority === 'high' ? 'low' : resolvedFetchPriority
+        }
       />
       <Image
         src={src}
@@ -55,6 +61,7 @@ export default function BlurredBackdropImage({
         )}
         priority={priority}
         sizes={resolvedSizes}
+        fetchPriority={resolvedFetchPriority}
       />
     </div>
   )

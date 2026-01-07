@@ -80,6 +80,7 @@ export default function PrimaryImageCarousel({
                     className='object-contain object-center'
                     sizes='(max-width: 640px) 90vw, (max-width: 1025px) 80vw, 56rem'
                     priority={index === 0}
+                    fetchPriority={index === 0 ? 'high' : undefined}
                   />
                 </div>
               </CarouselItem>

@@ -38,6 +38,7 @@ export default function Hero({
             fill
             className='object-cover object-center'
             priority
+            fetchPriority='high'
             sizes='(max-width: 640px) 100vw, 65vw'
           />
           <div className='absolute inset-0 hidden from-olive-50 sm:block sm:bg-gradient-to-r sm:via-olive-50/30 sm:to-transparent' />

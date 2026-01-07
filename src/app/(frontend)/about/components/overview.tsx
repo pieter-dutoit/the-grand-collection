@@ -22,6 +22,8 @@ export default async function Overview(): Promise<JSX.Element> {
             fill
             className='object-cover object-center'
             sizes='(max-width: 640px) 100vw, 50vw'
+            priority
+            fetchPriority='high'
           />
         </div>
 

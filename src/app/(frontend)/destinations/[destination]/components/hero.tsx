@@ -28,6 +28,7 @@ export default async function DestinationHero({
             fill
             className='object-cover object-center'
             priority
+            fetchPriority='high'
             sizes='100vw'
           />
           <div className='absolute inset-0 hidden bg-gradient-to-r from-olive-300 via-olive-200 to-transparent sm:block' />
