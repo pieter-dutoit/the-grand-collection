@@ -15,8 +15,12 @@ export default async function DestinationHero({
     destination: { name, title, label, description, image }
   } = await getDestinationData(destinationSlug)
 
+  console.log({ image })
+
   const { url: heroImageUrl, alt: heroImageAlt } = extractImageProps(image)
   const heroImageAltText = heroImageAlt || title || name
+
+  console.log({ heroImageUrl })
 
   return (
     <section className='relative bg-olive-200'>

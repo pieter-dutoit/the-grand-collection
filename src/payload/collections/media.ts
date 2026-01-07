@@ -8,7 +8,7 @@ const NEXT_IMAGE_WIDTHS = [
 const WEBP_FORMAT = {
   format: 'webp',
   options: {
-    quality: 75
+    quality: 99
   }
 } satisfies ImageUploadFormatOptions
 
@@ -59,7 +59,7 @@ export const Media: CollectionConfig = {
       fit: 'inside',
       position: 'center'
     },
-    formatOptions: WEBP_FORMAT,
+    // formatOptions: WEBP_FORMAT,
     mimeTypes: ['image/*']
   }
 }

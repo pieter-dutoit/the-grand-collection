@@ -1,21 +1,34 @@
 import type { ImageLoaderProps } from 'next/image'
 
 const WIDTH_SUFFIX_REGEX = /-w\d+(?=\.[^.]+$)/i
+const MEDIA_PATH_REGEX = /(^|\/)media\//i
+const SEO_MEDIA_PATH_REGEX = /(^|\/)media\/seo\//i
 
 const normalizeBasePath = (pathname: string) => {
   const trimmed = pathname.replace(/\/$/, '')
   return trimmed === '/' ? '' : trimmed
 }
 
-const addWidthSuffix = (pathname: string, width: number) => {
+const addWidthSuffix = (
+  pathname: string,
+  width: number,
+  extensionOverride?: string
+) => {
   if (!width || pathname.toLowerCase().endsWith('.svg')) return pathname
-  if (WIDTH_SUFFIX_REGEX.test(pathname)) return pathname
 
   const extensionIndex = pathname.lastIndexOf('.')
   if (extensionIndex === -1) return pathname
 
   const name = pathname.slice(0, extensionIndex)
-  const extension = pathname.slice(extensionIndex)
+  const extension = extensionOverride
+    ? extensionOverride.startsWith('.')
+      ? extensionOverride
+      : `.${extensionOverride}`
+    : pathname.slice(extensionIndex)
+  if (WIDTH_SUFFIX_REGEX.test(pathname)) {
+    return `${name}${extension}`
+  }
+
   return `${name}-w${width}${extension}`
 }
 
@@ -37,6 +50,10 @@ export default function imageLoader({ src, width }: ImageLoaderProps) {
 
   const baseUrl = publicBase ? new URL(publicBase) : null
   const resolvedUrl = resolveUrl(src, baseUrl)
+  const fullPathname = resolvedUrl?.pathname ?? src
+  const shouldForceWebp =
+    MEDIA_PATH_REGEX.test(fullPathname) &&
+    !SEO_MEDIA_PATH_REGEX.test(fullPathname)
 
   const basePath = baseUrl ? normalizeBasePath(baseUrl.pathname) : ''
   const origin = baseUrl?.origin ?? resolvedUrl?.origin ?? ''
@@ -51,7 +68,11 @@ export default function imageLoader({ src, width }: ImageLoaderProps) {
     pathname = pathname.slice(basePath.length)
   }
 
-  const sizedPath = addWidthSuffix(pathname, width)
+  const sizedPath = addWidthSuffix(
+    pathname,
+    width,
+    shouldForceWebp ? 'webp' : undefined
+  )
   const finalPath = `${basePath}${sizedPath}`
 
   if (!origin) {
