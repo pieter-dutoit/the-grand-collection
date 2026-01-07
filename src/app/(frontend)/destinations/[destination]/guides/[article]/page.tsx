@@ -83,18 +83,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { alt: thumbnailAlt } = extractImageProps(article.thumbnail)
   const ogImage = getAbsoluteImageUrl(article.thumbnail)
   const canonical = `${getBaseUrl()}/destinations/${destinationSlug}/guides/${article.slug}`
+  const pageTitle = `${article.title} | ${destination.name}`
 
   return {
-    title: `${article.title} | ${destination.name} | The Grand Collection`,
+    title: pageTitle,
     description,
     alternates: {
       canonical
     },
     openGraph: {
-      title: article.title,
+      title: pageTitle,
       description,
       type: 'article',
       url: canonical,
+      publishedTime: article.createdAt,
+      modifiedTime: article.updatedAt,
+      authors: [article.author?.trim() || 'The Grand Collection'],
       ...(ogImage && {
         images: [
           {
@@ -103,6 +107,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           }
         ]
       })
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {})
     }
   }
 }

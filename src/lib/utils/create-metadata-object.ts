@@ -52,14 +52,18 @@ export default function createMetadataConfig(seo: SEO): Metadata {
       description: open_graph.description,
       siteName: open_graph.site_name,
       type: 'website',
-      images: [
-        {
-          url: ogURL,
-          alt: ogAlt,
-          height: ogHeight,
-          width: ogWidth
-        }
-      ]
+      ...(ogURL
+        ? {
+            images: [
+              {
+                url: ogURL,
+                alt: ogAlt,
+                height: ogHeight,
+                width: ogWidth
+              }
+            ]
+          }
+        : {})
     },
     // Twitter:
     twitter: {

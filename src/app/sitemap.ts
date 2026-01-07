@@ -46,7 +46,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .map((destination) => [destination.id, destination.slug])
   )
 
-  const guideIndexLastModifiedByDestination = new Map<string, Date>()
+  const guideIndexLastModifiedByDestination = new Map<string, Date>(
+    destinations
+      .filter((destination) => destination.slug)
+      .map((destination) => [
+        destination.slug,
+        new Date(destination.updatedAt || destination.createdAt)
+      ])
+  )
   const articleEntries = articles.flatMap((article) => {
     if (!article.slug || !article.destination) {
       return []
@@ -131,7 +138,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 1
     })),
-    // Destination Guides Index Pages (only when articles exist)
+    // Destination Pages
     ...guideIndexEntries,
     // Destination Guide Articles
     ...articleEntries
