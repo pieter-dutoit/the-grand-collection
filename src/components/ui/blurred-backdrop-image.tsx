@@ -27,6 +27,8 @@ export default function BlurredBackdropImage({
   if (!src) return null
   const resolvedSizes = sizes ?? '100vw'
   const resolvedFetchPriority = fetchPriority ?? (priority ? 'high' : undefined)
+  const isSvg =
+    src.toLowerCase().includes('.svg') || src.startsWith('data:image/svg+xml')
 
   return (
     <div
@@ -50,6 +52,7 @@ export default function BlurredBackdropImage({
         fetchPriority={
           resolvedFetchPriority === 'high' ? 'low' : resolvedFetchPriority
         }
+        unoptimized={isSvg}
       />
       <Image
         src={src}
@@ -62,6 +65,7 @@ export default function BlurredBackdropImage({
         priority={priority}
         sizes={resolvedSizes}
         fetchPriority={resolvedFetchPriority}
+        unoptimized={isSvg}
       />
     </div>
   )

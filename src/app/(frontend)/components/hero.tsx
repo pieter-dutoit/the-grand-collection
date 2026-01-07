@@ -15,7 +15,7 @@ export async function Hero(): Promise<JSX.Element> {
   if (!hero) return <></>
 
   const { title, background_image, locations_link } = hero
-  const { url, alt } = extractImageProps(background_image)
+  const { url, alt, isSvg } = extractImageProps(background_image)
 
   return (
     <section className='relative h-[75vh] max-h-[40rem] w-screen bg-sage-700 sm:max-h-none'>
@@ -29,6 +29,7 @@ export async function Hero(): Promise<JSX.Element> {
             sizes='100vw'
             priority
             fetchPriority='high'
+            unoptimized={isSvg}
           />
         )}
         <div className='absolute inset-0 bg-custom-gradient-mobile sm:bg-custom-gradient' />

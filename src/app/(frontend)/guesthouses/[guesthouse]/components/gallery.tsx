@@ -53,7 +53,7 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
             aria-label='View Gallery'
           >
             {preview.map((image, index) => {
-              const { url, alt } = extractImageProps(image)
+              const { url, alt, isSvg } = extractImageProps(image)
               const showRemainder = index === preview.length - 1
               const remainderCount =
                 showRemainder && allImages.length + -preview.length
@@ -79,6 +79,7 @@ export default function Gallery({ data }: GalleryProps): JSX.Element {
                     fill
                     className='object-cover object-center'
                     sizes={sizes}
+                    unoptimized={isSvg}
                   />
                   {showRemainder && (
                     <div className='absolute inset-0 flex items-center justify-center bg-black/40'>

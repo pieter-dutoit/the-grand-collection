@@ -15,7 +15,11 @@ export default async function DestinationHero({
     destination: { name, title, label, description, image }
   } = await getDestinationData(destinationSlug)
 
-  const { url: heroImageUrl, alt: heroImageAlt } = extractImageProps(image)
+  const {
+    url: heroImageUrl,
+    alt: heroImageAlt,
+    isSvg
+  } = extractImageProps(image)
   const heroImageAltText = heroImageAlt || title || name
 
   return (
@@ -30,6 +34,7 @@ export default async function DestinationHero({
             priority
             fetchPriority='high'
             sizes='100vw'
+            unoptimized={isSvg}
           />
           <div className='absolute inset-0 hidden bg-gradient-to-r from-olive-300 via-olive-200 to-transparent sm:block' />
         </div>

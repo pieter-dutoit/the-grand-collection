@@ -68,7 +68,7 @@ export default function PrimaryImageCarousel({
       >
         <CarouselContent className='-ml-1'>
           {images.map((image, index) => {
-            const { url, alt } = extractImageProps(image)
+            const { url, alt, isSvg } = extractImageProps(image)
 
             return (
               <CarouselItem key={url + index} className='pl-1'>
@@ -81,6 +81,7 @@ export default function PrimaryImageCarousel({
                     sizes='(max-width: 640px) 90vw, (max-width: 1025px) 80vw, 56rem'
                     priority={index === 0}
                     fetchPriority={index === 0 ? 'high' : undefined}
+                    unoptimized={isSvg}
                   />
                 </div>
               </CarouselItem>

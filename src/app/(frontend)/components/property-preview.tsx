@@ -54,7 +54,7 @@ export default function PropertyPreview({
     >
       <div className='mb-1 grid gap-2 lg:grid-cols-4 xl:grid-cols-5'>
         {gallery.map((image, index) => {
-          const { alt, url } = extractImageProps(image)
+          const { alt, url, isSvg } = extractImageProps(image)
           const isAboveFoldImage = aboveFold && index === 0
 
           const sizeClasses =
@@ -89,6 +89,7 @@ export default function PropertyPreview({
                 sizes={sizes}
                 priority={isAboveFoldImage}
                 fetchPriority={isAboveFoldImage ? 'high' : undefined}
+                unoptimized={isSvg}
               />
             </div>
           )

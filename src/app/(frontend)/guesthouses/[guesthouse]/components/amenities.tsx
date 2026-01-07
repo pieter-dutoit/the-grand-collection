@@ -28,11 +28,17 @@ export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
             {general_amenities.map((amenity) => {
               if (typeof amenity === 'string') return null
               const { id, icon, name } = amenity
-              const { url, alt } = extractImageProps(icon)
+              const { url, alt, isSvg } = extractImageProps(icon)
               return (
                 <li key={id} aria-label={`View ${name}` + ' amenity details'}>
                   <div className='flex cursor-default flex-col items-center transition-transform duration-150 ease-in-out hover:scale-105'>
-                    <Image src={url} alt={alt} height={30} width={30} />
+                    <Image
+                      src={url}
+                      alt={alt}
+                      height={30}
+                      width={30}
+                      unoptimized={isSvg}
+                    />
                     <span className='mt-2 text-xs font-semibold capitalize'>
                       {name}
                     </span>

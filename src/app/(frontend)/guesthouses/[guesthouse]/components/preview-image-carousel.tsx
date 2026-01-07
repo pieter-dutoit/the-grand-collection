@@ -33,7 +33,7 @@ export default function PreviewImageCarousel({
     >
       <CarouselContent className='-ml-2'>
         {images.map((image, index) => {
-          const { url, alt } = extractImageProps(image)
+          const { url, alt, isSvg } = extractImageProps(image)
           const borderClass =
             selectedPhoto === index
               ? 'border-gold-200 shadow-lg'
@@ -57,6 +57,7 @@ export default function PreviewImageCarousel({
                   fill
                   className='object-cover object-center'
                   sizes='(max-width: 768px) 20vw, 9rem'
+                  unoptimized={isSvg}
                 />
               </button>
             </CarouselItem>
