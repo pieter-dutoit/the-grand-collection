@@ -1,0 +1,41 @@
+import { fetchArticles } from '@/lib/data'
+import MoreArticlesSection from '@/components/more-articles'
+
+import { getArticlePageData } from '../lib/article-data'
+
+type ArticleRelatedArticlesProps = {
+  destinationSlug: string
+  articleSlug: string
+}
+
+export default async function ArticleRelatedArticles({
+  destinationSlug,
+  articleSlug
+}: ArticleRelatedArticlesProps) {
+  const { destination, article } = await getArticlePageData(
+    destinationSlug,
+    articleSlug
+  )
+
+  const relatedArticles = await fetchArticles(
+    {
+      destination: { equals: destination.id },
+      id: { not_equals: article.id },
+      slug: { exists: true }
+    },
+    {
+      sort: ['-featured', '-updatedAt', '-createdAt'],
+      limit: 6
+    }
+  )
+
+  return (
+    <MoreArticlesSection
+      label='Explore more'
+      title={`More things to do in ${destination.name}`}
+      description={`A few more hand-picked places and ideas to help you make the most of your time in ${destination.name}.`}
+      destination={destination}
+      relatedArticles={relatedArticles}
+    />
+  )
+}

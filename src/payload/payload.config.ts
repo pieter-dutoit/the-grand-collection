@@ -4,6 +4,7 @@ import sharp from 'sharp'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -23,6 +24,10 @@ import { SEOMedia } from './collections/seo-media'
 import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
 import { RichtextSections } from './collections/richtext-section'
+import { Articles } from './collections/articles'
+import { Destinations } from './collections/destinations'
+import { Faqs } from './collections/faqs'
+import { Policies } from './collections/policies'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -47,6 +52,10 @@ export default buildConfig({
   },
   globals: [Logos, HomePage, AboutUsPage, AllGuesthousesPage],
   collections: [
+    Articles,
+    Destinations,
+    Faqs,
+    Policies,
     Amenities,
     Beds,
     Users,
@@ -96,5 +105,17 @@ export default buildConfig({
     limits: {
       fileSize: 4500000
     }
-  }
+  },
+  email: nodemailerAdapter({
+    defaultFromAddress: 'contact@pieterdutoit.dev',
+    defaultFromName: 'Payload CMS',
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: 465,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+      }
+    }
+  })
 })

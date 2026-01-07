@@ -49,6 +49,32 @@ export const Guesthouses: CollectionConfig = {
         readOnly: true
       }
     },
+    {
+      name: 'destination',
+      label: 'Destination',
+      type: 'relationship',
+      relationTo: 'destinations',
+      hasMany: false,
+      index: true,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'faq',
+      label: 'FAQ Section',
+      type: 'relationship',
+      relationTo: 'faqs',
+      hasMany: false,
+      admin: {
+        position: 'sidebar'
+      },
+      filterOptions: {
+        _status: {
+          equals: 'published'
+        }
+      }
+    },
     BookingPlatform,
     //  TABS
     {

@@ -6,6 +6,7 @@ import { GoogleTagManager } from '@next/third-parties/google'
 
 import Navbar from '@/app/(frontend)/components/layout/navbar'
 import Footer from '@/app/(frontend)/components/layout/footer'
+import { Toaster } from '@/components/ui/sonner'
 
 import { fetchHomePageData } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
@@ -38,10 +39,11 @@ export default function RootLayout({
 
       <body>
         <Navbar />
-        <main>
+        <main className='bg-gradient-to-b from-white via-white to-olive-100'>
           {children}
           <Footer />
         </main>
+        <Toaster />
       </body>
     </html>
   )

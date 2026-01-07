@@ -1,7 +1,7 @@
 import 'server-only'
 import Link from 'next/link'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import {
   // fetchHomePageData,
   fetchGuestHouses,
@@ -18,20 +18,22 @@ export default async function Footer(): Promise<JSX.Element> {
   const guesthouses = await fetchGuestHouses()
   const logo = await fetchLogo('minimal_light')
   const { minimal_light } = logo
-  const { url, alt } = extractImageProps(minimal_light)
+  const logoProps = extractImageProps(minimal_light)
 
   return (
-    <footer className='w-full justify-center bg-olive-950/95 py-8'>
+    <footer className='w-full justify-center bg-black py-8'>
       <div className='container mx-auto grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-5'>
         {/* Logo & Socials */}
         <div className='flex flex-col md:col-span-3 lg:col-span-2'>
           <Link href='/'>
             <div className='relative mx-auto h-16 w-52 max-w-full md:mx-0'>
               <Image
-                src={url}
-                alt={alt}
+                src={logoProps.url}
+                alt={logoProps.alt}
                 fill
                 className='object-contain object-center'
+                sizes='(max-width: 640px) 60vw, 13rem'
+                unoptimized={logoProps.isSvg}
               />
             </div>
           </Link>

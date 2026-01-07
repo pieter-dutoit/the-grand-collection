@@ -33,6 +33,18 @@ export const HomePage: GlobalConfig = {
             HeroFields,
             OverviewFields,
             FeaturedPropertiesFields,
+            {
+              type: 'relationship',
+              name: 'faq',
+              label: 'FAQ Section',
+              relationTo: 'faqs',
+              hasMany: false,
+              filterOptions: {
+                _status: {
+                  equals: 'published'
+                }
+              }
+            },
             SocialMediaLinks,
             {
               type: 'relationship',

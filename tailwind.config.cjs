@@ -13,6 +13,34 @@ module.exports = {
       }
     },
     extend: {
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.olive.900'),
+            a: {
+              color: theme('colors.sage.700'),
+              fontWeight: '600',
+              textDecoration: 'underline',
+              textUnderlineOffset: '4px'
+            },
+            h1: { color: theme('colors.olive.900') },
+            h2: { color: theme('colors.olive.900') },
+            h3: { color: theme('colors.olive.900') },
+            h4: { color: theme('colors.olive.900') },
+            h5: { color: theme('colors.olive.900') },
+            h6: { color: theme('colors.olive.900') },
+            strong: { color: theme('colors.olive.900') },
+            blockquote: {
+              color: theme('colors.olive.800'),
+              borderLeftColor: theme('colors.gold.300')
+            },
+            figcaption: { color: theme('colors.olive.700') },
+            hr: { borderColor: theme('colors.olive.200') },
+            'ul > li::marker': { color: theme('colors.olive.400') },
+            'ol > li::marker': { color: theme('colors.olive.500') }
+          }
+        }
+      }),
       screens: {
         '2xl': '1280px'
       },
@@ -79,5 +107,5 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
 }

@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { House } from 'lucide-react'
 
-import Image from '@/components/ui/image'
+import Image from 'next/image'
 import { getButtonStyles } from '@/components/ui/button'
 import { fetchHomePageData, fetchLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
@@ -29,7 +28,6 @@ export async function Hero(): Promise<JSX.Element> {
             fill
             sizes='100vw'
             priority
-            portrait
           />
         )}
         <div className='absolute inset-0 bg-custom-gradient-mobile sm:bg-custom-gradient' />
@@ -42,6 +40,7 @@ export async function Hero(): Promise<JSX.Element> {
               className='object-contain object-center'
               sizes='(max-width: 510px) 90vw, 30rem'
               priority
+              unoptimized={logoProps.isSvg}
             />
           </div>
 
@@ -60,7 +59,6 @@ export async function Hero(): Promise<JSX.Element> {
             )}
             href={locations_link.link_url}
           >
-            <House />
             {locations_link.link_text}
           </Link>
         </div>

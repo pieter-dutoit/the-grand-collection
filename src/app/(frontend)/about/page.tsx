@@ -5,12 +5,15 @@ import SubSections from './components/sub-sections'
 import Overview from './components/overview'
 
 import { fetchAboutPageData } from '@/lib/data'
+import Breadcrumbs from '@/components/ui/breadcrumbs'
+import JsonLd from '@/components/seo/json-ld'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import {
-  createBreadCrumbs,
-  getOrganisationStructuredData
+  createPageStructuredData,
+  getOrganisationId
 } from '@/lib/utils/create-structured-data'
 import { getBaseUrl } from '@/lib/utils'
+import { getAboutBreadcrumbs } from '@/lib/utils/breadcrumbs'
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await fetchAboutPageData('seo')
@@ -23,29 +26,25 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function About(): Promise<JSX.Element> {
   const { seo } = await fetchAboutPageData('seo')
+  const breadcrumbs = getAboutBreadcrumbs()
+  const baseUrl = getBaseUrl()
+  const pageUrl = `${baseUrl}/about`
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'AboutPage',
-    '@id': 'https://thegrandcollection.co.za/about',
-    url: getBaseUrl() + '/about',
+  const jsonLd = await createPageStructuredData({
+    pageUrl,
+    pageType: 'AboutPage',
     name: seo?.meta.title,
     description: seo?.meta.description,
-    breadcrumb: createBreadCrumbs([
-      {
-        name: 'About',
-        item: '/about'
-      }
-    ]),
-    mainEntity: await getOrganisationStructuredData()
-  }
+    breadcrumbs,
+    mainEntityId: getOrganisationId()
+  })
 
   return (
     <>
-      <script
-        type='application/ld+json'
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      <section className='container mx-auto pt-3'>
+        <Breadcrumbs items={breadcrumbs} />
+      </section>
       <Hero />
       <Overview />
       <SubSections />

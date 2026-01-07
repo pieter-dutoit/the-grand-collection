@@ -3,8 +3,10 @@ import {
   RichText
 } from '@payloadcms/richtext-lexical/react'
 
-import SectionHeading from '@/components/ui/section-heading'
+import SectionHeading from '@/components/section-heading'
 import { fetchAboutPageData } from '@/lib/data'
+import Divider from '../../guesthouses/[guesthouse]/components/divider'
+import { Fragment } from 'react'
 
 const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters
@@ -22,14 +24,17 @@ export default async function SubSections(): Promise<JSX.Element> {
         const { heading, content } = subsection
 
         return (
-          <section key={index} className='container mx-auto py-8 lg:py-16'>
-            <SectionHeading heading={heading} />
-            <RichText
-              data={content}
-              className='mt-6 lg:mt-12'
-              converters={jsxConverters}
-            />
-          </section>
+          <Fragment key={`subsection-${index}`}>
+            {index !== 0 && <Divider />}
+            <section key={index} className='container mx-auto py-8 lg:py-16'>
+              <SectionHeading title={heading} className='text-center' />
+              <RichText
+                data={content}
+                className='mx-auto mt-6 max-w-prose lg:mt-12'
+                converters={jsxConverters}
+              />
+            </section>
+          </Fragment>
         )
       })}
     </div>
