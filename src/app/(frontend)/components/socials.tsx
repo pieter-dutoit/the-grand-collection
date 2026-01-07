@@ -27,7 +27,7 @@ export default function Socials({
         if (typeof platform === 'string') return null
         const { name, icon } = platform
 
-        const { url, alt } = extractImageProps(icon)
+        const { url, alt, isSvg } = extractImageProps(icon)
 
         return (
           <li key={platformLink} aria-label={`Link to ${name} profile`}>
@@ -44,7 +44,13 @@ export default function Socials({
               )}
             >
               <span className='sr-only'>{name}</span>
-              <Image src={url} alt={alt} height={25} width={25} />
+              <Image
+                src={url}
+                alt={alt}
+                height={25}
+                width={25}
+                unoptimized={isSvg}
+              />
             </Link>
           </li>
         )

@@ -17,7 +17,7 @@ export default function RoomDetails({
   const { name, description, base_price, details, amenities } = room
   const { sleeps_adults, sleeps_children, beds } = details
 
-  const { url, alt } = extractImageProps(peopleIcon)
+  const { url, alt, isSvg } = extractImageProps(peopleIcon)
   return (
     <>
       <h3 className='text-xl font-semibold text-olive-500'>{name}</h3>
@@ -28,7 +28,13 @@ export default function RoomDetails({
         <h4 className='sr-only'>Capacity</h4>
         <ul className='flex flex-col flex-wrap gap-2'>
           <li className='flex items-center gap-2'>
-            <Image src={url} alt={alt} height={18} width={18} />
+            <Image
+              src={url}
+              alt={alt}
+              height={18}
+              width={18}
+              unoptimized={isSvg}
+            />
             <span className='text-sm font-semibold'>
               Sleeps {sleeps_adults + sleeps_children} People
             </span>
@@ -37,10 +43,16 @@ export default function RoomDetails({
             {beds.map(({ type, quantity }) => {
               if (typeof type === 'string') return null
               const { icon } = type
-              const { url, alt } = extractImageProps(icon)
+              const { url, alt, isSvg } = extractImageProps(icon)
               return (
                 <span key={type.id} className='flex items-center gap-2'>
-                  <Image src={url} alt={alt} height={18} width={18} />
+                  <Image
+                    src={url}
+                    alt={alt}
+                    height={18}
+                    width={18}
+                    unoptimized={isSvg}
+                  />
                   <span className='text-sm font-semibold'>
                     {quantity} x {type.name} Bed{quantity === 1 ? '' : 's'}
                   </span>
@@ -57,7 +69,7 @@ export default function RoomDetails({
             {amenities.map((amenity) => {
               if (typeof amenity === 'string') return null
               const { icon, name } = amenity
-              const { url, alt } = extractImageProps(icon)
+              const { url, alt, isSvg } = extractImageProps(icon)
               return (
                 <li
                   key={amenity.id}
@@ -69,6 +81,7 @@ export default function RoomDetails({
                     height={16}
                     width={16}
                     className='size-4 object-contain object-center'
+                    unoptimized={isSvg}
                   />
                   <span className='text-xs font-semibold'>{name}</span>
                 </li>

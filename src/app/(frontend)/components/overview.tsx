@@ -41,7 +41,7 @@ export default async function Overview(): Promise<JSX.Element> {
           <div className='h-fit w-full place-self-center'>
             <ul className='my-auto grid h-fit grid-cols-2 gap-2'>
               {images.map((image, index) => {
-                const { url, alt } = extractImageProps(image)
+                const { url, alt, isSvg } = extractImageProps(image)
                 const { classes, sizes } =
                   index === 0
                     ? {
@@ -69,6 +69,7 @@ export default async function Overview(): Promise<JSX.Element> {
                       src={url}
                       alt={alt}
                       sizes={sizes}
+                      unoptimized={isSvg}
                     />
                   </li>
                 )

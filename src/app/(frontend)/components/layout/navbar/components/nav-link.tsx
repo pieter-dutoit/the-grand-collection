@@ -36,7 +36,9 @@ function DetailedNavLink({
   address
 }: NavOption): JSX.Element {
   const { text } = label
-  const { alt, url } = image ? extractImageProps(image) : { alt: '', url: '' }
+  const { alt, url, isSvg } = image
+    ? extractImageProps(image)
+    : { alt: '', url: '', isSvg: false }
   return (
     <NavigationMenuLink
       asChild
@@ -50,6 +52,8 @@ function DetailedNavLink({
             alt={alt}
             src={url}
             className='h-14 w-12 content-center rounded-l-lg bg-olive-100 object-cover sm:size-[90px]'
+            fetchPriority='low'
+            unoptimized={isSvg}
           />
 
           <div className='flex size-full flex-col items-start px-2 py-1'>

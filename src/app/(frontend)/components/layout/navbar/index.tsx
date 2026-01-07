@@ -50,6 +50,8 @@ export default async function Navbar(): Promise<JSX.Element> {
                 fill
                 className='object-contain object-center'
                 sizes='(max-width: 640px) 8rem, 9rem'
+                loading='eager'
+                fetchPriority='high'
                 unoptimized={logoProps.isSvg}
               />
             </div>

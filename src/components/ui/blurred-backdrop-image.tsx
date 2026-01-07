@@ -6,6 +6,7 @@ type Props = {
   alt: string
   sizes?: string
   priority?: boolean
+  fetchPriority?: 'high' | 'low' | 'auto'
   aspectRatio?: number
   containerClassName?: string
   backdropClassName?: string
@@ -17,6 +18,7 @@ export default function BlurredBackdropImage({
   alt,
   sizes,
   priority,
+  fetchPriority,
   aspectRatio,
   containerClassName,
   backdropClassName,
@@ -24,6 +26,9 @@ export default function BlurredBackdropImage({
 }: Props) {
   if (!src) return null
   const resolvedSizes = sizes ?? '100vw'
+  const resolvedFetchPriority = fetchPriority ?? (priority ? 'high' : undefined)
+  const isSvg =
+    src.toLowerCase().includes('.svg') || src.startsWith('data:image/svg+xml')
 
   return (
     <div
@@ -44,6 +49,10 @@ export default function BlurredBackdropImage({
         )}
         priority={priority}
         sizes={resolvedSizes}
+        fetchPriority={
+          resolvedFetchPriority === 'high' ? 'low' : resolvedFetchPriority
+        }
+        unoptimized={isSvg}
       />
       <Image
         src={src}
@@ -55,6 +64,8 @@ export default function BlurredBackdropImage({
         )}
         priority={priority}
         sizes={resolvedSizes}
+        fetchPriority={resolvedFetchPriority}
+        unoptimized={isSvg}
       />
     </div>
   )

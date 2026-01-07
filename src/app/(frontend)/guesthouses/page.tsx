@@ -54,10 +54,13 @@ export default async function AllGuestHouses(): Promise<JSX.Element> {
         <PageHeading heading={heading} subHeading={sub_heading} />
         {!!guesthouses && (
           <ul className='mt-4 flex flex-col gap-8 lg:mt-8'>
-            {guesthouses.map((guesthouse) => {
+            {guesthouses.map((guesthouse, index) => {
               return (
                 <li key={guesthouse.slug}>
-                  <PropertyPreview guesthouse={guesthouse} />
+                  <PropertyPreview
+                    guesthouse={guesthouse}
+                    aboveFold={index === 0}
+                  />
                 </li>
               )
             })}

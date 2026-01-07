@@ -8,7 +8,7 @@ export default async function Overview(): Promise<JSX.Element> {
   if (!overview) return <></>
 
   const { title, description, image } = overview
-  const { url, alt } = extractImageProps(image)
+  const { url, alt, isSvg } = extractImageProps(image)
 
   return (
     <section className='w-full bg-gradient-to-tr from-sage-50 to-sage-100'>
@@ -22,6 +22,9 @@ export default async function Overview(): Promise<JSX.Element> {
             fill
             className='object-cover object-center'
             sizes='(max-width: 640px) 100vw, 50vw'
+            priority
+            fetchPriority='high'
+            unoptimized={isSvg}
           />
         </div>
 
