@@ -172,7 +172,7 @@ export function ArticleRichText({ data, className, headings }: Props) {
       data={data}
       converters={createJsxConverters(headingIds)}
       className={twMerge(
-        'prose max-w-none prose-headings:font-light prose-p:leading-relaxed prose-p:text-olive-800 prose-blockquote:text-olive-800 prose-figcaption:text-xs prose-figcaption:font-semibold prose-figcaption:text-olive-500 prose-strong:text-olive-900 prose-li:opacity-90 prose-img:rounded-2xl',
+        'prose max-w-none prose-headings:font-light prose-h2:font-semibold prose-p:leading-relaxed prose-p:text-olive-800 prose-blockquote:text-olive-800 prose-figcaption:text-xs prose-figcaption:font-semibold prose-figcaption:text-olive-500 prose-strong:text-olive-900 prose-li:opacity-90 prose-img:rounded-2xl',
         className
       )}
     />
