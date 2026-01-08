@@ -4,7 +4,7 @@ import { DEFAULT_COLLECTION_ACCESS } from '../access/default-config'
 const JPEG_FORMAT = {
   format: 'jpeg',
   options: {
-    quality: 95
+    quality: 75
   }
 } satisfies ImageUploadFormatOptions
 
