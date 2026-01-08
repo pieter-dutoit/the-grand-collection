@@ -88,7 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           '/guides/' +
           article.slug,
         lastModified: articleLastModified,
-        changeFrequency: 'monthly' as const,
+        changeFrequency: 'yearly' as const,
         priority: 0.8
       }
     ]
@@ -99,7 +99,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ).map(([destinationSlug, lastModified]) => ({
     url: baseURL + '/destinations/' + destinationSlug,
     lastModified,
-    changeFrequency: 'monthly' as const,
+    changeFrequency: 'weekly' as const,
     priority: 0.7
   }))
 
@@ -110,7 +110,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: homePage.updatedAt
         ? new Date(homePage.updatedAt)
         : new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'yearly',
       priority: 0.3
     },
     // All Guesthouses Page
@@ -119,7 +119,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: allGuestHousesPage.updatedAt
         ? new Date(allGuestHousesPage.updatedAt)
         : new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'yearly',
       priority: 0.2
     },
     // About page
