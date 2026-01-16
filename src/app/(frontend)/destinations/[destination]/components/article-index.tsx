@@ -17,7 +17,7 @@ export default async function ArticleIndex({
 
   return (
     <section className='relative py-10 lg:py-20'>
-      <div id='things-to-do' className='absolute -mt-36 lg:-mt-48' />
+      <div id='travel-guides' className='absolute -mt-36 lg:-mt-48' />
       <div className='container mx-auto flex flex-col gap-6'>
         <SectionHeading
           parentLabel={guides.label}

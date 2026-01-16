@@ -4,16 +4,12 @@ import { cache } from 'react'
 import { notFound } from 'next/navigation'
 
 import { fetchArticles, fetchDestinations } from '@/lib/data'
-import { extractImageProps, getBaseUrl } from '@/lib/utils'
+import { extractImageProps, formatDate, getBaseUrl } from '@/lib/utils'
+import type { DateInfo } from '@/lib/utils'
 import { hasFaqItems } from '@/lib/utils/faq'
 import type { Article, Destination } from '@/payload/payload-types'
 
 import { getAbsoluteImageUrl } from './article-utils'
-
-type DateInfo = {
-  dateTime: string
-  humanReadable: string
-}
 
 type ArticleThumbnail = {
   url?: string
@@ -35,19 +31,6 @@ type ArticlePageData = {
   hasFaq: boolean
   ogImage?: string
   thumbnail: ArticleThumbnail
-}
-
-const formatDate = (value: string): DateInfo => {
-  const date = new Date(value)
-
-  return {
-    dateTime: date.toISOString(),
-    humanReadable: new Intl.DateTimeFormat('en-ZA', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
-    }).format(date)
-  }
 }
 
 const shouldShowUpdatedAt = (createdAt: string, updatedAt: string) => {

@@ -80,7 +80,7 @@ export default async function ArticleBody({
                 </li>
                 <li>
                   <Button asChild variant='link' colour='olive'>
-                    <Link href={`#more-articles`}>More things to do</Link>
+                    <Link href={`#more-articles`}>More travel guides</Link>
                   </Button>
                 </li>
                 <li>

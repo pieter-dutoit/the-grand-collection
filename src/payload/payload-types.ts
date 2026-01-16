@@ -68,6 +68,7 @@ export interface Config {
   blocks: {}
   collections: {
     articles: Article
+    'article-categories': ArticleCategory
     destinations: Destination
     faqs: Faq
     policies: Policy
@@ -89,6 +90,9 @@ export interface Config {
   collectionsJoins: {}
   collectionsSelect: {
     articles: ArticlesSelect<false> | ArticlesSelect<true>
+    'article-categories':
+      | ArticleCategoriesSelect<false>
+      | ArticleCategoriesSelect<true>
     destinations: DestinationsSelect<false> | DestinationsSelect<true>
     faqs: FaqsSelect<false> | FaqsSelect<true>
     policies: PoliciesSelect<false> | PoliciesSelect<true>
@@ -173,6 +177,7 @@ export interface Article {
   guesthouse?: (string | null) | Guesthouse
   faq?: (string | null) | Faq
   featured?: boolean | null
+  categories?: (string | ArticleCategory)[] | null
   type: 'guide'
   author: string
   thumbnail: string | Media
@@ -672,6 +677,17 @@ export interface SocialMediaPlatform {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article-categories".
+ */
+export interface ArticleCategory {
+  id: string
+  slug: string
+  name: string
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -747,6 +763,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'articles'
         value: string | Article
+      } | null)
+    | ({
+        relationTo: 'article-categories'
+        value: string | ArticleCategory
       } | null)
     | ({
         relationTo: 'destinations'
@@ -852,6 +872,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   guesthouse?: T
   faq?: T
   featured?: T
+  categories?: T
   type?: T
   author?: T
   thumbnail?: T
@@ -861,6 +882,16 @@ export interface ArticlesSelect<T extends boolean = true> {
   updatedAt?: T
   createdAt?: T
   _status?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article-categories_select".
+ */
+export interface ArticleCategoriesSelect<T extends boolean = true> {
+  slug?: T
+  name?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

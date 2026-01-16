@@ -136,8 +136,8 @@ export default async function Page({ params }: Props): Promise<JSX.Element> {
         relatedArticles.length > 0 && (
           <MoreArticlesSection
             label='Nearby highlights'
-            title={`Things to do near ${data.destination.name}`}
-            description='A short list of local favorites, plus a few guides to help you choose what to do.'
+            title={`${data.destination.name} Travel Guides`}
+            description='Local favourites and practical guides to help you make the most of your time here.'
             destination={data.destination}
             relatedArticles={relatedArticles}
           />
