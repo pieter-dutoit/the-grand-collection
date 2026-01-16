@@ -125,7 +125,7 @@ export default function PropertyPreview({
                 'mr-2 mt-2 lg:mt-0'
               )}
             >
-              Things to do in {destinationData.name}
+              {destinationData.name} travel guides
             </Link>
           )}
 

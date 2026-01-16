@@ -71,6 +71,16 @@ export const Articles: CollectionConfig = {
       }
     },
     {
+      name: 'categories',
+      label: 'Categories',
+      type: 'relationship',
+      relationTo: 'article-categories',
+      hasMany: true,
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
       name: 'type',
       label: 'Type',
       type: 'select',

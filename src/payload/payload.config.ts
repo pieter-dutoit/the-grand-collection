@@ -25,6 +25,7 @@ import { Rooms } from './collections/rooms'
 import { Beds } from './collections/beds'
 import { RichtextSections } from './collections/richtext-section'
 import { Articles } from './collections/articles'
+import { ArticleCategories } from './collections/article-categories'
 import { Destinations } from './collections/destinations'
 import { Faqs } from './collections/faqs'
 import { Policies } from './collections/policies'
@@ -53,6 +54,7 @@ export default buildConfig({
   globals: [Logos, HomePage, AboutUsPage, AllGuesthousesPage],
   collections: [
     Articles,
+    ArticleCategories,
     Destinations,
     Faqs,
     Policies,

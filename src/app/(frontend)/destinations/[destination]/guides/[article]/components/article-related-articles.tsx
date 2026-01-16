@@ -32,7 +32,7 @@ export default async function ArticleRelatedArticles({
   return (
     <MoreArticlesSection
       label='Explore more'
-      title={`More things to do in ${destination.name}`}
+      title={`More ${destination.name} travel guides`}
       description={`A few more hand-picked places and ideas to help you make the most of your time in ${destination.name}.`}
       destination={destination}
       relatedArticles={relatedArticles}

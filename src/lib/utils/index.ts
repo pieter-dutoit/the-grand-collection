@@ -2,6 +2,9 @@ import { ContactPerson, Media, SeoMedia } from '@/payload/payload-types'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
+export { formatDate, formatDateLabel } from './date'
+export type { DateInfo } from './date'
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }

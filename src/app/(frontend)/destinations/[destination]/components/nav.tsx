@@ -10,7 +10,7 @@ export default function DestinationNav() {
       <ul className='container mx-auto flex w-full flex-row items-center gap-2 overflow-x-auto py-2'>
         <li>
           <Button asChild colour='olive' variant='outline'>
-            <Link href={`#things-to-do`}>Things to do</Link>
+            <Link href={`#travel-guides`}>Travel guides</Link>
           </Button>
         </li>
         <li>
