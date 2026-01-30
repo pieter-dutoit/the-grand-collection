@@ -38,6 +38,11 @@ export const Media: CollectionConfig = {
       type: 'text',
       label: 'Brief image description, e.g. "View of pool"',
       required: true
+    },
+    {
+      name: 'caption',
+      type: 'text',
+      label: 'Caption (optional)'
     }
   ],
   upload: {

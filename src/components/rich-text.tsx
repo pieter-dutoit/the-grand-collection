@@ -132,6 +132,8 @@ const createJsxConverters = (
       if (!isMedia(node.value)) return null
 
       const { url, alt, width, height } = extractImageProps(node.value)
+      const caption =
+        typeof node.value.caption === 'string' ? node.value.caption.trim() : ''
       if (!url) return null
 
       const aspectRatio = width && height ? width / height : undefined
@@ -153,11 +155,11 @@ const createJsxConverters = (
               maxWidth
             )}
           />
-          {/* {alt ? (
+          {caption ? (
             <figcaption className='mt-2 text-xs font-semibold text-olive-500'>
-              Image: {alt}
+              {caption}
             </figcaption>
-          ) : null} */}
+          ) : null}
         </figure>
       )
     }

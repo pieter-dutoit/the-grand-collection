@@ -3,7 +3,11 @@ import 'server-only'
 import { Metadata } from 'next'
 
 import { fetchArticles, fetchDestinations } from '@/lib/data'
-import { extractImageProps, getBaseUrl } from '@/lib/utils'
+import {
+  extractImageProps,
+  getBaseUrl,
+  getPublicImageSizeUrl
+} from '@/lib/utils'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
 import { getArticleBreadcrumbs } from '@/lib/utils/breadcrumbs'
 
@@ -15,14 +19,17 @@ import ArticleRelatedArticles from './components/article-related-articles'
 import ArticleWhereToStay from './components/article-where-to-stay'
 import ArticleFaq from './components/article-faq'
 
-import {
-  resolveDestinationSlug,
-  getAbsoluteImageUrl
-} from './lib/article-utils'
+import { resolveDestinationSlug } from './lib/article-utils'
 import { getArticlePageData } from './lib/article-data'
 
 type Props = {
   params: Promise<{ destination: string; article: string }>
+}
+
+const normalizeText = (value?: string | null) => {
+  if (!value) return undefined
+  const trimmed = value.trim()
+  return trimmed.length ? trimmed : undefined
 }
 
 export async function generateStaticParams() {
@@ -78,41 +85,62 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!article) return {}
 
-  const description = article.excerpt
+  const seo = article.seo
+  const descriptionFallback = article.excerpt
+  const pageTitleFallback = `${article.title} | ${destination.name}`
+  const metaTitle = normalizeText(seo?.meta?.title)
+  const metaDescription = normalizeText(seo?.meta?.description)
+  const ogTitle = normalizeText(seo?.open_graph?.title)
+  const ogDescription = normalizeText(seo?.open_graph?.description)
+  const ogSiteName = normalizeText(seo?.open_graph?.site_name)
 
-  const { alt: thumbnailAlt } = extractImageProps(article.thumbnail)
-  const ogImage = getAbsoluteImageUrl(article.thumbnail)
+  const resolvedTitle = metaTitle ?? pageTitleFallback
+  const resolvedDescription = metaDescription ?? descriptionFallback
+  const resolvedOgTitle = ogTitle ?? metaTitle ?? pageTitleFallback
+  const resolvedOgDescription =
+    ogDescription ?? metaDescription ?? descriptionFallback
+
+  const thumbnailProps = extractImageProps(article.thumbnail)
+  const seoOgImage = seo?.open_graph?.image
+  const seoOgImageProps = seoOgImage ? extractImageProps(seoOgImage) : null
+  const ogImageUrl = seoOgImageProps?.url || thumbnailProps.url
+  const ogImageAlt = seoOgImageProps?.alt || thumbnailProps.alt || article.title
+  const ogImageSource = seoOgImageProps?.url ? seoOgImage : article.thumbnail
+  const twitterImageUrl =
+    getPublicImageSizeUrl(ogImageSource, 'twitter') || ogImageUrl
   const canonical = `${getBaseUrl()}/destinations/${destinationSlug}/guides/${article.slug}`
-  const pageTitle = `${article.title} | ${destination.name}`
 
   return {
-    title: pageTitle,
-    description,
+    title: resolvedTitle,
+    description: resolvedDescription,
     alternates: {
       canonical
     },
     openGraph: {
-      title: pageTitle,
-      description,
+      title: resolvedOgTitle,
+      description: resolvedOgDescription,
+      ...(ogSiteName ? { siteName: ogSiteName } : {}),
       type: 'article',
       url: canonical,
       publishedTime: article.createdAt,
       modifiedTime: article.updatedAt,
       authors: [article.author?.trim() || 'The Grand Collection'],
-      ...(ogImage && {
+      ...(ogImageUrl && {
         images: [
           {
-            url: ogImage,
-            alt: thumbnailAlt || article.title
+            url: ogImageUrl,
+            alt: ogImageAlt || article.title
           }
         ]
       })
     },
     twitter: {
       card: 'summary_large_image',
-      title: pageTitle,
-      description,
-      ...(ogImage ? { images: [ogImage] } : {})
+      title: resolvedOgTitle,
+      description: resolvedOgDescription,
+      ...(seo?.twitter?.creator ? { creator: seo.twitter.creator } : {}),
+      ...(seo?.twitter?.creatorId ? { creatorId: seo.twitter.creatorId } : {}),
+      ...(twitterImageUrl ? { images: [twitterImageUrl] } : {})
     }
   }
 }
