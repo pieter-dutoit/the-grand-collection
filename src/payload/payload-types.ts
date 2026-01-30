@@ -198,6 +198,11 @@ export interface Article {
     }
     [k: string]: unknown
   }
+  seo: {
+    meta: MetadataField
+    open_graph: OpenGraphField
+    twitter?: TwitterField
+  }
   updatedAt: string
   createdAt: string
   _status?: ('draft' | 'published') | null
@@ -242,6 +247,7 @@ export interface Destination {
 export interface Media {
   id: string
   alt: string
+  caption?: string | null
   prefix?: string | null
   updatedAt: string
   createdAt: string
@@ -879,9 +885,42 @@ export interface ArticlesSelect<T extends boolean = true> {
   title?: T
   excerpt?: T
   body?: T
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>
+        open_graph?: T | OpenGraphFieldSelect<T>
+        twitter?: T | TwitterFieldSelect<T>
+      }
   updatedAt?: T
   createdAt?: T
   _status?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField_select".
+ */
+export interface MetadataFieldSelect<T extends boolean = true> {
+  title?: T
+  description?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField_select".
+ */
+export interface OpenGraphFieldSelect<T extends boolean = true> {
+  site_name?: T
+  title?: T
+  description?: T
+  image?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField_select".
+ */
+export interface TwitterFieldSelect<T extends boolean = true> {
+  creator?: T
+  creatorId?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -930,32 +969,6 @@ export interface DestinationsSelect<T extends boolean = true> {
       }
   updatedAt?: T
   createdAt?: T
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MetadataField_select".
- */
-export interface MetadataFieldSelect<T extends boolean = true> {
-  title?: T
-  description?: T
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "OpenGraphField_select".
- */
-export interface OpenGraphFieldSelect<T extends boolean = true> {
-  site_name?: T
-  title?: T
-  description?: T
-  image?: T
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TwitterField_select".
- */
-export interface TwitterFieldSelect<T extends boolean = true> {
-  creator?: T
-  creatorId?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1052,6 +1065,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T
+  caption?: T
   prefix?: T
   updatedAt?: T
   createdAt?: T

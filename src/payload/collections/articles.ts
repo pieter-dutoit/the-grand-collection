@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 
+import SEOFields from '../field-groups/seo'
 import createArticleSlug from '../hooks/collections/create-article-slug'
 import revalidateCache from '../hooks/collections/revalidate-cache'
 import { GoogleMapBlock } from '../blocks/google-map'
@@ -108,42 +109,57 @@ export const Articles: CollectionConfig = {
       }
     },
     {
-      name: 'thumbnail',
-      label: 'Thumbnail',
-      type: 'upload',
-      relationTo: 'media',
-      hasMany: false,
-      required: true
-    },
-    {
-      name: 'title',
-      type: 'text',
-      label: 'Title',
-      required: true,
-      minLength: 1,
-      maxLength: 200
-    },
-    {
-      name: 'excerpt',
-      type: 'text',
-      label: 'Excerpt',
-      required: true,
-      minLength: 10,
-      maxLength: 500
-    },
-    {
-      name: 'body',
-      type: 'richText',
-      label: 'Content',
-      required: true,
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          ...defaultFeatures,
-          BlocksFeature({
-            blocks: [GoogleMapBlock]
-          })
-        ]
-      })
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'thumbnail',
+              label: 'Thumbnail',
+              type: 'upload',
+              relationTo: 'media',
+              hasMany: false,
+              required: true
+            },
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Title',
+              required: true,
+              minLength: 1,
+              maxLength: 200
+            },
+            {
+              name: 'excerpt',
+              type: 'text',
+              label: 'Excerpt',
+              required: true,
+              minLength: 10,
+              maxLength: 500
+            },
+            {
+              name: 'body',
+              type: 'richText',
+              label: 'Content',
+              required: true,
+              editor: lexicalEditor({
+                features: ({ defaultFeatures }) => [
+                  ...defaultFeatures,
+                  BlocksFeature({
+                    blocks: [GoogleMapBlock]
+                  })
+                ]
+              })
+            }
+          ]
+        },
+        {
+          name: 'seo',
+          label: 'SEO',
+          fields: SEOFields
+        }
+      ]
     }
   ]
 }

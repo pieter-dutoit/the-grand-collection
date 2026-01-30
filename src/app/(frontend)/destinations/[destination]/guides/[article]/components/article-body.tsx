@@ -37,27 +37,27 @@ export default async function ArticleBody({
         <div className='sticky top-16 hidden w-80 flex-col self-start py-10 md:block lg:py-20'>
           <nav
             aria-label='On this page'
-            className='flex w-full flex-col items-end gap-2 rounded-lg border border-gold-100 p-4'
+            className='flex w-full flex-col items-start gap-2 rounded-lg border border-gold-100 p-4'
           >
-            <h2 className='pr-4 text-lg font-extrabold text-olive-600'>
+            <h2 className='text-lg font-extrabold text-olive-600'>
               On this page
             </h2>
             {headingLinks.length > 0 && (
-              <div className='flex w-full flex-col items-end gap-2'>
-                <p className='pr-4 text-xs font-semibold capitalize tracking-wide text-olive-400'>
+              <div className='flex w-full flex-col items-start gap-2'>
+                <p className='text-xs font-semibold capitalize tracking-wide text-olive-400'>
                   In this article
                 </p>
-                <ul className='flex w-full flex-col items-end'>
+                <ul className='flex w-full flex-col items-start'>
                   {headingLinks.map((heading) => (
                     <li key={heading.id} className='w-full overflow-hidden'>
                       <Button
                         asChild
                         variant='link'
                         colour='olive'
-                        className='w-full min-w-0 justify-end'
+                        className='w-full min-w-0 justify-start'
                       >
                         <Link href={`#${heading.id}`}>
-                          <span className='block w-full truncate text-right'>
+                          <span className='block w-full truncate text-left'>
                             {heading.text}
                           </span>
                         </Link>
@@ -68,11 +68,11 @@ export default async function ArticleBody({
               </div>
             )}
 
-            <div className='mt-4 flex w-full flex-col items-end gap-2 border-t border-gold-100 pt-4'>
-              <p className='pr-4 text-xs font-semibold capitalize tracking-wide text-olive-400'>
+            <div className='mt-4 flex w-full flex-col items-start gap-2 border-t border-gold-100 pt-4'>
+              <p className='text-xs font-semibold capitalize tracking-wide text-olive-400'>
                 Quick links
               </p>
-              <ul className='flex w-full flex-col items-end'>
+              <ul className='flex w-full flex-col items-start'>
                 <li>
                   <Button asChild variant='ghost' colour='olive'>
                     <Link href={`#${article.slug}`}>Back to top</Link>
