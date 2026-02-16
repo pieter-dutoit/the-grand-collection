@@ -11,7 +11,9 @@ type Props = {
   options: NavOption[]
 }
 
-export default function BookingOptions({ options }: Props): JSX.Element[] {
+export default function BookingOptions({
+  options
+}: Props): React.JSX.Element[] {
   const { guesthouse = '' } = useParams()
 
   const sorted = options.sort((a, b) => {

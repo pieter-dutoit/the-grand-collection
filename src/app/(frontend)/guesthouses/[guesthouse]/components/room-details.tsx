@@ -13,7 +13,7 @@ export default function RoomDetails({
   room,
   peopleIcon,
   bookingLink
-}: PropTypes): JSX.Element {
+}: PropTypes): React.JSX.Element {
   const { name, description, base_price, details, amenities } = room
   const { sleeps_adults, sleeps_children, beds } = details
 

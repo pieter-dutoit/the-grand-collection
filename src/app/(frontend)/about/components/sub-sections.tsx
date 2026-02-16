@@ -12,7 +12,7 @@ const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters
 })
 
-export default async function SubSections(): Promise<JSX.Element> {
+export default async function SubSections(): Promise<React.JSX.Element> {
   const { subsections } = await fetchAboutPageData('subsections')
   if (!subsections?.length) return <></>
 

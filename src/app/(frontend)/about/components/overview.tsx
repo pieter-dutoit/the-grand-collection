@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { fetchAboutPageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
-export default async function Overview(): Promise<JSX.Element> {
+export default async function Overview(): Promise<React.JSX.Element> {
   const { overview } = await fetchAboutPageData('overview')
   if (!overview) return <></>
 

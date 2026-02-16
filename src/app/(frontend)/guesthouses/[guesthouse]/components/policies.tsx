@@ -5,7 +5,7 @@ interface PropTypes {
   data: Guesthouse
 }
 
-export default function Policies({ data }: PropTypes): JSX.Element {
+export default function Policies({ data }: PropTypes): React.JSX.Element {
   const {
     content: {
       policies: { heading, description, label, policies_list }

@@ -14,7 +14,7 @@ export default function ContactPersons({
   contactPersons,
   className,
   contactLinksClasses
-}: ContactsProps): JSX.Element {
+}: ContactsProps): React.JSX.Element {
   const contacts = extractContactDetails(contactPersons)
   return (
     <ul className={twMerge('mt-2 text-center md:text-left', className)}>

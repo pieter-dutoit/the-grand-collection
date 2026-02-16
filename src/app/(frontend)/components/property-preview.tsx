@@ -15,7 +15,7 @@ export default function PropertyPreview({
 }: {
   guesthouse: Guesthouse
   aboveFold?: boolean
-}): JSX.Element {
+}): React.JSX.Element {
   const margin = 'mx-auto'
 
   const {

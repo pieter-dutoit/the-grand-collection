@@ -19,7 +19,10 @@ type Props = {
   name: string
 }
 
-export default function GalleryDialog({ images, name }: Props): JSX.Element {
+export default function GalleryDialog({
+  images,
+  name
+}: Props): React.JSX.Element {
   const [selectedImage, setSelectedImage] = React.useState<number>(0)
 
   return (

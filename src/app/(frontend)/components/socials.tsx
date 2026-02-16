@@ -18,7 +18,7 @@ interface SocialProps {
 export default function Socials({
   socials,
   className = ''
-}: SocialProps): JSX.Element {
+}: SocialProps): React.JSX.Element {
   return (
     <ul className={twMerge('flex items-center gap-4', className)}>
       {socials.map((social) => {

@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-export default async function AllGuestHouses(): Promise<JSX.Element> {
+export default async function AllGuestHouses(): Promise<React.JSX.Element> {
   const { content } = await fetchGuesthousesPageData('content')
   if (!content) return <></>
   const { heading, sub_heading } = content

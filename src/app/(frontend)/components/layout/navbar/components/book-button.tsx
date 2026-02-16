@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge'
 import { getButtonStyles } from '@/components/ui/button'
 import { NavigationMenuTrigger } from '@/components/ui/navigation-menu'
 
-export default function BookButton(): JSX.Element | null {
+export default function BookButton(): React.JSX.Element | null {
   const pathname = usePathname()
   const isMatch = /^\/guesthouses\/[a-z0-9-]+/.test(pathname)
 

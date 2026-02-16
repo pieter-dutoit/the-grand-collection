@@ -34,7 +34,16 @@ export const SEOMedia: CollectionConfig = {
   ],
   upload: {
     disableLocalStorage: true,
-    adminThumbnail: 'thumbnail',
+    adminThumbnail: ({ doc }) => {
+      const typedDoc = doc as
+        | {
+            sizes?: Record<string, { url?: null | string } | null>
+            url?: null | string
+          }
+        | undefined
+
+      return typedDoc?.sizes?.thumbnail?.url || typedDoc?.url || null
+    },
     imageSizes: [
       {
         name: 'thumbnail',

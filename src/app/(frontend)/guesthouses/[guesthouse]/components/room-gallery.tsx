@@ -10,7 +10,7 @@ interface PropTypes {
   room: Room
 }
 
-export default function RoomGallery({ room }: PropTypes): JSX.Element {
+export default function RoomGallery({ room }: PropTypes): React.JSX.Element {
   const { gallery } = room
   const thumbnails = gallery.slice(0, 2)
 

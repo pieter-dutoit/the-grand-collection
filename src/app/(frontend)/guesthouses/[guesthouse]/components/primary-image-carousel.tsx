@@ -23,7 +23,7 @@ export default function PrimaryImageCarousel({
   images,
   onPhotoSelect,
   selectedPhoto
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)

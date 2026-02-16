@@ -22,7 +22,7 @@ export default function PreviewImageCarousel({
   images,
   onPhotoSelect,
   selectedPhoto
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   return (
     <Carousel
       opts={{
