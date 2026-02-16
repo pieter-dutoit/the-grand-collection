@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-export default async function About(): Promise<JSX.Element> {
+export default async function About(): Promise<React.JSX.Element> {
   const { seo } = await fetchAboutPageData('seo')
   const breadcrumbs = getAboutBreadcrumbs()
   const baseUrl = getBaseUrl()

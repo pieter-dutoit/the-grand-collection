@@ -3,7 +3,7 @@ import { fetchHomePageData } from '@/lib/data'
 import SectionHeading from '@/components/section-heading'
 import PropertyPreview from './property-preview'
 
-export default async function Properties(): Promise<JSX.Element> {
+export default async function Properties(): Promise<React.JSX.Element> {
   const { featured } = await fetchHomePageData('featured')
   if (!featured) return <></>
 

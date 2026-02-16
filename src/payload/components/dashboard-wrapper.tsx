@@ -4,7 +4,7 @@ import { Gutter } from '@payloadcms/ui'
 
 import revalidateAllPaths from '../utils/revalidate-all-paths'
 
-function DashboardWrapper(): JSX.Element {
+function DashboardWrapper(): React.JSX.Element {
   return (
     <Gutter>
       <h1>Payload CMS</h1>

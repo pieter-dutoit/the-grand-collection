@@ -23,7 +23,7 @@ import BookingOptions from './components/booking-options'
 import { fetchLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
-export default async function Navbar(): Promise<JSX.Element> {
+export default async function Navbar(): Promise<React.JSX.Element> {
   const bookingOptions = await getBookingOptions()
   const logo = await fetchLogo('minimal_dark')
   const { minimal_dark } = logo

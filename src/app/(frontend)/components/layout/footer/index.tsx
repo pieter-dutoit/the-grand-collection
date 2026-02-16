@@ -12,7 +12,7 @@ import { extractImageProps } from '@/lib/utils'
 // import Socials from '../../socials'
 import ContactPersons from '../../contact-persons'
 
-export default async function Footer(): Promise<JSX.Element> {
+export default async function Footer(): Promise<React.JSX.Element> {
   // const { socials } = await fetchHomePageData('socials')
   // const { contactPersons } = await fetchHomePageData('contactPersons')
   const guesthouses = await fetchGuestHouses()

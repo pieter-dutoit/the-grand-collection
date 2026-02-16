@@ -6,7 +6,7 @@ import { getButtonStyles } from '@/components/ui/button'
 import { fetchHomePageData, fetchLogo } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
-export async function Hero(): Promise<JSX.Element> {
+export async function Hero(): Promise<React.JSX.Element> {
   const { hero } = await fetchHomePageData('hero')
   const logo = await fetchLogo('logo_light')
   const { logo_light } = logo

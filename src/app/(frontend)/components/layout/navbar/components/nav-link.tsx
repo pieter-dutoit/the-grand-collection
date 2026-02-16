@@ -9,7 +9,7 @@ import { extractImageProps } from '@/lib/utils'
 
 import type { NavOption } from '../data'
 
-function BlockLink({ label, href }: NavOption): JSX.Element {
+function BlockLink({ label, href }: NavOption): React.JSX.Element {
   const { variant, color, text } = label
 
   return (
@@ -34,7 +34,7 @@ function DetailedNavLink({
   href,
   image,
   address
-}: NavOption): JSX.Element {
+}: NavOption): React.JSX.Element {
   const { text } = label
   const { alt, url, isSvg } = image
     ? extractImageProps(image)
@@ -89,7 +89,7 @@ function ExternalNavLink({
   href,
   externalSiteName,
   isHighlighted
-}: NavOption): JSX.Element {
+}: NavOption): React.JSX.Element {
   const highlightedStyles = isHighlighted ? 'bg-olive-100' : 'bg-white'
 
   return (
@@ -115,7 +115,7 @@ function ExternalNavLink({
   )
 }
 
-function DefaultLink({ label, href }: NavOption): JSX.Element {
+function DefaultLink({ label, href }: NavOption): React.JSX.Element {
   const { text, variant, color } = label
 
   return (
@@ -132,7 +132,7 @@ function DefaultLink({ label, href }: NavOption): JSX.Element {
   )
 }
 
-export default function NavLink(props: NavOption): JSX.Element {
+export default function NavLink(props: NavOption): React.JSX.Element {
   const { variant = 'default' } = props
 
   const LinkType = {

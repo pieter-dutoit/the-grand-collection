@@ -8,7 +8,7 @@ interface PropTypes {
   data: Guesthouse
 }
 
-export default function Rooms({ data }: PropTypes): JSX.Element {
+export default function Rooms({ data }: PropTypes): React.JSX.Element {
   const {
     booking_platform: { url },
     content: {

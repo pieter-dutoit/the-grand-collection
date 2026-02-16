@@ -10,7 +10,7 @@ export default function Hero({
   guesthouse
 }: {
   guesthouse: Guesthouse
-}): JSX.Element {
+}): React.JSX.Element {
   const {
     name,
     business_details: { geo },

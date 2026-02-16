@@ -31,7 +31,7 @@ export default function SubMenu({
 }: {
   label: NavLabel
   options: NavOption[]
-}): JSX.Element | null {
+}): React.JSX.Element | null {
   // The purpose of this hook is to prevent loading desktop dropdown menus on mobile.
   // It's not for responsive design.
   const isDesktop = useMediaQuery('(min-width: 768px)')

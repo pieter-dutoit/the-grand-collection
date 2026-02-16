@@ -1,7 +1,8 @@
+import React from 'react'
 import PageHeading from '@/components/ui/page-heading'
 import { fetchAboutPageData } from '@/lib/data'
 
-export default async function Hero(): Promise<JSX.Element> {
+export default async function Hero(): Promise<React.JSX.Element> {
   const { hero } = await fetchAboutPageData('hero')
   if (!hero) return <></>
 

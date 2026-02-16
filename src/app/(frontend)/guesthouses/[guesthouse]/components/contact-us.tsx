@@ -18,7 +18,7 @@ export default function ContactUs({
     },
     contact_details: { address, contact_persons, socials }
   }
-}: ContactUsProps): JSX.Element {
+}: ContactUsProps): React.JSX.Element {
   const contacts = extractContactDetails(contact_persons)
   const { street, suburb, city, province, postalCode } = address
 

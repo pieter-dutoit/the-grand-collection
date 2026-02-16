@@ -50,6 +50,12 @@ pnpm install
 pnpm dev
 ```
 
+### Development Runtime Note
+
+On the current stable dependency track (Next.js 15 + Payload 3), `pnpm dev` intentionally uses Webpack.
+Payload's Next integration still configures webpack-specific behavior in this compatibility window, and forcing Turbopack can emit misleading warnings.
+Turbopack-first development is planned for the Next.js `16.2+` migration phase once stable compatibility is locked.
+
 ## Environment Variables
 
 Create a `.env.local` file in the root directory with the following variables:

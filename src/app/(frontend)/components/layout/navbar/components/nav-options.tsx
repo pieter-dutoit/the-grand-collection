@@ -11,7 +11,7 @@ export default async function NavOptions({
   className
 }: {
   className?: string
-}): Promise<JSX.Element> {
+}): Promise<React.JSX.Element> {
   const navOptions = await getNavOptions()
 
   return (

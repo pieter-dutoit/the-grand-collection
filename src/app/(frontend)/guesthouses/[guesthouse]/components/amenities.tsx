@@ -4,7 +4,11 @@ import Image from 'next/image'
 import { extractImageProps } from '@/lib/utils'
 import SectionHeading from '@/components/section-heading'
 
-export default function Amenities({ data }: { data: Guesthouse }): JSX.Element {
+export default function Amenities({
+  data
+}: {
+  data: Guesthouse
+}): React.JSX.Element {
   const {
     content: {
       amenities: { general_amenities, label, heading, description }

@@ -8,7 +8,7 @@ import { getButtonStyles } from '@/components/ui/button'
 import { fetchHomePageData } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
 
-export default async function Overview(): Promise<JSX.Element> {
+export default async function Overview(): Promise<React.JSX.Element> {
   const data = await fetchHomePageData('overview')
 
   if (!data?.overview) return <></>

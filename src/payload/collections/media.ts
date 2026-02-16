@@ -47,7 +47,16 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     disableLocalStorage: true,
-    adminThumbnail: 'w96',
+    adminThumbnail: ({ doc }) => {
+      const typedDoc = doc as
+        | {
+            sizes?: Record<string, { url?: null | string } | null>
+            url?: null | string
+          }
+        | undefined
+
+      return typedDoc?.sizes?.w96?.url || typedDoc?.url || null
+    },
     imageSizes: NEXT_IMAGE_WIDTHS.map((width) => ({
       name: `w${width}`,
       width,

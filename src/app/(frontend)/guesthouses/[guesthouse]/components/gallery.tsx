@@ -12,7 +12,7 @@ interface GalleryProps {
   data: Guesthouse
 }
 
-export default function Gallery({ data }: GalleryProps): JSX.Element {
+export default function Gallery({ data }: GalleryProps): React.JSX.Element {
   const {
     name,
     content: {

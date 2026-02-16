@@ -14,7 +14,7 @@ export default function PageHeading({
   containerClassNames,
   headingClassNames,
   subHeadingClassNames
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   return (
     <div className={twMerge('w-full py-8 lg:py-16', containerClassNames)}>
       <h1

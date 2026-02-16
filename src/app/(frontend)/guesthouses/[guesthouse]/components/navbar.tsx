@@ -17,7 +17,9 @@ const NAV_OPTIONS = [
 
 const FAQ_OPTION = { href: '#faq', text: 'FAQs' }
 
-export default function Navbar({ showFaq = true }: NavbarProps): JSX.Element {
+export default function Navbar({
+  showFaq = true
+}: NavbarProps): React.JSX.Element {
   const navOptions = showFaq ? [...NAV_OPTIONS, FAQ_OPTION] : NAV_OPTIONS
 
   return (
