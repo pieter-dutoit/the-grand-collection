@@ -29,7 +29,7 @@ export default function Hero({
 
   const { url: heroSrc, alt, isSvg } = extractImageProps(background_image)
   return (
-    <section className='relative bg-olive-50'>
+    <section className='relative overflow-hidden bg-olive-50'>
       {heroSrc && (
         <div className='relative aspect-[20/8] w-full sm:absolute sm:inset-y-0 sm:left-[35vw] sm:right-0 sm:aspect-auto sm:h-full'>
           <Image
