@@ -29,7 +29,7 @@ export default function Breadcrumbs({
     >
       <ol
         className={cn(
-          'flex items-center overflow-x-auto rounded-sm bg-white/70 px-2 py-1 backdrop-blur-md',
+          'flex items-center overflow-x-auto rounded-xs bg-white/70 px-2 py-1 backdrop-blur-md',
           listClassName
         )}
       >
@@ -44,14 +44,14 @@ export default function Breadcrumbs({
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className='rounded-sm transition-colors hover:text-olive-800'
+                  className='rounded-xs transition-colors hover:text-olive-800'
                 >
                   {item.name}
                 </Link>
               ) : (
                 <span
                   className={cn(
-                    'line-clamp-1 rounded-sm',
+                    'line-clamp-1 rounded-xs',
                     isLast ? 'text-olive-800' : 'text-olive-500'
                   )}
                   aria-current={isLast ? 'page' : undefined}

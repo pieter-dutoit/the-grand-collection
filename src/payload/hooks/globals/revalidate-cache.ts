@@ -5,7 +5,7 @@ const revalidateCache =
   (cacheTagName: string): GlobalAfterChangeHook =>
   async ({ doc }) => {
     if (doc._status === 'published') {
-      revalidateTag(cacheTagName)
+      revalidateTag(cacheTagName, 'max')
     }
     return doc
   }
