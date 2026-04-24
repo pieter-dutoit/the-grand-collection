@@ -45,7 +45,7 @@ export default function FaqSection({
           {items.map((item) => (
             <Collapsible
               key={item.id}
-              className='rounded-2xl border border-gold-200 bg-white/90 shadow-sm'
+              className='border-gold-200 rounded-2xl border bg-white/90 shadow-xs'
             >
               <CollapsibleTrigger className='group flex w-full items-center justify-between gap-4 px-5 py-4 text-left'>
                 <span className='text-base font-semibold text-olive-900'>
