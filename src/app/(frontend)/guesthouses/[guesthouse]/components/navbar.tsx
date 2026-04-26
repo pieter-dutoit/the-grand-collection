@@ -5,6 +5,7 @@ import { getButtonStyles } from '@/components/ui/button'
 
 type NavbarProps = {
   showFaq?: boolean
+  showLatest?: boolean
 }
 
 const NAV_OPTIONS = [
@@ -16,14 +17,20 @@ const NAV_OPTIONS = [
 ]
 
 const FAQ_OPTION = { href: '#faq', text: 'FAQs' }
+const LATEST_OPTION = { href: '#latest', text: 'Latest' }
 
 export default function Navbar({
-  showFaq = true
+  showFaq = true,
+  showLatest = false
 }: NavbarProps): React.JSX.Element {
-  const navOptions = showFaq ? [...NAV_OPTIONS, FAQ_OPTION] : NAV_OPTIONS
+  const navOptions = [
+    ...NAV_OPTIONS,
+    ...(showFaq ? [FAQ_OPTION] : []),
+    ...(showLatest ? [LATEST_OPTION] : [])
+  ]
 
   return (
-    <nav className='sticky left-0 top-16 z-40 h-14 w-full border-b border-olive-200 bg-gradient-to-r from-white/80 to-white/80 backdrop-blur-lg sm:from-olive-50 sm:via-olive-50/70 sm:to-olive-50/70 lg:h-16'>
+    <nav className='sticky top-16 left-0 z-40 h-14 w-full border-b border-olive-200 bg-gradient-to-r from-white/80 to-white/80 backdrop-blur-lg sm:from-olive-50 sm:via-olive-50/70 sm:to-olive-50/70 lg:h-16'>
       <ul className='container mx-auto flex h-full snap-x items-center space-x-1 overflow-x-auto'>
         {navOptions.map(({ href, text }) => (
           <li key={href} className='snap-center'>

@@ -45,7 +45,7 @@ export default async function Footer(): Promise<React.JSX.Element> {
           {/* Contact Persons */}
 
           <div className='mt-8 flex flex-col text-olive-100'>
-            <h3 className='text-center text-lg font-bold uppercase text-gold-400 md:text-left'>
+            <h3 className='text-gold-400 text-center text-lg font-bold uppercase md:text-left'>
               Get in touch
             </h3>
 
@@ -71,7 +71,7 @@ export default async function Footer(): Promise<React.JSX.Element> {
         <div className='flex flex-col text-center text-olive-100 md:text-left'>
           <Link
             href='/'
-            className='mb-4 text-lg font-bold uppercase text-gold-400'
+            className='text-gold-400 mb-4 text-lg font-bold uppercase'
           >
             Home
           </Link>
@@ -100,7 +100,7 @@ export default async function Footer(): Promise<React.JSX.Element> {
         <div className='flex flex-col text-center text-olive-100 md:text-left'>
           <Link
             href='/guesthouses'
-            className='mb-4 text-lg font-bold uppercase text-gold-400'
+            className='text-gold-400 mb-4 text-lg font-bold uppercase'
           >
             Guesthouses
           </Link>
@@ -118,7 +118,7 @@ export default async function Footer(): Promise<React.JSX.Element> {
 
         {/* Other pages */}
         <div className='flex flex-col text-center text-olive-100 md:text-left'>
-          <h4 className='mb-4 text-lg font-bold uppercase text-gold-400'>
+          <h4 className='text-gold-400 mb-4 text-lg font-bold uppercase'>
             Other
           </h4>
 

@@ -47,7 +47,7 @@ export default function PreviewImageCarousel({
               <button
                 onClick={() => onPhotoSelect(index)}
                 className={twMerge(
-                  'relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg border bg-gold-200 sm:aspect-video',
+                  'bg-gold-200 relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg border sm:aspect-video',
                   borderClass
                 )}
               >

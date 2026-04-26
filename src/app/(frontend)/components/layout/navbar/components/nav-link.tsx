@@ -46,18 +46,20 @@ function DetailedNavLink({
     >
       <Link href={href ?? '#'}>
         <div className='flex grow'>
-          <Image
-            width={90}
-            height={90}
-            alt={alt}
-            src={url}
-            className='h-14 w-12 content-center rounded-l-lg bg-olive-100 object-cover sm:size-[90px]'
-            fetchPriority='low'
-            unoptimized={isSvg}
-          />
+          <div className='relative h-14 w-12 shrink-0 overflow-hidden rounded-l-lg bg-olive-100 sm:size-[90px]'>
+            <Image
+              alt={alt}
+              src={url}
+              fill
+              className='object-cover object-center'
+              sizes='(max-width: 639px) 48px, 90px'
+              fetchPriority='low'
+              unoptimized={isSvg}
+            />
+          </div>
 
           <div className='flex size-full flex-col items-start px-2 py-1'>
-            <h3 className='text-nowrap text-base font-semibold text-olive-700'>
+            <h3 className='text-base font-semibold text-nowrap text-olive-700'>
               {text}
             </h3>
 
@@ -96,17 +98,17 @@ function ExternalNavLink({
     <NavigationMenuLink
       href={href}
       className={twMerge(
-        'my-1 flex min-w-48 flex-row items-center justify-end rounded-sm border border-olive-200 py-1 pl-4 pr-2 transition-colors hover:border-olive-950 active:border-olive-500',
+        'my-1 flex min-w-48 flex-row items-center justify-end rounded-xs border border-olive-200 py-1 pr-2 pl-4 transition-colors hover:border-olive-950 active:border-olive-500',
         highlightedStyles
       )}
     >
       <div className='flex flex-col items-end'>
-        <span className='text-nowrap text-base text-olive-800'>
+        <span className='text-base text-nowrap text-olive-800'>
           {label.text}
         </span>
         <div className='flex items-center gap-1'>
           <Lock className='size-2' />
-          <em className='text-nowrap text-xs'>
+          <em className='text-xs text-nowrap'>
             Opens <strong className='font-semibold'>{externalSiteName}</strong>
           </em>
         </div>

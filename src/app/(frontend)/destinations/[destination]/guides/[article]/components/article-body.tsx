@@ -29,7 +29,7 @@ export default async function ArticleBody({
           <ArticleRichText
             data={article.body}
             headings={headingLinks}
-            className='w-full lg:prose-lg'
+            className='lg:prose-lg w-full'
           />
         </section>
 
@@ -37,14 +37,14 @@ export default async function ArticleBody({
         <div className='sticky top-16 hidden w-80 flex-col self-start py-10 md:block lg:py-20'>
           <nav
             aria-label='On this page'
-            className='flex w-full flex-col items-start gap-2 rounded-lg border border-gold-100 p-4'
+            className='border-gold-100 flex w-full flex-col items-start gap-2 rounded-lg border p-4'
           >
             <h2 className='text-lg font-extrabold text-olive-600'>
               On this page
             </h2>
             {headingLinks.length > 0 && (
               <div className='flex w-full flex-col items-start gap-2'>
-                <p className='text-xs font-semibold capitalize tracking-wide text-olive-400'>
+                <p className='text-xs font-semibold tracking-wide text-olive-400 capitalize'>
                   In this article
                 </p>
                 <ul className='flex w-full flex-col items-start'>
@@ -68,8 +68,8 @@ export default async function ArticleBody({
               </div>
             )}
 
-            <div className='mt-4 flex w-full flex-col items-start gap-2 border-t border-gold-100 pt-4'>
-              <p className='text-xs font-semibold capitalize tracking-wide text-olive-400'>
+            <div className='border-gold-100 mt-4 flex w-full flex-col items-start gap-2 border-t pt-4'>
+              <p className='text-xs font-semibold tracking-wide text-olive-400 capitalize'>
                 Quick links
               </p>
               <ul className='flex w-full flex-col items-start'>

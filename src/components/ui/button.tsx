@@ -6,18 +6,18 @@ import { cn } from '@/lib/utils'
 import { twMerge } from 'tailwind-merge'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0 dark:focus-visible:ring-zinc-300',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-base font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-zinc-950 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0 dark:focus-visible:ring-zinc-300',
   {
     variants: {
       variant: {
         default:
           'bg-zinc-500 text-zinc-50 shadow hover:bg-zinc-600/90 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90',
         destructive:
-          'bg-red-500 text-red-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-red-50 dark:hover:bg-red-900/90',
+          'bg-red-500 text-red-50 shadow-xs hover:bg-red-500/90 dark:bg-red-900 dark:text-red-50 dark:hover:bg-red-900/90',
         outline:
-          'border text-zinc-600 border-zinc-200 bg-white shadow-sm hover:bg-zinc-100 hover:text-zinc-800 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
+          'border text-zinc-600 border-zinc-200 bg-white shadow-xs hover:bg-zinc-100 hover:text-zinc-800 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
         secondary:
-          'bg-zinc-100 text-zinc-900 shadow-sm hover:bg-zinc-100/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80',
+          'bg-zinc-100 text-zinc-900 shadow-xs hover:bg-zinc-100/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80',
         ghost:
           'hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
         link: 'text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50'
@@ -47,13 +47,13 @@ const buttonVariants = cva(
         variant: 'outline',
         colour: 'sage',
         className:
-          'border text-sage-600 border-sage-200 bg-white shadow-sm hover:bg-sage-100 hover:text-sage-800 dark:border-sage-800 dark:bg-sage-950 dark:hover:bg-sage-800 dark:hover:text-sage-50'
+          'border text-sage-600 border-sage-200 bg-white shadow-xs hover:bg-sage-100 hover:text-sage-800 dark:border-sage-800 dark:bg-sage-950 dark:hover:bg-sage-800 dark:hover:text-sage-50'
       },
       {
         variant: 'secondary',
         colour: 'sage',
         className:
-          'bg-sage-100 text-sage-900 shadow-sm hover:bg-sage-100/80 dark:bg-sage-800 dark:text-sage-50 dark:hover:bg-sage-800/80'
+          'bg-sage-100 text-sage-900 shadow-xs hover:bg-sage-100/80 dark:bg-sage-800 dark:text-sage-50 dark:hover:bg-sage-800/80'
       },
       {
         variant: 'ghost',
@@ -78,13 +78,13 @@ const buttonVariants = cva(
         variant: 'outline',
         colour: 'olive',
         className:
-          'border text-olive-600 border-olive-200 bg-white shadow-sm hover:bg-olive-100 hover:text-olive-800 dark:border-olive-800 dark:bg-olive-950 dark:hover:bg-olive-800 dark:hover:text-olive-50'
+          'border text-olive-600 border-olive-200 bg-white shadow-xs hover:bg-olive-100 hover:text-olive-800 dark:border-olive-800 dark:bg-olive-950 dark:hover:bg-olive-800 dark:hover:text-olive-50'
       },
       {
         variant: 'secondary',
         colour: 'olive',
         className:
-          'bg-olive-100 text-olive-900 shadow-sm hover:bg-olive-100/80 dark:bg-olive-800 dark:text-olive-50 dark:hover:bg-olive-800/80'
+          'bg-olive-100 text-olive-900 shadow-xs hover:bg-olive-100/80 dark:bg-olive-800 dark:text-olive-50 dark:hover:bg-olive-800/80'
       },
       {
         variant: 'ghost',
@@ -109,13 +109,13 @@ const buttonVariants = cva(
         variant: 'outline',
         colour: 'gold',
         className:
-          'border text-gold-600 border-gold-200 bg-white shadow-sm hover:bg-gold-100 hover:text-gold-800 dark:border-gold-800 dark:bg-gold-950 dark:hover:bg-gold-800 dark:hover:text-gold-50'
+          'border text-gold-600 border-gold-200 bg-white shadow-xs hover:bg-gold-100 hover:text-gold-800 dark:border-gold-800 dark:bg-gold-950 dark:hover:bg-gold-800 dark:hover:text-gold-50'
       },
       {
         variant: 'secondary',
         colour: 'gold',
         className:
-          'bg-gold-100 text-gold-900 shadow-sm hover:bg-gold-100/80 dark:bg-gold-800 dark:text-gold-50 dark:hover:bg-gold-800/80'
+          'bg-gold-100 text-gold-900 shadow-xs hover:bg-gold-100/80 dark:bg-gold-800 dark:text-gold-50 dark:hover:bg-gold-800/80'
       },
       {
         variant: 'ghost',

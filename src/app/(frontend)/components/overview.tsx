@@ -28,12 +28,12 @@ export default async function Overview(): Promise<React.JSX.Element> {
       <div id='overview' className='absolute -top-16' />
       <div className='container mx-auto py-8 lg:py-16'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
-          <h2 className='max-w-72 whitespace-normal text-5xl font-light capitalize text-gold-700 sm:max-w-full sm:text-5xl md:max-w-96 md:whitespace-pre-wrap md:leading-tight lg:text-6xl lg:leading-tight'>
+          <h2 className='text-gold-700 max-w-72 text-5xl font-light whitespace-normal capitalize sm:max-w-full sm:text-5xl md:max-w-96 md:leading-tight md:whitespace-pre-wrap lg:text-6xl lg:leading-tight'>
             {heading}
           </h2>
 
           {/* Q2  */}
-          <p className='text-justify text-lg font-light leading-normal tracking-wide text-olive-700 lg:leading-loose'>
+          <p className='text-justify text-lg leading-normal font-light tracking-wide text-olive-700 lg:leading-loose'>
             {description}
           </p>
 
@@ -60,7 +60,7 @@ export default async function Overview(): Promise<React.JSX.Element> {
                     key={url}
                     className={twMerge(
                       classes,
-                      'relative overflow-hidden rounded-lg border-2 border-gold-300 bg-olive-300'
+                      'border-gold-300 relative overflow-hidden rounded-lg border-2 bg-olive-300'
                     )}
                   >
                     <Image

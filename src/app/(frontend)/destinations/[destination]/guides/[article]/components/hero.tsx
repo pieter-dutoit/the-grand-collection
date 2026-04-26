@@ -32,7 +32,7 @@ export default async function ArticleHero({
       id={article.slug}
       className='relative flex w-full flex-col justify-between bg-olive-50'
     >
-      <div className='container mx-auto flex flex-col items-start gap-6 pb-10 pt-14'>
+      <div className='container mx-auto flex flex-col items-start gap-6 pt-14 pb-10'>
         <Link
           href={`/destinations/${destination.slug}`}
           className='inline-flex items-center gap-2 text-sm font-medium text-olive-500 transition hover:text-olive-700'
@@ -40,7 +40,7 @@ export default async function ArticleHero({
           <ArrowLeft className='size-4' />
           Back to all {destination.name} guides
         </Link>
-        <h1 className='max-w-3xl text-pretty text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
+        <h1 className='max-w-3xl text-3xl font-semibold text-pretty text-olive-900 md:text-4xl lg:text-5xl'>
           {article.title}
         </h1>
 

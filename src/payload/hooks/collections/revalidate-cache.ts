@@ -8,9 +8,9 @@ const revalidateCache =
   ): CollectionAfterChangeHook =>
   async ({ doc }) => {
     if (checkIfPublished && doc._status === 'published') {
-      revalidateTag(cacheTagName)
+      revalidateTag(cacheTagName, 'max')
     } else {
-      revalidateTag(cacheTagName)
+      revalidateTag(cacheTagName, 'max')
     }
     return doc
   }

@@ -26,6 +26,7 @@ import { Beds } from './collections/beds'
 import { RichtextSections } from './collections/richtext-section'
 import { Articles } from './collections/articles'
 import { ArticleCategories } from './collections/article-categories'
+import { ArticleSections } from './collections/article-sections'
 import { Destinations } from './collections/destinations'
 import { Faqs } from './collections/faqs'
 import { Policies } from './collections/policies'
@@ -55,6 +56,7 @@ export default buildConfig({
   collections: [
     Articles,
     ArticleCategories,
+    ArticleSections,
     Destinations,
     Faqs,
     Policies,

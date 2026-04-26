@@ -69,7 +69,7 @@ export default function Gallery({ data }: GalleryProps): React.JSX.Element {
                 <div
                   key={url + index}
                   className={twMerge(
-                    'relative h-full min-h-20 w-full overflow-hidden rounded-lg border border-gold-200 bg-olive-700 shadow-md md:min-h-32 xl:min-h-40',
+                    'border-gold-200 relative h-full min-h-20 w-full overflow-hidden rounded-lg border bg-olive-700 shadow-md md:min-h-32 xl:min-h-40',
                     classes
                   )}
                 >

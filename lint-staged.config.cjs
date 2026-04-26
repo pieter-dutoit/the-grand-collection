@@ -2,9 +2,9 @@ const path = require('path')
 
 const formatCommand = 'prettier --write .'
 const buildEslintCommand = (filenames) =>
-  `next lint --fix --file ${filenames
+  `eslint --fix --max-warnings=0 --no-warn-ignored ${filenames
     .map((f) => path.relative(process.cwd(), f))
-    .join(' --file ')}`
+    .join(' ')}`
 
 module.exports = {
   '*.{js,jsx,ts,tsx}': [formatCommand, buildEslintCommand]

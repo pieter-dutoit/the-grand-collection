@@ -33,7 +33,7 @@ export default function Rooms({ data }: PropTypes): React.JSX.Element {
               return (
                 <li
                   key={room.id}
-                  className='grid rounded-lg border border-gold-200 bg-white text-olive-600 shadow-lg lg:grid-cols-2'
+                  className='border-gold-200 grid rounded-lg border bg-white text-olive-600 shadow-lg lg:grid-cols-2'
                 >
                   <div className='order-2 flex flex-col p-4 lg:order-1'>
                     <RoomDetails

@@ -64,7 +64,7 @@ export default function PrimaryImageCarousel({
           align: 'center',
           loop: true
         }}
-        className='relative mb-4 mt-2 w-full overflow-hidden rounded-lg border border-gold-200 drop-shadow-md lg:rounded-2xl'
+        className='border-gold-200 relative mt-2 mb-4 w-full overflow-hidden rounded-lg border drop-shadow-md lg:rounded-2xl'
       >
         <CarouselContent className='-ml-1'>
           {images.map((image, index) => {
@@ -90,7 +90,7 @@ export default function PrimaryImageCarousel({
         </CarouselContent>
 
         <button
-          className='absolute left-0 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center rounded-r-md bg-gold-500 shadow-md sm:flex'
+          className='bg-gold-500 absolute top-1/2 left-0 hidden size-12 -translate-y-1/2 items-center justify-center rounded-r-md shadow-md sm:flex'
           onClick={() => api?.scrollPrev()}
           aria-label='Previous Image'
         >
@@ -98,14 +98,14 @@ export default function PrimaryImageCarousel({
         </button>
 
         <button
-          className='absolute right-0 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center rounded-l-md bg-gold-500 shadow-md sm:flex'
+          className='bg-gold-500 absolute top-1/2 right-0 hidden size-12 -translate-y-1/2 items-center justify-center rounded-l-md shadow-md sm:flex'
           onClick={() => api?.scrollNext()}
           aria-label='Next Image'
         >
           <ChevronRight size={30} color='white' />
         </button>
       </Carousel>
-      <p className='mx-auto mb-4 text-center text-sm font-bold text-gold-500'>
+      <p className='text-gold-500 mx-auto mb-4 text-center text-sm font-bold'>
         Photo {current} of {count}
       </p>
     </>

@@ -65,7 +65,7 @@ export default function SubMenu({
       {/* Hide in Desktop using CSS */}
       {/* Load regardless of Desktop/Mobile to ensure it's available 
       immediately on mobile devices. Negligible impact on Desktop performance */}
-      <p className='my-2 ml-4 w-full text-left text-lg font-bold text-gold-500 lg:hidden'>
+      <p className='text-gold-500 my-2 ml-4 w-full text-left text-lg font-bold lg:hidden'>
         {label.text}
       </p>
       <NavigationMenuList className='flex flex-col items-start space-x-0 pl-4 lg:hidden'>

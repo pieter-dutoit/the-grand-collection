@@ -24,7 +24,7 @@ export default function SectionHeading({
         {title}
       </h2>
       {description && (
-        <p className='max-w-prose text-balance text-sm opacity-80'>
+        <p className='max-w-prose text-sm text-balance opacity-80'>
           {description}
         </p>
       )}

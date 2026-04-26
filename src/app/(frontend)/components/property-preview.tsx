@@ -48,7 +48,7 @@ export default function PropertyPreview({
   return (
     <div
       className={twMerge(
-        'flex w-full flex-col gap-2 rounded-xl border border-gold-200 bg-white p-4 shadow-lg transition-shadow ease-in hover:shadow-xl',
+        'border-gold-200 flex w-full flex-col gap-2 rounded-xl border bg-white p-4 shadow-lg transition-shadow ease-in hover:shadow-xl',
         margin
       )}
     >
@@ -76,7 +76,7 @@ export default function PropertyPreview({
           return (
             <div
               className={twMerge(
-                'h-30 relative size-40 w-full overflow-hidden rounded-lg border border-gold-200 bg-olive-100',
+                'border-gold-200 relative size-40 h-30 w-full overflow-hidden rounded-lg border bg-olive-100',
                 sizeClasses
               )}
               key={url}
@@ -100,7 +100,7 @@ export default function PropertyPreview({
         <div className='flex flex-col'>
           <span className='text-xs font-bold text-olive-400'>Guesthouse</span>
 
-          <h3 className='text-2xl font-semibold leading-tight text-olive-800'>
+          <h3 className='text-2xl leading-tight font-semibold text-olive-800'>
             {name}
           </h3>
           <div className='mt-2 flex items-center'>
@@ -122,7 +122,7 @@ export default function PropertyPreview({
                   variant: 'outline',
                   colour: 'default'
                 }),
-                'mr-2 mt-2 lg:mt-0'
+                'mt-2 mr-2 lg:mt-0'
               )}
             >
               {destinationData.name} travel guides
@@ -137,7 +137,7 @@ export default function PropertyPreview({
                 variant: 'outline',
                 colour: 'default'
               }),
-              'mr-2 mt-2 lg:mt-0'
+              'mt-2 mr-2 lg:mt-0'
             )}
           >
             View property details
