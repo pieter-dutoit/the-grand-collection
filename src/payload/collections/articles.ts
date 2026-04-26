@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
 import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 
@@ -7,9 +7,56 @@ import createArticleSlug from '../hooks/collections/create-article-slug'
 import revalidateCache from '../hooks/collections/revalidate-cache'
 import { GoogleMapBlock } from '../blocks/google-map'
 
+const hasFieldValue = (value: unknown) =>
+  value !== null && value !== undefined && value !== ''
+
+const getRelationValue = (
+  fieldName: string,
+  data: Record<string, unknown>,
+  originalDoc?: Record<string, unknown>
+) => {
+  if (Object.prototype.hasOwnProperty.call(data, fieldName)) {
+    return data[fieldName]
+  }
+
+  return originalDoc?.[fieldName]
+}
+
+const validateArticleRouting: CollectionBeforeValidateHook = ({
+  data,
+  originalDoc
+}) => {
+  if (!data) {
+    return data
+  }
+
+  const original = originalDoc as Record<string, unknown> | undefined
+  const type = String(data.type ?? original?.type ?? 'guide')
+  const destination = getRelationValue('destination', data, original)
+  const guesthouse = getRelationValue('guesthouse', data, original)
+  const section = getRelationValue('section', data, original)
+
+  if (type === 'guide' && !hasFieldValue(destination)) {
+    throw new Error('Guide articles must be linked to a destination.')
+  }
+
+  if (type === 'guesthouse_post') {
+    if (!hasFieldValue(guesthouse)) {
+      throw new Error('Guesthouse posts must be linked to a guesthouse.')
+    }
+
+    if (!hasFieldValue(section)) {
+      throw new Error('Guesthouse posts must be linked to an article section.')
+    }
+  }
+
+  return data
+}
+
 export const Articles: CollectionConfig = {
   slug: 'articles',
   hooks: {
+    beforeValidate: [validateArticleRouting],
     beforeChange: [createArticleSlug],
     afterChange: [revalidateCache('articles', true)]
   },
@@ -38,7 +85,9 @@ export const Articles: CollectionConfig = {
       hasMany: false,
       index: true,
       admin: {
-        position: 'sidebar'
+        position: 'sidebar',
+        condition: (_, siblingData) =>
+          !siblingData.type || siblingData.type === 'guide'
       }
     },
     {
@@ -48,7 +97,20 @@ export const Articles: CollectionConfig = {
       relationTo: 'guesthouses',
       hasMany: false,
       admin: {
-        position: 'sidebar'
+        position: 'sidebar',
+        condition: (_, siblingData) => siblingData.type === 'guesthouse_post'
+      }
+    },
+    {
+      name: 'section',
+      label: 'Section',
+      type: 'relationship',
+      relationTo: 'article-sections',
+      hasMany: false,
+      index: true,
+      admin: {
+        position: 'sidebar',
+        condition: (_, siblingData) => siblingData.type === 'guesthouse_post'
       }
     },
     {
@@ -91,6 +153,10 @@ export const Articles: CollectionConfig = {
         {
           label: 'Guide',
           value: 'guide'
+        },
+        {
+          label: 'Guesthouse Post',
+          value: 'guesthouse_post'
         }
       ],
       admin: {

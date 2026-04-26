@@ -18,7 +18,7 @@ export async function Hero(): Promise<React.JSX.Element> {
   const { url, alt, isSvg } = extractImageProps(background_image)
 
   return (
-    <section className='relative h-[75vh] max-h-[40rem] w-screen bg-sage-700 sm:max-h-none'>
+    <section className='bg-sage-700 relative h-[75vh] max-h-[40rem] w-screen sm:max-h-none'>
       <div className='absolute inset-0 size-full'>
         {url && (
           <Image
@@ -32,7 +32,7 @@ export async function Hero(): Promise<React.JSX.Element> {
             unoptimized={isSvg}
           />
         )}
-        <div className='absolute inset-0 bg-custom-gradient-mobile sm:bg-custom-gradient' />
+        <div className='bg-custom-gradient-mobile sm:bg-custom-gradient absolute inset-0' />
         <div className='absolute inset-0 flex flex-col items-center justify-center p-3'>
           <div className='relative h-[30vh] w-full md:h-52 md:w-96 lg:h-80 lg:w-[500px]'>
             <Image

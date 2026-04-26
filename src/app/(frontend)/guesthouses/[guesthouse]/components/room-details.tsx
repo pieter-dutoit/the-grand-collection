@@ -21,7 +21,7 @@ export default function RoomDetails({
   return (
     <>
       <h3 className='text-xl font-semibold text-olive-500'>{name}</h3>
-      <p className='mt-2 text-pretty text-sm'>{description}</p>
+      <p className='mt-2 text-sm text-pretty'>{description}</p>
 
       <div className='mt-6 flex flex-col gap-6'>
         {/* Capacity / Beds */}
@@ -91,7 +91,7 @@ export default function RoomDetails({
         </div>
 
         <div className='flex flex-wrap items-center justify-between gap-4'>
-          <p className='text-sm font-semibold text-sage-800'>
+          <p className='text-sage-800 text-sm font-semibold'>
             from <strong className='text-lg'>R{base_price}</strong> per night
           </p>
           <AvailabilityLink bookingUrl={bookingLink} />

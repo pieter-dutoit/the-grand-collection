@@ -28,6 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang='en'
+      data-scroll-behavior='smooth'
       className={`${redhat.variable} ${playball.variable} scroll-smooth antialiased`}
     >
       {enableAnalytics && (

@@ -7,6 +7,7 @@ import config from '@payload-config'
 
 import type {
   Article,
+  ArticleSection,
   Guesthouse,
   Destination,
   AllGuesthousesPage,
@@ -173,7 +174,31 @@ export const fetchArticles = unstable_cache(
     return res.docs
   },
   [],
-  { revalidate: false, tags: ['articles', 'guesthouses', 'faqs'] }
+  {
+    revalidate: false,
+    tags: ['articles', 'guesthouses', 'article-sections', 'faqs']
+  }
+)
+
+export const fetchArticleSections = unstable_cache(
+  async (query?: Where): Promise<ArticleSection[]> => {
+    const payload = await getPayload({ config })
+    const res = await payload.find({
+      collection: 'article-sections',
+      depth: 1,
+      pagination: false,
+      sort: 'name',
+      ...(query && { where: query })
+    })
+
+    if (!res) {
+      throw new Error('Failed to fetch article sections data')
+    }
+
+    return res.docs
+  },
+  [],
+  { revalidate: false, tags: ['article-sections', 'articles'] }
 )
 
 export const fetchArticlesCount = unstable_cache(

@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     articles: Article
     'article-categories': ArticleCategory
+    'article-sections': ArticleSection
     destinations: Destination
     faqs: Faq
     policies: Policy
@@ -93,6 +94,9 @@ export interface Config {
     'article-categories':
       | ArticleCategoriesSelect<false>
       | ArticleCategoriesSelect<true>
+    'article-sections':
+      | ArticleSectionsSelect<false>
+      | ArticleSectionsSelect<true>
     destinations: DestinationsSelect<false> | DestinationsSelect<true>
     faqs: FaqsSelect<false> | FaqsSelect<true>
     policies: PoliciesSelect<false> | PoliciesSelect<true>
@@ -176,10 +180,11 @@ export interface Article {
   slug: string
   destination?: (string | null) | Destination
   guesthouse?: (string | null) | Guesthouse
+  section?: (string | null) | ArticleSection
   faq?: (string | null) | Faq
   featured?: boolean | null
   categories?: (string | ArticleCategory)[] | null
-  type: 'guide'
+  type: 'guide' | 'guesthouse_post'
   author: string
   thumbnail: string | Media
   title: string
@@ -684,6 +689,18 @@ export interface SocialMediaPlatform {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article-sections".
+ */
+export interface ArticleSection {
+  id: string
+  slug: string
+  name: string
+  description?: string | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "article-categories".
  */
 export interface ArticleCategory {
@@ -775,6 +792,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'article-categories'
         value: string | ArticleCategory
+      } | null)
+    | ({
+        relationTo: 'article-sections'
+        value: string | ArticleSection
       } | null)
     | ({
         relationTo: 'destinations'
@@ -878,6 +899,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   slug?: T
   destination?: T
   guesthouse?: T
+  section?: T
   faq?: T
   featured?: T
   categories?: T
@@ -931,6 +953,17 @@ export interface TwitterFieldSelect<T extends boolean = true> {
 export interface ArticleCategoriesSelect<T extends boolean = true> {
   slug?: T
   name?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article-sections_select".
+ */
+export interface ArticleSectionsSelect<T extends boolean = true> {
+  slug?: T
+  name?: T
+  description?: T
   updatedAt?: T
   createdAt?: T
 }

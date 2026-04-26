@@ -55,7 +55,8 @@ export const getArticlePageData = cache(
 
     const [article] = await fetchArticles({
       slug: { equals: articleSlug },
-      destination: { equals: destination.id }
+      destination: { equals: destination.id },
+      type: { equals: 'guide' }
     })
 
     if (!article || !article.slug) {

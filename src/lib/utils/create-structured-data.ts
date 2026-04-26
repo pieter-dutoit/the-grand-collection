@@ -170,27 +170,33 @@ type ArticleAuthorType = 'Organization' | 'Person'
 
 type ArticleStructuredDataInput = {
   pageUrl: string
+  articleType?: 'Article' | 'BlogPosting' | 'NewsArticle'
   headline: string
   description?: string | null
   datePublished: string
   dateModified: string
   authorName: string
   authorType: ArticleAuthorType
+  authorUrl?: string
   image?: string
+  aboutId?: string
 }
 
 export function createArticleStructuredData({
   pageUrl,
+  articleType = 'Article',
   headline,
   description,
   datePublished,
   dateModified,
   authorName,
   authorType,
-  image
+  authorUrl,
+  image,
+  aboutId
 }: ArticleStructuredDataInput): StructuredDataNode {
   return {
-    '@type': 'Article',
+    '@type': articleType,
     '@id': `${pageUrl}#article`,
     url: pageUrl,
     name: headline,
@@ -200,7 +206,8 @@ export function createArticleStructuredData({
     dateModified,
     author: {
       '@type': authorType,
-      name: authorName
+      name: authorName,
+      ...(authorUrl && { url: authorUrl })
     },
     publisher: {
       '@id': getOrganisationId()
@@ -208,6 +215,11 @@ export function createArticleStructuredData({
     mainEntityOfPage: {
       '@id': pageUrl
     },
+    ...(aboutId && {
+      about: {
+        '@id': aboutId
+      }
+    }),
     ...(image && { image: [image] })
   }
 }

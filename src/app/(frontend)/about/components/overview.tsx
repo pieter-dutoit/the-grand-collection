@@ -11,11 +11,11 @@ export default async function Overview(): Promise<React.JSX.Element> {
   const { url, alt, isSvg } = extractImageProps(image)
 
   return (
-    <section className='w-full bg-gradient-to-tr from-sage-50 to-sage-100'>
+    <section className='from-sage-50 to-sage-100 w-full bg-gradient-to-tr'>
       <div className='grid items-center gap-8 sm:grid-cols-2'>
         {/* Image */}
 
-        <div className='relative size-full min-h-32 bg-sage-300'>
+        <div className='bg-sage-300 relative size-full min-h-32'>
           <Image
             src={url}
             alt={alt}

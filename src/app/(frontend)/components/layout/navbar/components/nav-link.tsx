@@ -46,15 +46,17 @@ function DetailedNavLink({
     >
       <Link href={href ?? '#'}>
         <div className='flex grow'>
-          <Image
-            width={90}
-            height={90}
-            alt={alt}
-            src={url}
-            className='h-14 w-12 content-center rounded-l-lg bg-olive-100 object-cover sm:size-[90px]'
-            fetchPriority='low'
-            unoptimized={isSvg}
-          />
+          <div className='relative h-14 w-12 shrink-0 overflow-hidden rounded-l-lg bg-olive-100 sm:size-[90px]'>
+            <Image
+              alt={alt}
+              src={url}
+              fill
+              className='object-cover object-center'
+              sizes='(max-width: 639px) 48px, 90px'
+              fetchPriority='low'
+              unoptimized={isSvg}
+            />
+          </div>
 
           <div className='flex size-full flex-col items-start px-2 py-1'>
             <h3 className='text-base font-semibold text-nowrap text-olive-700'>

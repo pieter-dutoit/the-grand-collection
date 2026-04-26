@@ -20,6 +20,7 @@ export default async function ArticleRelatedArticles({
   const relatedArticles = await fetchArticles(
     {
       destination: { equals: destination.id },
+      type: { equals: 'guide' },
       id: { not_equals: article.id },
       slug: { exists: true }
     },

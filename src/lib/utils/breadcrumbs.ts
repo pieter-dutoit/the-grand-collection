@@ -1,5 +1,9 @@
 import type { Article, Destination, Guesthouse } from '@/payload/payload-types'
 import { getBaseUrl } from '@/lib/utils'
+import {
+  getGuesthouseArticlesPath,
+  getGuesthousePostPath
+} from '@/lib/utils/articles'
 
 export type BreadcrumbItem = {
   name: string
@@ -9,6 +13,10 @@ export type BreadcrumbItem = {
 const HOME_CRUMB: BreadcrumbItem = { name: 'Home', href: '/' }
 export const DESTINATIONS_CRUMB: BreadcrumbItem = { name: 'Destinations' }
 export const GUIDES_CRUMB: BreadcrumbItem = { name: 'Guides' }
+export const GUESTHOUSES_CRUMB: BreadcrumbItem = {
+  name: 'Guesthouses',
+  href: '/guesthouses'
+}
 
 const isAbsoluteUrl = (value: string) => /^https?:\/\//.test(value)
 
@@ -53,7 +61,7 @@ export const getAboutBreadcrumbs = () =>
   buildBreadcrumbs([{ name: 'About', href: '/about' }])
 
 export const getGuesthousesBreadcrumbs = () =>
-  buildBreadcrumbs([{ name: 'Guesthouses', href: '/guesthouses' }])
+  buildBreadcrumbs([GUESTHOUSES_CRUMB])
 
 export const getDestinationBreadcrumbs = (destination: Destination) =>
   buildBreadcrumbs([
@@ -94,5 +102,38 @@ export const getArticleBreadcrumbs = (
     {
       name: article.title,
       href: `/destinations/${destination.slug}/guides/${article.slug}`
+    }
+  ])
+
+export const getGuesthouseArticlesBreadcrumbs = (guesthouse: Guesthouse) =>
+  buildBreadcrumbs([
+    GUESTHOUSES_CRUMB,
+    {
+      name: guesthouse.name,
+      href: `/guesthouses/${guesthouse.slug}`
+    },
+    {
+      name: 'Articles',
+      href: getGuesthouseArticlesPath(guesthouse.slug)
+    }
+  ])
+
+export const getGuesthousePostBreadcrumbs = (
+  guesthouse: Guesthouse,
+  article: Article
+) =>
+  buildBreadcrumbs([
+    GUESTHOUSES_CRUMB,
+    {
+      name: guesthouse.name,
+      href: `/guesthouses/${guesthouse.slug}`
+    },
+    {
+      name: 'Articles',
+      href: getGuesthouseArticlesPath(guesthouse.slug)
+    },
+    {
+      name: article.title,
+      href: getGuesthousePostPath(guesthouse.slug, article.slug)
     }
   ])

@@ -34,7 +34,7 @@ export default function ContactUs({
 
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
           {/* Email & Phone Card */}
-          <div className='rounded-xl border border-gold-200 bg-white p-6 shadow-md'>
+          <div className='border-gold-200 rounded-xl border bg-white p-6 shadow-md'>
             <h3 className='text-lg font-semibold text-olive-600'>
               Contact Information
             </h3>
@@ -45,14 +45,14 @@ export default function ContactUs({
                     href={`mailto:${email}`}
                     className='flex items-center gap-2'
                   >
-                    <Mail className='size-4 text-sage-500' />
+                    <Mail className='text-sage-500 size-4' />
                     <span className='opacity-90'>{email}</span>
                   </Link>
                   <Link
                     href={`tel:+27${phoneLink}`}
                     className='flex items-center gap-2'
                   >
-                    <Phone className='size-4 text-sage-500' />
+                    <Phone className='text-sage-500 size-4' />
                     <span className='opacity-90'>{phone}</span>
                   </Link>
                 </li>
@@ -69,7 +69,7 @@ export default function ContactUs({
               </p>
               <Link
                 href={maps_link}
-                className='flex items-center gap-1 text-sage-500 underline underline-offset-2'
+                className='text-sage-500 flex items-center gap-1 underline underline-offset-2'
                 target='_blank'
               >
                 <MapPin className='size-4' />
@@ -85,9 +85,9 @@ export default function ContactUs({
           </div>
 
           {/* Maps Card */}
-          <div className='rounded-xl border border-gold-200 bg-white p-6 shadow-md'>
+          <div className='border-gold-200 rounded-xl border bg-white p-6 shadow-md'>
             <h3 className='text-lg font-semibold text-olive-600'>Location</h3>
-            <div className='mt-4 overflow-hidden rounded-lg border border-gold-100'>
+            <div className='border-gold-100 mt-4 overflow-hidden rounded-lg border'>
               <iframe
                 title='Guesthouse Map Location'
                 src={maps_embed_url}
