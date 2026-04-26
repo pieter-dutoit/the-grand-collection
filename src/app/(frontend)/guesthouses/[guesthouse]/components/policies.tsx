@@ -32,9 +32,9 @@ export default function Policies({ data }: PropTypes): React.JSX.Element {
               return (
                 <li
                   key={id}
-                  className='overflow-hidden rounded-lg border border-gold-200 bg-white'
+                  className='border-gold-200 overflow-hidden rounded-lg border bg-white'
                 >
-                  <div className='border-b border-gold-100 bg-gray-50 px-4 py-3'>
+                  <div className='border-gold-100 border-b bg-gray-50 px-4 py-3'>
                     <h3 className='text-base font-semibold text-olive-900'>
                       {heading}
                     </h3>

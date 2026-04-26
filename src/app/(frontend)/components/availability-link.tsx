@@ -35,7 +35,7 @@ export default function AvailabilityLink({
       >
         {text}
       </Link>
-      <em className='mt-0.5 flex items-center gap-1 text-nowrap text-xs text-olive-500'>
+      <em className='mt-0.5 flex items-center gap-1 text-xs text-nowrap text-olive-500'>
         <Lock className='size-2' /> Opens{' '}
         <strong className='font-semibold'>{platformName}</strong>
       </em>

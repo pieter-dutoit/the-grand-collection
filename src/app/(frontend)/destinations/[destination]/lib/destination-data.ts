@@ -27,7 +27,8 @@ export const getDestinationData = cache(
     const [allArticles, guesthouses] = await Promise.all([
       fetchArticles(
         {
-          destination: { equals: destination.id }
+          destination: { equals: destination.id },
+          type: { equals: 'guide' }
         },
         {
           sort: ['-featured', '-updatedAt', '-createdAt']

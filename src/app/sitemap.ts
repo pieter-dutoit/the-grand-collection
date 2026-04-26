@@ -9,6 +9,12 @@ import {
   fetchGuesthousesPageData,
   fetchHomePageData
 } from '@/lib/data'
+import {
+  getGuesthouseArticlesPath,
+  getGuesthousePostPath,
+  getGuesthouseSlug,
+  getGuideArticlePath
+} from '@/lib/utils/articles'
 
 const resolveDestinationSlug = (
   destination: { id?: string; slug?: string } | string,
@@ -45,7 +51,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .filter((destination) => destination.slug)
       .map((destination) => [destination.id, destination.slug])
   )
-
+  const guesthouseSlugById = new Map(
+    guesthouses
+      .filter((guesthouse) => guesthouse.slug)
+      .map((guesthouse) => [guesthouse.id, guesthouse.slug])
+  )
   const guideIndexLastModifiedByDestination = new Map<string, Date>(
     destinations
       .filter((destination) => destination.slug)
@@ -54,7 +64,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         new Date(destination.updatedAt || destination.createdAt)
       ])
   )
-  const articleEntries = articles.flatMap((article) => {
+  const guideArticleEntries = articles.flatMap((article) => {
+    if (article.type !== 'guide') {
+      return []
+    }
+
     if (!article.slug || !article.destination) {
       return []
     }
@@ -81,15 +95,51 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return [
       {
-        url:
-          baseURL +
-          '/destinations/' +
-          destinationSlug +
-          '/guides/' +
-          article.slug,
+        url: baseURL + getGuideArticlePath(destinationSlug, article.slug),
         lastModified: articleLastModified,
         changeFrequency: 'yearly' as const,
         priority: 0.8
+      }
+    ]
+  })
+  const guesthouseArticlesIndexLastModified = new Map<
+    string,
+    {
+      guesthouseSlug: string
+      lastModified: Date
+    }
+  >()
+  const guesthousePostEntries = articles.flatMap((article) => {
+    if (article.type !== 'guesthouse_post' || !article.slug) {
+      return []
+    }
+
+    const guesthouseSlug = getGuesthouseSlug(
+      article.guesthouse,
+      guesthouseSlugById
+    )
+
+    if (!guesthouseSlug) {
+      return []
+    }
+
+    const articleLastModified = new Date(article.updatedAt || article.createdAt)
+    const previousIndex =
+      guesthouseArticlesIndexLastModified.get(guesthouseSlug)
+
+    if (!previousIndex || articleLastModified > previousIndex.lastModified) {
+      guesthouseArticlesIndexLastModified.set(guesthouseSlug, {
+        guesthouseSlug,
+        lastModified: articleLastModified
+      })
+    }
+
+    return [
+      {
+        url: baseURL + getGuesthousePostPath(guesthouseSlug, article.slug),
+        lastModified: articleLastModified,
+        changeFrequency: 'monthly' as const,
+        priority: 0.6
       }
     ]
   })
@@ -101,6 +151,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified,
     changeFrequency: 'weekly' as const,
     priority: 0.7
+  }))
+  const guesthouseArticlesIndexEntries = Array.from(
+    guesthouseArticlesIndexLastModified.values()
+  ).map(({ guesthouseSlug, lastModified }) => ({
+    url: baseURL + getGuesthouseArticlesPath(guesthouseSlug),
+    lastModified,
+    changeFrequency: 'weekly' as const,
+    priority: 0.6
   }))
 
   return [
@@ -141,6 +199,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Destination Pages
     ...guideIndexEntries,
     // Destination Guide Articles
-    ...articleEntries
+    ...guideArticleEntries,
+    // Guesthouse Article Indexes
+    ...guesthouseArticlesIndexEntries,
+    // Guesthouse Articles
+    ...guesthousePostEntries
   ]
 }

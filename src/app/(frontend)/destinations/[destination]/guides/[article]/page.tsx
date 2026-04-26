@@ -34,7 +34,7 @@ const normalizeText = (value?: string | null) => {
 
 export async function generateStaticParams() {
   const [articles, destinations] = await Promise.all([
-    fetchArticles(),
+    fetchArticles({ type: { equals: 'guide' } }),
     fetchDestinations()
   ])
 
@@ -80,7 +80,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const [article] = await fetchArticles({
     slug: { equals: articleSlug },
-    destination: { equals: destination.id }
+    destination: { equals: destination.id },
+    type: { equals: 'guide' }
   })
 
   if (!article) return {}

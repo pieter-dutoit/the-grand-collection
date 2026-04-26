@@ -6,6 +6,10 @@ import { notFound } from 'next/navigation'
 import { fetchArticles, fetchGuestHouses } from '@/lib/data'
 import { Guesthouse } from '@/payload/payload-types'
 import { getBaseUrl } from '@/lib/utils'
+import {
+  getGuesthouseArticlesPath,
+  getGuesthousePostPath
+} from '@/lib/utils/articles'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
 import {
   createFaqStructuredData,
@@ -95,18 +99,29 @@ export default async function Page({
   })
   const hasFaq = hasFaqItems(data.faq)
 
-  const relatedArticles =
-    typeof data.destination === 'object' && data.destination !== null
-      ? await fetchArticles(
-          {
-            destination: { equals: data.destination.id }
-          },
-          {
-            sort: ['-featured', '-updatedAt', '-createdAt'],
-            limit: 6
-          }
-        )
-      : []
+  const [relatedArticles, guesthousePosts] = await Promise.all([
+    fetchArticles(
+      {
+        destination: { equals: data.destination.id },
+        type: { equals: 'guide' }
+      },
+      {
+        sort: ['-featured', '-updatedAt', '-createdAt'],
+        limit: 6
+      }
+    ),
+    fetchArticles(
+      {
+        guesthouse: { equals: data.id },
+        type: { equals: 'guesthouse_post' },
+        slug: { exists: true }
+      },
+      {
+        sort: ['-featured', '-updatedAt', '-createdAt'],
+        limit: 6
+      }
+    )
+  ])
 
   return (
     <>
@@ -117,7 +132,7 @@ export default async function Page({
         </div>
       </section>
       <Hero guesthouse={data} />
-      <Navbar showFaq={hasFaq} />
+      <Navbar showFaq={hasFaq} showLatest={guesthousePosts.length > 0} />
       <Rooms data={data} />
       <Amenities data={data} />
       <Gallery data={data} />
@@ -132,6 +147,24 @@ export default async function Page({
       />
 
       <Divider />
+
+      {guesthousePosts.length > 0 && (
+        <>
+          <MoreArticlesSection
+            id='latest'
+            label='Latest'
+            title={`Latest from ${data.name}`}
+            description={`Fresh updates, stories and hospitality notes from ${data.name}.`}
+            viewAllHref={getGuesthouseArticlesPath(data.slug)}
+            viewAllLabel='View all articles'
+            relatedArticles={guesthousePosts}
+            articleHrefBuilder={(article) =>
+              getGuesthousePostPath(data.slug, article.slug)
+            }
+          />
+          <Divider />
+        </>
+      )}
 
       {data.destination &&
         typeof data.destination !== 'string' &&

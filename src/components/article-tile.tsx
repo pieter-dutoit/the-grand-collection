@@ -2,12 +2,14 @@ import Link from 'next/link'
 
 import type { Article } from '@/payload/payload-types'
 import { cn, extractImageProps, formatDateLabel } from '@/lib/utils'
+import { getGuideArticlePath } from '@/lib/utils/articles'
 import { Badge } from '@/components/ui/badge'
 import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 
 type ArticleTileBaseProps = {
   article: ArticleTileArticle
-  destinationSlug: string
+  destinationSlug?: string
+  href?: string
   badgeText?: string
 }
 
@@ -57,13 +59,22 @@ const getCategoryLabel = (categories?: (string | ArticleCategory)[] | null) => {
 export default function ArticleTile({
   article,
   destinationSlug,
+  href,
   className
 }: ArticleTileProps) {
   const { url, alt } = extractImageProps(article.thumbnail)
   const thumbnailAlt = alt || article.title
-  const href = `/destinations/${destinationSlug}/guides/${article.slug}`
+  const articleHref =
+    href ||
+    (destinationSlug
+      ? getGuideArticlePath(destinationSlug, article.slug)
+      : undefined)
   const categoryLabel = getCategoryLabel(article.categories)
   const publishedDate = formatDateLabel(article.createdAt)
+
+  if (!articleHref) {
+    return null
+  }
 
   return (
     <div
@@ -72,7 +83,7 @@ export default function ArticleTile({
         className
       )}
     >
-      <Link href={href} className='block'>
+      <Link href={articleHref} className='block'>
         {url && (
           <BlurredBackdropImage
             src={url}

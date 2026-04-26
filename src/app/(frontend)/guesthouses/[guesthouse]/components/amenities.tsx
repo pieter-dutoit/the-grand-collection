@@ -20,7 +20,7 @@ export default function Amenities({
       <div id='amenities' className='absolute -mt-36 lg:-mt-48' />
 
       <div className='container mx-auto'>
-        <div className='flex flex-col gap-8 rounded-xl border border-gold-200 bg-gradient-to-br from-gold-100 to-gold-200 p-8'>
+        <div className='border-gold-200 from-gold-100 to-gold-200 flex flex-col gap-8 rounded-xl border bg-gradient-to-br p-8'>
           <SectionHeading
             title={heading}
             parentLabel={label}

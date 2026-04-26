@@ -31,7 +31,7 @@ export default function Hero({
   return (
     <section className='relative overflow-hidden bg-olive-50'>
       {heroSrc && (
-        <div className='relative aspect-[20/8] w-full sm:absolute sm:inset-y-0 sm:left-[35vw] sm:right-0 sm:aspect-auto sm:h-full'>
+        <div className='relative aspect-[20/8] w-full sm:absolute sm:inset-y-0 sm:right-0 sm:left-[35vw] sm:aspect-auto sm:h-full'>
           <Image
             src={heroSrc}
             alt={alt}
@@ -60,7 +60,7 @@ export default function Hero({
             {/* Maps link */}
             <Link
               href={geo.maps_link}
-              className='mt-2 flex items-center gap-1 text-sm text-sage-500 underline underline-offset-2'
+              className='text-sage-500 mt-2 flex items-center gap-1 text-sm underline underline-offset-2'
               target='_blank'
             >
               <MapPin className='size-4' />

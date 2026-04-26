@@ -30,7 +30,7 @@ export default async function Navbar(): Promise<React.JSX.Element> {
   const logoProps = extractImageProps(minimal_dark)
 
   return (
-    <header className='sticky left-0 top-0 z-50 h-16 w-full border-b border-b-olive-100 bg-white'>
+    <header className='sticky top-0 left-0 z-50 h-16 w-full border-b border-b-olive-100 bg-white'>
       <div className='container mx-auto flex size-full items-center justify-between'>
         {/* Left content */}
         <div className='flex items-center'>

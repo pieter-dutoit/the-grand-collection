@@ -40,12 +40,12 @@ export default async function DestinationHero({
         </div>
       )}
 
-      <div className='container relative z-10 mx-auto py-8 sm:py-20 lg:py-28'>
+      <div className='relative z-10 container mx-auto py-8 sm:py-20 lg:py-28'>
         <div className='flex max-w-2xl flex-col gap-2'>
-          <span className='text-xs font-extrabold uppercase tracking-wide text-olive-900'>
+          <span className='text-xs font-extrabold tracking-wide text-olive-900 uppercase'>
             {label}
           </span>
-          <h1 className='text-pretty text-3xl font-semibold text-olive-900 md:text-4xl lg:text-5xl'>
+          <h1 className='text-3xl font-semibold text-pretty text-olive-900 md:text-4xl lg:text-5xl'>
             {title}
           </h1>
           {description && (
