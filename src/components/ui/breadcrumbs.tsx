@@ -23,13 +23,13 @@ export default function Breadcrumbs({
     <nav
       aria-label='Breadcrumb'
       className={cn(
-        'flex text-xs font-semibold tracking-wide text-olive-500',
+        'flex max-w-full min-w-0 text-xs font-semibold tracking-wide text-olive-500',
         className
       )}
     >
       <ol
         className={cn(
-          'flex items-center overflow-x-auto rounded-xs bg-white/70 px-2 py-1 backdrop-blur-md',
+          'flex max-w-full min-w-0 flex-nowrap items-center overflow-hidden rounded-xs bg-white/70 px-2 py-1 backdrop-blur-md',
           listClassName
         )}
       >
@@ -37,21 +37,24 @@ export default function Breadcrumbs({
           const isLast = index === items.length - 1
 
           return (
-            <li key={`${item.name}-${index}`} className='flex items-center'>
+            <li
+              key={`${item.name}-${index}`}
+              className='flex min-w-0 items-center'
+            >
               {index > 0 && (
-                <ChevronRight className='mx-1 size-3 text-olive-600' />
+                <ChevronRight className='mx-1 size-3 shrink-0 text-olive-600' />
               )}
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className='rounded-xs transition-colors hover:text-olive-800'
+                  className='block min-w-0 truncate rounded-xs transition-colors hover:text-olive-800'
                 >
                   {item.name}
                 </Link>
               ) : (
                 <span
                   className={cn(
-                    'line-clamp-1 rounded-xs',
+                    'block min-w-0 truncate rounded-xs',
                     isLast ? 'text-olive-800' : 'text-olive-500'
                   )}
                   aria-current={isLast ? 'page' : undefined}
