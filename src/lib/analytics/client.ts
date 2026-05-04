@@ -226,10 +226,11 @@ function initClarity() {
 
   window.clarity =
     window.clarity ||
-    function clarity(...args: unknown[]) {
-      ;(window.clarity!.q = window.clarity!.q || []).push(args)
+    function clarity() {
+      ;(window.clarity!.q = window.clarity!.q || []).push(arguments)
     }
 
+  setClarityConsent(consentGranted)
   loadScript(`https://www.clarity.ms/tag/${CLARITY_ID}`, 'clarity')
 
   clarityReady = true
@@ -295,7 +296,22 @@ function setProviderConsent(granted: boolean) {
     analyticsWindow[`ga-disable-${GA4_ID}`] = !granted
   }
 
-  window.clarity?.('consent', granted)
+  setClarityConsent(granted)
+}
+
+function setClarityConsent(granted: boolean) {
+  if (!CLARITY_ID || !window.clarity) {
+    return
+  }
+
+  window.clarity('consentv2', {
+    ad_Storage: 'denied',
+    analytics_Storage: granted ? 'granted' : 'denied'
+  })
+
+  if (!granted) {
+    window.clarity('consent', false)
+  }
 }
 
 function scheduleIdle(callback: () => void) {

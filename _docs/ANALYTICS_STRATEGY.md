@@ -5,12 +5,12 @@ Microsoft Clarity, and PostHog without duplicating each tool's role.
 
 ## Tool Roles
 
-| Tool | Role | Notes |
-| --- | --- | --- |
-| GA4 | Acquisition, campaign/source reporting, and high-value conversion events | Loaded directly through `gtag.js`. GTM is intentionally not used. |
-| PostHog | Structured onsite events, funnels, paths, CTA performance, and dashboards | Uses the slim SDK with manual capture only. |
-| Clarity | Recordings, heatmaps, scroll behavior, dead/rage clicks, and UX diagnosis | Receives lightweight event markers for filtering recordings. |
-| Vercel Speed Insights | Performance monitoring | Kept separate from user behavior analytics. |
+| Tool                  | Role                                                                      | Notes                                                             |
+| --------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| GA4                   | Acquisition, campaign/source reporting, and high-value conversion events  | Loaded directly through `gtag.js`. GTM is intentionally not used. |
+| PostHog               | Structured onsite events, funnels, paths, CTA performance, and dashboards | Uses the slim SDK with manual capture only.                       |
+| Clarity               | Recordings, heatmaps, scroll behavior, dead/rage clicks, and UX diagnosis | Receives lightweight event markers for filtering recordings.      |
+| Vercel Speed Insights | Performance monitoring                                                    | Kept separate from user behavior analytics.                       |
 
 GA4 should answer "where did valuable visitors come from?". PostHog should
 answer "what did visitors do on the site?". Clarity should answer "why did a
@@ -44,10 +44,10 @@ Current behavior:
 
 Storage keys:
 
-| Key | Value | Meaning |
-| --- | --- | --- |
-| `tgc_analytics_consent` | `declined` | User disabled analytics. Absence means analytics may run. |
-| `tgc_analytics_notice_dismissed` | `true` | Notice has been dismissed. |
+| Key                              | Value      | Meaning                                                   |
+| -------------------------------- | ---------- | --------------------------------------------------------- |
+| `tgc_analytics_consent`          | `declined` | User disabled analytics. Absence means analytics may run. |
+| `tgc_analytics_notice_dismissed` | `true`     | Notice has been dismissed.                                |
 
 ## Provider Configuration
 
@@ -71,7 +71,8 @@ Clarity:
 
 - Loads `https://www.clarity.ms/tag/{NEXT_PUBLIC_CLARITY_ID}` directly.
 - Receives `clarity('event', eventName)` markers for tracked events.
-- Receives consent changes through `clarity('consent', granted)`.
+- Receives consent changes through Consent V2, with analytics storage granted or denied and ad storage denied.
+- Uses custom events only as lightweight recording filters; detailed event properties remain in PostHog.
 
 Do not re-enable GTM unless there is a specific marketing or ads requirement
 that cannot be handled through direct GA4 events.
@@ -90,51 +91,51 @@ properties by `getElementAnalyticsProperties()`. Programmatic client events use
 
 Every event is enriched with route-derived page metadata:
 
-| Route shape | `page_type` | Extra metadata |
-| --- | --- | --- |
-| `/` | `home` | none |
-| `/about` | `about` | none |
-| `/guesthouses` | `guesthouse_index` | none |
-| `/guesthouses/[guesthouse]` | `guesthouse` | `guesthouse_slug` |
-| `/guesthouses/[guesthouse]/articles` | `guesthouse_articles` | `guesthouse_slug` |
-| `/guesthouses/[guesthouse]/articles/[article]` | `guesthouse_article` | `guesthouse_slug`, `article_slug` |
-| `/destinations/[destination]` | `destination` | `destination_slug` |
+| Route shape                                    | `page_type`           | Extra metadata                     |
+| ---------------------------------------------- | --------------------- | ---------------------------------- |
+| `/`                                            | `home`                | none                               |
+| `/about`                                       | `about`               | none                               |
+| `/guesthouses`                                 | `guesthouse_index`    | none                               |
+| `/guesthouses/[guesthouse]`                    | `guesthouse`          | `guesthouse_slug`                  |
+| `/guesthouses/[guesthouse]/articles`           | `guesthouse_articles` | `guesthouse_slug`                  |
+| `/guesthouses/[guesthouse]/articles/[article]` | `guesthouse_article`  | `guesthouse_slug`, `article_slug`  |
+| `/destinations/[destination]`                  | `destination`         | `destination_slug`                 |
 | `/destinations/[destination]/guides/[article]` | `destination_article` | `destination_slug`, `article_slug` |
-| anything else | `other` | none |
+| anything else                                  | `other`               | none                               |
 
 Supported event properties:
 
-| Property | Purpose |
-| --- | --- |
-| `page_path` | Current pathname. |
-| `page_type` | Route category inferred from the URL. |
-| `source_section` | Where the interaction happened, such as `guesthouse_hero` or `property_preview`. |
-| `cta_label` | Human-readable button/link label. |
-| `destination_slug` | Destination context when known. |
-| `guesthouse_slug` | Guesthouse context when known. |
-| `article_slug` | Article context when known. |
-| `booking_platform` | External booking platform name, usually NightsBridge. |
-| `target_url` | Destination URL for outbound or navigational clicks. |
+| Property           | Purpose                                                                          |
+| ------------------ | -------------------------------------------------------------------------------- |
+| `page_path`        | Current pathname.                                                                |
+| `page_type`        | Route category inferred from the URL.                                            |
+| `source_section`   | Where the interaction happened, such as `guesthouse_hero` or `property_preview`. |
+| `cta_label`        | Human-readable button/link label.                                                |
+| `destination_slug` | Destination context when known.                                                  |
+| `guesthouse_slug`  | Guesthouse context when known.                                                   |
+| `article_slug`     | Article context when known.                                                      |
+| `booking_platform` | External booking platform name, usually NightsBridge.                            |
+| `target_url`       | Destination URL for outbound or navigational clicks.                             |
 
 Do not send personal data in event properties. Use slugs, labels, URLs, section
 names, and platform names only.
 
 ## Event Reference
 
-| Event | Sent to | Meaning |
-| --- | --- | --- |
-| `page_view` | GA4, PostHog | Manual pageview. PostHog receives this as `$pageview`. |
-| `booking_click` | GA4, PostHog, Clarity | User clicked an outbound booking or availability CTA. |
-| `booking_menu_open` | PostHog, Clarity | User opened the navbar booking menu. |
-| `property_detail_click` | GA4, PostHog, Clarity | User clicked through to a guesthouse/property details page. |
-| `article_click` | PostHog, Clarity | User clicked an article card or article list link. |
+| Event                      | Sent to               | Meaning                                                                          |
+| -------------------------- | --------------------- | -------------------------------------------------------------------------------- |
+| `page_view`                | GA4, PostHog          | Manual pageview. PostHog receives this as `$pageview`.                           |
+| `booking_click`            | GA4, PostHog, Clarity | User clicked an outbound booking or availability CTA.                            |
+| `booking_menu_open`        | PostHog, Clarity      | User opened the navbar booking menu.                                             |
+| `property_detail_click`    | GA4, PostHog, Clarity | User clicked through to a guesthouse/property details page.                      |
+| `article_click`            | PostHog, Clarity      | User clicked an article card or article list link.                               |
 | `article_guesthouse_click` | GA4, PostHog, Clarity | Article or destination content moved the user toward a guesthouse/property flow. |
-| `article_anchor_click` | PostHog, Clarity | User used article/table-of-contents/section navigation. |
-| `contact_click` | GA4, PostHog, Clarity | User clicked phone or email contact CTAs. |
-| `maps_click` | PostHog, Clarity | User clicked a directions or Google Maps link. |
-| `share_click` | PostHog, Clarity | User used copy, WhatsApp, email, or native share. |
-| `faq_open` | PostHog, Clarity | User opened an FAQ item. |
-| `gallery_open` | PostHog, Clarity | User opened a guesthouse or room gallery. |
+| `article_anchor_click`     | PostHog, Clarity      | User used article/table-of-contents/section navigation.                          |
+| `contact_click`            | GA4, PostHog, Clarity | User clicked phone or email contact CTAs.                                        |
+| `maps_click`               | PostHog, Clarity      | User clicked a directions or Google Maps link.                                   |
+| `share_click`              | PostHog, Clarity      | User used copy, WhatsApp, email, or native share.                                |
+| `faq_open`                 | PostHog, Clarity      | User opened an FAQ item.                                                         |
+| `gallery_open`             | PostHog, Clarity      | User opened a guesthouse or room gallery.                                        |
 
 GA4 high-value allowlist in `src/lib/analytics/client.ts`:
 
@@ -214,6 +215,7 @@ Provider checks:
 - GA4: use DebugView to confirm `page_view`, `booking_click`, `contact_click`, `property_detail_click`, and `article_guesthouse_click`.
 - PostHog: use Live Events and schema/property views to confirm all structured events and properties.
 - Clarity: filter recordings by custom events such as `booking_click`, `article_guesthouse_click`, `faq_open`, and `gallery_open`.
+- Clarity dashboard: keep masking set to `Balanced`, avoid `Relaxed`, and review heatmaps/recordings by URL, device, dead clicks, rage clicks, and custom events.
 
 Code checks:
 
