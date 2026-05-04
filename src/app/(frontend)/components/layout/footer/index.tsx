@@ -8,6 +8,7 @@ import {
   fetchLogo
 } from '@/lib/data'
 import { extractImageProps } from '@/lib/utils'
+import AnalyticsSettingsButton from '@/components/analytics/analytics-settings-button'
 
 // import Socials from '../../socials'
 import ContactPersons from '../../contact-persons'
@@ -19,6 +20,7 @@ export default async function Footer(): Promise<React.JSX.Element> {
   const logo = await fetchLogo('minimal_light')
   const { minimal_light } = logo
   const logoProps = extractImageProps(minimal_light)
+  const enableAnalytics = process.env.NEXT_PUBLIC_ANALYTICS === 'true'
 
   return (
     <footer className='w-full justify-center bg-black py-8'>
@@ -135,6 +137,11 @@ export default async function Footer(): Promise<React.JSX.Element> {
                 </li>
               )
             })}
+            {enableAnalytics && (
+              <li>
+                <AnalyticsSettingsButton className='cursor-pointer text-inherit transition-colors hover:text-white' />
+              </li>
+            )}
           </ul>
         </div>
       </div>

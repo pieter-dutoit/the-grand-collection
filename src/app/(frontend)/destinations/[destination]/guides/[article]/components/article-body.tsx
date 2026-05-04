@@ -56,7 +56,14 @@ export default async function ArticleBody({
                         colour='olive'
                         className='w-full min-w-0 justify-start'
                       >
-                        <Link href={`#${heading.id}`}>
+                        <Link
+                          href={`#${heading.id}`}
+                          data-analytics-event='article_anchor_click'
+                          data-analytics-source-section='article_toc'
+                          data-analytics-cta-label={heading.text}
+                          data-analytics-destination-slug={destination.slug}
+                          data-analytics-article-slug={article.slug}
+                        >
                           <span className='block w-full truncate text-left'>
                             {heading.text}
                           </span>
@@ -75,17 +82,42 @@ export default async function ArticleBody({
               <ul className='flex w-full flex-col items-start'>
                 <li>
                   <Button asChild variant='ghost' colour='olive'>
-                    <Link href={`#${article.slug}`}>Back to top</Link>
+                    <Link
+                      href={`#${article.slug}`}
+                      data-analytics-event='article_anchor_click'
+                      data-analytics-source-section='article_quick_links'
+                      data-analytics-cta-label='Back to top'
+                      data-analytics-destination-slug={destination.slug}
+                      data-analytics-article-slug={article.slug}
+                    >
+                      Back to top
+                    </Link>
                   </Button>
                 </li>
                 <li>
                   <Button asChild variant='link' colour='olive'>
-                    <Link href={`#more-articles`}>More travel guides</Link>
+                    <Link
+                      href={`#more-articles`}
+                      data-analytics-event='article_anchor_click'
+                      data-analytics-source-section='article_quick_links'
+                      data-analytics-cta-label='More travel guides'
+                      data-analytics-destination-slug={destination.slug}
+                      data-analytics-article-slug={article.slug}
+                    >
+                      More travel guides
+                    </Link>
                   </Button>
                 </li>
                 <li>
                   <Button asChild variant='ghost' colour='olive'>
-                    <Link href={`#where-to-stay`}>
+                    <Link
+                      href={`#where-to-stay`}
+                      data-analytics-event='article_guesthouse_click'
+                      data-analytics-source-section='article_quick_links'
+                      data-analytics-cta-label={`Where to stay in ${destination.name}`}
+                      data-analytics-destination-slug={destination.slug}
+                      data-analytics-article-slug={article.slug}
+                    >
                       Where to stay in {destination.name}
                     </Link>
                   </Button>
@@ -94,7 +126,16 @@ export default async function ArticleBody({
                 {hasFaq && (
                   <li>
                     <Button asChild variant='ghost' colour='olive'>
-                      <Link href='#faq'>FAQs</Link>
+                      <Link
+                        href='#faq'
+                        data-analytics-event='article_anchor_click'
+                        data-analytics-source-section='article_quick_links'
+                        data-analytics-cta-label='FAQs'
+                        data-analytics-destination-slug={destination.slug}
+                        data-analytics-article-slug={article.slug}
+                      >
+                        FAQs
+                      </Link>
                     </Button>
                   </li>
                 )}

@@ -118,6 +118,10 @@ const createJsxConverters = (
                     target='_blank'
                     rel='noopener noreferrer'
                     className='underline underline-offset-2'
+                    data-analytics-event='maps_click'
+                    data-analytics-source-section='article_map'
+                    data-analytics-cta-label='Open in Google Maps'
+                    data-analytics-target-url={mapsLink}
                   >
                     Open in Google Maps
                   </a>

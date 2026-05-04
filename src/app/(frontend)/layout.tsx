@@ -2,11 +2,11 @@ import '@/app/globals.css'
 import { Metadata } from 'next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { playball, redhat } from '@/fonts/index'
-import { GoogleTagManager } from '@next/third-parties/google'
 
 import Navbar from '@/app/(frontend)/components/layout/navbar'
 import Footer from '@/app/(frontend)/components/layout/footer'
 import { Toaster } from '@/components/ui/sonner'
+import AnalyticsProvider from '@/components/analytics/analytics-provider'
 
 import { fetchHomePageData } from '@/lib/data'
 import createMetadataConfig from '@/lib/utils/create-metadata-object'
@@ -23,7 +23,6 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const enableAnalytics = process.env.NEXT_PUBLIC_ANALYTICS === 'true'
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID
 
   return (
     <html
@@ -31,13 +30,6 @@ export default function RootLayout({
       data-scroll-behavior='smooth'
       className={`${redhat.variable} ${playball.variable} scroll-smooth antialiased`}
     >
-      {enableAnalytics && (
-        <>
-          {gtmId && <GoogleTagManager gtmId={gtmId} />}
-          <SpeedInsights />
-        </>
-      )}
-
       <body>
         <Navbar />
         <main className='bg-gradient-to-b from-white via-white to-olive-100'>
@@ -45,6 +37,12 @@ export default function RootLayout({
           <Footer />
         </main>
         <Toaster />
+        {enableAnalytics && (
+          <>
+            <AnalyticsProvider />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   )

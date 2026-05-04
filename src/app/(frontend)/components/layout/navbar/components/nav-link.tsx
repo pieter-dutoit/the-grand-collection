@@ -24,7 +24,14 @@ function BlockLink({ label, href }: NavOption): React.JSX.Element {
         'mb-1 w-full bg-olive-50 lg:bg-olive-50/50'
       )}
     >
-      <Link href={href ?? '#'}>{text}</Link>
+      <Link
+        href={href ?? '#'}
+        data-analytics-event='article_anchor_click'
+        data-analytics-source-section='primary_nav'
+        data-analytics-cta-label={text}
+      >
+        {text}
+      </Link>
     </NavigationMenuLink>
   )
 }
@@ -44,7 +51,12 @@ function DetailedNavLink({
       asChild
       className='my-1 w-[250px] overflow-hidden rounded-lg border border-olive-100 bg-olive-50 transition-colors hover:bg-olive-50/50 active:border-olive-300 sm:w-[350px] lg:bg-transparent'
     >
-      <Link href={href ?? '#'}>
+      <Link
+        href={href ?? '#'}
+        data-analytics-event='property_detail_click'
+        data-analytics-source-section='primary_nav'
+        data-analytics-cta-label={text}
+      >
         <div className='flex grow'>
           <div className='relative h-14 w-12 shrink-0 overflow-hidden rounded-l-lg bg-olive-100 sm:size-[90px]'>
             <Image
@@ -97,6 +109,13 @@ function ExternalNavLink({
   return (
     <NavigationMenuLink
       href={href}
+      target='_blank'
+      rel='noopener noreferrer'
+      data-analytics-event='booking_click'
+      data-analytics-source-section='primary_nav_booking_menu'
+      data-analytics-cta-label={label.text}
+      data-analytics-booking-platform={externalSiteName}
+      data-analytics-target-url={href}
       className={twMerge(
         'my-1 flex min-w-48 flex-row items-center justify-end rounded-xs border border-olive-200 py-1 pr-2 pl-4 transition-colors hover:border-olive-950 active:border-olive-500',
         highlightedStyles
@@ -129,7 +148,14 @@ function DefaultLink({ label, href }: NavOption): React.JSX.Element {
         colour: color
       })}
     >
-      <Link href={href ?? '#'}>{text}</Link>
+      <Link
+        href={href ?? '#'}
+        data-analytics-event='article_anchor_click'
+        data-analytics-source-section='primary_nav'
+        data-analytics-cta-label={text}
+      >
+        {text}
+      </Link>
     </NavigationMenuLink>
   )
 }

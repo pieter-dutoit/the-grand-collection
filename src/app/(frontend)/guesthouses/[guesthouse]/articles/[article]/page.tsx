@@ -302,7 +302,14 @@ export default async function GuesthousePostPage({ params }: Props) {
                           colour='olive'
                           className='w-full min-w-0 justify-start'
                         >
-                          <Link href={`#${heading.id}`}>
+                          <Link
+                            href={`#${heading.id}`}
+                            data-analytics-event='article_anchor_click'
+                            data-analytics-source-section='article_toc'
+                            data-analytics-cta-label={heading.text}
+                            data-analytics-guesthouse-slug={guesthouse.slug}
+                            data-analytics-article-slug={article.slug}
+                          >
                             <span className='block w-full truncate text-left'>
                               {heading.text}
                             </span>
@@ -321,23 +328,57 @@ export default async function GuesthousePostPage({ params }: Props) {
                 <ul className='flex w-full flex-col items-start'>
                   <li>
                     <Button asChild variant='ghost' colour='olive'>
-                      <Link href={`#${article.slug}`}>Back to top</Link>
+                      <Link
+                        href={`#${article.slug}`}
+                        data-analytics-event='article_anchor_click'
+                        data-analytics-source-section='article_quick_links'
+                        data-analytics-cta-label='Back to top'
+                        data-analytics-guesthouse-slug={guesthouse.slug}
+                        data-analytics-article-slug={article.slug}
+                      >
+                        Back to top
+                      </Link>
                     </Button>
                   </li>
                   <li>
                     <Button asChild variant='ghost' colour='olive'>
-                      <Link href={guesthousePath}>{guesthouse.name}</Link>
+                      <Link
+                        href={guesthousePath}
+                        data-analytics-event='article_guesthouse_click'
+                        data-analytics-source-section='article_quick_links'
+                        data-analytics-cta-label={guesthouse.name}
+                        data-analytics-guesthouse-slug={guesthouse.slug}
+                        data-analytics-article-slug={article.slug}
+                      >
+                        {guesthouse.name}
+                      </Link>
                     </Button>
                   </li>
                   <li>
                     <Button asChild variant='ghost' colour='olive'>
-                      <Link href={articlesPath}>Articles</Link>
+                      <Link
+                        href={articlesPath}
+                        data-analytics-event='article_anchor_click'
+                        data-analytics-source-section='article_quick_links'
+                        data-analytics-cta-label='Articles'
+                        data-analytics-guesthouse-slug={guesthouse.slug}
+                        data-analytics-article-slug={article.slug}
+                      >
+                        Articles
+                      </Link>
                     </Button>
                   </li>
                   {relatedArticles.length > 0 && (
                     <li>
                       <Button asChild variant='link' colour='olive'>
-                        <Link href='#more-articles'>
+                        <Link
+                          href='#more-articles'
+                          data-analytics-event='article_anchor_click'
+                          data-analytics-source-section='article_quick_links'
+                          data-analytics-cta-label={`More from ${guesthouse.name}`}
+                          data-analytics-guesthouse-slug={guesthouse.slug}
+                          data-analytics-article-slug={article.slug}
+                        >
                           More from {guesthouse.name}
                         </Link>
                       </Button>
@@ -349,6 +390,14 @@ export default async function GuesthousePostPage({ params }: Props) {
                         <Button asChild variant='ghost' colour='olive'>
                           <Link
                             href={`/destinations/${guesthouse.destination.slug}`}
+                            data-analytics-event='article_anchor_click'
+                            data-analytics-source-section='article_quick_links'
+                            data-analytics-cta-label={`${guesthouse.destination.name} guides`}
+                            data-analytics-destination-slug={
+                              guesthouse.destination.slug
+                            }
+                            data-analytics-guesthouse-slug={guesthouse.slug}
+                            data-analytics-article-slug={article.slug}
                           >
                             {guesthouse.destination.name} guides
                           </Link>
@@ -359,7 +408,16 @@ export default async function GuesthousePostPage({ params }: Props) {
                   {hasFaq && (
                     <li>
                       <Button asChild variant='ghost' colour='olive'>
-                        <Link href='#faq'>FAQs</Link>
+                        <Link
+                          href='#faq'
+                          data-analytics-event='article_anchor_click'
+                          data-analytics-source-section='article_quick_links'
+                          data-analytics-cta-label='FAQs'
+                          data-analytics-guesthouse-slug={guesthouse.slug}
+                          data-analytics-article-slug={article.slug}
+                        >
+                          FAQs
+                        </Link>
                       </Button>
                     </li>
                   )}
