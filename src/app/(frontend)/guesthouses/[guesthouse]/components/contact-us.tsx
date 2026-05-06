@@ -13,6 +13,7 @@ import SectionHeading from '@/components/section-heading'
 
 export default function ContactUs({
   data: {
+    slug,
     business_details: {
       geo: { maps_link, maps_embed_url }
     },
@@ -44,6 +45,11 @@ export default function ContactUs({
                   <Link
                     href={`mailto:${email}`}
                     className='flex items-center gap-2'
+                    data-analytics-event='contact_click'
+                    data-analytics-source-section='contact_section'
+                    data-analytics-cta-label='Email'
+                    data-analytics-guesthouse-slug={slug}
+                    data-analytics-target-url={`mailto:${email}`}
                   >
                     <Mail className='text-sage-500 size-4' />
                     <span className='opacity-90'>{email}</span>
@@ -51,6 +57,11 @@ export default function ContactUs({
                   <Link
                     href={`tel:+27${phoneLink}`}
                     className='flex items-center gap-2'
+                    data-analytics-event='contact_click'
+                    data-analytics-source-section='contact_section'
+                    data-analytics-cta-label='Phone'
+                    data-analytics-guesthouse-slug={slug}
+                    data-analytics-target-url={`tel:+27${phoneLink}`}
                   >
                     <Phone className='text-sage-500 size-4' />
                     <span className='opacity-90'>{phone}</span>
@@ -71,6 +82,12 @@ export default function ContactUs({
                 href={maps_link}
                 className='text-sage-500 flex items-center gap-1 underline underline-offset-2'
                 target='_blank'
+                rel='noopener noreferrer'
+                data-analytics-event='maps_click'
+                data-analytics-source-section='contact_section'
+                data-analytics-cta-label='Get Directions'
+                data-analytics-guesthouse-slug={slug}
+                data-analytics-target-url={maps_link}
               >
                 <MapPin className='size-4' />
                 Get Directions

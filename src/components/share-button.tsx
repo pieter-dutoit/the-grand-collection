@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
+import { trackEvent } from '@/lib/analytics/client'
 
 type ShareButtonProps = Omit<ButtonProps, 'children' | 'onClick'> & {
   title?: string
@@ -52,6 +53,14 @@ export function ShareButton({
   const getResolvedUrl = () =>
     resolvedUrlRef.current || url || window.location.href
 
+  const trackShare = (method: string) => {
+    trackEvent('share_click', {
+      source_section: 'share_button',
+      cta_label: method,
+      target_url: getResolvedUrl()
+    })
+  }
+
   const handleCopy = async () => {
     const shareUrl = getResolvedUrl()
 
@@ -62,6 +71,7 @@ export function ShareButton({
 
     try {
       await navigator.clipboard.writeText(shareUrl)
+      trackShare('copy')
       toast.success('Link copied to clipboard')
     } catch {
       toast.error('Failed to copy link')
@@ -80,6 +90,7 @@ export function ShareButton({
       try {
         if (!navigator.canShare || navigator.canShare(shareData)) {
           await navigator.share(shareData)
+          trackShare('native')
           return
         }
       } catch (error) {
@@ -144,6 +155,7 @@ export function ShareButton({
               target='_blank'
               rel='noreferrer'
               className={dropdownItemClassName}
+              onClick={() => trackShare('whatsapp')}
             >
               <MessageCircle className='size-4 text-olive-600' />
               <span>WhatsApp</span>
@@ -153,7 +165,11 @@ export function ShareButton({
 
         {hrefEmail && (
           <DropdownMenuItem asChild className='p-0'>
-            <a href={hrefEmail} className={dropdownItemClassName}>
+            <a
+              href={hrefEmail}
+              className={dropdownItemClassName}
+              onClick={() => trackShare('email')}
+            >
               <Mail className='size-4 text-olive-600' />
               <span>Email</span>
             </a>

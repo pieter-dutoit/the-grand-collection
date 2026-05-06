@@ -33,7 +33,15 @@ export default function ContactPersons({
               )}
             >
               <Phone className='size-5' />{' '}
-              <a href={`tel:+27${phoneLink}`}>{phone}</a>
+              <a
+                href={`tel:+27${phoneLink}`}
+                data-analytics-event='contact_click'
+                data-analytics-source-section='footer'
+                data-analytics-cta-label='Phone'
+                data-analytics-target-url={`tel:+27${phoneLink}`}
+              >
+                {phone}
+              </a>
             </div>
             <div
               className={twMerge(
@@ -42,7 +50,15 @@ export default function ContactPersons({
               )}
             >
               <Mail className='size-5' />{' '}
-              <a href={`mailto:${email}`}>{email}</a>
+              <a
+                href={`mailto:${email}`}
+                data-analytics-event='contact_click'
+                data-analytics-source-section='footer'
+                data-analytics-cta-label='Email'
+                data-analytics-target-url={`mailto:${email}`}
+              >
+                {email}
+              </a>
             </div>
           </li>
         )

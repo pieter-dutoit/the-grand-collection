@@ -12,6 +12,7 @@ export default function Hero({
   guesthouse: Guesthouse
 }): React.JSX.Element {
   const {
+    slug,
     name,
     business_details: { geo },
     booking_platform: { url: bookingURL, name: platformName },
@@ -62,6 +63,12 @@ export default function Hero({
               href={geo.maps_link}
               className='text-sage-500 mt-2 flex items-center gap-1 text-sm underline underline-offset-2'
               target='_blank'
+              rel='noopener noreferrer'
+              data-analytics-event='maps_click'
+              data-analytics-source-section='guesthouse_hero'
+              data-analytics-cta-label='Get Directions'
+              data-analytics-guesthouse-slug={slug}
+              data-analytics-target-url={geo.maps_link}
             >
               <MapPin className='size-4' />
               {street}, {city} <strong>(Get Directions)</strong>
@@ -81,6 +88,8 @@ export default function Hero({
               <AvailabilityLink
                 bookingUrl={bookingURL}
                 platformName={platformName}
+                guesthouseSlug={slug}
+                sourceSection='guesthouse_hero'
                 text='Book online'
               />
               <Button asChild variant='outline' colour='olive'>
@@ -88,6 +97,11 @@ export default function Hero({
                   href={`tel:+27${contacts[0]?.phoneLink}`}
                   className='flex items-center gap-1'
                   aria-label='Call us'
+                  data-analytics-event='contact_click'
+                  data-analytics-source-section='guesthouse_hero'
+                  data-analytics-cta-label='Call us'
+                  data-analytics-guesthouse-slug={slug}
+                  data-analytics-target-url={`tel:+27${contacts[0]?.phoneLink}`}
                 >
                   <Phone className='size-4' />
                   <span>{contacts[0]?.phone}</span>
@@ -98,6 +112,11 @@ export default function Hero({
                   href={`mailto:${contacts[0]?.email}`}
                   className='flex items-center gap-1'
                   aria-label='Email us'
+                  data-analytics-event='contact_click'
+                  data-analytics-source-section='guesthouse_hero'
+                  data-analytics-cta-label='Email us'
+                  data-analytics-guesthouse-slug={slug}
+                  data-analytics-target-url={`mailto:${contacts[0]?.email}`}
                 >
                   <Mail className='size-4' />
                   <span>{contacts[0]?.email}</span>

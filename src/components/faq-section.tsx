@@ -10,6 +10,7 @@ import {
 import { cn } from '@/lib/utils'
 import type { Faq } from '@/payload/payload-types'
 import { getFaqItems } from '@/lib/utils/faq'
+import { trackEvent } from '@/lib/analytics/client'
 import SectionHeading from './section-heading'
 
 type FaqSectionProps = {
@@ -45,6 +46,14 @@ export default function FaqSection({
           {items.map((item) => (
             <Collapsible
               key={item.id}
+              onOpenChange={(isOpen) => {
+                if (!isOpen) return
+
+                trackEvent('faq_open', {
+                  source_section: id,
+                  cta_label: item.question
+                })
+              }}
               className='border-gold-200 rounded-2xl border bg-white/90 shadow-xs'
             >
               <CollapsibleTrigger className='group flex w-full items-center justify-between gap-4 px-5 py-4 text-left'>

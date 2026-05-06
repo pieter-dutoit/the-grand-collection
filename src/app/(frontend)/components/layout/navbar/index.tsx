@@ -66,6 +66,9 @@ export default async function Navbar(): Promise<React.JSX.Element> {
             {/* Desktop & Mobile */}
             <NavigationMenuItem>
               <NavigationMenuTrigger
+                data-analytics-event='booking_menu_open'
+                data-analytics-source-section='primary_nav'
+                data-analytics-cta-label='Book now'
                 className={twMerge(
                   getButtonStyles({ variant: 'default', colour: 'olive' }),
                   'text-sm font-bold uppercase'

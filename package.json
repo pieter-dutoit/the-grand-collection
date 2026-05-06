@@ -17,7 +17,6 @@
     "generate:types": "PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload generate:types"
   },
   "dependencies": {
-    "@next/third-parties": "16.2.4",
     "@payloadcms/db-mongodb": "3.84.1",
     "@payloadcms/email-nodemailer": "3.84.1",
     "@payloadcms/next": "3.84.1",
@@ -38,6 +37,7 @@
     "next": "16.2.4",
     "next-themes": "^0.4.6",
     "payload": "3.84.1",
+    "posthog-js": "^1.372.6",
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "server-only": "^0.0.1",

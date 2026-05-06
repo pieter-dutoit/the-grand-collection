@@ -83,7 +83,15 @@ export default function ArticleTile({
         className
       )}
     >
-      <Link href={articleHref} className='block'>
+      <Link
+        href={articleHref}
+        className='block'
+        data-analytics-event='article_click'
+        data-analytics-source-section='article_tile'
+        data-analytics-cta-label={article.title}
+        data-analytics-destination-slug={destinationSlug}
+        data-analytics-article-slug={article.slug}
+      >
         {url && (
           <BlurredBackdropImage
             src={url}

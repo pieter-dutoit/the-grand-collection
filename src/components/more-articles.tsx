@@ -75,6 +75,10 @@ export default function MoreArticlesSection({
             <Link
               href={resolvedViewAllHref}
               className='flex flex-row items-center gap-2 self-start'
+              data-analytics-event='article_click'
+              data-analytics-source-section={id}
+              data-analytics-cta-label={resolvedViewAllLabel}
+              data-analytics-destination-slug={destination?.slug}
             >
               {resolvedViewAllLabel} <ArrowRight className='size-2' />
             </Link>
@@ -107,6 +111,10 @@ export default function MoreArticlesSection({
                 <Link
                   href={resolvedViewAllHref}
                   className='flex size-full flex-row items-center justify-center gap-2 rounded-xl border border-olive-100 bg-gradient-to-r from-olive-300 to-olive-50 text-olive-800 underline-offset-1 hover:text-olive-600 hover:underline'
+                  data-analytics-event='article_click'
+                  data-analytics-source-section={id}
+                  data-analytics-cta-label={resolvedViewAllLabel}
+                  data-analytics-destination-slug={destination?.slug}
                 >
                   <span className='text-base font-semibold'>
                     {resolvedViewAllLabel}
