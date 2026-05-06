@@ -20,6 +20,40 @@ import {
 type AnalyticsStatus = 'enabled' | typeof ANALYTICS_CONSENT_DECLINED | 'loading'
 type PanelMode = 'hidden' | 'notice' | 'settings'
 
+function canReadStoredValues() {
+  try {
+    window.localStorage.getItem(ANALYTICS_CONSENT_STORAGE_KEY)
+    window.localStorage.getItem(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY)
+    return true
+  } catch {
+    return false
+  }
+}
+
+function getStoredValue(key: string) {
+  try {
+    return window.localStorage.getItem(key)
+  } catch {
+    return null
+  }
+}
+
+function setStoredValue(key: string, value: string) {
+  try {
+    window.localStorage.setItem(key, value)
+  } catch {
+    // Storage may be blocked in privacy modes; keep the in-memory state update.
+  }
+}
+
+function removeStoredValue(key: string) {
+  try {
+    window.localStorage.removeItem(key)
+  } catch {
+    // Storage may be blocked in privacy modes; keep the in-memory state update.
+  }
+}
+
 export default function AnalyticsProvider() {
   const pathname = usePathname()
   const [analyticsStatus, setAnalyticsStatus] =
@@ -32,13 +66,16 @@ export default function AnalyticsProvider() {
       return
     }
 
-    const storedConsent = window.localStorage.getItem(
-      ANALYTICS_CONSENT_STORAGE_KEY
-    )
+    if (!canReadStoredValues()) {
+      setAnalyticsStatus(ANALYTICS_CONSENT_DECLINED)
+      setPanelMode('hidden')
+      return
+    }
+
+    const storedConsent = getStoredValue(ANALYTICS_CONSENT_STORAGE_KEY)
     const hasDeclined = storedConsent === ANALYTICS_CONSENT_DECLINED
     const noticeDismissed =
-      window.localStorage.getItem(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY) ===
-      'true'
+      getStoredValue(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY) === 'true'
 
     setAnalyticsStatus(hasDeclined ? ANALYTICS_CONSENT_DECLINED : 'enabled')
     setPanelMode(!hasDeclined && !noticeDismissed ? 'notice' : 'hidden')
@@ -98,23 +135,20 @@ export default function AnalyticsProvider() {
   }, [])
 
   const closePanel = () => {
-    window.localStorage.setItem(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY, 'true')
+    setStoredValue(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY, 'true')
     setPanelMode('hidden')
   }
 
   const decline = () => {
-    window.localStorage.setItem(
-      ANALYTICS_CONSENT_STORAGE_KEY,
-      ANALYTICS_CONSENT_DECLINED
-    )
-    window.localStorage.setItem(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY, 'true')
+    setStoredValue(ANALYTICS_CONSENT_STORAGE_KEY, ANALYTICS_CONSENT_DECLINED)
+    setStoredValue(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY, 'true')
     setAnalyticsStatus(ANALYTICS_CONSENT_DECLINED)
     setPanelMode('hidden')
   }
 
   const enableAnalytics = () => {
-    window.localStorage.removeItem(ANALYTICS_CONSENT_STORAGE_KEY)
-    window.localStorage.setItem(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY, 'true')
+    removeStoredValue(ANALYTICS_CONSENT_STORAGE_KEY)
+    setStoredValue(ANALYTICS_NOTICE_DISMISSED_STORAGE_KEY, 'true')
     setAnalyticsStatus('enabled')
     setPanelMode('hidden')
   }
