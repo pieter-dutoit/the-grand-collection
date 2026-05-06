@@ -94,7 +94,11 @@ export default function RoomDetails({
           <p className='text-sage-800 text-sm font-semibold'>
             from <strong className='text-lg'>R{base_price}</strong> per night
           </p>
-          <AvailabilityLink bookingUrl={bookingLink} />
+          <AvailabilityLink
+            bookingUrl={bookingLink}
+            sourceSection='room_details'
+            text='Check availability'
+          />
         </div>
       </div>
     </>

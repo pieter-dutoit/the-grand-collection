@@ -17,7 +17,12 @@ export default function RoomGallery({ room }: PropTypes): React.JSX.Element {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className='size-full'>
+        <button
+          className='size-full'
+          data-analytics-event='gallery_open'
+          data-analytics-source-section='room_gallery'
+          data-analytics-cta-label={room.name}
+        >
           <ul className='grid size-full grid-cols-5 gap-2 p-2'>
             {thumbnails.map((image, index) => {
               const { url, alt, isSvg } = extractImageProps(image)

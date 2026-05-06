@@ -36,6 +36,9 @@ export default function Navbar({
           <li key={href} className='snap-center'>
             <Link
               href={href}
+              data-analytics-event='article_anchor_click'
+              data-analytics-source-section='guesthouse_section_nav'
+              data-analytics-cta-label={text}
               className={twMerge(
                 getButtonStyles({
                   variant: 'ghost',

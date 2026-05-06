@@ -14,6 +14,7 @@ interface GalleryProps {
 
 export default function Gallery({ data }: GalleryProps): React.JSX.Element {
   const {
+    slug,
     name,
     content: {
       images: { interior = [], exterior = [] },
@@ -51,6 +52,10 @@ export default function Gallery({ data }: GalleryProps): React.JSX.Element {
           <button
             className='container mx-auto grid grid-cols-6 gap-2 md:gap-3'
             aria-label='View Gallery'
+            data-analytics-event='gallery_open'
+            data-analytics-source-section='gallery_section'
+            data-analytics-cta-label='View Gallery'
+            data-analytics-guesthouse-slug={slug}
           >
             {preview.map((image, index) => {
               const { url, alt, isSvg } = extractImageProps(image)

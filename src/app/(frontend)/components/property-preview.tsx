@@ -117,6 +117,11 @@ export default function PropertyPreview({
           {hasDestination && (
             <Link
               href={`/destinations/${destinationData.slug}`}
+              data-analytics-event='article_anchor_click'
+              data-analytics-source-section='property_preview'
+              data-analytics-cta-label={`${destinationData.name} travel guides`}
+              data-analytics-destination-slug={destinationData.slug}
+              data-analytics-guesthouse-slug={slug}
               className={twMerge(
                 getButtonStyles({
                   variant: 'outline',
@@ -132,6 +137,11 @@ export default function PropertyPreview({
           {/* Link to guesthouse details page */}
           <Link
             href={`/guesthouses/${slug}`}
+            data-analytics-event='property_detail_click'
+            data-analytics-source-section='property_preview'
+            data-analytics-cta-label='View property details'
+            data-analytics-destination-slug={destinationData?.slug}
+            data-analytics-guesthouse-slug={slug}
             className={twMerge(
               getButtonStyles({
                 variant: 'outline',
@@ -147,6 +157,9 @@ export default function PropertyPreview({
           <AvailabilityLink
             bookingUrl={bookingUrl}
             platformName={platformName}
+            guesthouseSlug={slug}
+            destinationSlug={destinationData?.slug}
+            sourceSection='property_preview'
             className='mt-2 lg:mt-0'
           />
         </div>
