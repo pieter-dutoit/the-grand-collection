@@ -15,7 +15,7 @@ export default function AnalyticsSettingsButton({
 
   return (
     <button type='button' className={className} onClick={openAnalyticsSettings}>
-      Privacy settings
+      Privacy Settings
     </button>
   )
 }

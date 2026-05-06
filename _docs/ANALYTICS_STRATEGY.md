@@ -66,6 +66,7 @@ PostHog:
 - Uses manual capture only.
 - Disables `autocapture`, `capture_pageview`, `capture_pageleave`, `capture_exceptions`, and `disable_session_recording: true`.
 - Uses `person_profiles: 'identified_only'` and `respect_dnt: true`.
+- Manual `$pageview` events include `$current_url`, `$pathname`, and `$referrer` alongside route metadata.
 
 Clarity:
 
@@ -213,7 +214,7 @@ Local/browser checks:
 Provider checks:
 
 - GA4: use DebugView to confirm `page_view`, `booking_click`, `contact_click`, `property_detail_click`, and `article_guesthouse_click`.
-- PostHog: use Live Events and schema/property views to confirm all structured events and properties.
+- PostHog: use Live Events and schema/property views to confirm `$pageview` and custom events include expected properties.
 - Clarity: filter recordings by custom events such as `booking_click`, `article_guesthouse_click`, `faq_open`, and `gallery_open`.
 - Clarity dashboard: keep masking set to `Balanced`, avoid `Relaxed`, and review heatmaps/recordings by URL, device, dead clicks, rage clicks, and custom events.
 

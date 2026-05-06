@@ -173,7 +173,10 @@ function dispatchEvent({ name, properties }: QueuedEvent) {
   if (name === 'page_view') {
     window.gtag?.('event', 'page_view', getGa4Properties(properties))
 
-    posthogClient?.capture('$pageview', properties)
+    posthogClient?.capture(
+      '$pageview',
+      getPostHogPageviewProperties(properties)
+    )
     return
   }
 
@@ -421,6 +424,15 @@ function getGa4Properties(properties: QueuedEvent['properties']) {
       Object.entries(properties).filter(([key]) => GA4_PARAMETERS.has(key))
     ),
     debug_mode: GA4_DEBUG ? true : undefined
+  })
+}
+
+function getPostHogPageviewProperties(properties: QueuedEvent['properties']) {
+  return cleanProperties({
+    ...properties,
+    $current_url: properties.page_location,
+    $pathname: properties.page_path,
+    $referrer: properties.page_referrer
   })
 }
 
