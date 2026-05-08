@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -163,11 +164,11 @@ export default function AnalyticsProvider() {
 
   return (
     <aside
-      className='fixed right-4 bottom-4 left-4 z-50 mx-auto max-w-xl rounded-lg border border-olive-200 bg-white p-4 shadow-xl md:right-6 md:left-auto'
+      className='fixed right-3 bottom-3 left-3 z-50 mx-auto max-w-xl rounded-lg border border-olive-200 bg-white p-2 shadow-xl md:right-6 md:bottom-4 md:left-auto md:p-3'
       aria-label={ariaLabel}
     >
-      <div className='flex flex-col gap-3 md:flex-row md:items-center'>
-        <p className='text-sm leading-relaxed text-olive-900'>
+      <div className='flex flex-row items-center gap-2.5 md:gap-3'>
+        <p className='min-w-0 flex-1 text-xs leading-snug text-olive-900 md:text-sm md:leading-relaxed'>
           {analyticsEnabled
             ? 'We use analytics to understand how people use this site.'
             : 'Analytics is currently off. You can enable limited analytics to help us understand site usage and improve The Grand Collection.'}
@@ -178,17 +179,30 @@ export default function AnalyticsProvider() {
               type='button'
               variant='outline'
               colour='olive'
+              size='sm'
               onClick={decline}
             >
               Disable
             </Button>
           ) : (
-            <Button type='button' colour='olive' onClick={enableAnalytics}>
+            <Button
+              type='button'
+              colour='olive'
+              size='sm'
+              onClick={enableAnalytics}
+            >
               Enable
             </Button>
           )}
-          <Button type='button' colour='olive' onClick={closePanel}>
-            Close
+          <Button
+            type='button'
+            colour='olive'
+            size='icon'
+            className='size-8'
+            onClick={closePanel}
+          >
+            <X aria-hidden='true' />
+            <span className='sr-only'>Close analytics notice</span>
           </Button>
         </div>
       </div>
