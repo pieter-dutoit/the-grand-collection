@@ -19,12 +19,12 @@ import {
 
 const desktopTriggerStyles = twMerge(
   getButtonStyles({ variant: 'ghost', colour: 'olive' }),
-  'h-10 text-sm font-bold uppercase'
+  'h-10 text-base font-semibold capitalize'
 )
 
 const textLinkStyles = twMerge(
   getButtonStyles({ variant: 'ghost', colour: 'olive' }),
-  'h-10 text-sm font-bold uppercase'
+  'h-10 text-base font-semibold capitalize'
 )
 
 const mobileMenuPanelStyles =
@@ -568,7 +568,7 @@ export default async function Navbar(): Promise<React.JSX.Element> {
               type='button'
               className={twMerge(
                 getButtonStyles({ variant: 'default', colour: 'olive' }),
-                'group text-sm font-bold uppercase'
+                'group text-base font-semibold capitalize'
               )}
               aria-controls='primary-nav-booking'
               aria-expanded='false'
