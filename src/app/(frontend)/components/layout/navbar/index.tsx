@@ -10,6 +10,7 @@ import { CountryOutline } from '@/components/ui/logos'
 
 import NavMenuCard, { type NavMenuCardAction } from './nav-menu-card'
 import NavbarShell from './navbar-shell'
+import MobileNavSection from './mobile-nav-section'
 import {
   DestinationNavItem,
   getPrimaryNavData,
@@ -26,8 +27,14 @@ const textLinkStyles = twMerge(
   'h-10 text-sm font-bold uppercase'
 )
 
-const mobileSectionTitleStyles =
-  'flex w-full cursor-pointer list-none items-center justify-between rounded-md px-2 py-3 text-left text-sm font-bold uppercase text-olive-800 transition-colors hover:bg-olive-50 [&::-webkit-details-marker]:hidden'
+const mobileMenuPanelStyles =
+  "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2 fixed inset-x-0 top-16 z-40 isolate flex max-h-[calc(90dvh-4rem)] -translate-y-2 overflow-hidden rounded-b-xl border-b border-olive-300/70 bg-olive-50 py-5 opacity-0 shadow-[0_24px_70px_rgba(23,26,20,0.24)] ring-1 ring-olive-200/70 transition-[opacity,transform] duration-200 ease-out data-[state=closed]:pointer-events-none data-[state=open]:translate-y-0 data-[state=open]:opacity-100 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-olive-400/45 after:content-[''] motion-reduce:translate-y-0 motion-reduce:animate-none motion-reduce:transition-none xl:hidden"
+
+const mobileMenuBackdropStyles =
+  'data-[state=open]:animate-in data-[state=open]:fade-in-0 fixed inset-x-0 top-16 bottom-0 z-30 bg-olive-950/55 opacity-0 transition-opacity duration-150 ease-out data-[state=closed]:pointer-events-none data-[state=open]:opacity-100 motion-reduce:animate-none motion-reduce:transition-none xl:hidden'
+
+const mobileMenuRowStyles =
+  'flex w-full items-center rounded-md py-3 text-left text-sm font-bold uppercase text-olive-900 transition-colors hover:bg-white/80 focus-visible:bg-white/90 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-olive-500/50'
 
 const dropdownChevronStyles =
   'size-4 transition-transform duration-200 motion-reduce:transition-none'
@@ -381,7 +388,7 @@ function DesktopPanels({
               Book your stay
             </h2>
             <p className='mt-2 text-sm text-olive-600'>
-              Book your stay on Nightsbridge.
+              Book your stay on NightsBridge.
             </p>
           </div>
           <div className='grid gap-3 sm:grid-cols-2'>
@@ -406,11 +413,15 @@ function MobileMenu({
     <div
       id='primary-nav-mobile-menu'
       data-mobile-menu
+      data-mobile-menu-panel
+      data-state='closed'
       hidden
-      className='fixed inset-x-0 top-16 z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-olive-100 bg-white/95 px-4 py-5 shadow-xl backdrop-blur-lg xl:hidden'
+      aria-hidden='true'
+      inert
+      className={mobileMenuPanelStyles}
     >
-      <div className='mx-auto flex w-full max-w-screen-sm flex-col gap-5'>
-        <div className='flex items-center justify-between'>
+      <div className='relative z-10 container mx-auto flex min-h-0 w-full flex-1 flex-col'>
+        <div className='flex shrink-0 items-center justify-between'>
           <p className='text-sm font-bold tracking-wide text-olive-800 uppercase'>
             Menu
           </p>
@@ -431,87 +442,61 @@ function MobileMenu({
           </button>
         </div>
 
-        <section>
-          <h2 className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
-            Book a stay
-          </h2>
-          <div className='mt-3 grid gap-2'>
-            {guesthouses.map((guesthouse) => (
-              <BookingLink key={guesthouse.slug} guesthouse={guesthouse} />
-            ))}
+        <div className='mt-5 min-h-0 flex-1 overflow-y-auto overscroll-contain'>
+          <div className='flex flex-col gap-5'>
+            <section>
+              <h2 className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
+                Book a stay
+              </h2>
+              <div className='mt-3 grid gap-2'>
+                {guesthouses.map((guesthouse) => (
+                  <BookingLink key={guesthouse.slug} guesthouse={guesthouse} />
+                ))}
+              </div>
+            </section>
+
+            <MobileNavSection title='Recommended guesthouses' defaultOpen>
+              <ul className='mt-2 grid gap-3'>
+                {guesthouses.map((guesthouse) => (
+                  <GuesthouseCard
+                    key={guesthouse.slug}
+                    guesthouse={guesthouse}
+                    variant='mobile'
+                  />
+                ))}
+              </ul>
+            </MobileNavSection>
+
+            <MobileNavSection title='Destinations & Guides'>
+              <ul className='mt-2 grid gap-3'>
+                {destinations.map((destination) => (
+                  <DestinationCard
+                    key={destination.slug}
+                    destination={destination}
+                  />
+                ))}
+              </ul>
+            </MobileNavSection>
+
+            <div className='grid gap-2 border-t border-olive-300/60 pt-4'>
+              <Link
+                href='/about'
+                className={twMerge(mobileMenuRowStyles, 'justify-start')}
+              >
+                About
+              </Link>
+              <MobileNavSection title='Contact' className='border-t-0 pt-0'>
+                <ul className='mt-2 grid gap-3'>
+                  {guesthouses.map((guesthouse) => (
+                    <ContactCard
+                      key={guesthouse.slug}
+                      guesthouse={guesthouse}
+                    />
+                  ))}
+                </ul>
+              </MobileNavSection>
+            </div>
           </div>
-        </section>
-
-        <details open className='group border-t border-olive-100 pt-2'>
-          <summary className={mobileSectionTitleStyles}>
-            Recommended guesthouses
-            <ChevronDown
-              className={twMerge(
-                dropdownChevronStyles,
-                'group-open:rotate-180'
-              )}
-              aria-hidden='true'
-            />
-          </summary>
-          <ul className='mt-2 grid gap-3'>
-            {guesthouses.map((guesthouse) => (
-              <GuesthouseCard
-                key={guesthouse.slug}
-                guesthouse={guesthouse}
-                variant='mobile'
-              />
-            ))}
-          </ul>
-        </details>
-
-        <details className='group border-t border-olive-100 pt-2'>
-          <summary className={mobileSectionTitleStyles}>
-            Destinations & Guides
-            <ChevronDown
-              className={twMerge(
-                dropdownChevronStyles,
-                'group-open:rotate-180'
-              )}
-              aria-hidden='true'
-            />
-          </summary>
-          <ul className='mt-2 grid gap-3'>
-            {destinations.map((destination) => (
-              <DestinationCard
-                key={destination.slug}
-                destination={destination}
-              />
-            ))}
-          </ul>
-        </details>
-
-        <div className='grid gap-2 border-t border-olive-100 pt-4'>
-          <Link
-            href='/about'
-            className={twMerge(
-              getButtonStyles({ variant: 'ghost', colour: 'olive' }),
-              'justify-start text-sm font-bold uppercase'
-            )}
-          >
-            About
-          </Link>
-          <details className='group'>
-            <summary className={mobileSectionTitleStyles}>
-              Contact
-              <ChevronDown
-                className={twMerge(
-                  dropdownChevronStyles,
-                  'group-open:rotate-180'
-                )}
-                aria-hidden='true'
-              />
-            </summary>
-            <ul className='mt-2 grid gap-3'>
-              {guesthouses.map((guesthouse) => (
-                <ContactCard key={guesthouse.slug} guesthouse={guesthouse} />
-              ))}
-            </ul>
-          </details>
         </div>
       </div>
     </div>
@@ -630,6 +615,15 @@ export default async function Navbar(): Promise<React.JSX.Element> {
       </div>
 
       <DesktopPanels destinations={destinations} guesthouses={guesthouses} />
+      <div
+        data-mobile-menu
+        data-mobile-menu-backdrop
+        data-state='closed'
+        data-nav-close
+        hidden
+        aria-hidden='true'
+        className={mobileMenuBackdropStyles}
+      />
       <MobileMenu destinations={destinations} guesthouses={guesthouses} />
     </NavbarShell>
   )

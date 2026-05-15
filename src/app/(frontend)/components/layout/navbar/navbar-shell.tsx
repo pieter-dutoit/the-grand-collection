@@ -7,11 +7,15 @@ type NavbarShellProps = {
   children: React.ReactNode
 }
 
+const MOBILE_MENU_CLOSE_ANIMATION_MS = 200
+
 export default function NavbarShell({ children }: NavbarShellProps) {
   const rootRef = useRef<HTMLElement>(null)
+  const mobileCloseTimerRef = useRef<number | null>(null)
   const pathname = usePathname()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isMobilePresent, setIsMobilePresent] = useState(false)
 
   useEffect(() => {
     const root = rootRef.current
@@ -43,15 +47,50 @@ export default function NavbarShell({ children }: NavbarShellProps) {
       })
 
     root.querySelectorAll<HTMLElement>('[data-mobile-menu]').forEach((menu) => {
-      menu.hidden = !isMobileOpen
+      const isPanel = menu.hasAttribute('data-mobile-menu-panel')
+
+      menu.hidden = !isMobilePresent
+      menu.dataset.state = isMobileOpen ? 'open' : 'closed'
+
+      if (isPanel) {
+        menu.setAttribute('aria-hidden', String(!isMobileOpen))
+        menu.toggleAttribute('inert', !isMobileOpen)
+      }
     })
 
-    document.body.style.overflow = isMobileOpen ? 'hidden' : ''
+    document.body.style.overflow =
+      isMobileOpen || isMobilePresent ? 'hidden' : ''
 
     return () => {
       document.body.style.overflow = ''
     }
-  }, [isMobileOpen])
+  }, [isMobileOpen, isMobilePresent])
+
+  useEffect(() => {
+    if (mobileCloseTimerRef.current) {
+      window.clearTimeout(mobileCloseTimerRef.current)
+      mobileCloseTimerRef.current = null
+    }
+
+    if (isMobileOpen) {
+      setIsMobilePresent(true)
+      return
+    }
+
+    if (!isMobilePresent) return
+
+    mobileCloseTimerRef.current = window.setTimeout(() => {
+      setIsMobilePresent(false)
+      mobileCloseTimerRef.current = null
+    }, MOBILE_MENU_CLOSE_ANIMATION_MS)
+
+    return () => {
+      if (mobileCloseTimerRef.current) {
+        window.clearTimeout(mobileCloseTimerRef.current)
+        mobileCloseTimerRef.current = null
+      }
+    }
+  }, [isMobileOpen, isMobilePresent])
 
   useEffect(() => {
     setActiveMenu(null)
