@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {
   // fetchHomePageData,
+  fetchDestinations,
   fetchGuestHouses,
   fetchLogo
 } from '@/lib/data'
@@ -16,15 +17,18 @@ import ContactPersons from '../../contact-persons'
 export default async function Footer(): Promise<React.JSX.Element> {
   // const { socials } = await fetchHomePageData('socials')
   // const { contactPersons } = await fetchHomePageData('contactPersons')
-  const guesthouses = await fetchGuestHouses()
-  const logo = await fetchLogo('minimal_light')
+  const [guesthouses, destinations, logo] = await Promise.all([
+    fetchGuestHouses(),
+    fetchDestinations(),
+    fetchLogo('minimal_light')
+  ])
   const { minimal_light } = logo
   const logoProps = extractImageProps(minimal_light)
   const enableAnalytics = process.env.NEXT_PUBLIC_ANALYTICS === 'true'
 
   return (
     <footer className='w-full justify-center bg-black py-8'>
-      <div className='container mx-auto grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-5'>
+      <div className='container mx-auto grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-6'>
         {/* Logo & Socials */}
         <div className='flex flex-col md:col-span-3 lg:col-span-2'>
           <Link href='/'>
@@ -112,6 +116,33 @@ export default async function Footer(): Promise<React.JSX.Element> {
               return (
                 <li key={slug}>
                   <Link href={`/guesthouses/${slug}`}>{name}</Link>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+
+        {/* Travel Guides */}
+        <div className='flex flex-col text-center text-olive-100 md:text-left'>
+          <h4 className='text-gold-400 mb-4 text-lg font-bold uppercase'>
+            Travel Guides
+          </h4>
+
+          <ul className='flex flex-col gap-2'>
+            {destinations.map(({ name, slug }) => {
+              const label = `${name} Guides`
+
+              return (
+                <li key={slug}>
+                  <Link
+                    href={`/destinations/${slug}#travel-guides`}
+                    data-analytics-event='article_anchor_click'
+                    data-analytics-source-section='footer'
+                    data-analytics-cta-label={label}
+                    data-analytics-destination-slug={slug}
+                  >
+                    {label}
+                  </Link>
                 </li>
               )
             })}

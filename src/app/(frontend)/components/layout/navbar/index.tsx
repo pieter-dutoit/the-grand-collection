@@ -3,19 +3,12 @@ import 'server-only'
 import Image from 'next/image'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import {
-  AlignJustify,
-  ChevronDown,
-  ExternalLink,
-  Mail,
-  MapPin,
-  Phone,
-  X
-} from 'lucide-react'
+import { AlignJustify, ChevronDown, ExternalLink, X } from 'lucide-react'
 
 import { getButtonStyles } from '@/components/ui/button'
 import { CountryOutline } from '@/components/ui/logos'
 
+import NavMenuCard, { type NavMenuCardAction } from './nav-menu-card'
 import NavbarShell from './navbar-shell'
 import {
   DestinationNavItem,
@@ -38,6 +31,15 @@ const mobileSectionTitleStyles =
 
 const dropdownChevronStyles =
   'size-4 transition-transform duration-200 motion-reduce:transition-none'
+
+const desktopPanelStyles =
+  'absolute inset-x-0 top-full hidden border-b border-olive-100 bg-white opacity-0 shadow-lg xl:invisible xl:block xl:-translate-y-2 xl:pointer-events-none xl:transition-[opacity,transform,visibility] xl:duration-200 xl:ease-out xl:data-[state=open]:visible xl:data-[state=open]:translate-y-0 xl:data-[state=open]:pointer-events-auto xl:data-[state=open]:opacity-100 motion-reduce:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none'
+
+const desktopPanelContentStyles =
+  'container mx-auto grid items-start gap-5 py-5 lg:grid-cols-[14rem_1fr]'
+
+const desktopCardGridStyles =
+  'grid auto-rows-fr gap-3 xl:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))]'
 
 function DropdownTrigger({
   children,
@@ -69,156 +71,175 @@ function DropdownTrigger({
   )
 }
 
-function ImageFrame({
-  image,
-  sizes,
-  className
+function DesktopPanelIntro({
+  action,
+  description,
+  eyebrow,
+  title
 }: {
-  className: string
-  image: GuesthouseNavItem['image'] | DestinationNavItem['image']
-  sizes: string
+  action?: React.ReactNode
+  description: string
+  eyebrow: string
+  title: string
 }) {
   return (
-    <div
-      className={twMerge(
-        'border-gold-100 relative shrink-0 overflow-hidden rounded-md border bg-olive-100',
-        className
-      )}
-    >
-      {image.url && (
-        <Image
-          src={image.url}
-          alt={image.alt}
-          fill
-          className='object-cover object-center'
-          sizes={sizes}
-          fetchPriority='low'
-          unoptimized={image.isSvg}
-        />
-      )}
+    <div className='flex max-w-56 flex-col items-start'>
+      <p className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
+        {eyebrow}
+      </p>
+      <h2 className='mt-1 text-2xl leading-tight font-semibold text-olive-900'>
+        {title}
+      </h2>
+      <p className='mt-2 line-clamp-2 text-sm leading-snug text-olive-600'>
+        {description}
+      </p>
+      {action && <div className='mt-3'>{action}</div>}
     </div>
   )
 }
 
-function GuesthouseCard({ guesthouse }: { guesthouse: GuesthouseNavItem }) {
+function getGuesthouseActions(
+  guesthouse: GuesthouseNavItem,
+  variant: 'desktop' | 'mobile'
+): NavMenuCardAction[] {
+  const actions: NavMenuCardAction[] = [
+    { href: `${guesthouse.href}#rooms`, label: 'Rooms & Rates' },
+    ...(variant === 'desktop'
+      ? [{ href: `${guesthouse.href}#gallery`, label: 'Gallery' }]
+      : []),
+    { href: `${guesthouse.href}#contact`, label: 'Contact' }
+  ]
+
+  return actions.map(({ href, label }) => ({
+    href,
+    label,
+    linkProps: {
+      'data-analytics-event': 'article_anchor_click',
+      'data-analytics-source-section': 'primary_nav',
+      'data-analytics-cta-label': `${guesthouse.name} ${label}`,
+      'data-analytics-guesthouse-slug': guesthouse.slug
+    }
+  }))
+}
+
+function GuesthouseCard({
+  guesthouse,
+  variant = 'desktop'
+}: {
+  guesthouse: GuesthouseNavItem
+  variant?: 'desktop' | 'mobile'
+}) {
   return (
-    <li className='rounded-lg border border-olive-100 bg-white transition-colors hover:bg-olive-50/60'>
-      <div className='flex gap-3 p-3'>
-        <Link
-          href={guesthouse.href}
-          className='flex min-w-0 flex-1 gap-3'
-          data-analytics-event='property_detail_click'
-          data-analytics-source-section='primary_nav'
-          data-analytics-cta-label={guesthouse.name}
-          data-analytics-guesthouse-slug={guesthouse.slug}
-          data-analytics-destination-slug={guesthouse.destinationSlug}
-        >
-          <ImageFrame
-            image={guesthouse.image}
-            className='size-18'
-            sizes='72px'
-          />
-          <span className='flex min-w-0 flex-col'>
-            <span className='truncate text-base font-semibold text-olive-800'>
-              {guesthouse.name}
-            </span>
-            <span className='mt-1 flex items-center text-xs font-semibold text-olive-500'>
-              <MapPin className='mr-1 size-3.5 shrink-0' aria-hidden='true' />
-              <span className='truncate'>
-                {guesthouse.city}, {guesthouse.province}
-              </span>
-            </span>
-            <span className='text-gold-600 mt-2 text-xs font-bold'>
-              View property
-            </span>
-          </span>
-        </Link>
-      </div>
-      <div className='grid grid-cols-3 border-t border-olive-100 text-center text-xs font-semibold text-olive-600'>
-        {[
-          { href: `${guesthouse.href}#rooms`, label: 'Rooms & Rates' },
-          { href: `${guesthouse.href}#gallery`, label: 'Gallery' },
-          { href: `${guesthouse.href}#contact`, label: 'Contact' }
-        ].map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            className='border-r border-olive-100 px-2 py-2 last:border-r-0 hover:bg-olive-50 hover:text-olive-900'
-            data-analytics-event='article_anchor_click'
-            data-analytics-source-section='primary_nav'
-            data-analytics-cta-label={`${guesthouse.name} ${label}`}
-            data-analytics-guesthouse-slug={guesthouse.slug}
-          >
-            {label}
-          </Link>
-        ))}
-      </div>
-    </li>
+    <NavMenuCard
+      actions={getGuesthouseActions(guesthouse, variant)}
+      body={`${guesthouse.city}, ${guesthouse.province}`}
+      href={guesthouse.href}
+      image={guesthouse.image}
+      primaryLinkProps={{
+        'data-analytics-event': 'property_detail_click',
+        'data-analytics-source-section': 'primary_nav',
+        'data-analytics-cta-label': guesthouse.name,
+        'data-analytics-guesthouse-slug': guesthouse.slug,
+        'data-analytics-destination-slug': guesthouse.destinationSlug
+      }}
+      title={guesthouse.name}
+    />
   )
 }
 
 function DestinationCard({ destination }: { destination: DestinationNavItem }) {
   return (
-    <li className='rounded-lg border border-olive-100 bg-white p-3 transition-colors hover:bg-olive-50/60'>
-      <Link
-        href={destination.href}
-        className='flex gap-3'
-        data-analytics-event='article_anchor_click'
-        data-analytics-source-section='primary_nav'
-        data-analytics-cta-label={destination.name}
-        data-analytics-destination-slug={destination.slug}
-      >
-        <ImageFrame
-          image={destination.image}
-          className='h-18 w-24'
-          sizes='96px'
-        />
-        <span className='flex min-w-0 flex-col'>
-          <span className='truncate text-base font-semibold text-olive-800'>
-            {destination.name}
-          </span>
-          <span className='mt-1 line-clamp-2 text-xs text-olive-600'>
-            {destination.description}
-          </span>
-        </span>
-      </Link>
-      <div className='mt-3 flex flex-wrap gap-2'>
-        <Link
-          href={`${destination.href}#travel-guides`}
-          className={twMerge(
-            getButtonStyles({
-              variant: 'outline',
-              colour: 'olive',
-              size: 'sm'
-            }),
-            'text-xs'
-          )}
-          data-analytics-event='article_anchor_click'
-          data-analytics-source-section='primary_nav'
-          data-analytics-cta-label={`${destination.name} travel guides`}
-          data-analytics-destination-slug={destination.slug}
-        >
-          Travel guides
-        </Link>
-        <Link
-          href={`${destination.href}#where-to-stay`}
-          className={twMerge(
-            getButtonStyles({
-              variant: 'outline',
-              colour: 'olive',
-              size: 'sm'
-            }),
-            'text-xs'
-          )}
-          data-analytics-event='article_guesthouse_click'
-          data-analytics-source-section='primary_nav'
-          data-analytics-cta-label={`${destination.name} where to stay`}
-          data-analytics-destination-slug={destination.slug}
-        >
-          Where to stay
-        </Link>
-      </div>
-    </li>
+    <NavMenuCard
+      actions={[
+        {
+          href: `${destination.href}#travel-guides`,
+          label: 'Travel guides',
+          linkProps: {
+            'data-analytics-event': 'article_anchor_click',
+            'data-analytics-source-section': 'primary_nav',
+            'data-analytics-cta-label': `${destination.name} travel guides`,
+            'data-analytics-destination-slug': destination.slug
+          }
+        },
+        {
+          href: `${destination.href}#where-to-stay`,
+          label: 'Where to stay',
+          linkProps: {
+            'data-analytics-event': 'article_guesthouse_click',
+            'data-analytics-source-section': 'primary_nav',
+            'data-analytics-cta-label': `${destination.name} where to stay`,
+            'data-analytics-destination-slug': destination.slug
+          }
+        }
+      ]}
+      body={destination.description}
+      href={destination.href}
+      image={destination.image}
+      primaryLinkProps={{
+        'data-analytics-event': 'article_anchor_click',
+        'data-analytics-source-section': 'primary_nav',
+        'data-analytics-cta-label': destination.name,
+        'data-analytics-destination-slug': destination.slug
+      }}
+      title={destination.name}
+    />
+  )
+}
+
+function getContactActions(guesthouse: GuesthouseNavItem): NavMenuCardAction[] {
+  const actions: NavMenuCardAction[] = []
+
+  if (guesthouse.contact?.phoneHref) {
+    actions.push({
+      href: guesthouse.contact.phoneHref,
+      label: guesthouse.contact.phone || 'Call',
+      linkProps: {
+        'aria-label': `Call ${guesthouse.name}`,
+        'data-analytics-event': 'contact_click',
+        'data-analytics-source-section': 'primary_nav_contact_menu',
+        'data-analytics-cta-label': `Call ${guesthouse.name}`,
+        'data-analytics-target-url': guesthouse.contact.phoneHref,
+        'data-analytics-guesthouse-slug': guesthouse.slug,
+        'data-analytics-destination-slug': guesthouse.destinationSlug
+      }
+    })
+  }
+
+  if (guesthouse.contact?.emailHref) {
+    actions.push({
+      href: guesthouse.contact.emailHref,
+      label: guesthouse.contact.email || 'Email',
+      linkProps: {
+        'aria-label': `Email ${guesthouse.name}`,
+        'data-analytics-event': 'contact_click',
+        'data-analytics-source-section': 'primary_nav_contact_menu',
+        'data-analytics-cta-label': `Email ${guesthouse.name}`,
+        'data-analytics-target-url': guesthouse.contact.emailHref,
+        'data-analytics-guesthouse-slug': guesthouse.slug,
+        'data-analytics-destination-slug': guesthouse.destinationSlug
+      }
+    })
+  }
+
+  return actions
+}
+
+function ContactCard({ guesthouse }: { guesthouse: GuesthouseNavItem }) {
+  return (
+    <NavMenuCard
+      actions={getContactActions(guesthouse)}
+      body={`${guesthouse.city}, ${guesthouse.province}`}
+      href={`${guesthouse.href}#contact`}
+      image={guesthouse.image}
+      primaryLinkProps={{
+        'data-analytics-event': 'article_anchor_click',
+        'data-analytics-source-section': 'primary_nav',
+        'data-analytics-cta-label': `Contact ${guesthouse.name}`,
+        'data-analytics-guesthouse-slug': guesthouse.slug,
+        'data-analytics-destination-slug': guesthouse.destinationSlug
+      }}
+      title={guesthouse.name}
+    />
   )
 }
 
@@ -250,59 +271,6 @@ function BookingLink({ guesthouse }: { guesthouse: GuesthouseNavItem }) {
   )
 }
 
-function ContactLink({ guesthouse }: { guesthouse: GuesthouseNavItem }) {
-  return (
-    <li className='rounded-lg border border-olive-100 bg-white p-4'>
-      <Link
-        href={`${guesthouse.href}#contact`}
-        className='font-semibold text-olive-800 hover:text-olive-950'
-        data-analytics-event='article_anchor_click'
-        data-analytics-source-section='primary_nav'
-        data-analytics-cta-label={`Contact ${guesthouse.name}`}
-        data-analytics-guesthouse-slug={guesthouse.slug}
-      >
-        Contact {guesthouse.name}
-      </Link>
-      <p className='mt-1 flex items-center text-xs font-semibold text-olive-500'>
-        <MapPin className='mr-1 size-3.5' aria-hidden='true' />
-        {guesthouse.city}, {guesthouse.province}
-      </p>
-      {(guesthouse.contact?.phoneHref || guesthouse.contact?.emailHref) && (
-        <div className='mt-3 flex flex-col gap-2 text-sm text-olive-700'>
-          {guesthouse.contact.phoneHref && (
-            <a
-              href={guesthouse.contact.phoneHref}
-              className='inline-flex items-center gap-2 hover:text-olive-950'
-              data-analytics-event='contact_click'
-              data-analytics-source-section='primary_nav_contact_menu'
-              data-analytics-cta-label={`Call ${guesthouse.name}`}
-              data-analytics-target-url={guesthouse.contact.phoneHref}
-              data-analytics-guesthouse-slug={guesthouse.slug}
-            >
-              <Phone className='size-4' aria-hidden='true' />
-              {guesthouse.contact.phone}
-            </a>
-          )}
-          {guesthouse.contact.emailHref && (
-            <a
-              href={guesthouse.contact.emailHref}
-              className='inline-flex min-w-0 items-center gap-2 hover:text-olive-950'
-              data-analytics-event='contact_click'
-              data-analytics-source-section='primary_nav_contact_menu'
-              data-analytics-cta-label={`Email ${guesthouse.name}`}
-              data-analytics-target-url={guesthouse.contact.emailHref}
-              data-analytics-guesthouse-slug={guesthouse.slug}
-            >
-              <Mail className='size-4 shrink-0' aria-hidden='true' />
-              <span className='truncate'>{guesthouse.contact.email}</span>
-            </a>
-          )}
-        </div>
-      )}
-    </li>
-  )
-}
-
 function DesktopPanels({
   destinations,
   guesthouses
@@ -315,38 +283,33 @@ function DesktopPanels({
       <div
         id='primary-nav-guesthouses'
         data-nav-panel='guesthouses'
-        hidden
-        className='absolute inset-x-0 top-full hidden border-b border-olive-100 bg-white shadow-lg xl:block'
+        data-state='closed'
+        aria-hidden='true'
+        inert
+        className={desktopPanelStyles}
       >
-        <div className='container mx-auto grid gap-5 py-5 lg:grid-cols-[14rem_1fr]'>
-          <div className='flex flex-col items-start'>
-            <p className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
-              Places to stay
-            </p>
-            <h2 className='mt-1 text-2xl font-semibold text-olive-900'>
-              Guesthouses
-            </h2>
-            <p className='mt-2 text-sm text-olive-600'>
-              Compare the collection, view rooms, and move straight to booking.
-            </p>
-            <Link
-              href='/guesthouses'
-              className={twMerge(
-                getButtonStyles({
+        <div className={desktopPanelContentStyles}>
+          <DesktopPanelIntro
+            eyebrow='Places to stay'
+            title='Guesthouses'
+            description='Compare rooms, galleries, and contact options.'
+            action={
+              <Link
+                href='/guesthouses'
+                className={getButtonStyles({
                   variant: 'default',
                   colour: 'olive',
                   size: 'sm'
-                }),
-                'mt-4'
-              )}
-              data-analytics-event='property_detail_click'
-              data-analytics-source-section='primary_nav'
-              data-analytics-cta-label='View all guesthouses'
-            >
-              View all guesthouses
-            </Link>
-          </div>
-          <ul className='grid gap-3 lg:grid-cols-2 xl:grid-cols-3'>
+                })}
+                data-analytics-event='property_detail_click'
+                data-analytics-source-section='primary_nav'
+                data-analytics-cta-label='View all guesthouses'
+              >
+                View all guesthouses
+              </Link>
+            }
+          />
+          <ul className={desktopCardGridStyles}>
             {guesthouses.map((guesthouse) => (
               <GuesthouseCard key={guesthouse.slug} guesthouse={guesthouse} />
             ))}
@@ -357,23 +320,18 @@ function DesktopPanels({
       <div
         id='primary-nav-destinations'
         data-nav-panel='destinations'
-        hidden
-        className='absolute inset-x-0 top-full hidden border-b border-olive-100 bg-white shadow-lg xl:block'
+        data-state='closed'
+        aria-hidden='true'
+        inert
+        className={desktopPanelStyles}
       >
-        <div className='container mx-auto grid gap-5 py-5 lg:grid-cols-[14rem_1fr]'>
-          <div>
-            <p className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
-              Local guides
-            </p>
-            <h2 className='mt-1 text-2xl font-semibold text-olive-900'>
-              Destinations
-            </h2>
-            <p className='mt-2 text-sm text-olive-600'>
-              Find local travel guides and nearby guesthouses in each
-              destination.
-            </p>
-          </div>
-          <ul className='grid gap-3 lg:grid-cols-2 xl:grid-cols-3'>
+        <div className={desktopPanelContentStyles}>
+          <DesktopPanelIntro
+            eyebrow='Local guides'
+            title='Destinations'
+            description='Find local guides and nearby guesthouses.'
+          />
+          <ul className={desktopCardGridStyles}>
             {destinations.map((destination) => (
               <DestinationCard
                 key={destination.slug}
@@ -387,25 +345,20 @@ function DesktopPanels({
       <div
         id='primary-nav-contact'
         data-nav-panel='contact'
-        hidden
-        className='absolute inset-x-0 top-full hidden border-b border-olive-100 bg-white shadow-lg xl:block'
+        data-state='closed'
+        aria-hidden='true'
+        inert
+        className={desktopPanelStyles}
       >
-        <div className='container mx-auto grid gap-5 py-5 lg:grid-cols-[14rem_1fr]'>
-          <div>
-            <p className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
-              Get in touch
-            </p>
-            <h2 className='mt-1 text-2xl font-semibold text-olive-900'>
-              Contact
-            </h2>
-            <p className='mt-2 text-sm text-olive-600'>
-              Choose a property to view directions, phone numbers, and booking
-              contact details.
-            </p>
-          </div>
-          <ul className='grid gap-3 lg:grid-cols-2 xl:grid-cols-3'>
+        <div className={desktopPanelContentStyles}>
+          <DesktopPanelIntro
+            eyebrow='Get in touch'
+            title='Contact'
+            description="Reach out with any questions or booking needs. We're happy to help."
+          />
+          <ul className={desktopCardGridStyles}>
             {guesthouses.map((guesthouse) => (
-              <ContactLink key={guesthouse.slug} guesthouse={guesthouse} />
+              <ContactCard key={guesthouse.slug} guesthouse={guesthouse} />
             ))}
           </ul>
         </div>
@@ -414,8 +367,10 @@ function DesktopPanels({
       <div
         id='primary-nav-booking'
         data-nav-panel='booking'
-        hidden
-        className='absolute inset-x-0 top-full hidden border-b border-olive-100 bg-white shadow-lg xl:block'
+        data-state='closed'
+        aria-hidden='true'
+        inert
+        className={desktopPanelStyles}
       >
         <div className='container mx-auto grid max-w-5xl gap-5 py-5 lg:grid-cols-[14rem_1fr]'>
           <div>
@@ -426,8 +381,7 @@ function DesktopPanels({
               Book your stay
             </h2>
             <p className='mt-2 text-sm text-olive-600'>
-              Continue to the active booking platform for your selected
-              guesthouse.
+              Book your stay on Nightsbridge.
             </p>
           </div>
           <div className='grid gap-3 sm:grid-cols-2'>
@@ -501,7 +455,11 @@ function MobileMenu({
           </summary>
           <ul className='mt-2 grid gap-3'>
             {guesthouses.map((guesthouse) => (
-              <GuesthouseCard key={guesthouse.slug} guesthouse={guesthouse} />
+              <GuesthouseCard
+                key={guesthouse.slug}
+                guesthouse={guesthouse}
+                variant='mobile'
+              />
             ))}
           </ul>
         </details>
@@ -550,7 +508,7 @@ function MobileMenu({
             </summary>
             <ul className='mt-2 grid gap-3'>
               {guesthouses.map((guesthouse) => (
-                <ContactLink key={guesthouse.slug} guesthouse={guesthouse} />
+                <ContactCard key={guesthouse.slug} guesthouse={guesthouse} />
               ))}
             </ul>
           </details>

@@ -25,7 +25,10 @@ export default function NavbarShell({ children }: NavbarShellProps) {
       })
 
     root.querySelectorAll<HTMLElement>('[data-nav-panel]').forEach((panel) => {
-      panel.hidden = panel.dataset.navPanel !== activeMenu
+      const isActive = panel.dataset.navPanel === activeMenu
+      panel.dataset.state = isActive ? 'open' : 'closed'
+      panel.setAttribute('aria-hidden', String(!isActive))
+      panel.toggleAttribute('inert', !isActive)
     })
   }, [activeMenu])
 
