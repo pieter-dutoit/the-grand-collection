@@ -442,7 +442,7 @@ function MobileMenu({
           </button>
         </div>
 
-        <div className='mt-5 min-h-0 flex-1 overflow-y-auto overscroll-contain'>
+        <div className='mt-5 min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain'>
           <div className='flex flex-col gap-5'>
             <section>
               <h2 className='text-gold-600 text-xs font-bold tracking-wide uppercase'>

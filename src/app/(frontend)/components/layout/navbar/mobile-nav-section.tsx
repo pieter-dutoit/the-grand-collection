@@ -19,6 +19,9 @@ const triggerStyles =
 const chevronStyles =
   'size-4 transition-transform duration-200 data-[state=open]:rotate-180 motion-reduce:transition-none'
 
+const chevronFrameStyles =
+  'flex size-6 shrink-0 items-center justify-center overflow-hidden'
+
 const contentStyles =
   'grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out data-[state=closed]:grid-rows-[0fr] data-[state=closed]:opacity-0 data-[state=open]:grid-rows-[1fr] data-[state=open]:opacity-100 motion-reduce:transition-none'
 
@@ -44,12 +47,14 @@ export default function MobileNavSection({
           setIsOpen((current) => !current)
         }}
       >
-        {title}
-        <ChevronDown
-          className={chevronStyles}
-          data-state={state}
-          aria-hidden='true'
-        />
+        <span className='min-w-0 flex-1'>{title}</span>
+        <span className={chevronFrameStyles}>
+          <ChevronDown
+            className={chevronStyles}
+            data-state={state}
+            aria-hidden='true'
+          />
+        </span>
       </button>
       <div
         id={contentId}

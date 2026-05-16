@@ -9,6 +9,35 @@ type NavbarShellProps = {
 
 const MOBILE_MENU_CLOSE_ANIMATION_MS = 200
 
+function isElementVisible(element: HTMLElement): boolean {
+  return (
+    !element.hidden &&
+    element.getClientRects().length > 0 &&
+    window.getComputedStyle(element).visibility !== 'hidden'
+  )
+}
+
+function moveFocusBeforeHide(
+  container: HTMLElement,
+  fallbackFocusElement: HTMLElement | null
+) {
+  const activeElement = document.activeElement
+
+  if (
+    !(activeElement instanceof HTMLElement) ||
+    !container.contains(activeElement)
+  ) {
+    return
+  }
+
+  if (fallbackFocusElement && isElementVisible(fallbackFocusElement)) {
+    fallbackFocusElement.focus({ preventScroll: true })
+    return
+  }
+
+  activeElement.blur()
+}
+
 export default function NavbarShell({ children }: NavbarShellProps) {
   const rootRef = useRef<HTMLElement>(null)
   const mobileCloseTimerRef = useRef<number | null>(null)
@@ -30,7 +59,16 @@ export default function NavbarShell({ children }: NavbarShellProps) {
 
     root.querySelectorAll<HTMLElement>('[data-nav-panel]').forEach((panel) => {
       const isActive = panel.dataset.navPanel === activeMenu
+      const trigger = Array.from(
+        root.querySelectorAll<HTMLButtonElement>('[data-nav-trigger]')
+      ).find((item) => item.dataset.navTrigger === panel.dataset.navPanel)
+
       panel.dataset.state = isActive ? 'open' : 'closed'
+
+      if (!isActive) {
+        moveFocusBeforeHide(panel, trigger ?? null)
+      }
+
       panel.setAttribute('aria-hidden', String(!isActive))
       panel.toggleAttribute('inert', !isActive)
     })
@@ -53,6 +91,17 @@ export default function NavbarShell({ children }: NavbarShellProps) {
       menu.dataset.state = isMobileOpen ? 'open' : 'closed'
 
       if (isPanel) {
+        if (!isMobileOpen) {
+          const trigger =
+            Array.from(
+              root.querySelectorAll<HTMLButtonElement>(
+                '[data-mobile-menu-trigger]'
+              )
+            ).find(isElementVisible) ?? null
+
+          moveFocusBeforeHide(menu, trigger)
+        }
+
         menu.setAttribute('aria-hidden', String(!isMobileOpen))
         menu.toggleAttribute('inert', !isMobileOpen)
       }

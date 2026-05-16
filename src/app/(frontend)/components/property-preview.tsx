@@ -48,11 +48,24 @@ export default function PropertyPreview({
   return (
     <div
       className={twMerge(
-        'border-gold-200 flex w-full flex-col gap-2 rounded-xl border bg-white p-4 shadow-lg transition-shadow ease-in hover:shadow-xl',
+        'group border-gold-200 hover:border-gold-300 relative flex w-full cursor-pointer flex-col gap-2 rounded-xl border bg-white p-4 shadow-lg transition-[border-color,box-shadow] ease-in focus-within:ring-2 focus-within:ring-olive-400/70 focus-within:ring-offset-2 hover:shadow-xl',
         margin
       )}
     >
-      <div className='mb-1 grid gap-2 lg:grid-cols-4 xl:grid-cols-5'>
+      <Link
+        href={`/guesthouses/${slug}`}
+        aria-label={`View ${name}`}
+        data-analytics-event='property_detail_click'
+        data-analytics-source-section='property_preview'
+        data-analytics-cta-label={`${name} card`}
+        data-analytics-destination-slug={destinationData?.slug}
+        data-analytics-guesthouse-slug={slug}
+        className='absolute inset-0 z-10 rounded-xl focus:outline-none'
+      >
+        <span className='sr-only'>View {name}</span>
+      </Link>
+
+      <div className='pointer-events-none relative z-20 mb-1 grid gap-2 lg:grid-cols-4 xl:grid-cols-5'>
         {gallery.map((image, index) => {
           const { alt, url, isSvg } = extractImageProps(image)
           const isAboveFoldImage = aboveFold && index === 0
@@ -85,7 +98,7 @@ export default function PropertyPreview({
                 src={url}
                 alt={alt}
                 fill
-                className='object-cover object-center'
+                className='object-cover object-center transition-transform duration-300 ease-out group-hover:scale-[1.03]'
                 sizes={sizes}
                 priority={isAboveFoldImage}
                 fetchPriority={isAboveFoldImage ? 'high' : undefined}
@@ -96,11 +109,11 @@ export default function PropertyPreview({
         })}
       </div>
 
-      <div className='flex flex-col lg:flex-row lg:items-start lg:justify-between'>
+      <div className='pointer-events-none relative z-20 flex flex-col lg:flex-row lg:items-start lg:justify-between'>
         <div className='flex flex-col'>
           <span className='text-xs font-bold text-olive-400'>Guesthouse</span>
 
-          <h3 className='text-2xl leading-tight font-semibold text-olive-800'>
+          <h3 className='text-2xl leading-tight font-semibold text-olive-800 transition-colors duration-200 group-hover:text-olive-600'>
             {name}
           </h3>
           <div className='mt-2 flex items-center'>
@@ -113,7 +126,7 @@ export default function PropertyPreview({
           </div>
         </div>
 
-        <div className='mt-2 flex flex-wrap items-start lg:mt-0 lg:flex-row'>
+        <div className='pointer-events-auto relative z-30 mt-2 flex flex-wrap items-start lg:mt-0 lg:flex-row'>
           {hasDestination && (
             <Link
               href={`/destinations/${destinationData.slug}`}
@@ -134,12 +147,11 @@ export default function PropertyPreview({
             </Link>
           )}
 
-          {/* Link to guesthouse details page */}
           <Link
             href={`/guesthouses/${slug}`}
             data-analytics-event='property_detail_click'
             data-analytics-source-section='property_preview'
-            data-analytics-cta-label='View property details'
+            data-analytics-cta-label='Explore property'
             data-analytics-destination-slug={destinationData?.slug}
             data-analytics-guesthouse-slug={slug}
             className={twMerge(
@@ -150,10 +162,9 @@ export default function PropertyPreview({
               'mt-2 mr-2 lg:mt-0'
             )}
           >
-            View property details
+            Explore property
           </Link>
 
-          {/* Booking / Availability button */}
           <AvailabilityLink
             bookingUrl={bookingUrl}
             platformName={platformName}
@@ -165,7 +176,7 @@ export default function PropertyPreview({
         </div>
       </div>
 
-      <p className='mt-4 text-justify text-base font-normal tracking-wide text-olive-950'>
+      <p className='pointer-events-none relative z-20 mt-4 text-justify text-base font-normal tracking-wide text-olive-950'>
         {heading}
       </p>
     </div>
