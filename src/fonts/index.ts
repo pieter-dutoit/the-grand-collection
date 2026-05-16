@@ -14,10 +14,3 @@ export const redhat = localFont({
   display: 'swap',
   preload: true
 })
-
-export const playball = localFont({
-  src: [{ path: './Playball-Regular.ttf' }],
-  variable: '--font-playball',
-  display: 'swap'
-  // preload: true
-})
