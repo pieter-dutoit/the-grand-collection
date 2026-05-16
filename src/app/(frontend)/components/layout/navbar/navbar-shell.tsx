@@ -8,6 +8,7 @@ type NavbarShellProps = {
 }
 
 const MOBILE_MENU_CLOSE_ANIMATION_MS = 200
+const DESKTOP_NAV_MEDIA_QUERY = '(min-width: 80rem)'
 
 function isElementVisible(element: HTMLElement): boolean {
   return (
@@ -45,6 +46,10 @@ export default function NavbarShell({ children }: NavbarShellProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isMobilePresent, setIsMobilePresent] = useState(false)
+  const [isDesktopNav, setIsDesktopNav] = useState(false)
+
+  const isMobileMenuVisible = !isDesktopNav && isMobilePresent
+  const isMobileMenuExpanded = !isDesktopNav && isMobileOpen
 
   useEffect(() => {
     const root = rootRef.current
@@ -75,23 +80,50 @@ export default function NavbarShell({ children }: NavbarShellProps) {
   }, [activeMenu])
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia(DESKTOP_NAV_MEDIA_QUERY)
+
+    const handleMediaQueryChange = () => {
+      const isDesktop = mediaQuery.matches
+
+      setIsDesktopNav(isDesktop)
+
+      if (isDesktop) {
+        if (mobileCloseTimerRef.current) {
+          window.clearTimeout(mobileCloseTimerRef.current)
+          mobileCloseTimerRef.current = null
+        }
+
+        setIsMobileOpen(false)
+        setIsMobilePresent(false)
+      }
+    }
+
+    handleMediaQueryChange()
+    mediaQuery.addEventListener('change', handleMediaQueryChange)
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange)
+    }
+  }, [])
+
+  useEffect(() => {
     const root = rootRef.current
     if (!root) return
 
     root
       .querySelectorAll<HTMLButtonElement>('[data-mobile-menu-trigger]')
       .forEach((trigger) => {
-        trigger.setAttribute('aria-expanded', String(isMobileOpen))
+        trigger.setAttribute('aria-expanded', String(isMobileMenuExpanded))
       })
 
     root.querySelectorAll<HTMLElement>('[data-mobile-menu]').forEach((menu) => {
       const isPanel = menu.hasAttribute('data-mobile-menu-panel')
 
-      menu.hidden = !isMobilePresent
-      menu.dataset.state = isMobileOpen ? 'open' : 'closed'
+      menu.hidden = !isMobileMenuVisible
+      menu.dataset.state = isMobileMenuExpanded ? 'open' : 'closed'
 
       if (isPanel) {
-        if (!isMobileOpen) {
+        if (!isMobileMenuExpanded) {
           const trigger =
             Array.from(
               root.querySelectorAll<HTMLButtonElement>(
@@ -102,18 +134,17 @@ export default function NavbarShell({ children }: NavbarShellProps) {
           moveFocusBeforeHide(menu, trigger)
         }
 
-        menu.setAttribute('aria-hidden', String(!isMobileOpen))
-        menu.toggleAttribute('inert', !isMobileOpen)
+        menu.setAttribute('aria-hidden', String(!isMobileMenuExpanded))
+        menu.toggleAttribute('inert', !isMobileMenuExpanded)
       }
     })
 
-    document.body.style.overflow =
-      isMobileOpen || isMobilePresent ? 'hidden' : ''
+    document.body.style.overflow = isMobileMenuVisible ? 'hidden' : ''
 
     return () => {
       document.body.style.overflow = ''
     }
-  }, [isMobileOpen, isMobilePresent])
+  }, [isMobileMenuExpanded, isMobileMenuVisible])
 
   useEffect(() => {
     if (mobileCloseTimerRef.current) {
