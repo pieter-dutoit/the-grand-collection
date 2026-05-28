@@ -17,33 +17,59 @@ import {
   GuesthouseNavItem
 } from './nav-data'
 
+const darkGhostButtonStyles =
+  'text-white hover:bg-white/10 hover:text-white focus-visible:ring-white/60'
+
+const darkPrimaryButtonStyles =
+  'bg-white/90 text-black hover:bg-white hover:text-black focus-visible:ring-white/60'
+
+const darkIconButtonStyles = twMerge(
+  getButtonStyles({
+    variant: 'ghost',
+    colour: 'olive',
+    size: 'icon'
+  }),
+  darkGhostButtonStyles
+)
+
+const darkSmallPrimaryButtonStyles = twMerge(
+  getButtonStyles({
+    variant: 'default',
+    colour: 'olive',
+    size: 'sm'
+  }),
+  darkPrimaryButtonStyles
+)
+
 const desktopTriggerStyles = twMerge(
   getButtonStyles({ variant: 'ghost', colour: 'olive' }),
+  darkGhostButtonStyles,
   'h-10 text-base font-semibold capitalize'
 )
 
 const textLinkStyles = twMerge(
   getButtonStyles({ variant: 'ghost', colour: 'olive' }),
+  darkGhostButtonStyles,
   'h-10 text-base font-semibold capitalize'
 )
 
 const mobileMenuPanelStyles =
-  "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2 fixed inset-x-0 top-16 z-40 isolate flex max-h-[calc(90dvh-4rem)] -translate-y-2 overflow-hidden rounded-b-xl border-b border-olive-300/70 bg-olive-50 py-5 opacity-0 shadow-[0_24px_70px_rgba(23,26,20,0.24)] ring-1 ring-olive-200/70 transition-[opacity,transform] duration-200 ease-out data-[state=closed]:pointer-events-none data-[state=open]:translate-y-0 data-[state=open]:opacity-100 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-olive-400/45 after:content-[''] motion-reduce:translate-y-0 motion-reduce:animate-none motion-reduce:transition-none xl:hidden"
+  "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2 fixed inset-x-0 top-16 z-40 flex max-h-[calc(90dvh-4rem)] -translate-y-2 overflow-hidden rounded-b-xl border-b border-white/10 py-5 text-white opacity-0 shadow-[0_12px_36px_rgba(0,0,0,0.18)] ring-1 ring-white/10 transition-[opacity,transform] duration-200 ease-out before:pointer-events-none before:absolute before:inset-0 before:bg-black/60 before:backdrop-blur-md before:backdrop-saturate-150 before:content-[''] data-[state=closed]:pointer-events-none data-[state=open]:translate-y-0 data-[state=open]:opacity-100 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10 after:content-[''] motion-reduce:translate-y-0 motion-reduce:animate-none motion-reduce:transition-none xl:hidden"
 
 const mobileMenuBackdropStyles =
-  'data-[state=open]:animate-in data-[state=open]:fade-in-0 fixed inset-x-0 top-16 bottom-0 z-30 bg-olive-950/55 opacity-0 transition-opacity duration-150 ease-out data-[state=closed]:pointer-events-none data-[state=open]:opacity-100 motion-reduce:animate-none motion-reduce:transition-none xl:hidden'
+  'data-[state=open]:animate-in data-[state=open]:fade-in-0 fixed inset-x-0 top-16 bottom-0 z-30 bg-black/35 opacity-0 backdrop-blur-sm transition-opacity duration-150 ease-out data-[state=closed]:pointer-events-none data-[state=open]:opacity-100 motion-reduce:animate-none motion-reduce:transition-none xl:hidden'
 
 const mobileMenuRowStyles =
-  'flex w-full items-center rounded-md py-3 text-left text-sm font-bold uppercase text-olive-900 transition-colors hover:bg-white/80 focus-visible:bg-white/90 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-olive-500/50'
+  'flex w-full items-center rounded-md py-3 text-left text-sm font-bold uppercase text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:bg-white/10 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-white/60'
 
 const dropdownChevronStyles =
   'size-4 transition-transform duration-200 motion-reduce:transition-none'
 
 const desktopPanelStyles =
-  'absolute inset-x-0 top-full hidden border-b border-olive-100 bg-white opacity-0 shadow-lg xl:invisible xl:block xl:-translate-y-2 xl:pointer-events-none xl:transition-[opacity,transform,visibility] xl:duration-200 xl:ease-out xl:data-[state=open]:visible xl:data-[state=open]:translate-y-0 xl:data-[state=open]:pointer-events-auto xl:data-[state=open]:opacity-100 motion-reduce:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none'
+  "absolute inset-x-0 top-full z-20 hidden overflow-hidden border-b border-white/10 text-white opacity-0 shadow-[0_12px_36px_rgba(0,0,0,0.18)] before:pointer-events-none before:absolute before:inset-0 before:bg-black/60 before:backdrop-blur-md before:backdrop-saturate-150 before:content-[''] xl:invisible xl:block xl:-translate-y-2 xl:pointer-events-none xl:transition-[opacity,transform,visibility] xl:duration-200 xl:ease-out xl:data-[state=open]:visible xl:data-[state=open]:translate-y-0 xl:data-[state=open]:pointer-events-auto xl:data-[state=open]:opacity-100 motion-reduce:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
 
 const desktopPanelContentStyles =
-  'container mx-auto grid items-start gap-5 py-5 lg:grid-cols-[14rem_1fr]'
+  'relative z-10 container mx-auto grid items-start gap-5 py-5 lg:grid-cols-[14rem_1fr]'
 
 const desktopCardGridStyles =
   'grid auto-rows-fr gap-3 xl:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))]'
@@ -91,13 +117,13 @@ function DesktopPanelIntro({
 }) {
   return (
     <div className='flex max-w-56 flex-col items-start'>
-      <p className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
+      <p className='text-gold-300 text-xs font-bold tracking-wide uppercase'>
         {eyebrow}
       </p>
-      <h2 className='mt-1 text-2xl leading-tight font-semibold text-olive-900'>
+      <h2 className='mt-1 text-2xl leading-tight font-semibold text-white'>
         {title}
       </h2>
-      <p className='mt-2 line-clamp-2 text-sm leading-snug text-olive-600'>
+      <p className='mt-2 line-clamp-2 text-sm leading-snug text-white/70'>
         {description}
       </p>
       {action && <div className='mt-3'>{action}</div>}
@@ -256,7 +282,7 @@ function BookingLink({ guesthouse }: { guesthouse: GuesthouseNavItem }) {
       href={guesthouse.bookingUrl}
       target='_blank'
       rel='noopener noreferrer'
-      className='flex items-center justify-between gap-4 rounded-md border border-olive-200 bg-white px-4 py-3 text-left transition-colors hover:border-olive-500 hover:bg-olive-50'
+      className='flex items-center justify-between gap-4 rounded-md border border-white/15 bg-white/10 px-4 py-3 text-left text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-md transition-colors hover:border-white/30 hover:bg-white/15 focus-visible:ring-1 focus-visible:ring-white/60 focus-visible:outline-hidden'
       data-analytics-event='booking_click'
       data-analytics-source-section='primary_nav_booking_menu'
       data-analytics-cta-label={guesthouse.name}
@@ -266,14 +292,14 @@ function BookingLink({ guesthouse }: { guesthouse: GuesthouseNavItem }) {
       data-analytics-destination-slug={guesthouse.destinationSlug}
     >
       <span className='flex min-w-0 flex-col'>
-        <span className='truncate text-sm font-semibold text-olive-800'>
+        <span className='truncate text-sm font-semibold text-white'>
           {guesthouse.name}
         </span>
-        <span className='text-xs text-olive-500'>
+        <span className='text-xs text-white/65'>
           Opens {guesthouse.bookingPlatformName}
         </span>
       </span>
-      <ExternalLink className='size-4 shrink-0 text-olive-500' />
+      <ExternalLink className='size-4 shrink-0 text-white/65' />
     </a>
   )
 }
@@ -303,11 +329,7 @@ function DesktopPanels({
             action={
               <Link
                 href='/guesthouses'
-                className={getButtonStyles({
-                  variant: 'default',
-                  colour: 'olive',
-                  size: 'sm'
-                })}
+                className={darkSmallPrimaryButtonStyles}
                 data-analytics-event='property_detail_click'
                 data-analytics-source-section='primary_nav'
                 data-analytics-cta-label='View all guesthouses'
@@ -379,15 +401,15 @@ function DesktopPanels({
         inert
         className={desktopPanelStyles}
       >
-        <div className='container mx-auto grid max-w-5xl gap-5 py-5 lg:grid-cols-[14rem_1fr]'>
+        <div className='relative z-10 container mx-auto grid max-w-5xl gap-5 py-5 lg:grid-cols-[14rem_1fr]'>
           <div>
-            <p className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
+            <p className='text-gold-300 text-xs font-bold tracking-wide uppercase'>
               Direct booking paths
             </p>
-            <h2 className='mt-1 text-2xl font-semibold text-olive-900'>
+            <h2 className='mt-1 text-2xl font-semibold text-white'>
               Book your stay
             </h2>
-            <p className='mt-2 text-sm text-olive-600'>
+            <p className='mt-2 text-sm text-white/70'>
               Book your stay on NightsBridge.
             </p>
           </div>
@@ -422,19 +444,12 @@ function MobileMenu({
     >
       <div className='relative z-10 container mx-auto flex min-h-0 w-full flex-1 flex-col'>
         <div className='flex shrink-0 items-center justify-between'>
-          <p className='text-sm font-bold tracking-wide text-olive-800 uppercase'>
+          <p className='text-sm font-bold tracking-wide text-white/80 uppercase'>
             Menu
           </p>
           <button
             type='button'
-            className={twMerge(
-              getButtonStyles({
-                variant: 'ghost',
-                colour: 'olive',
-                size: 'icon'
-              }),
-              'shrink-0'
-            )}
+            className={twMerge(darkIconButtonStyles, 'shrink-0')}
             data-nav-close
           >
             <span className='sr-only'>Close nav menu</span>
@@ -445,7 +460,7 @@ function MobileMenu({
         <div className='mt-5 min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain'>
           <div className='flex flex-col gap-5'>
             <section>
-              <h2 className='text-gold-600 text-xs font-bold tracking-wide uppercase'>
+              <h2 className='text-gold-300 text-xs font-bold tracking-wide uppercase'>
                 Book a stay
               </h2>
               <div className='mt-3 grid gap-2'>
@@ -478,7 +493,7 @@ function MobileMenu({
               </ul>
             </MobileNavSection>
 
-            <div className='grid gap-2 border-t border-olive-300/60 pt-4'>
+            <div className='grid gap-2 border-t border-white/10 pt-4'>
               <Link
                 href='/about'
                 className={twMerge(mobileMenuRowStyles, 'justify-start')}
@@ -508,18 +523,11 @@ export default async function Navbar(): Promise<React.JSX.Element> {
 
   return (
     <NavbarShell>
-      <div className='container mx-auto flex h-full items-center'>
+      <div className='relative z-10 container mx-auto flex h-full items-center'>
         <div className='flex shrink-0 items-center'>
           <button
             type='button'
-            className={twMerge(
-              getButtonStyles({
-                variant: 'ghost',
-                colour: 'olive',
-                size: 'icon'
-              }),
-              'mr-1 shrink-0 xl:hidden'
-            )}
+            className={twMerge(darkIconButtonStyles, 'mr-1 shrink-0 xl:hidden')}
             aria-controls='primary-nav-mobile-menu'
             aria-expanded='false'
             data-mobile-menu-trigger
@@ -568,6 +576,7 @@ export default async function Navbar(): Promise<React.JSX.Element> {
               type='button'
               className={twMerge(
                 getButtonStyles({ variant: 'default', colour: 'olive' }),
+                darkPrimaryButtonStyles,
                 'group text-base font-semibold capitalize'
               )}
               aria-controls='primary-nav-booking'
@@ -593,11 +602,7 @@ export default async function Navbar(): Promise<React.JSX.Element> {
           <button
             type='button'
             className={twMerge(
-              getButtonStyles({
-                variant: 'default',
-                colour: 'olive',
-                size: 'sm'
-              }),
+              darkSmallPrimaryButtonStyles,
               'font-bold uppercase xl:hidden'
             )}
             aria-controls='primary-nav-mobile-menu'
@@ -609,7 +614,7 @@ export default async function Navbar(): Promise<React.JSX.Element> {
 
           <Link className='hidden xl:block' href='/guesthouses'>
             <span className='sr-only'>View our guesthouses</span>
-            <CountryOutline />
+            <CountryOutline className='text-white/85 transition-colors hover:text-white' />
           </Link>
         </div>
       </div>
