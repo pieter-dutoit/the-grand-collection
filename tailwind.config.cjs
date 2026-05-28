@@ -46,9 +46,9 @@ module.exports = {
       },
       backgroundImage: {
         'custom-gradient':
-          'radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 90%)',
+          'radial-gradient(ellipse 72% 28% at 50% 48%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.58) 46%, rgba(0, 0, 0, 0) 86%)',
         'custom-gradient-mobile':
-          'linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.2) 100%)'
+          'linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.9) 45%, rgba(0, 0, 0, 0.2) 100%)'
       },
       borderRadius: {
         lg: 'var(--radius)',
