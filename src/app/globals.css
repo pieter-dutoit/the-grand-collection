@@ -22,7 +22,7 @@
 
 @layer utilities {
   body {
-    font-family: var(--font-redhat), Arial, Helvetica, sans-serif;
+    font-family: var(--font-red-hat-display), Arial, Helvetica, sans-serif;
   }
 }
 

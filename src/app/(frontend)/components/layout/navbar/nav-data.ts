@@ -50,13 +50,13 @@ const firstAvailableImage = (
 
 export async function getPrimaryNavData(): Promise<PrimaryNavData> {
   const [logoData, guesthouses, destinations] = await Promise.all([
-    fetchLogo('minimal_dark'),
+    fetchLogo('minimal_light'),
     fetchGuestHouses(),
     fetchDestinations()
   ])
 
   return {
-    logo: extractImageProps(logoData.minimal_dark),
+    logo: extractImageProps(logoData.minimal_light),
     guesthouses: guesthouses.map((guesthouse) => {
       const {
         booking_platform,
