@@ -47,26 +47,28 @@ export default async function AllGuestHouses(): Promise<React.JSX.Element> {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <section className='container mx-auto pt-3'>
-        <Breadcrumbs items={breadcrumbs} />
-      </section>
-      <section className='container mx-auto grid w-full pb-10 lg:pb-20'>
-        <PageHeading heading={heading} subHeading={sub_heading} />
-        {!!guesthouses && (
-          <ul className='mt-4 flex flex-col gap-8 lg:mt-8'>
-            {guesthouses.map((guesthouse, index) => {
-              return (
-                <li key={guesthouse.slug}>
-                  <PropertyPreview
-                    guesthouse={guesthouse}
-                    aboveFold={index === 0}
-                  />
-                </li>
-              )
-            })}
-          </ul>
-        )}
-      </section>
+      <div className='-mt-16 pt-16'>
+        <section className='container mx-auto pt-3'>
+          <Breadcrumbs items={breadcrumbs} />
+        </section>
+        <section className='container mx-auto grid w-full pb-10 lg:pb-20'>
+          <PageHeading heading={heading} subHeading={sub_heading} />
+          {!!guesthouses && (
+            <ul className='mt-4 flex flex-col gap-8 lg:mt-8'>
+              {guesthouses.map((guesthouse, index) => {
+                return (
+                  <li key={guesthouse.slug}>
+                    <PropertyPreview
+                      guesthouse={guesthouse}
+                      aboveFold={index === 0}
+                    />
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </section>
+      </div>
     </>
   )
 }

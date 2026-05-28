@@ -165,8 +165,8 @@ export default async function GuesthouseArticlesPage({ params }: Props) {
           <Breadcrumbs items={breadcrumbs} />
         </div>
       </section>
-      <section className='bg-olive-50'>
-        <div className='container mx-auto flex flex-col items-start gap-6 pt-14 pb-10'>
+      <section className='-mt-16 bg-olive-50'>
+        <div className='container mx-auto flex flex-col items-start gap-6 pt-[7.5rem] pb-10'>
           <Link
             href={`/guesthouses/${guesthouse.slug}`}
             className='inline-flex items-center gap-2 text-sm font-medium text-olive-500 transition hover:text-olive-700'

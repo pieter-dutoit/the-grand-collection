@@ -23,9 +23,9 @@ export default async function DestinationHero({
   const heroImageAltText = heroImageAlt || title || name
 
   return (
-    <section className='relative bg-olive-200'>
+    <section className='relative -mt-16 bg-olive-200'>
       {heroImageUrl && (
-        <div className='relative aspect-video w-full sm:absolute sm:inset-0 sm:aspect-auto sm:size-full'>
+        <div className='relative h-[calc(56.25vw+4rem)] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:size-full'>
           <Image
             src={heroImageUrl}
             alt={heroImageAltText}
@@ -40,7 +40,7 @@ export default async function DestinationHero({
         </div>
       )}
 
-      <div className='relative z-10 container mx-auto py-8 sm:py-20 lg:py-28'>
+      <div className='relative z-10 container mx-auto pt-8 pb-8 sm:pt-36 sm:pb-20 lg:pt-44 lg:pb-28'>
         <div className='flex max-w-2xl flex-col gap-2'>
           <span className='text-xs font-extrabold tracking-wide text-olive-900 uppercase'>
             {label}
