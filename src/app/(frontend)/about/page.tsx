@@ -42,10 +42,12 @@ export default async function About(): Promise<React.JSX.Element> {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <section className='container mx-auto pt-3'>
-        <Breadcrumbs items={breadcrumbs} />
-      </section>
-      <Hero />
+      <div className='-mt-16 pt-16'>
+        <section className='container mx-auto pt-3'>
+          <Breadcrumbs items={breadcrumbs} />
+        </section>
+        <Hero />
+      </div>
       <Overview />
       <SubSections />
     </>
