@@ -247,7 +247,7 @@ export default function NavbarShell({ children }: NavbarShellProps) {
   return (
     <header
       ref={rootRef}
-      className='sticky top-0 left-0 z-50 h-16 w-full border-b border-b-olive-100 bg-white'
+      className="sticky top-0 left-0 z-50 h-16 w-full text-white before:pointer-events-none before:absolute before:inset-0 before:z-0 before:border-b before:border-white/10 before:bg-black/70 before:shadow-[0_12px_36px_rgba(0,0,0,0.18)] before:backdrop-blur-xl before:backdrop-saturate-150 before:content-['']"
     >
       {children}
     </header>

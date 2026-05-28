@@ -38,7 +38,7 @@ const actionLinkStyles = twMerge(
     colour: 'olive',
     size: 'sm'
   }),
-  'text-xs'
+  'border-white/20 bg-white/10 text-xs text-white shadow-none hover:border-white/30 hover:bg-white/15 hover:text-white focus-visible:ring-white/60'
 )
 
 const externalHrefPattern = /^(?:[a-z][a-z\d+.-]*:|\/\/)/i
@@ -52,9 +52,9 @@ export default function NavMenuCard({
   title
 }: NavMenuCardProps) {
   return (
-    <li className='flex h-full flex-col rounded-lg border border-olive-100 bg-white p-3 transition-colors hover:bg-olive-50/60'>
+    <li className='flex h-full flex-col rounded-lg border border-white/15 bg-white/10 p-3 text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-md transition-colors hover:bg-white/15'>
       <Link href={href} className='flex min-w-0 gap-3' {...primaryLinkProps}>
-        <div className='border-gold-100 relative h-18 w-24 shrink-0 overflow-hidden rounded-md border bg-olive-100'>
+        <div className='relative h-18 w-24 shrink-0 overflow-hidden rounded-md border border-white/10 bg-white/10'>
           {image.url && (
             <Image
               src={image.url}
@@ -68,10 +68,10 @@ export default function NavMenuCard({
           )}
         </div>
         <span className='flex min-w-0 flex-col'>
-          <span className='truncate text-base font-semibold text-olive-800'>
+          <span className='truncate text-base font-semibold text-white'>
             {title}
           </span>
-          <span className='mt-1 line-clamp-2 min-h-8 text-xs text-olive-600'>
+          <span className='mt-1 line-clamp-2 min-h-8 text-xs text-white/65'>
             {body}
           </span>
         </span>

@@ -11,10 +11,10 @@ type MobileNavSectionProps = {
   title: string
 }
 
-const sectionStyles = 'border-t border-olive-300/60 pt-2'
+const sectionStyles = 'border-t border-white/10 pt-2'
 
 const triggerStyles =
-  'group flex w-full cursor-pointer list-none items-center justify-between rounded-md py-3 text-left text-sm font-bold uppercase text-olive-900 transition-colors hover:bg-white/80 focus-visible:bg-white/90 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-olive-500/50'
+  'group flex w-full cursor-pointer list-none items-center justify-between rounded-md py-3 text-left text-sm font-bold uppercase text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:bg-white/10 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-white/60'
 
 const chevronStyles =
   'size-4 transition-transform duration-200 data-[state=open]:rotate-180 motion-reduce:transition-none'

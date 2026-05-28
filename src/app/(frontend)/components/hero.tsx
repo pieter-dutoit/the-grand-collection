@@ -19,7 +19,7 @@ export async function Hero(): Promise<React.JSX.Element> {
 
   return (
     <section className='bg-sage-700 relative h-[75vh] max-h-[40rem] w-screen sm:max-h-none'>
-      <div className='absolute inset-0 size-full'>
+      <div className='absolute inset-x-0 -top-16 bottom-0'>
         {url && (
           <Image
             src={url}
@@ -33,38 +33,39 @@ export async function Hero(): Promise<React.JSX.Element> {
           />
         )}
         <div className='bg-custom-gradient-mobile sm:bg-custom-gradient absolute inset-0' />
-        <div className='absolute inset-0 flex flex-col items-center justify-center p-3'>
-          <div className='relative h-[30vh] w-full md:h-52 md:w-96 lg:h-80 lg:w-[500px]'>
-            <Image
-              src={logoProps.url}
-              alt={logoProps.alt}
-              fill
-              className='object-contain object-center'
-              sizes='(max-width: 510px) 90vw, 30rem'
-              priority
-              fetchPriority='high'
-              unoptimized={logoProps.isSvg}
-            />
-          </div>
+      </div>
 
-          <h1 className='mx-auto mt-8 max-w-screen-lg px-6 text-center text-white drop-shadow-sm md:text-lg lg:text-xl'>
-            {title}
-          </h1>
-
-          <Link
-            className={twMerge(
-              getButtonStyles({
-                variant: 'default',
-                colour: 'sage',
-                size: 'lg'
-              }),
-              'mt-8 flex flex-row items-center drop-shadow-xl'
-            )}
-            href={locations_link.link_url}
-          >
-            {locations_link.link_text}
-          </Link>
+      <div className='relative z-10 flex size-full flex-col items-center justify-center p-3'>
+        <div className='relative h-[30vh] w-full md:h-52 md:w-96 lg:h-80 lg:w-[500px]'>
+          <Image
+            src={logoProps.url}
+            alt={logoProps.alt}
+            fill
+            className='object-contain object-center'
+            sizes='(max-width: 510px) 90vw, 30rem'
+            priority
+            fetchPriority='high'
+            unoptimized={logoProps.isSvg}
+          />
         </div>
+
+        <h1 className='mx-auto mt-8 max-w-screen-lg px-6 text-center text-white drop-shadow-sm md:text-lg lg:text-xl'>
+          {title}
+        </h1>
+
+        <Link
+          className={twMerge(
+            getButtonStyles({
+              variant: 'default',
+              colour: 'gold',
+              size: 'lg'
+            }),
+            'mt-8 flex flex-row items-center drop-shadow-xl'
+          )}
+          href={locations_link.link_url}
+        >
+          {locations_link.link_text}
+        </Link>
       </div>
     </section>
   )

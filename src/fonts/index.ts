@@ -1,16 +1,9 @@
-import localFont from 'next/font/local'
+import { Red_Hat_Display } from 'next/font/google'
 
-export const redhat = localFont({
-  src: [
-    {
-      path: './RedHatDisplay-VariableFont_wght.ttf'
-    },
-    {
-      path: './RedHatDisplay-Italic-VariableFont_wght.ttf',
-      style: 'italic'
-    }
-  ],
-  variable: '--font-redhat',
+export const redHatDisplay = Red_Hat_Display({
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  variable: '--font-red-hat-display',
   display: 'swap',
   preload: true
 })
