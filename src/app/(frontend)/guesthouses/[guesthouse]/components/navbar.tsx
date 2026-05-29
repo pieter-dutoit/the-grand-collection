@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
+import HashLink from '@/components/hash-link'
 import { getButtonStyles } from '@/components/ui/button'
 
 type NavbarProps = {
@@ -34,7 +34,7 @@ export default function Navbar({
       <ul className='container mx-auto flex h-full snap-x items-center space-x-1 overflow-x-auto'>
         {navOptions.map(({ href, text }) => (
           <li key={href} className='snap-center'>
-            <Link
+            <HashLink
               href={href}
               data-analytics-event='article_anchor_click'
               data-analytics-source-section='guesthouse_section_nav'
@@ -48,7 +48,7 @@ export default function Navbar({
               )}
             >
               {text}
-            </Link>
+            </HashLink>
           </li>
         ))}
       </ul>

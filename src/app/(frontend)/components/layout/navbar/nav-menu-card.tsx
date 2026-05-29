@@ -1,7 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
+import HashLink from '@/components/hash-link'
 import { getButtonStyles } from '@/components/ui/button'
 
 type NavImage = {
@@ -32,6 +34,12 @@ type NavMenuCardProps = {
   title: string
 }
 
+type InternalNavLinkProps = LinkDataProps & {
+  children: ReactNode
+  className?: string
+  href: string
+}
+
 const actionLinkStyles = twMerge(
   getButtonStyles({
     variant: 'outline',
@@ -43,6 +51,28 @@ const actionLinkStyles = twMerge(
 
 const externalHrefPattern = /^(?:[a-z][a-z\d+.-]*:|\/\/)/i
 
+const hasRealHash = (href: string) => {
+  const hashIndex = href.indexOf('#')
+
+  return hashIndex !== -1 && hashIndex < href.length - 1
+}
+
+function InternalNavLink({ children, href, ...props }: InternalNavLinkProps) {
+  if (hasRealHash(href)) {
+    return (
+      <HashLink href={href} {...props}>
+        {children}
+      </HashLink>
+    )
+  }
+
+  return (
+    <Link href={href} {...props}>
+      {children}
+    </Link>
+  )
+}
+
 export default function NavMenuCard({
   actions,
   body,
@@ -51,31 +81,41 @@ export default function NavMenuCard({
   primaryLinkProps,
   title
 }: NavMenuCardProps) {
+  const primaryLinkContent = (
+    <>
+      <div className='relative h-18 w-24 shrink-0 overflow-hidden rounded-md border border-white/10 bg-white/10'>
+        {image.url && (
+          <Image
+            src={image.url}
+            alt={image.alt}
+            fill
+            className='object-cover object-center'
+            sizes='96px'
+            fetchPriority='low'
+            unoptimized={image.isSvg}
+          />
+        )}
+      </div>
+      <span className='flex min-w-0 flex-col'>
+        <span className='truncate text-base font-semibold text-white'>
+          {title}
+        </span>
+        <span className='mt-1 line-clamp-2 min-h-8 text-xs text-white/65'>
+          {body}
+        </span>
+      </span>
+    </>
+  )
+
   return (
     <li className='flex h-full flex-col rounded-lg border border-white/15 bg-white/10 p-3 text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-md transition-colors hover:bg-white/15'>
-      <Link href={href} className='flex min-w-0 gap-3' {...primaryLinkProps}>
-        <div className='relative h-18 w-24 shrink-0 overflow-hidden rounded-md border border-white/10 bg-white/10'>
-          {image.url && (
-            <Image
-              src={image.url}
-              alt={image.alt}
-              fill
-              className='object-cover object-center'
-              sizes='96px'
-              fetchPriority='low'
-              unoptimized={image.isSvg}
-            />
-          )}
-        </div>
-        <span className='flex min-w-0 flex-col'>
-          <span className='truncate text-base font-semibold text-white'>
-            {title}
-          </span>
-          <span className='mt-1 line-clamp-2 min-h-8 text-xs text-white/65'>
-            {body}
-          </span>
-        </span>
-      </Link>
+      <InternalNavLink
+        href={href}
+        className='flex min-w-0 gap-3'
+        {...primaryLinkProps}
+      >
+        {primaryLinkContent}
+      </InternalNavLink>
       <div className='mt-auto flex min-h-8 flex-wrap gap-2 pt-3'>
         {actions.map(({ href: actionHref, label, linkProps }) => {
           const isExternalHref = externalHrefPattern.test(actionHref)
@@ -94,14 +134,14 @@ export default function NavMenuCard({
           }
 
           return (
-            <Link
+            <InternalNavLink
               key={actionHref}
               href={actionHref}
               className={actionLinkStyles}
               {...linkProps}
             >
               {label}
-            </Link>
+            </InternalNavLink>
           )
         })}
       </div>

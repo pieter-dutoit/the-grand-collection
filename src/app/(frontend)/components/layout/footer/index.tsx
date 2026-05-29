@@ -2,6 +2,7 @@ import 'server-only'
 import Link from 'next/link'
 
 import Image from 'next/image'
+import HashLink from '@/components/hash-link'
 import {
   // fetchHomePageData,
   fetchDestinations,
@@ -134,7 +135,7 @@ export default async function Footer(): Promise<React.JSX.Element> {
 
               return (
                 <li key={slug}>
-                  <Link
+                  <HashLink
                     href={`/destinations/${slug}#travel-guides`}
                     data-analytics-event='article_anchor_click'
                     data-analytics-source-section='footer'
@@ -142,7 +143,7 @@ export default async function Footer(): Promise<React.JSX.Element> {
                     data-analytics-destination-slug={slug}
                   >
                     {label}
-                  </Link>
+                  </HashLink>
                 </li>
               )
             })}
