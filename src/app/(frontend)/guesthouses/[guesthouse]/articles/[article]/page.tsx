@@ -28,6 +28,7 @@ import BlurredBackdropImage from '@/components/ui/blurred-backdrop-image'
 import Breadcrumbs from '@/components/ui/breadcrumbs'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import HashLink from '@/components/hash-link'
 import FaqSection from '@/components/faq-section'
 import JsonLd from '@/components/seo/json-ld'
 import MoreArticlesSection from '@/components/more-articles'
@@ -302,7 +303,7 @@ export default async function GuesthousePostPage({ params }: Props) {
                           colour='olive'
                           className='w-full min-w-0 justify-start'
                         >
-                          <Link
+                          <HashLink
                             href={`#${heading.id}`}
                             data-analytics-event='article_anchor_click'
                             data-analytics-source-section='article_toc'
@@ -313,7 +314,7 @@ export default async function GuesthousePostPage({ params }: Props) {
                             <span className='block w-full truncate text-left'>
                               {heading.text}
                             </span>
-                          </Link>
+                          </HashLink>
                         </Button>
                       </li>
                     ))}
@@ -328,7 +329,7 @@ export default async function GuesthousePostPage({ params }: Props) {
                 <ul className='flex w-full flex-col items-start'>
                   <li>
                     <Button asChild variant='ghost' colour='olive'>
-                      <Link
+                      <HashLink
                         href={`#${article.slug}`}
                         data-analytics-event='article_anchor_click'
                         data-analytics-source-section='article_quick_links'
@@ -337,7 +338,7 @@ export default async function GuesthousePostPage({ params }: Props) {
                         data-analytics-article-slug={article.slug}
                       >
                         Back to top
-                      </Link>
+                      </HashLink>
                     </Button>
                   </li>
                   <li>
@@ -371,7 +372,7 @@ export default async function GuesthousePostPage({ params }: Props) {
                   {relatedArticles.length > 0 && (
                     <li>
                       <Button asChild variant='link' colour='olive'>
-                        <Link
+                        <HashLink
                           href='#more-articles'
                           data-analytics-event='article_anchor_click'
                           data-analytics-source-section='article_quick_links'
@@ -380,7 +381,7 @@ export default async function GuesthousePostPage({ params }: Props) {
                           data-analytics-article-slug={article.slug}
                         >
                           More from {guesthouse.name}
-                        </Link>
+                        </HashLink>
                       </Button>
                     </li>
                   )}
@@ -408,7 +409,7 @@ export default async function GuesthousePostPage({ params }: Props) {
                   {hasFaq && (
                     <li>
                       <Button asChild variant='ghost' colour='olive'>
-                        <Link
+                        <HashLink
                           href='#faq'
                           data-analytics-event='article_anchor_click'
                           data-analytics-source-section='article_quick_links'
@@ -417,7 +418,7 @@ export default async function GuesthousePostPage({ params }: Props) {
                           data-analytics-article-slug={article.slug}
                         >
                           FAQs
-                        </Link>
+                        </HashLink>
                       </Button>
                     </li>
                   )}

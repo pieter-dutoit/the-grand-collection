@@ -1,5 +1,4 @@
-import Link from 'next/link'
-
+import HashLink from '@/components/hash-link'
 import { ArticleRichText } from '@/components/rich-text'
 import { Button } from '@/components/ui/button'
 import { extractH2Headings } from '@/lib/utils/richtext'
@@ -56,7 +55,7 @@ export default async function ArticleBody({
                         colour='olive'
                         className='w-full min-w-0 justify-start'
                       >
-                        <Link
+                        <HashLink
                           href={`#${heading.id}`}
                           data-analytics-event='article_anchor_click'
                           data-analytics-source-section='article_toc'
@@ -67,7 +66,7 @@ export default async function ArticleBody({
                           <span className='block w-full truncate text-left'>
                             {heading.text}
                           </span>
-                        </Link>
+                        </HashLink>
                       </Button>
                     </li>
                   ))}
@@ -82,7 +81,7 @@ export default async function ArticleBody({
               <ul className='flex w-full flex-col items-start'>
                 <li>
                   <Button asChild variant='ghost' colour='olive'>
-                    <Link
+                    <HashLink
                       href={`#${article.slug}`}
                       data-analytics-event='article_anchor_click'
                       data-analytics-source-section='article_quick_links'
@@ -91,12 +90,12 @@ export default async function ArticleBody({
                       data-analytics-article-slug={article.slug}
                     >
                       Back to top
-                    </Link>
+                    </HashLink>
                   </Button>
                 </li>
                 <li>
                   <Button asChild variant='link' colour='olive'>
-                    <Link
+                    <HashLink
                       href={`#more-articles`}
                       data-analytics-event='article_anchor_click'
                       data-analytics-source-section='article_quick_links'
@@ -105,12 +104,12 @@ export default async function ArticleBody({
                       data-analytics-article-slug={article.slug}
                     >
                       More travel guides
-                    </Link>
+                    </HashLink>
                   </Button>
                 </li>
                 <li>
                   <Button asChild variant='ghost' colour='olive'>
-                    <Link
+                    <HashLink
                       href={`#where-to-stay`}
                       data-analytics-event='article_guesthouse_click'
                       data-analytics-source-section='article_quick_links'
@@ -119,14 +118,14 @@ export default async function ArticleBody({
                       data-analytics-article-slug={article.slug}
                     >
                       Where to stay in {destination.name}
-                    </Link>
+                    </HashLink>
                   </Button>
                 </li>
 
                 {hasFaq && (
                   <li>
                     <Button asChild variant='ghost' colour='olive'>
-                      <Link
+                      <HashLink
                         href='#faq'
                         data-analytics-event='article_anchor_click'
                         data-analytics-source-section='article_quick_links'
@@ -135,7 +134,7 @@ export default async function ArticleBody({
                         data-analytics-article-slug={article.slug}
                       >
                         FAQs
-                      </Link>
+                      </HashLink>
                     </Button>
                   </li>
                 )}
