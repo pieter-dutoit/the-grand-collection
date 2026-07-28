@@ -39,6 +39,35 @@ const remotePatterns: NonNullable<NextConfig['images']>['remotePatterns'] =
 
 const nextConfig: NextConfig = {
   reactCompiler: false,
+  serverExternalPackages: ['sharp'],
+  outputFileTracingIncludes: {
+    '/brand/download': [
+      './public/logos/tgc-horizontal-gold.svg',
+      './public/logos/tgc-emblem-gold.svg'
+    ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/brand',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive'
+          }
+        ]
+      },
+      {
+        source: '/logos/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, noimageindex'
+          }
+        ]
+      }
+    ]
+  },
   images: {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
