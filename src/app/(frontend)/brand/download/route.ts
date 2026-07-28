@@ -1,5 +1,3 @@
-import sharp from 'sharp'
-
 import {
   brandLogoDesigns,
   buildLogoFilename,
@@ -18,6 +16,15 @@ export const runtime = 'nodejs'
 
 const FORMATS = ['svg', 'png', 'jpeg'] as const
 const DISPOSITIONS = ['attachment', 'inline'] as const
+const QUERY_PARAMETER_NAMES = [
+  'logo',
+  'foreground',
+  'background',
+  'size',
+  'format',
+  'v',
+  'disposition'
+] as const
 const MAX_RESPONSE_BYTES = 4_300_000
 const IMMUTABLE_CACHE_SECONDS = 31_536_000
 const LOGO_IDS = brandLogoDesigns.map(({ id }) => id)
@@ -43,15 +50,23 @@ const errorResponse = (message: string, status: number) =>
   )
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
+  const url = new URL(request.url)
+  const queryEntries = [...url.searchParams.entries()]
 
-  const logo = searchParams.get('logo')
-  const foreground = searchParams.get('foreground')
-  const background = searchParams.get('background')
-  const size = searchParams.get('size')
-  const format = searchParams.get('format')
-  const version = searchParams.get('v')
-  const disposition = searchParams.get('disposition') ?? 'attachment'
+  if (
+    queryEntries.length !== QUERY_PARAMETER_NAMES.length ||
+    queryEntries.some(([name], index) => name !== QUERY_PARAMETER_NAMES[index])
+  ) {
+    return errorResponse('Invalid logo download options.', 400)
+  }
+
+  const logo = url.searchParams.get('logo')
+  const foreground = url.searchParams.get('foreground')
+  const background = url.searchParams.get('background')
+  const size = url.searchParams.get('size')
+  const format = url.searchParams.get('format')
+  const version = url.searchParams.get('v')
+  const disposition = url.searchParams.get('disposition')
 
   if (
     !isOneOf(logo, LOGO_IDS) ||
@@ -62,6 +77,20 @@ export async function GET(request: Request) {
     !isOneOf(disposition, DISPOSITIONS) ||
     version !== LOGO_ASSET_VERSION
   ) {
+    return errorResponse('Invalid logo download options.', 400)
+  }
+
+  const canonicalSearch = new URLSearchParams({
+    logo,
+    foreground,
+    background,
+    size,
+    format,
+    v: version,
+    disposition
+  }).toString()
+
+  if (url.search.slice(1) !== canonicalSearch) {
     return errorResponse('Invalid logo download options.', 400)
   }
 
@@ -98,6 +127,7 @@ export async function GET(request: Request) {
       body = new TextEncoder().encode(svg).buffer
       contentType = 'image/svg+xml; charset=utf-8'
     } else {
+      const { default: sharp } = await import('sharp')
       const image = sharp(Buffer.from(svg), { density: 300 }).resize({
         width: sizeOption.width,
         height: sizeOption.height,
