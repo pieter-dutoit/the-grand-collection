@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import {
   ChevronDown,
-  CircleHelp,
   Download,
   FileImage,
   FileType,
@@ -22,6 +21,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,23 +30,22 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import {
+  Field,
+  FieldContent,
   FieldDescription,
   FieldGroup,
+  FieldLabel,
   FieldLegend,
   FieldSet
 } from '@/components/ui/field'
 import { Separator } from '@/components/ui/separator'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
 import {
   buildLogoFilename,
+  getLogoOutputSize,
+  isLogoColourCombinationAllowed,
   LOGO_ASSET_VERSION,
   logoBackgrounds,
   logoColours,
@@ -59,8 +58,7 @@ import {
 
 const FORMAT_LABELS: Record<LogoDownloadFormat, string> = {
   svg: 'SVG',
-  png: 'PNG',
-  jpeg: 'JPEG'
+  png: 'PNG'
 }
 
 const CHECKERBOARD_STYLE = {
@@ -77,6 +75,7 @@ const buildDownloadUrl = ({
   foreground,
   format,
   logo,
+  rounded,
   size
 }: {
   background: LogoBackgroundId
@@ -84,6 +83,7 @@ const buildDownloadUrl = ({
   foreground: LogoColourId
   format: LogoDownloadFormat
   logo: BrandLogoDesign['id']
+  rounded: boolean
   size: LogoSizeId
 }) => {
   const params = new URLSearchParams({
@@ -92,6 +92,7 @@ const buildDownloadUrl = ({
     background,
     size,
     format,
+    rounded: String(rounded),
     v: LOGO_ASSET_VERSION,
     disposition
   })
@@ -123,6 +124,8 @@ export default function LogoConfiguratorCard({
   const [foreground, setForeground] = useState<LogoColourId>('gold')
   const [background, setBackground] = useState<LogoBackgroundId>('transparent')
   const [size, setSize] = useState<LogoSizeId>('large')
+  const [rounded, setRounded] = useState(false)
+  const [downloadMenuOpen, setDownloadMenuOpen] = useState(false)
   const [downloadingFormat, setDownloadingFormat] =
     useState<LogoDownloadFormat | null>(null)
 
@@ -131,6 +134,11 @@ export default function LogoConfiguratorCard({
     ({ id }) => id === background
   )!
   const selectedSize = design.sizes.find(({ id }) => id === size)!
+  const selectedOutputSize = getLogoOutputSize({
+    background,
+    design,
+    size: selectedSize
+  })
 
   const previewUrl = useMemo(
     () =>
@@ -138,11 +146,12 @@ export default function LogoConfiguratorCard({
         logo: design.id,
         foreground,
         background,
+        rounded,
         size,
         format: 'svg',
         disposition: 'inline'
       }),
-    [background, design.id, foreground, size]
+    [background, design.id, foreground, rounded, size]
   )
 
   const handleForegroundChange = (value: string) => {
@@ -151,8 +160,14 @@ export default function LogoConfiguratorCard({
     const nextForeground = value as LogoColourId
     setForeground(nextForeground)
 
-    if (background === nextForeground) {
+    if (
+      !isLogoColourCombinationAllowed({
+        background,
+        foreground: nextForeground
+      })
+    ) {
       setBackground('transparent')
+      setRounded(false)
     }
   }
 
@@ -160,7 +175,19 @@ export default function LogoConfiguratorCard({
     if (!value) return
 
     const nextBackground = value as LogoBackgroundId
+    if (
+      !isLogoColourCombinationAllowed({
+        background: nextBackground,
+        foreground
+      })
+    )
+      return
+
     setBackground(nextBackground)
+
+    if (nextBackground === 'transparent') {
+      setRounded(false)
+    }
   }
 
   const handleSizeChange = (value: string) => {
@@ -168,7 +195,7 @@ export default function LogoConfiguratorCard({
   }
 
   const downloadLogo = async (format: LogoDownloadFormat) => {
-    if (format === 'jpeg' && background === 'transparent') return
+    if (downloadingFormat !== null) return
 
     setDownloadingFormat(format)
 
@@ -176,6 +203,7 @@ export default function LogoConfiguratorCard({
       logo: design.id,
       foreground,
       background,
+      rounded,
       size,
       format
     })
@@ -186,6 +214,7 @@ export default function LogoConfiguratorCard({
           logo: design.id,
           foreground,
           background,
+          rounded,
           size,
           format,
           disposition: 'attachment'
@@ -213,14 +242,15 @@ export default function LogoConfiguratorCard({
     }
   }
 
-  const previewStyle =
-    background === 'transparent'
-      ? CHECKERBOARD_STYLE
-      : { backgroundColor: selectedBackground.hex ?? undefined }
+  const handleDownloadSelect = (format: LogoDownloadFormat) => {
+    setDownloadMenuOpen(false)
+    void downloadLogo(format)
+  }
+
   const previewAlt = `${design.alt} in ${selectedForeground.name} on ${
     background === 'transparent'
       ? 'a transparent background'
-      : `a ${selectedBackground.name} background`
+      : `a ${selectedBackground.name} background${rounded ? ' with rounded corners' : ''}`
   }`
 
   return (
@@ -235,13 +265,13 @@ export default function LogoConfiguratorCard({
       <CardContent className='grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] lg:items-start'>
         <div
           className='flex h-72 items-center justify-center overflow-hidden rounded-lg border border-olive-200 p-8 sm:p-12'
-          style={previewStyle}
+          style={CHECKERBOARD_STYLE}
         >
           <Image
             src={previewUrl}
             alt={previewAlt}
-            width={selectedSize.width}
-            height={selectedSize.height}
+            width={selectedOutputSize.width}
+            height={selectedOutputSize.height}
             className={cn(
               'h-auto w-auto max-w-full object-contain',
               design.id === 'horizontal' ? 'max-h-32' : 'max-h-48'
@@ -288,7 +318,10 @@ export default function LogoConfiguratorCard({
               aria-label={`${design.name} background`}
             >
               {logoBackgrounds.map((option) => {
-                const disabled = option.id === foreground
+                const disabled = !isLogoColourCombinationAllowed({
+                  background: option.id,
+                  foreground
+                })
 
                 return (
                   <ToggleGroupItem
@@ -297,7 +330,7 @@ export default function LogoConfiguratorCard({
                     disabled={disabled}
                     aria-label={
                       disabled
-                        ? `${option.name} background unavailable because it matches the logo`
+                        ? `${option.name} background unavailable with ${selectedForeground.name} logo`
                         : `Use ${option.name} background`
                     }
                     className='h-auto min-w-0 flex-col px-2 py-2'
@@ -312,8 +345,9 @@ export default function LogoConfiguratorCard({
               })}
             </ToggleGroup>
             <FieldDescription>
-              Matching logo and background colours are unavailable to keep the
-              mark visible.
+              Incompatible backgrounds are disabled. Choosing a logo colour that
+              conflicts with the current background resets the background to
+              Transparent.
             </FieldDescription>
           </FieldSet>
 
@@ -327,29 +361,58 @@ export default function LogoConfiguratorCard({
               className='grid grid-cols-2 sm:grid-cols-4'
               aria-label={`${design.name} download size`}
             >
-              {design.sizes.map((option) => (
-                <ToggleGroupItem
-                  key={option.id}
-                  value={option.id}
-                  aria-label={`${option.name}, ${option.width} by ${option.height} pixels`}
-                  className='h-auto min-w-0 flex-col px-2 py-2'
-                >
-                  <span>{option.name}</span>
-                  <span className='text-xs font-normal text-olive-500'>
-                    {option.width}×{option.height}
-                  </span>
-                </ToggleGroupItem>
-              ))}
+              {design.sizes.map((option) => {
+                const outputSize = getLogoOutputSize({
+                  background,
+                  design,
+                  size: option
+                })
+
+                return (
+                  <ToggleGroupItem
+                    key={option.id}
+                    value={option.id}
+                    aria-label={`${option.name}, ${outputSize.width} by ${outputSize.height} pixels`}
+                    className='h-auto min-w-0 flex-col px-2 py-2'
+                  >
+                    <span>{option.name}</span>
+                    <span className='text-xs font-normal text-olive-500'>
+                      {outputSize.width}×{outputSize.height}
+                    </span>
+                  </ToggleGroupItem>
+                )
+              })}
             </ToggleGroup>
             <FieldDescription className='flex flex-wrap items-center gap-2'>
               {selectedSize.useCase}.
-              {size === 'large' && (
-                <Badge asChild variant='secondary'>
-                  <span>Recommended</span>
-                </Badge>
-              )}
-              <span>Size applies to PNG and JPEG; SVG scales freely.</span>
+              <br />
+              <span className='font-semibold'>
+                Size applies to PNG; SVG scales freely.
+              </span>
             </FieldDescription>
+          </FieldSet>
+
+          <FieldSet className='gap-3'>
+            <FieldLegend variant='label'>Corners</FieldLegend>
+            <Field
+              orientation='horizontal'
+              data-disabled={background === 'transparent'}
+            >
+              <Checkbox
+                id={`rounded-corners-${design.id}`}
+                checked={rounded}
+                disabled={background === 'transparent'}
+                onCheckedChange={(checked) => setRounded(checked === true)}
+              />
+              <FieldContent>
+                <FieldLabel htmlFor={`rounded-corners-${design.id}`}>
+                  Rounded corners
+                </FieldLabel>
+                <FieldDescription>
+                  Available when a background colour is selected.
+                </FieldDescription>
+              </FieldContent>
+            </Field>
           </FieldSet>
         </FieldGroup>
       </CardContent>
@@ -357,32 +420,15 @@ export default function LogoConfiguratorCard({
       <Separator />
 
       <CardFooter className='flex flex-wrap justify-between gap-4 pt-6'>
-        <div className='flex items-center gap-1'>
-          <p className='text-sm text-olive-600'>
-            JPEG requires a solid background.
-          </p>
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  type='button'
-                  variant='ghost'
-                  colour='olive'
-                  size='icon'
-                  aria-label='Why JPEG requires a solid background'
-                >
-                  <CircleHelp data-icon='inline-start' aria-hidden='true' />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                JPEG does not support transparent pixels. Choose Gold, Olive,
-                Black, or White first.
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
+        <p className='text-sm text-olive-600'>
+          The preview matches the exported canvas, padding, and corners.
+        </p>
 
-        <DropdownMenu>
+        <DropdownMenu
+          modal={false}
+          open={downloadMenuOpen}
+          onOpenChange={setDownloadMenuOpen}
+        >
           <DropdownMenuTrigger asChild>
             <Button
               type='button'
@@ -407,7 +453,7 @@ export default function LogoConfiguratorCard({
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end' className='min-w-56'>
             <DropdownMenuGroup>
-              <DropdownMenuItem onSelect={() => void downloadLogo('svg')}>
+              <DropdownMenuItem onSelect={() => handleDownloadSelect('svg')}>
                 <FileType aria-hidden='true' />
                 <span className='flex flex-col'>
                   <span>SVG</span>
@@ -416,7 +462,7 @@ export default function LogoConfiguratorCard({
                   </span>
                 </span>
               </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => void downloadLogo('png')}>
+              <DropdownMenuItem onSelect={() => handleDownloadSelect('png')}>
                 <FileImage aria-hidden='true' />
                 <span className='flex flex-col'>
                   <span className='flex items-center gap-2'>
@@ -427,20 +473,6 @@ export default function LogoConfiguratorCard({
                   </span>
                   <span className='text-xs text-olive-500'>
                     Supports transparency
-                  </span>
-                </span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                disabled={background === 'transparent'}
-                onSelect={() => void downloadLogo('jpeg')}
-              >
-                <FileImage aria-hidden='true' />
-                <span className='flex flex-col'>
-                  <span>JPEG</span>
-                  <span className='text-xs text-olive-500'>
-                    {background === 'transparent'
-                      ? 'Choose a solid background'
-                      : 'Smaller photographic file'}
                   </span>
                 </span>
               </DropdownMenuItem>

@@ -1,6 +1,8 @@
 import {
   brandLogoDesigns,
   buildLogoFilename,
+  getLogoOutputSize,
+  isLogoColourCombinationAllowed,
   LOGO_ASSET_VERSION,
   logoBackgrounds,
   logoColours,
@@ -14,7 +16,8 @@ import { renderBrandLogoSvg } from '../components/brand-logo-renderer'
 
 export const runtime = 'nodejs'
 
-const FORMATS = ['svg', 'png', 'jpeg'] as const
+const FORMATS = ['svg', 'png'] as const
+const ROUNDED_VALUES = ['false', 'true'] as const
 const DISPOSITIONS = ['attachment', 'inline'] as const
 const QUERY_PARAMETER_NAMES = [
   'logo',
@@ -22,6 +25,7 @@ const QUERY_PARAMETER_NAMES = [
   'background',
   'size',
   'format',
+  'rounded',
   'v',
   'disposition'
 ] as const
@@ -65,6 +69,7 @@ export async function GET(request: Request) {
   const background = url.searchParams.get('background')
   const size = url.searchParams.get('size')
   const format = url.searchParams.get('format')
+  const rounded = url.searchParams.get('rounded')
   const version = url.searchParams.get('v')
   const disposition = url.searchParams.get('disposition')
 
@@ -74,6 +79,7 @@ export async function GET(request: Request) {
     !isOneOf(background, BACKGROUND_IDS) ||
     !isOneOf(size, SIZE_IDS) ||
     !isOneOf(format, FORMATS) ||
+    !isOneOf(rounded, ROUNDED_VALUES) ||
     !isOneOf(disposition, DISPOSITIONS) ||
     version !== LOGO_ASSET_VERSION
   ) {
@@ -86,6 +92,7 @@ export async function GET(request: Request) {
     background,
     size,
     format,
+    rounded,
     v: version,
     disposition
   }).toString()
@@ -94,15 +101,20 @@ export async function GET(request: Request) {
     return errorResponse('Invalid logo download options.', 400)
   }
 
-  if (foreground === background) {
+  if (
+    !isLogoColourCombinationAllowed({
+      background,
+      foreground
+    })
+  ) {
     return errorResponse(
-      'The logo and background colours must be different.',
+      'That logo and background colour combination is unavailable.',
       400
     )
   }
 
-  if (format === 'jpeg' && background === 'transparent') {
-    return errorResponse('JPEG downloads require a solid background.', 400)
+  if (rounded === 'true' && background === 'transparent') {
+    return errorResponse('Rounded corners require a solid background.', 400)
   }
 
   const design = brandLogoDesigns.find(({ id }) => id === logo)
@@ -116,8 +128,8 @@ export async function GET(request: Request) {
     const svg = renderBrandLogoSvg({
       logo: logo as LogoDesignId,
       foreground: foreground as LogoColourId,
-      background:
-        format === 'svg' ? (background as LogoBackgroundId) : 'transparent'
+      background: background as LogoBackgroundId,
+      rounded: rounded === 'true'
     })
 
     let body: ArrayBuffer
@@ -128,27 +140,22 @@ export async function GET(request: Request) {
       contentType = 'image/svg+xml; charset=utf-8'
     } else {
       const { default: sharp } = await import('sharp')
-      const image = sharp(Buffer.from(svg), { density: 300 }).resize({
-        width: sizeOption.width,
-        height: sizeOption.height,
-        fit: 'contain',
-        background: { r: 0, g: 0, b: 0, alpha: 0 }
+      const outputSize = getLogoOutputSize({
+        background: background as LogoBackgroundId,
+        design,
+        size: sizeOption
       })
-      const backgroundHex = logoBackgrounds.find(
-        ({ id }) => id === background
-      )?.hex
-      const flattenedImage = backgroundHex
-        ? image.flatten({ background: backgroundHex })
-        : image
-      const output =
-        format === 'png'
-          ? await flattenedImage.png({ compressionLevel: 9 }).toBuffer()
-          : await flattenedImage
-              .jpeg({ chromaSubsampling: '4:4:4', quality: 92 })
-              .toBuffer()
+      const output = await sharp(Buffer.from(svg), { density: 300 })
+        .resize({
+          width: outputSize.width,
+          height: outputSize.height,
+          fit: 'fill'
+        })
+        .png({ compressionLevel: 9 })
+        .toBuffer()
 
       body = Uint8Array.from(output).buffer
-      contentType = format === 'png' ? 'image/png' : 'image/jpeg'
+      contentType = 'image/png'
     }
 
     if (body.byteLength > MAX_RESPONSE_BYTES) {
@@ -159,6 +166,7 @@ export async function GET(request: Request) {
       logo: logo as LogoDesignId,
       foreground: foreground as LogoColourId,
       background: background as LogoBackgroundId,
+      rounded: rounded === 'true',
       size: size as LogoSizeId,
       format: format as LogoDownloadFormat
     })
