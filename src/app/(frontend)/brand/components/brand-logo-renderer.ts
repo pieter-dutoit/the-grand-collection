@@ -5,6 +5,7 @@ import { join } from 'node:path'
 
 import {
   brandLogoDesigns,
+  getLogoCanvas,
   logoBackgrounds,
   logoColours,
   type LogoBackgroundId,
@@ -23,7 +24,6 @@ const SOURCE_SVGS: Record<LogoDesignId, string> = {
   )
 }
 
-const LOGO_PADDING_RATIO = 0.03
 const SOURCE_GOLD = /#7d7151/gi
 const INKSCAPE_PLACEHOLDER_FILL = /#ff00ff/gi
 const FONT_STYLE_DECLARATIONS =
@@ -73,52 +73,55 @@ const getBackgroundHex = (background: LogoBackgroundId) => {
   return option.hex
 }
 
-const getPaddedViewBox = (logo: LogoDesignId) => {
+const getDesign = (logo: LogoDesignId) => {
   const design = brandLogoDesigns.find(({ id }) => id === logo)
 
   if (!design) {
     throw new Error(`Unknown logo design: ${logo}`)
   }
 
-  const [x, y, width, height] = design.sourceViewBox
-  const horizontalPadding = width * LOGO_PADDING_RATIO
-  const verticalPadding = height * LOGO_PADDING_RATIO
-
-  return {
-    x: x - horizontalPadding,
-    y: y - verticalPadding,
-    width: width + horizontalPadding * 2,
-    height: height + verticalPadding * 2
-  }
+  return design
 }
 
 export const renderBrandLogoSvg = ({
   background,
   foreground,
-  logo
+  logo,
+  rounded
 }: {
   background: LogoBackgroundId
   foreground: LogoColourId
   logo: LogoDesignId
+  rounded: boolean
 }) => {
   const foregroundHex = getColourHex(foreground)
   const backgroundHex = getBackgroundHex(background)
-  const viewBox = getPaddedViewBox(logo)
+  const canvas = getLogoCanvas({
+    background,
+    design: getDesign(logo)
+  })
+  const shouldRound = rounded && background !== 'transparent'
   const title =
     logo === 'horizontal'
       ? 'The Grand Collection horizontal logo'
       : 'The Grand Collection emblem'
   const backgroundRect = backgroundHex
-    ? `<rect x="${viewBox.x}" y="${viewBox.y}" width="${viewBox.width}" height="${viewBox.height}" fill="${backgroundHex}"/>`
+    ? `<rect x="${canvas.x}" y="${canvas.y}" width="${canvas.width}" height="${canvas.height}" fill="${backgroundHex}"/>`
     : ''
   const artwork = CLEAN_LOGO_BODIES[logo].replace(SOURCE_GOLD, foregroundHex)
+  const clipPath = shouldRound
+    ? `<defs><clipPath id="logo-canvas-clip"><rect x="${canvas.x}" y="${canvas.y}" width="${canvas.width}" height="${canvas.height}" rx="${canvas.radius}"/></clipPath></defs>`
+    : ''
+  const content = shouldRound
+    ? `<g clip-path="url(#logo-canvas-clip)">${backgroundRect}${artwork}</g>`
+    : `${backgroundRect}${artwork}`
 
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}" role="img" aria-labelledby="logo-title" shape-rendering="geometricPrecision">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${canvas.x} ${canvas.y} ${canvas.width} ${canvas.height}" role="img" aria-labelledby="logo-title" shape-rendering="geometricPrecision">`,
     `<title id="logo-title">${title}</title>`,
-    backgroundRect,
-    artwork,
+    clipPath,
+    content,
     '</svg>'
   ].join('')
 }
